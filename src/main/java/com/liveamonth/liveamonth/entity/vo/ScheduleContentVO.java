@@ -1,0 +1,70 @@
+package com.liveamonth.liveamonth.entity.vo;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+public class ScheduleContentVO {
+
+	private int scheduleContentNO;
+	private String scheduleContentSubject;
+	private String scheduleContentDesc;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private String scheduleContentDate;
+	private int scheduleContentCost;
+	private int scheduleNO;
+
+	public ScheduleContentVO() {
+		this.scheduleContentNO = 0;
+		this.scheduleContentSubject = null;
+		this.scheduleContentDesc = null;
+		this.scheduleContentDate = null;
+		this.scheduleContentCost=0;
+		this.scheduleNO = 0;
+	}
+
+	
+	public String getScheduleContentDate() {
+		return scheduleContentDate;
+	}
+
+
+	public void setScheduleContentDate(String scheduleContentDate) {
+		this.scheduleContentDate = scheduleContentDate;
+	}
+
+
+	public int getScheduleContentNO() {
+		return scheduleContentNO;
+	}
+	public void setScheduleContentNO(int scheduleContentNO) {
+		this.scheduleContentNO = scheduleContentNO;
+	}
+	public String getScheduleContentSubject() {
+		return scheduleContentSubject;
+	}
+	public void setScheduleContentSubject(String scheduleContentSubject) {
+		this.scheduleContentSubject = scheduleContentSubject;
+	}
+	public String getScheduleContentDesc() {
+		return scheduleContentDesc;
+	}
+	public void setScheduleContentDesc(String scheduleContentDesc) {
+		this.scheduleContentDesc = scheduleContentDesc;
+	}
+
+	public int getScheduleContentCost() {
+		return scheduleContentCost;
+	}
+	public void setScheduleContentCost(int scheduleContentCost) {
+		this.scheduleContentCost = scheduleContentCost;
+	}
+
+	public int getScheduleNO() {
+		return scheduleNO;
+	}
+
+	public void setScheduleNO(int scheduleNO) {
+		this.scheduleNO = scheduleNO;
+	}
+
+
+}

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper
+	namespace="com.liveamonth.liveamonth.model.mapper.scheduleMapper.ScheduleMapper">
+	<insert id="addScheduleContent"
+		parameterType="com.liveamonth.liveamonth.entity.vo.ScheduleContentVO">
+		insert into scheduleContent
+		values
+		(#{scheduleContentNO}, #{scheduleContentSubject}, #{scheduleContentDesc}, #{scheduleContentDate},
+		#{scheduleContentCost}, null)
+	</insert>
+
+
+	<select id="beforeScheduleAddSearch"
+		parameterType="com.liveamonth.liveamonth.entity.vo.ScheduleContentVO" resultType="int">
+
+		select count(*) from scheduleContent where scheduleContentDate = #{scheduleContentDate}
+
+	</select>
+
+	<select id="scheduleContentList"
+		parameterType="com.liveamonth.liveamonth.entity.dto.CalendarDTO"
+		resultType="com.liveamonth.liveamonth.entity.vo.ScheduleContentVO">
+
+		select * from scheduleContent where scheduleContentDate &gt;= #{dbStartDate} and
+		scheduleContentDate &lt;= #{dbEndDate}
+		order by scheduleContentDate, scheduleContentNO
+
+	</select>
+	<select id="getLastScheduleContentNO" resultType="int">
+
+		select max(scheduleContentNO) from scheduleContent;
+
+	</select>
+</mapper>
