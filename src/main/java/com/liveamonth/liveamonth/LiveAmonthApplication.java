@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class LiveAmonthApplication {
-
+	//aasd
 	public static void main(String[] args) {
 		SpringApplication.run(LiveAmonthApplication.class, args);
 	}
