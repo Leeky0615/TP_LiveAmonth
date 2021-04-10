@@ -1,7 +1,9 @@
 package com.liveamonth.liveamonth.entity.vo;
 
+import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
+@Data
 public class ScheduleContentVO {
 
 	private int scheduleContentNO;

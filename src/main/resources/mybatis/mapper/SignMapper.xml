@@ -7,30 +7,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 					
 	<!-- insert-->
 	<insert id="insertUser" parameterType="com.liveamonth.liveamonth.entity.vo.UserVO">
-		insert into User
+		insert into user(userID,userPassword,userName,userNickname,userAge,userSex,userEmail)
 		values(#{userID},#{userPassword},#{userName},#{userNickname},#{userAge},#{userSex},#{userEmail});
 	</insert>
 
 
 	<!-- select -->
 	<select id="checkSign" parameterType="HashMap" resultType="String">
-		select userName from User where userID = #{userID} and userPassword =
+		select userName from user where userID = #{userID} and userPassword =
 		#{userPassword}
 	</select>
 
 	<select id="checkID" parameterType="String" resultType="String">
-		select userID from User where userID = #{userID}
+		select userID from user where userID = #{userID}
 	</select>
 
 	<select id="checkNickName" parameterType="String"
 		resultType="String">
-		select userNickName from User where userNickName =
+		select userNickName from user where userNickName =
 		#{userNickName}
 	</select>
 
 	<!-- IDFind -->
 	<select id="findID" parameterType="String" resultType="String">
 		select
-		userID from User where userEmail = #{userEmail}
+		userID from user where userEmail = #{userEmail}
 	</select>
 </mapper>

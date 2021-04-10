@@ -2,8 +2,6 @@ package com.liveamonth.liveamonth.model.service.signService;
 
 import java.util.HashMap;
 
-import javax.annotation.Resource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,8 +39,6 @@ public class SignServiceImpl implements SignService {
 		userVO.setUserEmail(userEmail);
 	
 		signMapper.insertUser(userVO);	
-		
-		
 	}
 
 	@Override

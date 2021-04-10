@@ -1,6 +1,5 @@
 package com.liveamonth.liveamonth.controller.signController;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -114,7 +113,7 @@ public class SignController{
 		return "signView/FindID";
 	}
 	
-	// 아이디 찾기
+	// �븘�씠�뵒 李얘린
 	@RequestMapping(value = "/resultMentFindID", method = RequestMethod.POST)
 	public String IDFind(HttpServletResponse response, @RequestParam("userEmail")
 	String userEmail, Model model) throws Exception{
