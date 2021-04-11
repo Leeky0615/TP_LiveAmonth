@@ -35,7 +35,7 @@
                         <ul>
                             <li><a href="#">Privacy Policy</a></li>
                             <li><a href="#">Contact Support</a></li>
-                            <li><a href="#">Knowledge base</a></li>
+                            <li><a href="#">Knowledgebase</a></li>
                             <li><a href="#">Careers</a></li>
                             <li><a href="#">FAQs</a></li>
                         </ul>
