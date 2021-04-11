@@ -14,4 +14,8 @@ public class MyPageController {
         this.myPageService = myPageService;
     }
 
+    @GetMapping("/myPage")
+    public String hello(Model model) {
+        return "myPageView/MyPage";
+    }
 }
