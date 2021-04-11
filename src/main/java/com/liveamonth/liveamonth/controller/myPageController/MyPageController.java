@@ -14,9 +14,4 @@ public class MyPageController {
         this.myPageService = myPageService;
     }
 
-    @GetMapping("/myPage")
-    public String hello(Model model) {
-        model.addAttribute("data", "REVIEW!!!");
-        return "myPageView/MyPage";
-    }
 }

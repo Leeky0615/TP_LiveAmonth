@@ -13,10 +13,4 @@ public class InformationController{
     public InformationController(InformationService informationService) {
         this.informationService = informationService;
     }
-
-    @GetMapping("/information")
-    public String hello(Model model) {
-        model.addAttribute("data", "CITY!!!");
-        return "informationView/City";
-    }
 }

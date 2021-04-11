@@ -13,11 +13,4 @@ public class BoardController{
     public BoardController(BoardService boardService) {
         this.boardService = boardService;
     }
-
-    @GetMapping("/board")
-    public String hello(Model model) {
-        model.addAttribute("data", "BOARD!!!");
-        return "boardView/Board";
-    }
-
 }
