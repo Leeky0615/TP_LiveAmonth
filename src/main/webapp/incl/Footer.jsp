@@ -1,10 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
     
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="utf-8">
 
 </head>
 <body>
@@ -19,7 +19,7 @@
                                 <img src="resources/img/f-logo.png" alt="">
                             </a>
                         </div>
-                        <p> 'ÇÑ´Þ »ì±â'¸¦ À§ÇÑ Á¤º¸¸¦ °øÀ¯ÇÏ´Â »çÀÌÆ®ÀÔ´Ï´Ù.</p>
+                        <p> 'í•œë‹¬ ì‚´ê¸°'ë¥¼ ìœ„í•œ ì •ë³´ë¥¼ ê³µìœ í•˜ëŠ” ì‚¬ì´íŠ¸ìž…ë‹ˆë‹¤.</p>
                         <div class="fs-social">
                             <a href="#"><i class="fa fa-facebook"></i></a>
                             <a href="#"><i class="fa fa-twitter"></i></a>

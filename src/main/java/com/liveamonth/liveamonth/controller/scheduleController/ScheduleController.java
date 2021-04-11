@@ -15,9 +15,12 @@ import com.liveamonth.liveamonth.model.service.scheduleService.ScheduleService;
 
 @Controller
 public class ScheduleController{
-	@Autowired
-	private ScheduleService scheduleService;
-	
+	private final ScheduleService scheduleService;
+
+	public ScheduleController(ScheduleService scheduleService) {
+		this.scheduleService = scheduleService;
+	}
+
 	@RequestMapping(value="addSchedule")
 	public String addSchedule(HttpServletRequest request, ScheduleContentVO scheduleContentVO, RedirectAttributes rttr) throws Exception{
 		

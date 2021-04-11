@@ -7,7 +7,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 					
 	<!-- insert-->
 	<insert id="insertUser" parameterType="com.liveamonth.liveamonth.entity.vo.UserVO">
-		insert into user(userID,userPassword,userName,userNickname,userAge,userSex,userEmail)
+		insert into
 		values(#{userID},#{userPassword},#{userName},#{userNickname},#{userAge},#{userSex},#{userEmail});
 	</insert>
 

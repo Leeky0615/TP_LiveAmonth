@@ -10,7 +10,6 @@ import com.liveamonth.liveamonth.entity.vo.UserVO;
 @Repository
 @Mapper
 public interface SignMapper {
-
     String checkID(String userID) throws Exception;
     String checkNickName(String userNickName) throws Exception;
     void insertUser(UserVO userVO) throws Exception;

@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
     
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -102,27 +102,26 @@
 					<div class="col-lg-9">
 						<nav class="nav-menu">
 							<ul>
-								<li class="active"><a href="./index.html">¾îµð¼­?</a>
+								<li class="active"><a href="information">CITY</a>
 									<ul class="dropdown">
-										<li><a href="TestPage">ALL</a></li>
-										<li><a href="*">¼­¿ï</a></li>
-										<li><a href="*">°æ±âµµ</a></li>
-										<li><a href="*">°­¿øµµ</a></li>
-										<li><a href="*">ÃæÃ»µµ</a></li>
-										<li><a href="*">Àü¶óµµ</a></li>
-										<li><a href="*">°æ»óµµ</a></li>
-										<li><a href="*">Á¦ÁÖµµ</a></li>
+										<li><a href="information">ALL</a></li>
+										<li><a href="information">ì„œìš¸</a></li>
+										<li><a href="information">ì œì£¼</a></li>
+										<li><a href="information">ì—¬ìˆ˜</a></li>
+										<li><a href="information">ë¶€ì‚°</a></li>
+										<li><a href="information">ê°•ë¦‰</a></li>
+										<li><a href="information">ê²½ì£¼</a></li>
 									</ul></li>
-								<li><a href="#">¹«¾ùÀ»?</a></li>
-								<li><a href="./agents.html">¾ó¸¶³ª µé±î?</a></li>
-								<li class="active"><a href="./index.html">´Ù¸¥»ç¶÷µéÀº?</a>
+								<li><a href="schedule">Schedule</a></li>
+								<li class="active"><a href="board">Review</a>
 									<ul class="dropdown">
-										<li><a href="*">ALL</a></li>
-										<li><a href="*">BEST ÈÄ±â°Ô½ÃÆÇ</a></li>
-										<li><a href="*">ÈÄ±â °Ô½ÃÆÇ</a></li>
+										<li><a href="board">ê°„ ê³³</a></li>
+										<li><a href="board">ë¨¹ì€ ê³³</a></li>
+										<li><a href="board">ëŠë‚€ ì </a></li>
+										<li><a href="board">ìžìœ  ê²Œì‹œíŒ</a></li>
 									</ul>
 								</li>
-								<li><a href="schedule">½ºÄÉÁÙÇ¥</a></li>
+								<li><a href="myPage">MyPage</a></li>
 							</ul>
 						</nav>
 					</div>
@@ -130,7 +129,7 @@
 						<div class="hn-social">
 							<c:if test="${userName != null}">
 
-								<p>È¯¿µÇÕ´Ï´Ù ${userName}´Ô.</p>
+								<p>í™˜ì˜í•©ë‹ˆë‹¤ ${userName}ë‹˜.</p>
 
 							</c:if>
 							<!--         <a href="#"><i class="fa fa-facebook"></i></a>

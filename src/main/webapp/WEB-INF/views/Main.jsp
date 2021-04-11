@@ -1,11 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
 <!DOCTYPE html>
 <html lang="zxx">
 
 <head>
     
-    <title>ÇÑ´Þ »ì±â</title>
+    <title>í•œë‹¬ ì‚´ê¸°</title>
 </head>
 
 <body>
@@ -81,20 +81,19 @@
             <div class="row">
                 <div class="col-lg-5">
                     <div class="section-title">
-                        <h4>Áö¿ªµé</h4>
+                        <h4>ì§€ì—­ë“¤</h4>
                     </div>
                 </div>
                 <div class="col-lg-7">
                     <div class="property-controls">
                         <ul>
                             <li data-filter="all">All</li>
-                            <li data-filter=".seoul">¼­¿ï</li>
-                            <li data-filter=".gyeonggi">°æ±âµµ</li>
-                            <li data-filter=".gangwon">°­¿øµµ</li>
-                            <li data-filter=".chungcheong">ÃæÃ»µµ</li>
-                            <li data-filter=".jeolla">Àü¶óµµ</li>
-                            <li data-filter=".gyeongsang">°æ»óµµ</li>
-                            <li data-filter=".jeju">Á¦ÁÖµµ</li>
+                            <li data-filter=".seoul">ì„œìš¸</li>
+                            <li data-filter=".gyeonggi">ì œì£¼</li>
+                            <li data-filter=".gangwon">ì—¬ìˆ˜</li>
+                            <li data-filter=".chungcheong">ë¶€ì‚°</li>
+                            <li data-filter=".jeolla">ê°•ë¦‰</li>
+                            <li data-filter=".gyeongsang">ê²½ì£¼</li>
                         </ul>
                     </div>
                 </div>
@@ -106,11 +105,11 @@
                     <div class="ih-item square effect13 left_to_right property-item">
 	                   <a href="#">
 	                       <div class="pi-pic set-bg" data-setbg="resources/img/property/property-1.jpg">
-	                           <div class="label">¼­¿ï</div>
+	                           <div class="label">ì„œìš¸</div>
 	                       </div>
 					       <div class="info">
 					         <h3>Seoul</h3>
-					         <p>¼­¿ïÀÔ´Ï´Ù.</p>
+					         <p>ì„œìš¸ìž…ë‹ˆë‹¤.</p>
 					       </div>
 				       </a>
 			       </div>
@@ -120,11 +119,11 @@
                     <div class="ih-item square effect13 left_to_right property-item">
 	                   <a href="#">
 	                       <div class="pi-pic set-bg" data-setbg="resources/img/property/property-2.jpg">
-	                           <div class="label">¾çÆò</div>
+	                           <div class="label">ì œì£¼</div>
 	                       </div>
 					       <div class="info">
-					         <h3>Yangpyeong</h3>
-					         <p>¾çÆòÀÔ´Ï´Ù.</p>
+					         <h3>Jeju</h3>
+					         <p>ì œì£¼ìž…ë‹ˆë‹¤.</p>
 					       </div>
 				       </a>
 			       </div>
@@ -134,11 +133,11 @@
                     <div class="ih-item square effect13 left_to_right property-item">
 	                   <a href="#">
 	                       <div class="pi-pic set-bg" data-setbg="resources/img/property/property-3.jpg">
-	                           <div class="label">°­¸ª</div>
+	                           <div class="label">ì—¬ìˆ˜</div>
 	                       </div>
 					       <div class="info">
-					         <h3>Gangneung</h3>
-					         <p>°­¸ªÀÔ´Ï´Ù.</p>
+					         <h3>YeoSU</h3>
+					         <p>ì—¬ìˆ˜ìž…ë‹ˆë‹¤.</p>
 					       </div>
 				       </a>
 			       </div>
@@ -148,11 +147,11 @@
                     <div class="ih-item square effect13 left_to_right property-item">
 	                   <a href="#">
 	                       <div class="pi-pic set-bg" data-setbg="resources/img/property/property-4.jpg">
-	                           <div class="label">º¸·É</div>
+	                           <div class="label">ë¶€ì‚°</div>
 	                       </div>
 					       <div class="info">
-					         <h3>Boryeong</h3>
-					         <p>º¸·ÉÀÔ´Ï´Ù.</p>
+					         <h3>Busan</h3>
+					         <p>ë¶€ì‚°ìž…ë‹ˆë‹¤.</p>
 					       </div>
 				       </a>
 			       </div>
@@ -162,11 +161,11 @@
                     <div class="ih-item square effect13 left_to_right property-item">
 	                   <a href="#">
 	                       <div class="pi-pic set-bg" data-setbg="resources/img/property/property-5.jpg">
-	                           <div class="label">Á¦ÁÖ</div>
+	                           <div class="label">ê°•ë¦‰</div>
 	                       </div>
 					       <div class="info">
-					         <h3>Jeju</h3>
-					         <p>Á¦ÁÖµµ ÀÔ´Ï´Ù.</p>
+					         <h3>Gangneung</h3>
+					         <p>ê°•ë¦‰ìž…ë‹ˆë‹¤.</p>
 					       </div>
 				       </a>
 			       </div>

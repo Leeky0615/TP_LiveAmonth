@@ -16,10 +16,13 @@ import com.liveamonth.liveamonth.model.service.signService.SignService;
 
 @Controller
 public class SignController{
-	@Autowired
-	private SignService signService;
+	private final SignService signService;
 
 	private boolean firstIn;
+
+	public SignController(SignService signService) {
+		this.signService = signService;
+	}
 
 	@RequestMapping("/signIn")
 	public String SignInPage(Model model) throws Exception {
