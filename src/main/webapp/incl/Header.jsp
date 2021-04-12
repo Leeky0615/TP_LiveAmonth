@@ -112,7 +112,7 @@
 										<li><a href="cityInfo">강릉</a></li>
 										<li><a href="cityInfo">경주</a></li>
 									</ul></li>
-								<li><a href="schedule">Schedule</a>
+								<li class="active"><a href="schedule">Schedule</a>
                                     <ul class="dropdown">
 									    <li><a href="schedule">내 스케줄 보기</a></li>
 									    <li><a href="otherScheduleList">다른 사람 스케줄 보기</a></li>
@@ -125,7 +125,7 @@
 										<li><a href="review">자유 게시판</a></li>
 									</ul>
 								</li>
-								<li><a href="myPage">MyPage</a></li>
+								<li class="active"><a href="myPage">MyPage</a></li>
 							</ul>
 						</nav>
 					</div>
