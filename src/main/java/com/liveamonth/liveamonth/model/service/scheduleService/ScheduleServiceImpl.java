@@ -2,7 +2,9 @@ package com.liveamonth.liveamonth.model.service.scheduleService;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
+import com.liveamonth.liveamonth.entity.vo.ScheduleVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,19 +17,19 @@ import com.liveamonth.liveamonth.model.mapper.scheduleMapper.ScheduleMapper;
 public class ScheduleServiceImpl implements ScheduleService{
 	@Autowired
 	private ScheduleMapper scheduleMapper;
-	
+
 	@Override
 	public CalendarDTO showCalendar(CalendarDTO calendarDTO) throws Exception {
 		Calendar cal = Calendar.getInstance();
 		CalendarDTO calendarData;
-		
+
 		//검색 날짜
 		if(calendarDTO.getDate().equals("")&&calendarDTO.getMonth().equals("")){
 			calendarDTO = new CalendarDTO(String.valueOf(cal.get(Calendar.YEAR)),String.valueOf(cal.get(Calendar.MONTH)),String.valueOf(cal.get(Calendar.DATE)),null,null);
 		}
 		calendarDTO.setTodayInformation(calendarDTO.todayInformation(calendarDTO));
 		calendarDTO.setDateList(new ArrayList<CalendarDTO>());
-		
+
 		//검색 날짜 end
 		ArrayList<ScheduleContentVO> ScheduleList =  scheduleMapper.scheduleContentList(calendarDTO);
 
@@ -51,7 +53,7 @@ public class ScheduleServiceImpl implements ScheduleService{
 				}
 			}
 		}
-		
+
 		//실질적인 달력 데이터 리스트에 데이터 삽입 시작.
 		//일단 시작 인덱스까지 아무것도 없는 데이터 삽입
 		for(int i=1; i<calendarDTO.getTodayInformation().get("start"); i++){
@@ -94,7 +96,7 @@ public class ScheduleServiceImpl implements ScheduleService{
 	@Override
 	public void addScheduleContent(ScheduleContentVO scheduleContentVO) throws Exception {
 		scheduleMapper.addScheduleContent(scheduleContentVO);
-		
+
 	}
 
 	@Override
@@ -104,7 +106,11 @@ public class ScheduleServiceImpl implements ScheduleService{
 
 	@Override
 	public ArrayList<ScheduleContentVO> scheduleContentList(CalendarDTO calendarDTO) throws Exception {
-		
 		return scheduleMapper.scheduleContentList(calendarDTO);
+	}
+
+	@Override
+	public List<ScheduleVO> getOtherScheduleInfo() {
+		return scheduleMapper.getOtherScheduleInfo();
 	}
 }

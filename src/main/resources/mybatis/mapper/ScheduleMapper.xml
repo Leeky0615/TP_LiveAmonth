@@ -4,9 +4,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 <mapper
-	namespace="com.liveamonth.liveamonth.model.mapper.scheduleMapper.ScheduleMapper">
+		namespace="com.liveamonth.liveamonth.model.mapper.scheduleMapper.ScheduleMapper">
 	<insert id="addScheduleContent"
-		parameterType="com.liveamonth.liveamonth.entity.vo.ScheduleContentVO">
+			parameterType="com.liveamonth.liveamonth.entity.vo.ScheduleContentVO">
 		insert into scheduleContent
 		values
 		(#{scheduleContentNO}, #{scheduleContentSubject}, #{scheduleContentDesc}, #{scheduleContentDate},
@@ -15,15 +15,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
 	<select id="beforeScheduleAddSearch"
-		parameterType="com.liveamonth.liveamonth.entity.vo.ScheduleContentVO" resultType="int">
+			parameterType="com.liveamonth.liveamonth.entity.vo.ScheduleContentVO" resultType="int">
 
 		select count(*) from scheduleContent where scheduleContentDate = #{scheduleContentDate}
 
 	</select>
 
 	<select id="scheduleContentList"
-		parameterType="com.liveamonth.liveamonth.entity.dto.CalendarDTO"
-		resultType="com.liveamonth.liveamonth.entity.vo.ScheduleContentVO">
+			parameterType="com.liveamonth.liveamonth.entity.dto.CalendarDTO"
+			resultType="com.liveamonth.liveamonth.entity.vo.ScheduleContentVO">
 
 		select * from scheduleContent where scheduleContentDate &gt;= #{dbStartDate} and
 		scheduleContentDate &lt;= #{dbEndDate}
@@ -34,5 +34,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 		select max(scheduleContentNO) from scheduleContent;
 
+	</select>
+
+	<select id="getOtherScheduleInfo" resultType="com.liveamonth.liveamonth.entity.vo.ScheduleVO">
+		select * from schedule where userNO in (select userNO from schedule where schedule.scheduleStatus = true)
 	</select>
 </mapper>
