@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 //Mapper 인터페이스를 인식할 수 있도록 설정
-@MapperScan(value={"com.liveamonth.liveamonth.model.mapper"})
 public class LiveAmonthApplication {
 
 	public static void main(String[] args) {

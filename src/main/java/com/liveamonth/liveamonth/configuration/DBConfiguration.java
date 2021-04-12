@@ -3,6 +3,7 @@ package com.liveamonth.liveamonth.configuration;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
@@ -13,6 +14,8 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableTransactionManagement
+@MapperScan(value={"com.liveamonth.liveamonth.model.mapper"})
+
 public class DBConfiguration {
 
     @Bean
@@ -20,7 +23,8 @@ public class DBConfiguration {
         SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
         sessionFactory.setDataSource(dataSource);
         sessionFactory.setMapperLocations();
-        Resource[] res = new PathMatchingResourcePatternResolver().getResources("classpath:mybatis/mapper/*.xml");
+        Resource[] res = new PathMatchingResourcePatternResolver().getResources("classpath*:mapper/*.xml");
+
         sessionFactory.setMapperLocations(res);
         return sessionFactory.getObject();
 
