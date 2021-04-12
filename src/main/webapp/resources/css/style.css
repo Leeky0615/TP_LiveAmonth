@@ -482,9 +482,9 @@ ol {
   height: 480px;
 }
 .hs-item .hc-inner-text {
+	
 
-
-
+ 
   background: rgba(255, 255, 255, 0.4);
   padding: 40px;
   overflow: hidden;
@@ -837,7 +837,7 @@ ol {
   height: 240px;
   position: relative;
   margin-bottom: 25px;
-}
+}  
 .property-item .pi-pic .label {
   font-family: 'Jua', sans-serif;
   text-shadow:2px 2px 6px gray;
@@ -4322,12 +4322,12 @@ li .richText-btn[data-command=toggleCode] {
   .blog-details-content .bc-widget .comment-option .co-item.reply-item {
     padding-left: 10%;
   }
-
-
-
-
-
-
+  
+  
+  
+  
+  
+  
   .ih-item.square.effect13 .info {
   background: #333333;
   background: rgba(0, 0, 0, 0.6);
@@ -4381,7 +4381,7 @@ li .richText-btn[data-command=toggleCode] {
   -o-transform: translateX(0);
   transform: translateX(0);
 }
-
+ 
 .int {
     display: block;
     position: relative;
@@ -4395,7 +4395,7 @@ li .richText-btn[data-command=toggleCode] {
 .error_next_box {
     margin-top: 9px;
     font-size: 12px;
-    color: red;
+    color: red;    
     display: none;
 }
 
@@ -4406,7 +4406,7 @@ li .richText-btn[data-command=toggleCode] {
     font-size: 12px;
     color: red;
     display: none;
-}
+} 
 
 .form-control:active, .form-control:focus {
     border-color: #32dbc6; }
@@ -4423,7 +4423,7 @@ li .richText-btn[data-command=toggleCode] {
 	z-index: 1;}
 
 #userSexBlock label {
-    z-index: -1;
+    z-index: -1; 
 }
 /*# sourceMappingURL=style.css.map */
 

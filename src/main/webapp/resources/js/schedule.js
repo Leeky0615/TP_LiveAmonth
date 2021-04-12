@@ -1,4 +1,6 @@
-function addScheduleContentButton() {
+
+
+		function addScheduleContentButton() {
 			var addScheduleForm = document.addScheduleContent;
 			if (addScheduleForm.scheduleContentDate.value == ""
 					|| addScheduleForm.scheduleContentDate.value == null) {
@@ -13,12 +15,12 @@ function addScheduleContentButton() {
 			}
 			addScheduleForm.submit();
 		}
-
+		
 		function deleteScheduleContentButton(){
 			var deleteScheduleContentForm = document.deleteScheduleContent;
 			deleteScheduleContentForm.submit();
 		}
-
+		
 		function modifyScheduleContentButton(){
 			var modifyScheduleContentForm = document.modifyScheduleContent;
 			if (modifyScheduleContentForm.modifyScheduleContentSubject.value == ""
@@ -27,13 +29,13 @@ function addScheduleContentButton() {
 				modifyScheduleContentForm.modifyScheduleContentSubject.focus();
 				return false;
 		}
-
+			
 			modifyScheduleContentForm.submit();
 		}
-
+		
 		function showScheduleContentList(scheduleContentNO, scheduleContentSubject,scheduleContentDate,scheduleContentDesc,scheduleContentCost){
 			var query = {scheduleContentDate : scheduleContentDate, scheduleContentSubject : scheduleContentSubject, scheduleContentNO : scheduleContentNO, scheduleContentDesc : scheduleContentDesc,scheduleContentCost : scheduleContentCost};
-
+		
 			$.ajax({
 			  	url : "showScheduleContentList",
 			  	type : "post",
@@ -46,12 +48,12 @@ function addScheduleContentButton() {
 			    	$('#modifyScheduleContentDesc').val(scheduleContentDesc);
 			    	$('#modifyScheduleContentDate').val(scheduleContentDate);
 			    	$('#modifyScheduleContentCost').val(scheduleContentCost);
-
+			    
 			  }
-			 });
-
-		}
-
+			 }); 
+		
+		}	
+		
 		function addSchedulButton() {
 			var addScheduleForm = document.addSchedule;
 			if (addScheduleForm.scheduleSubject.value == "" || addScheduleForm.scheduleSubject.value == null) {
@@ -61,3 +63,4 @@ function addScheduleContentButton() {
 				}
 			addScheduleForm.submit();
 		}
+

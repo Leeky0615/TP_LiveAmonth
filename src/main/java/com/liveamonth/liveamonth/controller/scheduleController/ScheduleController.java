@@ -30,8 +30,6 @@ public class ScheduleController{
 
     private int scheduleContentNO;
 
-
-
     @RequestMapping(value="addScheduleContent")
     public String addScheduleContent(HttpServletRequest request, ScheduleContentVO scheduleContentVO, RedirectAttributes rttr) throws Exception{
         HttpSession session = request.getSession();
@@ -131,6 +129,7 @@ public class ScheduleController{
     public void showScheduleContentList(Model model, HttpServletRequest request, CalendarDTO calendarDTO) throws Exception{
         this.scheduleContentNO = Integer.parseInt(request.getParameter("scheduleContentNO"));
     }
+
 
 
     @RequestMapping("/otherScheduleList")

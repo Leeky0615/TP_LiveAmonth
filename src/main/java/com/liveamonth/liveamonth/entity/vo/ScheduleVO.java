@@ -1,11 +1,8 @@
 package com.liveamonth.liveamonth.entity.vo;
 
 public class ScheduleVO {
-
     //should add more city
     public enum Place {SEOUL, JEJU}
-
-    ;
 
     private int scheduleNO;
     private String scheduleSubject;

@@ -26,7 +26,6 @@ public class CalendarDTO {
     public String getYear() {
         return year;
     }
-
     public void setYear(String year) {
         this.year = year;
     }
@@ -35,7 +34,6 @@ public class CalendarDTO {
     public String getMonth() {
         return month;
     }
-
     public void setMonth(String month) {
         this.month = month;
     }
@@ -44,7 +42,6 @@ public class CalendarDTO {
     public String getDate() {
         return date;
     }
-
     public void setDate(String date) {
         this.date = date;
     }
@@ -53,7 +50,6 @@ public class CalendarDTO {
     public String getValue() {
         return value;
     }
-
     public void setValue(String value) {
         this.value = value;
     }
@@ -62,15 +58,12 @@ public class CalendarDTO {
     public String getDbStartDate() {
         return dbStartDate;
     }
-
     public void setDbStartDate(String dbStartDate) {
         this.dbStartDate = dbStartDate;
     }
-
     public String getDbEndDate() {
         return dbEndDate;
     }
-
     public void setDbEndDate(String dbEndDate) {
         this.dbEndDate = dbEndDate;
     }
@@ -78,27 +71,21 @@ public class CalendarDTO {
     public ScheduleContentVO[] getScheduleDataArray() {
         return scheduleDataArray;
     }
-
     public void setScheduleDataArray(ScheduleContentVO[] scheduleDataArray) {
         this.scheduleDataArray = scheduleDataArray;
     }
-
     public Map<String, Integer> getTodayInformation() {
         return todayInformation;
     }
-
     public void setTodayInformation(Map<String, Integer> todayInformation) {
         this.todayInformation = todayInformation;
     }
-
     public List<CalendarDTO> getDateList() {
         return dateList;
     }
-
     public void setDateList(List<CalendarDTO> dateList) {
         this.dateList = dateList;
     }
-
     // 날짜에 관련된 달력정보를 가지는 메서드
     public Map<String, Integer> todayInformation(CalendarDTO calendarDTO) {
         // 날짜 캘린더 함수에 삽입.
@@ -126,9 +113,9 @@ public class CalendarDTO {
             today = Integer.parseInt(dsdf.format(todayCal.getTime()));
         }
 
-        searchMonth = searchMonth - 1;
+        searchMonth = searchMonth-1;
 
-        Map<String, Integer> beforeAfterCalendar = beforeAfterCalendar(searchYear, searchMonth);
+        Map<String, Integer> beforeAfterCalendar = beforeAfterCalendar(searchYear,searchMonth);
 
         //날짜 관련
         System.out.println("search_month : " + searchMonth);
@@ -138,34 +125,34 @@ public class CalendarDTO {
         todayData.put("endDay", endDay);
         todayData.put("today", today);
         todayData.put("searchYear", searchYear);
-        todayData.put("searchMonth", searchMonth + 1);
+        todayData.put("searchMonth", searchMonth+1);
         todayData.put("beforeYear", beforeAfterCalendar.get("beforeYear"));
         todayData.put("beforeMonth", beforeAfterCalendar.get("beforeMonth"));
         todayData.put("afterYear", beforeAfterCalendar.get("afterYear"));
         todayData.put("afterMonth", beforeAfterCalendar.get("afterMonth"));
 
 
-        this.dbStartDate = String.valueOf(searchYear) + "-" + String.valueOf(searchMonth + 1) + "-" + String.valueOf(startDay);
-        this.dbEndDate = String.valueOf(searchYear) + "-" + String.valueOf(searchMonth + 1) + "-" + String.valueOf(endDay);
+        this.dbStartDate = String.valueOf(searchYear)+"-"+String.valueOf(searchMonth+1)+"-"+String.valueOf(startDay);
+        this.dbEndDate = String.valueOf(searchYear)+"-"+String.valueOf(searchMonth+1)+"-"+String.valueOf(endDay);
         return todayData;
     }
 
     //이전달 다음달 및 이전년도 다음년도
-    private Map<String, Integer> beforeAfterCalendar(int searchYear, int searchMonth) {
+    private Map<String, Integer> beforeAfterCalendar(int searchYear, int searchMonth){
         Map<String, Integer> beforeAfterData = new HashMap<String, Integer>();
         int beforeYear = searchYear;
-        int beforeMonth = searchMonth - 1;
+        int beforeMonth = searchMonth-1;
         int afterYear = searchYear;
-        int afterMonth = searchMonth + 1;
+        int afterMonth = searchMonth+1;
 
-        if (beforeMonth < 0) {
-            beforeMonth = 11;
-            beforeYear = searchYear - 1;
+        if(beforeMonth<0){
+            beforeMonth=11;
+            beforeYear=searchYear-1;
         }
 
-        if (afterMonth > 11) {
-            afterMonth = 0;
-            afterYear = searchYear + 1;
+        if(afterMonth>11){
+            afterMonth=0;
+            afterYear=searchYear+1;
         }
 
         beforeAfterData.put("beforeYear", beforeYear);

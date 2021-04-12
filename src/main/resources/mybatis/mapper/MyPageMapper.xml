@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
  
-<mapper namespace="com.liveamon1th.liveamonth.model.mapper.myPageMapper.MyPageMapper">
+<mapper namespace="com.liveamonth.liveamonth.model.mapper.myPageMapper.MyPageMapper">
 
     <select id="getOtherScheduleUserInfo" resultType="com.liveamonth.liveamonth.entity.vo.UserVO">
         select * from user where userNO in (select userNO from schedule where schedule.scheduleStatus = true);

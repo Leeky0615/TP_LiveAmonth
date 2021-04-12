@@ -14,13 +14,10 @@ import com.liveamonth.liveamonth.model.service.signService.SignService;
 
 @Controller
 public class SignController {
-    private final SignService signService;
-
     private boolean firstIn;
 
-    public SignController(SignService signService) {
-        this.signService = signService;
-    }
+    @Autowired
+    private SignService signService;
 
     @RequestMapping("/signIn")
     public String SignInPage(Model model) throws Exception {
@@ -54,73 +51,71 @@ public class SignController {
     }
 
     @RequestMapping("/signUp")
-    public String SignUpPage(Model model) throws Exception {
+    public String SignUpPage(Model model)throws Exception{
         return "signView/SignUp";
     }
-
     @ResponseBody
     @RequestMapping(value = "/checkID", method = RequestMethod.POST)
     public int postIdCheck(HttpServletRequest request) throws Exception {
         String userID = request.getParameter("userID");
 
-        String idCheck = signService.checkID(userID);
+        String idCheck =  signService.checkID(userID);
 
         int idExist = 0;
 
-        if (idCheck != null) {
+        if(idCheck != null) {
             idExist = 1;
         }
 
         return idExist;
     }
-
     @ResponseBody
     @RequestMapping(value = "/checkNickName", method = RequestMethod.POST)
     public int postnickNameCheck(HttpServletRequest request) throws Exception {
         String userNickname = request.getParameter("userNickname");
 
-        String nickNameCheck = signService.checkNickName(userNickname);
+        String nickNameCheck =  signService.checkNickName(userNickname);
 
         int nickNameExist = 0;
 
-        if (nickNameCheck != null) {
+        if(nickNameCheck != null) {
             nickNameExist = 1;
         }
         return nickNameExist;
     }
 
     @RequestMapping("/ResultMentSignUp")
-    private String ResultMentSignUp(@ModelAttribute UserVO userVO) throws Exception {
+    private String ResultMentSignUp(@ModelAttribute UserVO userVO) throws Exception{
         signService.insertUser(userVO);
         return "signView/ResultMentSignUp";
     }
 
     @RequestMapping(value = "/resultMentFindID", method = RequestMethod.POST)
     public String IDFind(HttpServletResponse response, @RequestParam("userEmail")
-            String userEmail, Model model) throws Exception {
+            String userEmail, Model model) throws Exception{
         model.addAttribute("userID", signService.IDFind(response, userEmail));
         return "signView/ResultMentFindID";
     }
 
 
-    @RequestMapping(value = "/findID")
-    private String IDFind(Model model) throws Exception {
+
+    @RequestMapping(value ="/findID")
+    private String IDFind(Model model)throws Exception{
         return "signView/FindID";
     }
 
 
-    @RequestMapping(value = "/PWFind")
-    private String PWFind(Model model) throws Exception {
+
+    @RequestMapping(value ="/PWFind")
+    private String PWFind(Model model)throws Exception{
         return "signView/PWFind";
     }
 
     // 비밀번호 찾기
 
     @RequestMapping(value = "/ResultMentPWFind", method = RequestMethod.POST)
-    public String PWFind(HttpServletResponse response, @RequestParam("userID") String userID, @RequestParam("userEmail") String userEmail, Model model) throws Exception {
+    public String PWFind(HttpServletResponse response, @RequestParam("userID")String userID, @RequestParam("userEmail") String userEmail, Model model) throws Exception{
         model.addAttribute("userPassword", signService.PWFind(response, userID, userEmail));
         return "signView/ResultMentPWFind";
-
-
     }
 }
