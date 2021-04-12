@@ -140,6 +140,8 @@
 	</section>
 
 <script> 
+
+
 $(".checkID").click(function(){
  
  var query = {userID : $("#userID").val()};

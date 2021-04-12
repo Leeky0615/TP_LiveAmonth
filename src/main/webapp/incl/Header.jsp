@@ -102,23 +102,27 @@
 					<div class="col-lg-9">
 						<nav class="nav-menu">
 							<ul>
-								<li class="active"><a href="information">CITY</a>
+								<li class="active"><a href="cityInfo">CITY</a>
 									<ul class="dropdown">
-										<li><a href="information">ALL</a></li>
-										<li><a href="information">서울</a></li>
-										<li><a href="information">제주</a></li>
-										<li><a href="information">여수</a></li>
-										<li><a href="information">부산</a></li>
-										<li><a href="information">강릉</a></li>
-										<li><a href="information">경주</a></li>
+										<li><a href="cityInfo">ALL</a></li>
+										<li><a href="cityInfo">서울</a></li>
+										<li><a href="cityInfo">제주</a></li>
+										<li><a href="cityInfo">여수</a></li>
+										<li><a href="cityInfo">부산</a></li>
+										<li><a href="cityInfo">강릉</a></li>
+										<li><a href="cityInfo">경주</a></li>
 									</ul></li>
 								<li><a href="schedule">Schedule</a></li>
-								<li class="active"><a href="board">Review</a>
+                                    <ul class="dropdown">
+									    <li><a href="schedule">내 스케줄 보기</a></li>
+									    <li><a href="otherScheduleList">다른 사람 스케줄 보기</a></li>
+									</ul>
+								<li class="active"><a href="review">Review</a>
 									<ul class="dropdown">
-										<li><a href="board">간 곳</a></li>
-										<li><a href="board">먹은 곳</a></li>
-										<li><a href="board">느낀 점</a></li>
-										<li><a href="board">자유 게시판</a></li>
+										<li><a href="review">간 곳</a></li>
+										<li><a href="review">먹은 곳</a></li>
+										<li><a href="review">느낀 점</a></li>
+										<li><a href="review">자유 게시판</a></li>
 									</ul>
 								</li>
 								<li><a href="myPage">MyPage</a></li>

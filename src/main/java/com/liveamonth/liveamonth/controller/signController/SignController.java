@@ -13,96 +13,114 @@ import org.springframework.web.bind.annotation.*;
 import com.liveamonth.liveamonth.model.service.signService.SignService;
 
 @Controller
-public class SignController{
-	private final SignService signService;
+public class SignController {
+    private final SignService signService;
 
-	private boolean firstIn;
+    private boolean firstIn;
 
-	public SignController(SignService signService) {
-		this.signService = signService;
-	}
+    public SignController(SignService signService) {
+        this.signService = signService;
+    }
 
-	@RequestMapping("/signIn")
-	public String SignInPage(Model model) throws Exception {
-		this.firstIn = true;
-		model.addAttribute("firstIn", this.firstIn);
-		return "signView/SignIn";
-	}
+    @RequestMapping("/signIn")
+    public String SignInPage(Model model) throws Exception {
+        this.firstIn = true;
+        model.addAttribute("firstIn", this.firstIn);
+        return "signView/SignIn";
+    }
 
-	@RequestMapping("/logout")
-	private String logout(HttpSession session) throws Exception {
-		session.invalidate();
-		return "Main";
-	}
+    @RequestMapping("/logout")
+    private String logout(HttpSession session) throws Exception {
+        session.invalidate();
+        return "Main";
+    }
 
-	@RequestMapping("/checkSign")
-	private String checkSign(Model model, HttpServletRequest request) throws Exception {
-		HttpSession session = request.getSession();
-		String userID = request.getParameter("userID");
-		String userPassword = request.getParameter("userPassword");
-		String userName = signService.checkSign(userID, userPassword);
-		if (userName == null) {
-			this.firstIn = false;
+    @RequestMapping("/checkSign")
+    private String checkSign(Model model, HttpServletRequest request) throws Exception {
+        String userID = request.getParameter("userID");
+        String userPassword = request.getParameter("userPassword");
+        String userName = signService.checkSign(userID, userPassword);
 
-			model.addAttribute("firstIn", this.firstIn);
-			return "signView/SignIn";
-		} else {
-			session.setAttribute("userName", userName);
-			return "Main";
-		}
-	}
+        if (userName == null) {
+            this.firstIn = false;
+            model.addAttribute("firstIn", this.firstIn);
+            return "signView/SignIn";
+        } else {
+            HttpSession session = request.getSession();
+            session.setAttribute("userID", userID);
+            session.setAttribute("userName", userName);
+            return "Main";
+        }
+    }
 
-	@RequestMapping("/signUp")
-	public String SignUpPage(Model model)throws Exception{
-		return "signView/SignUp";
-	}
-	@ResponseBody
-	@RequestMapping(value = "/checkID", method = RequestMethod.POST)
-	public int postIdCheck(HttpServletRequest request) throws Exception {
-		String userID = request.getParameter("userID");
+    @RequestMapping("/signUp")
+    public String SignUpPage(Model model) throws Exception {
+        return "signView/SignUp";
+    }
 
-		String idCheck =  signService.checkID(userID);
+    @ResponseBody
+    @RequestMapping(value = "/checkID", method = RequestMethod.POST)
+    public int postIdCheck(HttpServletRequest request) throws Exception {
+        String userID = request.getParameter("userID");
 
-		int idExist = 0;
+        String idCheck = signService.checkID(userID);
 
-		if(idCheck != null) {
-			idExist = 1;
-		}
+        int idExist = 0;
 
-		return idExist;
-	}
-	@ResponseBody
-	@RequestMapping(value = "/checkNickName", method = RequestMethod.POST)
-	public int postnickNameCheck(HttpServletRequest request) throws Exception {
-		String userNickname = request.getParameter("userNickname");
+        if (idCheck != null) {
+            idExist = 1;
+        }
 
-		String nickNameCheck =  signService.checkNickName(userNickname);
+        return idExist;
+    }
 
-		int nickNameExist = 0;
+    @ResponseBody
+    @RequestMapping(value = "/checkNickName", method = RequestMethod.POST)
+    public int postnickNameCheck(HttpServletRequest request) throws Exception {
+        String userNickname = request.getParameter("userNickname");
 
-		if(nickNameCheck != null) {
-			nickNameExist = 1;
-		}
-		return nickNameExist;
-	}
+        String nickNameCheck = signService.checkNickName(userNickname);
 
-	@RequestMapping("/ResultMentSignUp")
-	private String ResultMentSignUp(@ModelAttribute UserVO userVO) throws Exception{
-		signService.insertUser(userVO);
-		return "signView/ResultMentSignUp";
-	}
+        int nickNameExist = 0;
+
+        if (nickNameCheck != null) {
+            nickNameExist = 1;
+        }
+        return nickNameExist;
+    }
+
+    @RequestMapping("/ResultMentSignUp")
+    private String ResultMentSignUp(@ModelAttribute UserVO userVO) throws Exception {
+        signService.insertUser(userVO);
+        return "signView/ResultMentSignUp";
+    }
+
+    @RequestMapping(value = "/resultMentFindID", method = RequestMethod.POST)
+    public String IDFind(HttpServletResponse response, @RequestParam("userEmail")
+            String userEmail, Model model) throws Exception {
+        model.addAttribute("userID", signService.IDFind(response, userEmail));
+        return "signView/ResultMentFindID";
+    }
 
 
-	@RequestMapping(value ="/findID")
-	private String IDFind(Model model)throws Exception{
-		return "signView/FindID";
-	}
+    @RequestMapping(value = "/findID")
+    private String IDFind(Model model) throws Exception {
+        return "signView/FindID";
+    }
 
-	// 아이디 찾기
-	@RequestMapping(value = "/resultMentFindID", method = RequestMethod.POST)
-	public String IDFind(HttpServletResponse response, @RequestParam("userEmail")
-			String userEmail, Model model) throws Exception{
-		model.addAttribute("userID", signService.findID(userEmail));
-		return "signView/ResultMentFindID";
-	}
+
+    @RequestMapping(value = "/PWFind")
+    private String PWFind(Model model) throws Exception {
+        return "signView/PWFind";
+    }
+
+    // 비밀번호 찾기
+
+    @RequestMapping(value = "/ResultMentPWFind", method = RequestMethod.POST)
+    public String PWFind(HttpServletResponse response, @RequestParam("userID") String userID, @RequestParam("userEmail") String userEmail, Model model) throws Exception {
+        model.addAttribute("userPassword", signService.PWFind(response, userID, userEmail));
+        return "signView/ResultMentPWFind";
+
+
+    }
 }

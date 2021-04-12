@@ -2,6 +2,7 @@ package com.liveamonth.liveamonth.model.service.scheduleService;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 
 import com.liveamonth.liveamonth.entity.vo.ScheduleVO;
@@ -19,7 +20,7 @@ public class ScheduleServiceImpl implements ScheduleService{
 	private ScheduleMapper scheduleMapper;
 
 	@Override
-	public CalendarDTO showCalendar(CalendarDTO calendarDTO) throws Exception {
+	public CalendarDTO showCalendar(CalendarDTO calendarDTO, int scheduleNO) throws Exception {
 		Calendar cal = Calendar.getInstance();
 		CalendarDTO calendarData;
 
@@ -31,7 +32,10 @@ public class ScheduleServiceImpl implements ScheduleService{
 		calendarDTO.setDateList(new ArrayList<CalendarDTO>());
 
 		//검색 날짜 end
-		ArrayList<ScheduleContentVO> ScheduleList =  scheduleMapper.scheduleContentList(calendarDTO);
+		HashMap<String, Object> scheduleCalendarDTO = new HashMap<String, Object>();
+		scheduleCalendarDTO.put("scheduleNO", scheduleNO);
+		scheduleCalendarDTO.put("calendarDTO", calendarDTO);
+		ArrayList<ScheduleContentVO> ScheduleList =  scheduleMapper.scheduleContentList(scheduleCalendarDTO);
 
 		//달력데이터에 넣기 위한 배열 추가
 		ScheduleContentVO[][] scheduleDataArray = new ScheduleContentVO[32][4];
@@ -104,13 +108,57 @@ public class ScheduleServiceImpl implements ScheduleService{
 		return scheduleMapper.getLastScheduleContentNO();
 	}
 
-	@Override
-	public ArrayList<ScheduleContentVO> scheduleContentList(CalendarDTO calendarDTO) throws Exception {
-		return scheduleMapper.scheduleContentList(calendarDTO);
-	}
+
 
 	@Override
 	public List<ScheduleVO> getOtherScheduleInfo() {
 		return scheduleMapper.getOtherScheduleInfo();
+	}
+
+	public ArrayList<ScheduleContentVO> scheduleContentList(CalendarDTO calendarDTO) throws Exception {
+		HashMap<String, Object> scheduleCalendarDTO = new HashMap<String, Object>();
+		scheduleCalendarDTO.put("scheduleNO", 101);
+		scheduleCalendarDTO.put("calendarDTO", calendarDTO);
+		return scheduleMapper.scheduleContentList(scheduleCalendarDTO);
+	}
+
+	@Override
+	public boolean addSchedule(ScheduleVO scheduleVO, String userID) throws Exception {
+		int ID = scheduleMapper.getLastScheduleNO();
+		scheduleVO.setScheduleNO(ID+1);
+		scheduleVO.setScheduleLikeCount(0);
+
+		//이부분은 공개여부 기능이 구현되면 수정해야함.
+		scheduleVO.setScheduleStatus(false);
+
+		scheduleVO.setUserNO(scheduleMapper.findUserIDToUserNO(userID));
+
+		if(scheduleMapper.addSchedule(scheduleVO)) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public ArrayList<ScheduleVO> getScheduleList(String userID) throws Exception {
+		return scheduleMapper.getScheduleList(userID);
+	}
+
+	@Override
+	public void deleteScheduleContent(int scheduleContentNO) throws Exception {
+		scheduleMapper.deleteScheduleContent(scheduleContentNO);
+
+	}
+
+	@Override
+	public void modifyScheduleContent(int scheduleContentNO, String scheduleContentSubject, String scheduleContentDesc,
+									  int scheduleContentCost) throws Exception {
+		ScheduleContentVO scheduleContentVO = new ScheduleContentVO();
+		scheduleContentVO.setScheduleContentNO(scheduleContentNO);
+		scheduleContentVO.setScheduleContentSubject(scheduleContentSubject);
+		scheduleContentVO.setScheduleContentDesc(scheduleContentDesc);
+		scheduleContentVO.setScheduleContentCost(scheduleContentCost);
+		scheduleMapper.modifyScheduleContent(scheduleContentVO);
+
 	}
 }

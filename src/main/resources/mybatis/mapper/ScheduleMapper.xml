@@ -5,38 +5,59 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper
 		namespace="com.liveamonth.liveamonth.model.mapper.scheduleMapper.ScheduleMapper">
-	<insert id="addScheduleContent"
-			parameterType="com.liveamonth.liveamonth.entity.vo.ScheduleContentVO">
-		insert into scheduleContent
-		values
-		(#{scheduleContentNO}, #{scheduleContentSubject}, #{scheduleContentDesc}, #{scheduleContentDate},
-		#{scheduleContentCost}, null)
-	</insert>
-
-
-	<select id="beforeScheduleAddSearch"
-			parameterType="com.liveamonth.liveamonth.entity.vo.ScheduleContentVO" resultType="int">
-
+	<!-- select -->
+	<select id="beforeScheduleAddSearch" parameterType="com.liveamonth.liveamonth.entity.vo.ScheduleContentVO" resultType="int">
 		select count(*) from scheduleContent where scheduleContentDate = #{scheduleContentDate}
-
 	</select>
 
-	<select id="scheduleContentList"
-			parameterType="com.liveamonth.liveamonth.entity.dto.CalendarDTO"
-			resultType="com.liveamonth.liveamonth.entity.vo.ScheduleContentVO">
-
-		select * from scheduleContent where scheduleContentDate &gt;= #{dbStartDate} and
-		scheduleContentDate &lt;= #{dbEndDate}
-		order by scheduleContentDate, scheduleContentNO
-
+	<select id="scheduleContentList" parameterType="HashMap" resultType="com.liveamonth.liveamonth.entity.vo.ScheduleContentVO">
+		select * from scheduleContent where scheduleContent.scheduleNO = #{scheduleNO} AND scheduleContentDate &gt;= #{calendarDTO.dbStartDate} and scheduleContentDate &lt;= #{calendarDTO.dbEndDate} order by scheduleContentDate, scheduleContentNO
 	</select>
+
 	<select id="getLastScheduleContentNO" resultType="int">
-
 		select max(scheduleContentNO) from scheduleContent;
-
 	</select>
+
 
 	<select id="getOtherScheduleInfo" resultType="com.liveamonth.liveamonth.entity.vo.ScheduleVO">
 		select * from schedule where userNO in (select userNO from schedule where schedule.scheduleStatus = true)
 	</select>
+
+
+	<select id="getLastScheduleNO" resultType="int">
+		select max(scheduleNO) from schedule;
+	</select>
+
+	<select id="getScheduleList" resultType="com.liveamonth.liveamonth.entity.vo.ScheduleVO" parameterType="String">
+		select * from schedule where schedule.userNO in (select userNO from user where userID = #{userID});
+	</select>
+
+	<select id="findUserIDToUserNO" resultType="int" parameterType="String">
+		select userNO from user where userID = #{userID};
+	</select>
+
+	<!-- delete -->
+	<delete id="deleteScheduleContent" parameterType="int">
+		delete from scheduleContent where scheduleContentNO = #{scheduleContentNO}
+	</delete>
+
+	<!-- insert -->
+
+	<insert id="addSchedule" parameterType="com.liveamonth.liveamonth.entity.vo.ScheduleVO">
+		insert into schedule values(#{scheduleNO}, #{scheduleSubject}, #{scheduleLikeCount}, #{scheduleStatus}, #{userNO})
+	</insert>
+
+	<insert id="addScheduleContent" parameterType="com.liveamonth.liveamonth.entity.vo.ScheduleContentVO">
+		insert into scheduleContent values (#{scheduleContentNO}, #{scheduleContentSubject}, #{scheduleContentDesc}, #{scheduleContentDate}, #{scheduleContentCost}, #{scheduleNO})
+	</insert>
+
+	<!-- update -->
+
+	<update id="modifyScheduleContent" parameterType="com.liveamonth.liveamonth.entity.vo.ScheduleContentVO">
+		update scheduleContent
+		set scheduleContentSubject = #{scheduleContentSubject}, scheduleContentDesc = #{scheduleContentDesc},
+		scheduleContentCost = #{scheduleContentCost}
+		where scheduleContentNO = #{scheduleContentNO}
+
+	</update>
 </mapper>

@@ -10,9 +10,17 @@ import com.liveamonth.liveamonth.entity.vo.UserVO;
 @Repository
 @Mapper
 public interface SignMapper {
-    String checkID(String userID) throws Exception;
-    String checkNickName(String userNickName) throws Exception;
-    void insertUser(UserVO userVO) throws Exception;
-    String checkSign(HashMap<String, Object> hash) throws Exception;
-    String findID(String userEmail) throws Exception;
+    public String checkID(String userID)throws Exception;
+
+    public String checkNickName(String userNickName) throws Exception;
+
+    public void insertUser(UserVO userVO) throws Exception;
+
+    public String checkSign(HashMap<String, Object> hash) throws Exception;
+
+    public String findID(String userEmail) throws Exception;
+
+    public String PWFind(HashMap<String, Object> hash) throws Exception;
+
+    public String IDFind(String userEmail) throws Exception;
 }

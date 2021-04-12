@@ -55,8 +55,12 @@
 										</label>
 									</div>
 									<div class="w-50 text-md-right">
-										<a href="findID">Forgot Password</a>
-									</div>
+									  <a href="findID">Forgot ID</a>
+                           </div>
+                           
+                           <div class="w-50 text-md-right">
+                              <a href="PWFind">Forgot Password</a>
+                           </div>
 		            </div>
 		          </form>
 		          <p class="text-center">Not a member? <a href="signUp">Sign Up</a></p>

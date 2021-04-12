@@ -14,6 +14,7 @@
 		})
 	})
 </script>
+<jsp:include page="/incl/Header.jsp" />
 <title>아이디 찾기</title>
 </head>
 <body>
@@ -34,4 +35,5 @@
 		</div>
 	</div>
 </body>
+<jsp:include page="/incl/Footer.jsp" />
 </html>

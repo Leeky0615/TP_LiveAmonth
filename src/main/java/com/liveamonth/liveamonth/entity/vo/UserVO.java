@@ -7,9 +7,9 @@ public class UserVO {
 	private String userName;
 	private String userNickname;
 	private int userAge;
-	private String userSex;
+	private boolean userSex;
 	private String userEmail;
-	
+
 	public UserVO() {
 		this.userNO = 0;
 		this.userID = null;
@@ -17,10 +17,10 @@ public class UserVO {
 		this.userName = null;
 		this.userNickname = null;
 		this.userAge = 0;
-		this.userSex = null;
+		this.userSex = false;
 		this.userEmail = null;
 	}
-	
+
 
 	public String getUserID() {
 		return userID;
@@ -61,15 +61,15 @@ public class UserVO {
 	public void setUserAge(int userAge) {
 		this.userAge = userAge;
 	}
-	
-	public String getUserSex() {
+
+	public boolean getUserSex() {
 		return userSex;
 	}
 
-	public void setUserSex(String userSex) {
+	public void setUserSex(boolean userSex) {
 		this.userSex = userSex;
 	}
-	
+
 	public String getUserEmail() {
 		return userEmail;
 	}
@@ -77,7 +77,6 @@ public class UserVO {
 	public void setUserEmail(String userEmail) {
 		this.userEmail = userEmail;
 	}
-
 
 	public int getUserNO() {
 		return userNO;
