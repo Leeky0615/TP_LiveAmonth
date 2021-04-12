@@ -4,7 +4,7 @@
     <mappers>
         <mapper resource="mybatis/mapper/SignMapper.xml"/>
         <mapper resource="mybatis/mapper/BoardMapper.xml"/>
-        <mapper resource="mybatis/mapper/InformationMapper.xml"/>
+        <mapper resource="mybatis/mapper/CityInfoMapper.xml"/>
         <mapper resource="mybatis/mapper/MyPageMapper.xml"/>
         <mapper resource="mybatis/mapper/ScheduleMapper.xml"/>
     </mappers>

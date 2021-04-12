@@ -9,29 +9,30 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 @SuppressWarnings("deprecation")
 @Component
-public class LoggerInterceptor extends HandlerInterceptorAdapter{
+public class LoggerInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
         HttpSession session = request.getSession(false);
 
-        if(session != null) {
+        if(session.getAttribute("userName") != null) {
             return true;
         }else {
-            ((ServletResponse) request).setContentType("text/html;charset=utf-8"); // 어떤 타입으로 출력할것인지 명시하였다.
-            PrintWriter out= ((ServletResponse) request).getWriter(); //getWriter() 출력스트림. 응답할 정보를 갖고 있는 객체에 출력스트림을 써서 out 객체에 담았다.
+            response.setContentType("text/html;charset=utf-8");
+            PrintWriter out= response.getWriter();
+            out.println("<script>");
             out.println("alert('세션 만료');");
-            out.close();
-            response.sendRedirect("main");
+            out.println("history.back(-1);");
+            out.println("</script>");
             return false;
         }
-
     }
 
     @Override
@@ -42,11 +43,6 @@ public class LoggerInterceptor extends HandlerInterceptorAdapter{
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler,
                                 @Nullable Exception ex) throws Exception {
-    }
-
-    @Override
-    public void afterConcurrentHandlingStarted(HttpServletRequest request, HttpServletResponse response,
-                                               Object handler) throws Exception {
     }
 
 }

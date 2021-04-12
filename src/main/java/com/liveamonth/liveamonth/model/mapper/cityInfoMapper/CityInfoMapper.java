@@ -1,4 +1,4 @@
-package com.liveamonth.liveamonth.model.mapper.informationMapper;
+package com.liveamonth.liveamonth.model.mapper.cityInfoMapper;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Mapper
 
-public interface InformationMapper {
+public interface CityInfoMapper {
 
 }

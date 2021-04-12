@@ -27,7 +27,6 @@ public class DBConfiguration {
 
         sessionFactory.setMapperLocations(res);
         return sessionFactory.getObject();
-
     }
 
     @Bean
