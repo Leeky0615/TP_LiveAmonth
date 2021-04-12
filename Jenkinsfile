@@ -15,8 +15,8 @@ pipeline {
 
     stage('deploy') {
       steps {
-       sh 'aws elasticbeanstalk create-application-version --region ap-northeast-2 --application-name live-a-month --version-label ${BUILD_TAG} --source-bundle S3Bucket="jenkins-deploy-application",S3Key="application.war"'
-       sh 'aws elasticbeanstalk update-environment --region ap-northeast-2 --environment-name liveamonth-env --version-label ${BUILD_TAG}'
+       sh 'aws elasticbeanstalk create-application-version --region ap-northeast-2 --application-name TP-live-a-month --version-label ${BUILD_TAG} --source-bundle S3Bucket="jenkins-deploy-application",S3Key="application.war"'
+       sh 'aws elasticbeanstalk update-environment --region ap-northeast-2 --environment-name Tpliveamonth-env --version-label ${BUILD_TAG}'
       }
     }
 
