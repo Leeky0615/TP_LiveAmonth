@@ -15,28 +15,27 @@ import com.liveamonth.liveamonth.entity.vo.ScheduleContentVO;
 @Repository
 @Mapper
 public interface ScheduleMapper {
-    public ArrayList<ScheduleContentVO> scheduleContentList(HashMap<String, Object> scheduleCalendarDTO) throws Exception;
+    ArrayList<ScheduleContentVO> scheduleContentList(HashMap<String, Object> scheduleCalendarDTO) throws Exception;
 
-    public int getLastScheduleContentNO() throws Exception;
+    int getLastScheduleContentNO() throws Exception;
 
-    public void addScheduleContent(ScheduleContentVO scheduleContentVO) throws Exception;
+    void addScheduleContent(ScheduleContentVO scheduleContentVO) throws Exception;
 
-    public int beforeScheduleAddSearch(ScheduleContentVO scheduleContentVO) throws Exception;
-
-
-    public List<ScheduleVO> getOtherScheduleInfo();
+    int beforeScheduleAddSearch(ScheduleContentVO scheduleContentVO) throws Exception;
 
 
-    public void deleteScheduleContent(int scheduleContentNO) throws Exception;
+    List<ScheduleVO> getOtherScheduleInfo();
 
-    public void modifyScheduleContent(ScheduleContentVO scheduleContentVO) throws Exception;
 
-    public int getLastScheduleNO() throws Exception;
+    void deleteScheduleContent(int scheduleContentNO) throws Exception;
 
-    public boolean addSchedule(ScheduleVO scheduleVO) throws Exception;
+    void modifyScheduleContent(ScheduleContentVO scheduleContentVO) throws Exception;
 
-    public ArrayList<ScheduleVO> getScheduleList(String userID) throws Exception;
+    int getLastScheduleNO() throws Exception;
 
-    public int findUserIDToUserNO(String userID) throws Exception;
+    boolean addSchedule(ScheduleVO scheduleVO) throws Exception;
 
+    ArrayList<ScheduleVO> getScheduleList(String userID) throws Exception;
+
+    int findUserIDToUserNO(String userID) throws Exception;
 }

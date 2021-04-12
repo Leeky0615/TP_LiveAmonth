@@ -5,6 +5,6 @@ import com.liveamonth.liveamonth.entity.vo.UserVO;
 import java.util.List;
 
 public interface MyPageService {
-    public List<UserVO> getOtherScheduleUserInfo() throws Exception;
+     List<UserVO> getOtherScheduleUserInfo() throws Exception;
 
 }

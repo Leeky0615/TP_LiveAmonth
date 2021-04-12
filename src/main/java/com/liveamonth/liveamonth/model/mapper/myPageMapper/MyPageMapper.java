@@ -9,6 +9,7 @@ import java.util.List;
 @Repository
 @Mapper
 public interface MyPageMapper {
-    public List<UserVO> getOtherScheduleUserInfo() throws Exception;;
+    List<UserVO> getOtherScheduleUserInfo() throws Exception;
+
 
 }

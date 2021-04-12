@@ -3,8 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
-<mapper
-		namespace="com.liveamonth.liveamonth.model.mapper.scheduleMapper.ScheduleMapper">
+<mapper	namespace="com.liveamonth.liveamonth.model.mapper.scheduleMapper.ScheduleMapper">
 	<!-- select -->
 	<select id="beforeScheduleAddSearch" parameterType="com.liveamonth.liveamonth.entity.vo.ScheduleContentVO" resultType="int">
 		select count(*) from scheduleContent where scheduleContentDate = #{scheduleContentDate}
@@ -44,7 +43,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- insert -->
 
 	<insert id="addSchedule" parameterType="com.liveamonth.liveamonth.entity.vo.ScheduleVO">
-		insert into schedule values(#{scheduleNO}, #{scheduleSubject}, #{scheduleLikeCount}, #{scheduleStatus}, #{userNO})
+		insert into schedule values(#{scheduleNO}, #{scheduleSubject}, #{scheduleLikeCount}, #{scheduleStatus}, #{userNO}, #{place})
 	</insert>
 
 	<insert id="addScheduleContent" parameterType="com.liveamonth.liveamonth.entity.vo.ScheduleContentVO">
