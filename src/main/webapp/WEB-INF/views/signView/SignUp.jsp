@@ -73,7 +73,7 @@
 								<div class="form-group mb-3">
 									<label class="label" for="userPassword">password</label> <input
 										id="password-field" type="password" id="userPassword"
-										class="form-control" placeholder="Password"
+										class="form-control" placeholder="Password" onpaste="return false;" oncopy="return false;"
 										name="userPassword"> <span toggle="#password-field"
 										class="fa fa-fw fa-eye field-icon toggle-password"></span>
 								</div>
@@ -93,9 +93,9 @@
 
 						<div class="form-group mb-3" id="userSexBlock">
 							<label class="label" for="userSex">성별</label><br> <select
-								name="userSex" class="form-control">
-								<option value="Man">남성</option>
-								<option value="Woman" selected="selected">여성</option>
+								name="userSex" id="userSex" class="form-control">
+								<option value=0>남성</option>
+								<option value=1>여성</option>
 							</select>
 						</div>
 						<br>

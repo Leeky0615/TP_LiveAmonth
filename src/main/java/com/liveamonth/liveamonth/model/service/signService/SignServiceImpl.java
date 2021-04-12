@@ -26,19 +26,8 @@ public class SignServiceImpl implements SignService {
 	}
 
 	@Override
-	public void insertUser(String userID, String userPassword, String userName, String userNickname, int userAge,
-			String userSex, String userEmail) throws Exception {
-		UserVO userVO = new UserVO();
-		
-		userVO.setUserID(userID);
-		userVO.setUserPassword(userPassword);
-		userVO.setUserName(userName);
-		userVO.setUserNickname(userNickname);
-		userVO.setUserSex(userSex);
-		userVO.setUserAge(userAge);
-		userVO.setUserEmail(userEmail);
-	
-		signMapper.insertUser(userVO);	
+	public void insertUser(UserVO userVO) throws Exception {
+		signMapper.insertUser(userVO);
 	}
 
 	@Override
@@ -47,7 +36,7 @@ public class SignServiceImpl implements SignService {
 		hash.put("userID", userID);
 		hash.put("userPassword", userPassword);
 		String userName = signMapper.checkSign(hash);
-	
+
 		return userName;
 	}
 

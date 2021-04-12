@@ -1,4 +1,4 @@
-package com.liveamonth.liveamonth;
+package com.liveamonth.liveamonth.configuration;
 
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;

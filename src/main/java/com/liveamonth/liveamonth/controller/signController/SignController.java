@@ -4,13 +4,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.liveamonth.liveamonth.entity.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import com.liveamonth.liveamonth.model.service.signService.SignService;
 
@@ -40,7 +38,6 @@ public class SignController{
 	@RequestMapping("/checkSign")
 	private String checkSign(Model model, HttpServletRequest request) throws Exception {
 		HttpSession session = request.getSession();
-		//		session.setMaxInactiveInterval(3);
 		String userID = request.getParameter("userID");
 		String userPassword = request.getParameter("userPassword");
 		String userName = signService.checkSign(userID, userPassword);
@@ -53,14 +50,8 @@ public class SignController{
 			session.setAttribute("userName", userName);
 			return "Main";
 		}
-
 	}
-//
-//	@RequestMapping("/TestPage")
-//	private String TestPage(Model model, HttpServletRequest request) throws Exception {
-//		return "TestPage";
-//	}
-	
+
 	@RequestMapping("/signUp")
 	public String SignUpPage(Model model)throws Exception{
 		return "signView/SignUp";
@@ -68,58 +59,49 @@ public class SignController{
 	@ResponseBody
 	@RequestMapping(value = "/checkID", method = RequestMethod.POST)
 	public int postIdCheck(HttpServletRequest request) throws Exception {
-	 String userID = request.getParameter("userID");
-	
-	 String idCheck =  signService.checkID(userID);
-	 
-	 int idExist = 0;
-	 
-	 if(idCheck != null) {
-		 idExist = 1;
-	 } 
-	 
-	 return idExist;
+		String userID = request.getParameter("userID");
+
+		String idCheck =  signService.checkID(userID);
+
+		int idExist = 0;
+
+		if(idCheck != null) {
+			idExist = 1;
+		}
+
+		return idExist;
 	}
 	@ResponseBody
 	@RequestMapping(value = "/checkNickName", method = RequestMethod.POST)
 	public int postnickNameCheck(HttpServletRequest request) throws Exception {
-	 String userNickname = request.getParameter("userNickname");
-	
-	 String nickNameCheck =  signService.checkNickName(userNickname);
-	 
-	 int nickNameExist = 0;
-	 
-	 if(nickNameCheck != null) {
-		 nickNameExist = 1;
-	 } 
-	 return nickNameExist;
-	}
-	
-	@RequestMapping("/ResultMentSignUp")
-	private String ResultMentSignUp(HttpServletResponse response,HttpServletRequest request,Model model) throws Exception{
-		String userID = request.getParameter("userID");
-		String userPassword = request.getParameter("userPassword");
-		String userName = request.getParameter("userName");
 		String userNickname = request.getParameter("userNickname");
-		int userAge = Integer.parseInt(request.getParameter("userAge"));
-		String userSex = request.getParameter("userSex");
-		String userEmail = request.getParameter("userEmail");
-		
-		signService.insertUser(userID,userPassword,userName,userNickname,userAge,userSex,userEmail);
-		
-		return "signView/ResultMentSignUp";
-		
+
+		String nickNameCheck =  signService.checkNickName(userNickname);
+
+		int nickNameExist = 0;
+
+		if(nickNameCheck != null) {
+			nickNameExist = 1;
+		}
+		return nickNameExist;
 	}
-	
+
+	@RequestMapping("/ResultMentSignUp")
+	private String ResultMentSignUp(@ModelAttribute UserVO userVO) throws Exception{
+		signService.insertUser(userVO);
+		return "signView/ResultMentSignUp";
+	}
+
+
 	@RequestMapping(value ="/findID")
 	private String IDFind(Model model)throws Exception{
 		return "signView/FindID";
 	}
-	
-	// �븘�씠�뵒 李얘린
+
+	// 아이디 찾기
 	@RequestMapping(value = "/resultMentFindID", method = RequestMethod.POST)
 	public String IDFind(HttpServletResponse response, @RequestParam("userEmail")
-	String userEmail, Model model) throws Exception{
+			String userEmail, Model model) throws Exception{
 		model.addAttribute("userID", signService.findID(userEmail));
 		return "signView/ResultMentFindID";
 	}

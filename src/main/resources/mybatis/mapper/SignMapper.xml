@@ -7,8 +7,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 					
 	<!-- insert-->
 	<insert id="insertUser" parameterType="com.liveamonth.liveamonth.entity.vo.UserVO">
-		insert into
-		values(#{userID},#{userPassword},#{userName},#{userNickname},#{userAge},#{userSex},#{userEmail});
+		<selectKey resultType = "int" keyProperty="userNO" order = "BEFORE">
+			select MAX(userNO)+1 from user
+		</selectKey>
+		insert into user
+		values(#{userNO},#{userID},#{userPassword},#{userName},#{userNickname},#{userEmail},#{userSex},#{userAge});
 	</insert>
 
 
