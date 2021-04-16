@@ -6,5 +6,6 @@ import java.util.List;
 
 public interface MyPageService {
      List<UserVO> getOtherScheduleUserInfo() throws Exception;
+     UserVO getUserInfo(String userID) throws Exception;
 
 }
