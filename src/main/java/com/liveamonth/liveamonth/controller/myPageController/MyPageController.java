@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 @Controller
 public class MyPageController {
     private final MyPageService myPageService;
-    private UserVO userVO;
+    private UserVO userVO;;
 
     public MyPageController(MyPageService myPageService) {
         this.myPageService = myPageService;
