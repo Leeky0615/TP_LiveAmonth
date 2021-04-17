@@ -16,6 +16,7 @@ public class MvcConfiguration implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new LoggerInterceptor()).addPathPatterns("/schedule");
+        registry.addInterceptor(new LoggerInterceptor()).addPathPatterns("/myPage");
         //registry.addInterceptor(new LoggerInterceptor()).excludePathPatterns("resources/**/**", "/ResultMentSignUp","/SignIn");
     }
 }
