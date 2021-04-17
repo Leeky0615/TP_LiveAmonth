@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.liveamonth.liveamonth.constants.LogicConstants;
 import com.liveamonth.liveamonth.entity.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import com.liveamonth.liveamonth.model.service.signService.SignService;
+
+import static com.liveamonth.liveamonth.constants.ControllerPathConstants.EMainPath.MAIN;
+import static com.liveamonth.liveamonth.constants.ControllerPathConstants.ESignPath.*;
+import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.*;
+import static com.liveamonth.liveamonth.constants.LogicConstants.ESignAttributes.FIRST_IN;
 
 @Controller
 public class SignController {
@@ -22,100 +28,86 @@ public class SignController {
     @RequestMapping("/signIn")
     public String SignInPage(Model model) throws Exception {
         this.firstIn = true;
-        model.addAttribute("firstIn", this.firstIn);
-        return "signView/SignIn";
+        model.addAttribute(FIRST_IN.getText(), this.firstIn);
+        return SIGN_IN.getPath();
     }
 
     @RequestMapping("/logout")
     private String logout(HttpSession session) throws Exception {
         session.invalidate();
-        return "Main";
+        return MAIN.getPath();
     }
 
     @RequestMapping("/checkSign")
     private String checkSign(Model model, HttpServletRequest request) throws Exception {
-        String userID = request.getParameter("userID");
-        String userPassword = request.getParameter("userPassword");
+        String userID = request.getParameter(USER_ID.getText());
+        String userPassword = request.getParameter(USER_PASSWORD.getText());
         String userName = signService.checkSign(userID, userPassword);
 
         if (userName == null) {
             this.firstIn = false;
-            model.addAttribute("firstIn", this.firstIn);
-            return "signView/SignIn";
+            model.addAttribute(FIRST_IN.getText(), this.firstIn);
+            return SIGN_IN.getPath();
         } else {
             HttpSession session = request.getSession();
-            session.setAttribute("userID", userID);
-            session.setAttribute("userName", userName);
-            return "Main";
+            session.setAttribute(USER_ID.getText(), userID);
+            session.setAttribute(USER_NAME.getText(), userName);
+            return MAIN.getPath();
         }
     }
 
     @RequestMapping("/signUp")
     public String SignUpPage(Model model)throws Exception{
-        return "signView/SignUp";
+        return SIGN_UP.getPath();
     }
     @ResponseBody
     @RequestMapping(value = "/checkID", method = RequestMethod.POST)
     public int postIdCheck(HttpServletRequest request) throws Exception {
-        String userID = request.getParameter("userID");
-
+        String userID = request.getParameter(USER_ID.getText());
         String idCheck =  signService.checkID(userID);
 
         int idExist = 0;
-
-        if(idCheck != null) {
-            idExist = 1;
-        }
-
+        if(idCheck != null) idExist = 1;
         return idExist;
     }
     @ResponseBody
     @RequestMapping(value = "/checkNickName", method = RequestMethod.POST)
     public int postnickNameCheck(HttpServletRequest request) throws Exception {
-        String userNickname = request.getParameter("userNickname");
-
+        String userNickname = request.getParameter(USER_NICKNAME.getText());
         String nickNameCheck =  signService.checkNickName(userNickname);
 
         int nickNameExist = 0;
-
-        if(nickNameCheck != null) {
-            nickNameExist = 1;
-        }
+        if(nickNameCheck != null) nickNameExist = 1;
         return nickNameExist;
     }
 
     @RequestMapping("/ResultMentSignUp")
-    private String ResultMentSignUp(@ModelAttribute UserVO userVO) throws Exception{
+    private String resultMentSignUp(@ModelAttribute UserVO userVO) throws Exception{
         signService.insertUser(userVO);
-        return "signView/ResultMentSignUp";
+        return RESULT_MENT_SIGN_UP.getPath();
     }
 
     @RequestMapping(value = "/resultMentFindID", method = RequestMethod.POST)
-    public String IDFind(HttpServletResponse response, @RequestParam("userEmail")
+    public String findID(HttpServletResponse response, @RequestParam("userEmail")
             String userEmail, Model model) throws Exception{
-        model.addAttribute("userID", signService.IDFind(response, userEmail));
-        return "signView/ResultMentFindID";
+        model.addAttribute(USER_ID.getText(),signService.IDFind(response, userEmail));
+        return RESULT_MENT_FIND_ID.getPath();
     }
 
-
-
-    @RequestMapping(value ="/findID")
-    private String IDFind(Model model)throws Exception{
-        return "signView/FindID";
+    @RequestMapping("/findID")
+    private String findID(Model model)throws Exception{
+        return FIND_ID.getPath();
     }
 
-
-
-    @RequestMapping(value ="/PWFind")
-    private String PWFind(Model model)throws Exception{
-        return "signView/PWFind";
+    @RequestMapping("/findPW")
+    private String findPW(Model model)throws Exception{
+        return FIND_PW.getPath();
     }
 
     // 비밀번호 찾기
-
     @RequestMapping(value = "/ResultMentPWFind", method = RequestMethod.POST)
-    public String PWFind(HttpServletResponse response, @RequestParam("userID")String userID, @RequestParam("userEmail") String userEmail, Model model) throws Exception{
-        model.addAttribute("userPassword", signService.PWFind(response, userID, userEmail));
-        return "signView/ResultMentPWFind";
+    public String findPW(HttpServletResponse response, @RequestParam("userID")String userID, @RequestParam("userEmail") String userEmail, Model model) throws Exception{
+        model.addAttribute(USER_PASSWORD.getText(), signService.findPW(response, userID, userEmail));
+        return RESULT_MENT_FIND_PW.getPath();
     }
 }

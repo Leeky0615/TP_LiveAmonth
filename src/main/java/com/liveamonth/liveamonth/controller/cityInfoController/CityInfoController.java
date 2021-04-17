@@ -5,6 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import static com.liveamonth.liveamonth.constants.ControllerPathConstants.ECityInfoPath.*;
+
 @Controller
 public class CityInfoController {
     private final CityInfoService informationService;
@@ -15,6 +17,6 @@ public class CityInfoController {
 
     @GetMapping("/cityInfo")
     public String hello(Model model) {
-        return "cityInfoView/CityInfo";
+        return CITY_INFO.getPath();
     }
 }

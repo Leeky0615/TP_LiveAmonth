@@ -70,7 +70,7 @@ public class SignServiceImpl implements SignService {
 
 	// 비밀번호 찾기
 	@Override
-	public String PWFind(HttpServletResponse response, String userID, String userEmail) throws Exception {
+	public String findPW(HttpServletResponse response, String userID, String userEmail) throws Exception {
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter out = response.getWriter();
 		HashMap<String, Object> hash = new HashMap<String, Object>();

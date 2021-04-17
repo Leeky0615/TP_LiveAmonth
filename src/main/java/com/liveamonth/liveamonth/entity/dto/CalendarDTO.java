@@ -8,7 +8,11 @@ import java.util.Map;
 
 import com.liveamonth.liveamonth.entity.vo.ScheduleContentVO;
 import com.liveamonth.liveamonth.entity.vo.ScheduleVO;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class CalendarDTO {
     private String year = "";
     private String month = "";
@@ -23,69 +27,6 @@ public class CalendarDTO {
     private Map<String, Integer> todayInformation;
     private List<CalendarDTO> dateList;
 
-    public String getYear() {
-        return year;
-    }
-    public void setYear(String year) {
-        this.year = year;
-    }
-
-
-    public String getMonth() {
-        return month;
-    }
-    public void setMonth(String month) {
-        this.month = month;
-    }
-
-
-    public String getDate() {
-        return date;
-    }
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-
-    public String getValue() {
-        return value;
-    }
-    public void setValue(String value) {
-        this.value = value;
-    }
-
-
-    public String getDbStartDate() {
-        return dbStartDate;
-    }
-    public void setDbStartDate(String dbStartDate) {
-        this.dbStartDate = dbStartDate;
-    }
-    public String getDbEndDate() {
-        return dbEndDate;
-    }
-    public void setDbEndDate(String dbEndDate) {
-        this.dbEndDate = dbEndDate;
-    }
-
-    public ScheduleContentVO[] getScheduleDataArray() {
-        return scheduleDataArray;
-    }
-    public void setScheduleDataArray(ScheduleContentVO[] scheduleDataArray) {
-        this.scheduleDataArray = scheduleDataArray;
-    }
-    public Map<String, Integer> getTodayInformation() {
-        return todayInformation;
-    }
-    public void setTodayInformation(Map<String, Integer> todayInformation) {
-        this.todayInformation = todayInformation;
-    }
-    public List<CalendarDTO> getDateList() {
-        return dateList;
-    }
-    public void setDateList(List<CalendarDTO> dateList) {
-        this.dateList = dateList;
-    }
     // 날짜에 관련된 달력정보를 가지는 메서드
     public Map<String, Integer> todayInformation(CalendarDTO calendarDTO) {
         // 날짜 캘린더 함수에 삽입.

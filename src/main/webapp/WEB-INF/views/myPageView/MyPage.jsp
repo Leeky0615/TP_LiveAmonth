@@ -2,9 +2,6 @@
 <%@ page import="org.springframework.ui.Model" %>
 <%@ page language="java" contentType="text/html; charset=utf-8"
          pageEncoding="utf-8"%>
-<%
-    UserVO userVO = (UserVO) request.getAttribute("userVO");
-%>
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -15,7 +12,7 @@
 
 <body>
  	<jsp:include page="/incl/Header.jsp" />
-    <a href="modifyUserInfo">회원 정보 수정</a>
+    <a href="reCheckUserPW">회원 정보 수정</a>
     <jsp:include page="/incl/Footer.jsp" />
 </body>
 

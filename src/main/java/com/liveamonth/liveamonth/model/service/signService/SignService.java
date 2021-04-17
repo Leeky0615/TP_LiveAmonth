@@ -20,7 +20,7 @@ public interface SignService {
 
     String IDFind(HttpServletResponse response, String userEmail) throws Exception;
 
-    String PWFind(HttpServletResponse response, String userID, String userEmail) throws Exception;
+    String findPW(HttpServletResponse response, String userID, String userEmail) throws Exception;
 
     String findID(String userEmail) throws Exception;
 }

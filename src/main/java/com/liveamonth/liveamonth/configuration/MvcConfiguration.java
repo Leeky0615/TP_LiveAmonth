@@ -1,5 +1,9 @@
 package com.liveamonth.liveamonth.configuration;
 
+import com.liveamonth.liveamonth.model.mapper.cityInfoMapper.CityInfoMapper;
+import com.liveamonth.liveamonth.model.service.cityInfoService.CityInfoService;
+import com.liveamonth.liveamonth.model.service.cityInfoService.CityInfoServiceImpl;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;

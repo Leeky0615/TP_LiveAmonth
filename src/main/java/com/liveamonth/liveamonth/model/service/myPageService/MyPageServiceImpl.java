@@ -23,4 +23,9 @@ public class MyPageServiceImpl implements MyPageService {
     public UserVO getUserInfo(String userID) throws Exception {
         return myPageMapper.getUserInfo(userID);
     }
+
+    @Override
+    public void modifyUserInfo(UserVO userVO) throws Exception {
+        myPageMapper.modifyUserInfo(userVO);
+    }
 }
