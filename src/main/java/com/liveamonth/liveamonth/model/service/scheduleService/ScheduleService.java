@@ -17,7 +17,6 @@ public interface ScheduleService {
 
     public int getLastScheduleContentNO() throws Exception;
 
-    public  List<ScheduleVO> getOtherScheduleInfo() throws Exception;
 
     public void deleteScheduleContent(int scheduleContentNO) throws Exception;
 
@@ -32,5 +31,7 @@ public interface ScheduleService {
 	boolean modifySchedule(ScheduleVO scheduleVO) throws Exception;
 
 	boolean deleteSchedule(int scheduleNO) throws Exception;
+	
+	public  List<ScheduleVO> getOtherScheduleInfo() throws Exception;
 
 }

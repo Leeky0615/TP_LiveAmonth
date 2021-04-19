@@ -16,14 +16,19 @@ import com.liveamonth.liveamonth.entity.dto.CalendarDTO;
 import com.liveamonth.liveamonth.entity.vo.ScheduleContentVO;
 import com.liveamonth.liveamonth.entity.vo.ScheduleVO;
 import com.liveamonth.liveamonth.entity.vo.ScheduleVO.Place;
+import com.liveamonth.liveamonth.entity.vo.UserVO;
 import com.liveamonth.liveamonth.model.service.scheduleService.ScheduleService;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class ScheduleController{
     @Autowired
     private ScheduleService scheduleService;
+    
+    @Autowired
+    private MyPageService myPageService;
 
     private int scheduleContentNO;
 
@@ -163,8 +168,47 @@ public class ScheduleController{
     public void showScheduleContentList(Model model, HttpServletRequest request, CalendarDTO calendarDTO) throws Exception{
         this.scheduleContentNO = Integer.parseInt(request.getParameter("scheduleContentNO"));
     }
+    
 	@RequestMapping("/otherSchedule")
-	public String otherSchedule(Model model, HttpServletRequest request, CalendarDTO calendarDTO) throws Exception{
-		return "scheduleView/otherSchedule";
-	}
+	   public String otherSchedule(Model model, HttpServletRequest request, CalendarDTO calendarDTO) throws Exception{   
+	      int useNO =  Integer.parseInt((String) request.getParameter("useNO"));
+	      int scheduleNO = Integer.parseInt((String) request.getParameter("scheduleNO"));
+
+	      CalendarDTO calendarDto = scheduleService.showCalendar(calendarDTO, scheduleNO);
+	   
+	      model.addAttribute("dateList", calendarDto.getDateList()); //날짜 데이터 배열
+	      model.addAttribute("todayInformation", calendarDto.getTodayInformation());
+	      
+	      return "scheduleView/OtherSchedule";
+	   }
+	   
+	   @RequestMapping("/filteringScheduleList")
+	   public String filteringScheduleList(Model model, HttpServletRequest request, CalendarDTO calendarDTO) throws Exception{   
+	      int sex = Integer.parseInt((String)request.getParameter("sex"));
+	      int age = Integer.parseInt((String) request.getParameter("age"));
+	      String place = request.getParameter("place");
+	            
+	      List<ScheduleVO> ScheduleVOList = scheduleService.getOtherScheduleInfo();
+	      List<UserVO> UserVOList = myPageService.getOtherScheduleUserInfo(ScheduleVOList);
+
+	      model.addAttribute("scheduleVOList", ScheduleVOList);
+	      model.addAttribute("userVOList", UserVOList);
+	      
+	      return "redirect:otherScheduleList";
+	   }
+	   
+
+	   @RequestMapping("/otherScheduleList")
+	   public String otherScheduleList(Model model, HttpServletRequest request, CalendarDTO calendarDTO) throws Exception{
+	      List<ScheduleVO> scheduleVOList = scheduleService.getOtherScheduleInfo();
+	      List<UserVO> userVOList = myPageService.getOtherScheduleUserInfo(scheduleVOList);
+	      Place[] placeList = Place.values();
+
+	      model.addAttribute("scheduleVOList", scheduleVOList);
+	      model.addAttribute("userVOList", userVOList);
+	      model.addAttribute("placeList", placeList);
+	      
+	      return "scheduleView/OtherScheduleList";
+	   }
+	
 }

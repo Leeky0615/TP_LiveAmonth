@@ -112,7 +112,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public List<ScheduleVO> getOtherScheduleInfo() {
         return scheduleMapper.getOtherScheduleInfo();
-    }
+     }
 
 
 
@@ -166,10 +166,16 @@ public class ScheduleServiceImpl implements ScheduleService {
 
 	@Override
 	public boolean deleteSchedule(int scheduleNO) throws Exception {
-		scheduleMapper.deleteAllScheduleContentOfSchedule(scheduleNO);
 		if(scheduleMapper.deleteSchedule(scheduleNO)) {
 			return true;
 		}
 		return false;
 	}
+	
+	
+	
+	
+	
+	
+	
 }

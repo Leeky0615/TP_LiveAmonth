@@ -18,14 +18,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 
-<select id="getMaxScheduleNO" resultType="int">
+	<select id="getMaxScheduleNO" resultType="int">
 		select max(scheduleNO) from schedule;
 	</select>
-
-	<select id="getOtherScheduleInfo" resultType="com.liveamonth.liveamonth.entity.vo.ScheduleVO">
-		select * from schedule where userNO in (select userNO from schedule where schedule.scheduleStatus = true)
-	</select>
-
 
 	<select id="getLastScheduleNO" resultType="int">
 		select max(scheduleNO) from schedule;
@@ -38,6 +33,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="findUserIDToUserNO" resultType="int" parameterType="String">
 		select userNO from user where userID = #{userID};
 	</select>
+	
+	 <select id="getOtherScheduleInfo" resultType="com.liveamonth.liveamonth.entity.vo.ScheduleVO">
+      select * from schedule where schedule.scheduleStatus = true order by scheduleLikeCount DESC;
+    </select>
 
 	<!-- delete -->
 	<delete id="deleteScheduleContent" parameterType="int">
