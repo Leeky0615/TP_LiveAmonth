@@ -12,9 +12,6 @@ import java.util.List;
 @Repository
 @Mapper
 public interface MyPageMapper {
-    @Select("select * from user where userNO in (select userNO from schedule where schedule.scheduleStatus = true)")
-    List<UserVO> getOtherScheduleUserInfo() throws Exception;
-
     @Select("SELECT * FROM user WHERE userID=#{userID}")
     UserVO getUserInfo(String userID) throws Exception;
 
@@ -23,4 +20,6 @@ public interface MyPageMapper {
             "userEmail=#{userEmail}" +
             "WHERE userID=#{userID}")
     void modifyUserInfo(UserVO userVO)throws Exception;
+
+	public UserVO getOtherScheduleUserInfo(int userNO) throws Exception;
 }

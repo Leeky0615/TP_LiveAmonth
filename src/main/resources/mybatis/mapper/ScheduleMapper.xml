@@ -18,10 +18,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 
-	<select id="getOtherScheduleInfo" resultType="com.liveamonth.liveamonth.entity.vo.ScheduleVO">
-		select * from schedule where userNO in (select userNO from schedule where schedule.scheduleStatus = true)
+	<select id="getMaxScheduleNO" resultType="int">
+		select max(scheduleNO) from schedule;
 	</select>
-
 
 	<select id="getLastScheduleNO" resultType="int">
 		select max(scheduleNO) from schedule;
@@ -34,16 +33,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="findUserIDToUserNO" resultType="int" parameterType="String">
 		select userNO from user where userID = #{userID};
 	</select>
+	
+	 <select id="getOtherScheduleInfo" resultType="com.liveamonth.liveamonth.entity.vo.ScheduleVO">
+      select * from schedule where schedule.scheduleStatus = true order by scheduleLikeCount DESC;
+    </select>
 
 	<!-- delete -->
 	<delete id="deleteScheduleContent" parameterType="int">
 		delete from scheduleContent where scheduleContentNO = #{scheduleContentNO}
 	</delete>
+	
+	<delete id="deleteSchedule" parameterType="int">
+		delete from schedule where scheduleNO = #{scheduleNO}
+	</delete>
+	
+	<delete id="deleteAllScheduleContentOfSchedule" parameterType="int">
+		delete from scheduleContent where scheduleContent.scheduleNO = #{scheduleNO}
+	</delete>
 
 	<!-- insert -->
 
 	<insert id="addSchedule" parameterType="com.liveamonth.liveamonth.entity.vo.ScheduleVO">
-		insert into schedule values(#{scheduleNO}, #{scheduleSubject}, #{scheduleLikeCount}, #{scheduleStatus}, #{userNO}, #{place})
+		insert into schedule values(#{scheduleNO}, #{scheduleSubject}, #{scheduleLikeCount}, #{scheduleStatus},#{place},#{userNO})
 	</insert>
 
 	<insert id="addScheduleContent" parameterType="com.liveamonth.liveamonth.entity.vo.ScheduleContentVO">
@@ -57,6 +68,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		set scheduleContentSubject = #{scheduleContentSubject}, scheduleContentDesc = #{scheduleContentDesc},
 		scheduleContentCost = #{scheduleContentCost}
 		where scheduleContentNO = #{scheduleContentNO}
-
+	</update>
+	
+	<update id="modifySchedule" parameterType="com.liveamonth.liveamonth.entity.vo.ScheduleVO">
+		update schedule set scheduleSubject = #{scheduleSubject}, scheduleStatus = #{scheduleStatus}, place = #{place} where scheduleNO = #{scheduleNO}
 	</update>
 </mapper>

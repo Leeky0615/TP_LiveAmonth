@@ -2,7 +2,6 @@ package com.liveamonth.liveamonth.model.service.myPageService;
 
 import com.liveamonth.liveamonth.entity.vo.UserVO;
 import com.liveamonth.liveamonth.model.mapper.myPageMapper.MyPageMapper;
-import org.apache.ibatis.annotations.Select;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +13,19 @@ public class MyPageServiceImpl implements MyPageService {
     @Autowired
     private MyPageMapper myPageMapper;
 
+	   @Override
+	   public List<UserVO> getOtherScheduleUserInfo(List<ScheduleVO> scheduleVOList) throws Exception {
+
+	      int userNO = 0;
+	      List<UserVO> userVOList = new ArrayList<UserVO>();
+
+	      for(int i =0; i<scheduleVOList.size(); i++) {
+	         userNO = scheduleVOList.get(i).getUserNO();
+	         UserVO userVo = myPageMapper.getOtherScheduleUserInfo(userNO);
+	         userVOList.add(userVo);
+	      }
+	      return userVOList;
+	   }
     @Override
     public List<UserVO> getOtherScheduleUserInfo() throws Exception {
         return myPageMapper.getOtherScheduleUserInfo();

@@ -12,7 +12,11 @@
 
 <body>
  	<jsp:include page="/incl/Header.jsp" />
-    <a href="reCheckUserPW">회원 정보 수정</a>
+    <center>
+        <a href="reCheckUserPW">회원 정보 수정</a>
+        <a href="dropUser" >회원 탈퇴</a>
+    </center>
+
     <jsp:include page="/incl/Footer.jsp" />
 </body>
 

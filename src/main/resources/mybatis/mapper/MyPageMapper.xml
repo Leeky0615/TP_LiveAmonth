@@ -5,7 +5,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  
 <mapper namespace="com.liveamonth.liveamonth.model.mapper.myPageMapper.MyPageMapper">
 
-<!--    <select id="getOtherScheduleUserInfo" resultType="com.liveamonth.liveamonth.entity.vo.UserVO">-->
-<!--        select * from user where userNO in (select userNO from schedule where schedule.scheduleStatus = true);-->
-<!--    </select>-->
+    <select id="getOtherScheduleUserInfo" parameterType = "int" resultType="com.liveamonth.liveamonth.entity.vo.UserVO">
+      select * from user where userNO = #{userNO};
+    </select>
+
 </mapper>
