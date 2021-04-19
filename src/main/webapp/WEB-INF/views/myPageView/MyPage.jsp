@@ -6,10 +6,15 @@
 <head>
 
     <title>한달 살기</title>
+    <jsp:include page="/incl/Header.jsp" />
 </head>
 
 <body>
- 	<jsp:include page="/incl/Header.jsp" />
+	<center>
+	<a href="dropUser" >회원 탈퇴</a>
+	</center>
+ 	
+ 	
     <jsp:include page="/incl/Footer.jsp" />
 </body>
 

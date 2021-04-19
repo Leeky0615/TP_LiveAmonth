@@ -47,5 +47,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="PWFind" parameterType="HashMap" resultType="String">
 		select userPassword from user where userID = #{userID} and userEmail = #{userEmail}
 	</select>
+	
+	<!-- delete -->
+	<delete id="dropUser" parameterType="String">
+		delete from user where userID = #{userID}
+	</delete>
 
 </mapper>

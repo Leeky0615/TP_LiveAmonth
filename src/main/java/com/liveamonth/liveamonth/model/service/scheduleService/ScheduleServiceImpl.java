@@ -160,4 +160,10 @@ public class ScheduleServiceImpl implements ScheduleService {
         scheduleMapper.modifyScheduleContent(scheduleContentVO);
 
     }
+
+	@Override
+	public int getMaxScheduleNO() throws Exception {
+		// TODO Auto-generated method stub
+		return scheduleMapper.getMaxScheduleNO();
+	}
 }
