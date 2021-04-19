@@ -15,7 +15,7 @@
 <center>
     <ul>
         <li>
-            <a href="reCheckUserPW">회원 정보 수정</a>
+            <a href="reCheckUserPW">회원정보 수정</a>
         </li>
         <li>
             <a href="dropUser">회원 탈퇴</a>
