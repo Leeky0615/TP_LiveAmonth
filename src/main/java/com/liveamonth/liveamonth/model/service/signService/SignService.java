@@ -8,21 +8,19 @@ import javax.servlet.http.HttpServletResponse;
 
 public interface SignService {
 
-    public String checkID(String userID) throws Exception;
+    String checkID(String userID) throws Exception;
 
-    public String checkNickName(String userNickname) throws Exception;
+    String checkNickName(String userNickname) throws Exception;
 
-    public void insertUser(UserVO userVO) throws Exception;
+    void insertUser(UserVO userVO) throws Exception;
 
-    public String checkSign(String userID, String userPassword) throws Exception;
+    String checkSign(String userID, String userPassword) throws Exception;
 
-    public String findID(HttpServletResponse response, String userEmail) throws Exception;
+    String findID(HttpServletResponse response, String userEmail) throws Exception;
 
-    public String IDFind(HttpServletResponse response, String userEmail) throws Exception;
+    String findID(String userEmail) throws Exception;
 
-    public String PWFind(HttpServletResponse response, String userID, String userEmail) throws Exception;
+    String findPW(HttpServletResponse response, String userID, String userEmail) throws Exception;
 
-    public String findID(String userEmail) throws Exception;
-
-    public void dropUser(String userID) throws Exception;
+    void dropUser(String userID) throws Exception;
 }

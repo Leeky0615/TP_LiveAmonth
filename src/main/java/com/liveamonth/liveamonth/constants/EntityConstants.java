@@ -67,7 +67,7 @@ public class EntityConstants {
         SCHEDULE_SUBJECT("scheduleSubject"),
         SCHEDULE_LIKE_COUNT("scheduleLikeCount"),
         SCHEDULE_STATUS("scheduleStatus"),
-        SCHEDULE_PLACE("place");
+        SCHEDULE_PLACE("schedulePlace");
         private String text;
         private ESchedule(String text) {this.text = text;}
         public String getText() {return this.text;}

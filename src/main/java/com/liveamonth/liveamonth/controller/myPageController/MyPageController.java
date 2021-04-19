@@ -1,10 +1,23 @@
 package com.liveamonth.liveamonth.controller.myPageController;
 
+import com.liveamonth.liveamonth.constants.LogicConstants;
+import com.liveamonth.liveamonth.entity.vo.UserVO;
 import com.liveamonth.liveamonth.model.service.myPageService.MyPageService;
+import com.liveamonth.liveamonth.model.service.signService.SignService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import static com.liveamonth.liveamonth.constants.ControllerPathConstants.EMyPagePath.*;
+import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.*;
+import static com.liveamonth.liveamonth.constants.LogicConstants.EMyPageAttributes.CHECK_USER;
+import static com.liveamonth.liveamonth.constants.LogicConstants.ESignAttributes.*;
 
 @Controller
 public class MyPageController {
@@ -72,27 +85,25 @@ public class MyPageController {
 
     @RequestMapping(value="dropUser")
 	public String modifySchedule(Model model) throws Exception{
-    	 this.firstIn = true;
-         model.addAttribute("firstIn", this.firstIn);
+    	 // this.firstIn = true; -> 바로 true로 넣어줌
+         model.addAttribute(FIRST_IN.getText(), true);
     	return "myPageView/DropUser";
 	}
 
     @RequestMapping("/checkDropUserPassword")
     private String checkSign(Model model, HttpServletRequest request,HttpSession session) throws Exception {
-        String userID = request.getParameter("userID");
-        String userPassword = request.getParameter("userPassword");
+        String userID = request.getParameter(USER_ID.getText());
+        String userPassword = request.getParameter(USER_PASSWORD.getText());
         String userName = signService.checkSign(userID, userPassword);
 
         if (userName == null) {
-            this.firstIn = false;
-            model.addAttribute("firstIn", this.firstIn);
-            return "myPageView/DropUser";
+            // this.firstIn = false; -> 바로 false로 넣어줌
+            model.addAttribute(FIRST_IN.getText(), false);
+            return DROP_USER.getPath();
         } else {
         	session.invalidate();
         	signService.dropUser(userID);
-            return "myPageView/ResultMentDropUser";
+            return RESULT_MENT_DROP_USER.getPath();
         }
     }
-
-
 }

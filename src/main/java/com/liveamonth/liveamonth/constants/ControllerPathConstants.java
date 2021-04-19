@@ -11,6 +11,8 @@ public class ControllerPathConstants {
         MY_PAGE("MyPage"),
         MODIFY_USER_INFO("ModifyUserInfo"),
         RE_CHECK_USER_PW("ReCheckUserPW"),
+        DROP_USER("DropUser"),
+        RESULT_MENT_DROP_USER("ResultMentDropUser"),
         RESULT_MENT_MODIFY_USER_INFO("ResultMentModifyUserInfo");
         private String path;
         private EMyPagePath(String path) {this.path = "myPageView/"+path;}

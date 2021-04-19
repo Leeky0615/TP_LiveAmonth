@@ -1,137 +1,133 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-   pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+         pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html>
-<html lang="zxx">
+<html lang="utf-8">
 
 <head>
 </head>
 
 <body>
-   <jsp:include page="/incl/Header.jsp" />
+<jsp:include page="/incl/Header.jsp" />
 
-   <!--  <div class="container">
-      <div class="row">
-         <div class="col-lg-12 p-0">  -->
+<!--  <div class="container">
+   <div class="row">
+      <div class="col-lg-12 p-0">  -->
 
-   <!-- <div>
-      <form action="/filteringScheduleList" class="filter-form">
-         <h4>« ≈Õ ∞Àªˆ</h4>
-         <label>º∫∫∞</label> <br> <select name="sex" id="sex"
-            class="sm-width">
-            <option value="0">±‚∫ª</option>
-            <option value="1">≥≤º∫</option>
-            <option value="2">ø©º∫</option>
-         </select> <label>≥™¿Ã</label> <br> <select name="age" id="age"
-            class="sm-width">
-            <option value="0">±‚∫ª</option>
-            <option value="20">20¥Î</option>
-            <option value="30">30¥Î</option>
-            <option value="40">40¥Î</option>
-            <option value="50">50¥Î</option>
-            <option value="60">60¥Î</option>
-         </select> <label>¿Âº“</label> <br> <select name="place" id="place"
-            class="sm-width">
-            <option value="NULL">±‚∫ª</option>
-            <option value="SEOUL">º≠øÔ</option>
-            <option value="JEJU">¡¶¡÷</option>
-         </select> <input type="submit" value="¡∂»∏">      
-      </form>      
-   </div> -->
-   
-      <form action="/filteringScheduleList" class="filter-form">
-         <h4>« ≈Õ ∞Àªˆ</h4>
-         <table>
-            <thead>
-               <tr>
-                  <th><label>º∫∫∞</label></th>
-                  <th><label>≥™¿Ã</label></th>
-                  <th><label>¿Âº“</label></th>
-                  <th></th>
-               </tr>
-            </thead>
-            <tbody>
-               <tr>
-                  <td><select name="sex" id="sex" class="sm-width">
-                        <option value="0">±‚∫ª</option>
-                        <option value="1">≥≤º∫</option>
-                        <option value="2">ø©º∫</option>
-                  </select></td>
-                  <td><select name="age" id="age" class="sm-width">
-                        <option value="0">±‚∫ª</option>
-                        <option value="20">20¥Î</option>
-                        <option value="30">30¥Î</option>
-                        <option value="40">40¥Î</option>
-                        <option value="50">50¥Î</option>
-                        <option value="60">60¥Î</option>
-                  </select></td>
-                  <td><select name="place" id="place" class="sm-width">
-                        <option value="NULL">±‚∫ª</option>
-                           <c:forEach var="place" items="${placeList}">
-                                    <option value="${place}">${place.label}</option>
-                                   </c:forEach>
-                  </select></td>
-                  <td><input type="submit" value="¡∂»∏"></td>
-               </tr>
-            </tbody>
-         </table>
-      </form>
+<!-- <div>
+   <form action="/filteringScheduleList" class="filter-form">
+      <h4>ÌïÑÌÑ∞ Í≤ÄÏÉâ</h4>
+      <label>ÏÑ±Î≥Ñ</label> <br> <select name="sex" id="sex"
+         class="sm-width">
+         <option value="0">Í∏∞Î≥∏</option>
+         <option value="1">ÎÇ®ÏÑ±</option>
+         <option value="2">Ïó¨ÏÑ±</option>
+      </select> <label>ÎÇòÏù¥</label> <br> <select name="age" id="age"
+         class="sm-width">
+         <option value="0">Í∏∞Î≥∏</option>
+         <option value="20">20ÎåÄ</option>
+         <option value="30">30ÎåÄ</option>
+         <option value="40">40ÎåÄ</option>
+         <option value="50">50ÎåÄ</option>
+         <option value="60">60ÎåÄ</option>
+      </select> <label>Ïû•ÏÜå</label> <br> <select name="place" id="place"
+         class="sm-width">
+         <option value="NULL">Í∏∞Î≥∏</option>
+         <option value="SEOUL">ÏÑúÏö∏</option>
+         <option value="JEJU">Ï†úÏ£º</option>
+      </select> <input type="submit" value="Ï°∞Ìöå">
+   </form>
+</div> -->
 
-   <div class="pc-table">
-      <table>
-         <thead>
-            <tr>
-               <th class="type">Ω∫ƒ…¡Ÿ(¿ÃπÃ¡ˆ, ¡¶∏Ò)</th>
-               <th class="type">¿Âº“</th>
-               <th class="type">¥–≥◊¿”</th>
-               <th class="type">º∫∫∞</th>
-               <th class="type">≥™¿Ã</th>
-               <th class="type">¡¡æ∆ø‰ ºˆ</th>
-            </tr>
-         </thead>
-         <tbody>
-
-            <c:set var="now" value="<%=new java.util.Date()%>" />
-            <c:set var="sysYear">
-               <fmt:formatDate value="${now}" pattern="yyyy" />
-            </c:set>
-
-            <c:set var="size" value="${fn:length(userVOList)}" />
-            <c:forEach var="i" begin="0" end="${size-1}">
-               <c:choose>
-                  <c:when test="${userVOList[i].getUserSex() eq 'false'}">
-                     <c:set var="sex" value="≥≤¿⁄" />
-                  </c:when>
-
-                  <c:otherwise>
-                     <c:set var="sex" value="ø©¿⁄" />
-                  </c:otherwise>
-               </c:choose>
-
-               <tr>
-                  <td>
-                     <div class="title">Ω∫ƒ…¡Ÿ ¡¶∏Ò</div> <a
-                     href="/otherSchedule?useNO=${userVOList[i].getUserNO()}&scheduleNO=${scheduleVOList[i].getScheduleNO()}">
-                        <img src="resources/img/scheduleImg.png" alt="">
-                  </a>
-                  </td>
-                  <td><c:out value="${scheduleVOList[i].getPlace()}" /></td>
-                  <td><c:out value="${userVOList[i].getUserNickname()}" /></td>
-                  <td><c:out value="${sex}" /></td>
-                  <td><c:out value="${sysYear-userVOList[i].getUserAge()}ºº" /></td>
-                  <td><c:out
-                        value="${scheduleVOList[i].getScheduleLikeCount()}" /></td>
-               </tr>
+<form action="/filteringScheduleList" class="filter-form">
+   <h4>ÌïÑÌÑ∞ Í≤ÄÏÉâ</h4>
+   <table>
+      <thead>
+      <tr>
+         <th><label>ÏÑ±Î≥Ñ</label></th>
+         <th><label>ÎÇòÏù¥</label></th>
+         <th><label>Ïû•ÏÜå</label></th>
+         <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+         <td><select name="sex" id="sex" class="sm-width">
+            <option value="0">Í∏∞Î≥∏</option>
+            <option value="1">ÎÇ®ÏÑ±</option>
+            <option value="2">Ïó¨ÏÑ±</option>
+         </select></td>
+         <td><select name="age" id="age" class="sm-width">
+            <option value="0">Í∏∞Î≥∏</option>
+            <option value="20">20ÎåÄ</option>
+            <option value="30">30ÎåÄ</option>
+            <option value="40">40ÎåÄ</option>
+            <option value="50">50ÎåÄ</option>
+            <option value="60">60ÎåÄ</option>
+         </select></td>
+         <td><select name="place" id="place" class="sm-width">
+            <option value="NULL">Í∏∞Î≥∏</option>
+            <c:forEach var="place" items="${placeList}">
+               <option value="${place}">${place.label}</option>
             </c:forEach>
-         </tbody>
-      </table>
-   </div>
-   <!--          </div>
-      </div>
-   </div>  -->
+         </select></td>
+         <td><input type="submit" value="Ï°∞Ìöå"></td>
+      </tr>
+      </tbody>
+   </table>
+</form>
 
-   <jsp:include page="/incl/Footer.jsp" />
+<div class="pc-table">
+   <table>
+      <thead>
+      <tr>
+         <th class="type">Ïä§ÏºÄÏ§Ñ(Ïù¥ÎØ∏ÏßÄ, Ï†úÎ™©)</th>
+         <th class="type">Ïû•ÏÜå</th>
+         <th class="type">ÎãâÎÑ§ÏûÑ</th>
+         <th class="type">ÏÑ±Î≥Ñ</th>
+         <th class="type">ÎÇòÏù¥</th>
+         <th class="type">Ï¢ãÏïÑÏöî Ïàò</th>
+      </tr>
+      </thead>
+      <tbody>
+
+      <c:set var="now" value="<%=new java.util.Date()%>" />
+      <c:set var="sysYear">
+         <fmt:formatDate value="${now}" pattern="yyyy" />
+      </c:set>
+
+      <c:set var="size" value="${fn:length(userVOList)}" />
+      <c:forEach var="i" begin="0" end="${size-1}">
+         <c:choose>
+            <c:when test="${userVOList[i].isUserSex() eq 'false'}">
+               <c:set var="sex" value="ÎÇ®Ïûê" />
+            </c:when>
+
+            <c:otherwise>
+               <c:set var="sex" value="Ïó¨Ïûê" />
+            </c:otherwise>
+         </c:choose>
+
+         <tr>
+            <td>
+               <div class="title">Ïä§ÏºÄÏ§Ñ Ï†úÎ™©</div> <a
+                    href="/otherSchedule?useNO=${userVOList[i].getUserNO()}&scheduleNO=${scheduleVOList[i].getScheduleNO()}">
+               <img src="resources/img/scheduleImg.png" alt="">
+            </a>
+            </td>
+            <td><c:out value="${scheduleVOList[i].getPlace()}" /></td>
+            <td><c:out value="${userVOList[i].getUserNickname()}" /></td>
+            <td><c:out value="${sex}" /></td>
+            <td><c:out value="${sysYear-userVOList[i].getUserAge()}ÏÑ∏" /></td>
+            <td><c:out
+                    value="${scheduleVOList[i].getScheduleLikeCount()}" /></td>
+         </tr>
+      </c:forEach>
+      </tbody>
+   </table>
+</div>
+<jsp:include page="/incl/Footer.jsp" />
 </body>
 </html>

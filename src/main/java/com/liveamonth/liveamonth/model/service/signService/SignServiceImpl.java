@@ -49,7 +49,7 @@ public class SignServiceImpl implements SignService {
 	}
 
 	@Override
-	public String IDFind(HttpServletResponse response, String userEmail) throws Exception {
+	public String findID(HttpServletResponse response, String userEmail) throws Exception {
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter out = response.getWriter();
 		String id = signMapper.IDFind(userEmail);
@@ -65,8 +65,6 @@ public class SignServiceImpl implements SignService {
 			return id;
 		}
 	}
-
-
 
 	// 비밀번호 찾기
 	@Override
@@ -88,11 +86,6 @@ public class SignServiceImpl implements SignService {
 		} else {
 			return pw;
 		}
-	}
-
-	@Override
-	public String findID(HttpServletResponse response, String userEmail) throws Exception {
-		return null;
 	}
 
 	@Override

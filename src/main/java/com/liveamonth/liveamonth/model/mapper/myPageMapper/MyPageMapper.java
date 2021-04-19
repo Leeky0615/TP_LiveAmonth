@@ -21,5 +21,5 @@ public interface MyPageMapper {
             "WHERE userID=#{userID}")
     void modifyUserInfo(UserVO userVO)throws Exception;
 
-	public UserVO getOtherScheduleUserInfo(int userNO) throws Exception;
+	UserVO getOtherScheduleUserInfo(int userNO) throws Exception;
 }

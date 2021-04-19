@@ -90,7 +90,7 @@ public class SignController {
     @RequestMapping(value = "/resultMentFindID", method = RequestMethod.POST)
     public String findID(HttpServletResponse response, @RequestParam("userEmail")
             String userEmail, Model model) throws Exception{
-        model.addAttribute(USER_ID.getText(),signService.IDFind(response, userEmail));
+        model.addAttribute(USER_ID.getText(),signService.findID(response, userEmail));
         return RESULT_MENT_FIND_ID.getPath();
     }
 
