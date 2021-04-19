@@ -18,6 +18,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 
+<select id="getMaxScheduleNO" resultType="int">
+		select max(scheduleNO) from schedule;
+	</select>
+
 	<select id="getOtherScheduleInfo" resultType="com.liveamonth.liveamonth.entity.vo.ScheduleVO">
 		select * from schedule where userNO in (select userNO from schedule where schedule.scheduleStatus = true)
 	</select>
@@ -43,7 +47,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- insert -->
 
 	<insert id="addSchedule" parameterType="com.liveamonth.liveamonth.entity.vo.ScheduleVO">
-		insert into schedule values(#{scheduleNO}, #{scheduleSubject}, #{scheduleLikeCount}, #{scheduleStatus}, #{userNO}, #{place})
+		insert into schedule values(#{scheduleNO}, #{scheduleSubject}, #{scheduleLikeCount}, #{scheduleStatus},#{place},#{userNO})
 	</insert>
 
 	<insert id="addScheduleContent" parameterType="com.liveamonth.liveamonth.entity.vo.ScheduleContentVO">

@@ -95,4 +95,10 @@ public class SignServiceImpl implements SignService {
 		return null;
 	}
 
+	@Override
+	public void dropUser(String userID) throws Exception {
+		signMapper.dropUser(userID);
+		
+	}
+
 }

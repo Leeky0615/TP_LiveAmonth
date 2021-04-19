@@ -39,5 +39,7 @@ public interface ScheduleMapper {
 
     public int findUserIDToUserNO(String userID)throws Exception;
 
+	public int getMaxScheduleNO() throws Exception;
+
 
 }

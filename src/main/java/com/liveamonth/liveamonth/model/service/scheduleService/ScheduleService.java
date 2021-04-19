@@ -9,24 +9,26 @@ import com.liveamonth.liveamonth.entity.vo.ScheduleVO;
 
 
 public interface ScheduleService {
-    CalendarDTO showCalendar(CalendarDTO calendarDTO, int scheduleNO) throws Exception;
+    public CalendarDTO showCalendar(CalendarDTO calendarDTO, int scheduleNO) throws Exception;
 
-    int beforeScheduleAddSearch(ScheduleContentVO scheduleContentVO) throws Exception;
+    public int beforeScheduleAddSearch(ScheduleContentVO scheduleContentVO) throws Exception;
 
-    void addScheduleContent(ScheduleContentVO scheduleContentVO) throws Exception;
+    public void addScheduleContent(ScheduleContentVO scheduleContentVO) throws Exception;
 
-    int getLastScheduleContentNO() throws Exception;
+    public int getLastScheduleContentNO() throws Exception;
 
-    ArrayList<ScheduleContentVO> scheduleContentList(CalendarDTO calendarDTO) throws Exception;
+    public ArrayList<ScheduleContentVO> scheduleContentList(CalendarDTO calendarDTO) throws Exception;
 
-    List<ScheduleVO> getOtherScheduleInfo() throws Exception;
+    public  List<ScheduleVO> getOtherScheduleInfo() throws Exception;
 
-    void deleteScheduleContent(int scheduleContentNO) throws Exception;
+    public void deleteScheduleContent(int scheduleContentNO) throws Exception;
 
-    void modifyScheduleContent(int scheduleContentNO, String scheduleContentSubject, String scheduleContentDesc, int scheduleContentCost) throws Exception;
+    public void modifyScheduleContent(int scheduleContentNO, String scheduleContentSubject, String scheduleContentDesc, int scheduleContentCost) throws Exception;
 
-    boolean addSchedule(ScheduleVO scheduleVO, String userID) throws Exception;
+    public boolean addSchedule(ScheduleVO scheduleVO, String userID) throws Exception;
 
-    ArrayList<ScheduleVO> getScheduleList(String userID) throws Exception;
+    public ArrayList<ScheduleVO> getScheduleList(String userID) throws Exception;
+
+    public int getMaxScheduleNO()  throws Exception;
 
 }
