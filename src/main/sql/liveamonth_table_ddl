@@ -1,0 +1,87 @@
+drop database liveAmonthDB;
+
+show databases;
+
+create database liveAmonthDB;
+
+use liveAmonthDB;
+
+create table user (
+	userNO int not null,
+    userID varchar(20),
+    userPassword varchar(20),
+    userName varchar(20),
+    userNickname varchar(20),
+    userEmail varchar(50),
+    userSex boolean,
+    userAge int,
+    primary key (userNO)
+);
+
+create table schedule(
+	scheduleNO int not null,
+    scheduleLikeCount int,
+    scheduleStatus boolean,
+    userNO int,
+    primary key (scheduleNO),
+    foreign key (userNO) references user(userNO)
+);
+
+create table scheduleContent(
+	scheduleContentNO int not null,
+    scheduleContentSubject varchar(100),
+    scheduleContentDesc varchar(900),
+    scheduleContentDate date,
+    scheduleContentCost int,
+    scheduleNO int,
+    primary key (scheduleContentNO),
+    foreign key (scheduleNO) references schedule(scheduleNO)
+);
+
+create table scheduleReply(
+	scheduleReplyNO int not null,
+    scheduleReplyDesc varchar(200),
+    scheduleReplyDate date,
+    scheduleReplyRefNO int,
+    userNO int,
+	scheduleNO int,
+    primary key (scheduleReplyNO),
+    foreign key (scheduleReplyRefNO) references scheduleReply(scheduleReplyNO),
+    foreign key (userNO) references user(userNO),
+	foreign key (scheduleNO) references schedule(scheduleNO)
+);
+
+create table board(
+	boardNO int not null,
+    boardCategory varchar(10),
+    boardSubject varchar(100),
+    boardDesc varchar(900),
+    boardLikeCount int,
+    boardDate date,
+    boardViewCount int,
+    userNo int,
+    primary key (boardNO),
+    foreign key (userNO) references user(userNO)
+);
+
+create table boardReply(
+	boardReplyNO int not null,
+    boardReplyDesc varchar(200),
+    boardReplyDate date,
+    boardReplyRefNO int,
+    userNO int,
+	boardNO int,
+    primary key (boardReplyNO),
+    foreign key (boardReplyRefNO) references boardReply(boardReplyNO),
+    foreign key (userNO) references user(userNO),
+	foreign key (boardNO) references board(boardNO)
+);
+
+create table city(
+	cityNO int not null,
+    cityCategory varchar(10),
+    cityName varchar(10),
+    cityImageURL varchar(500),
+    cityDesc varchar(900),
+    primary key (cityNO)
+);
