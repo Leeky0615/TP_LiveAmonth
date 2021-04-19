@@ -24,8 +24,6 @@ import java.util.ArrayList;
 public class ScheduleController{
     @Autowired
     private ScheduleService scheduleService;
-    @Autowired
-    private MyPageService myPageService;
 
     private int scheduleContentNO;
 
@@ -78,15 +76,16 @@ public class ScheduleController{
 
         ArrayList<ScheduleVO> scheduleVOList = scheduleService.getScheduleList(userID);
         
-        int scheduleNO = scheduleVOList.get(0).getScheduleNO();
+        int scheduleNO;
+        
 		if(scheduleVOList.isEmpty()) {
 			scheduleNO = scheduleService.getMaxScheduleNO() +1;
-		}else {
+		} else {
 			scheduleNO = scheduleVOList.get(0).getScheduleNO();
 		}
 
         if(session.getAttribute("selectedScheduleNO") != null) {
-        	scheduleNO = Integer.parseInt((String) session.getAttribute("selectedScheduleNO"));
+        	scheduleNO = Integer.parseInt(String.valueOf(session.getAttribute("selectedScheduleNO")));
         } else {
         	session.setAttribute("selectedScheduleNO", scheduleNO);
         }
