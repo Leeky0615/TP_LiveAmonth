@@ -54,7 +54,7 @@
 		
 		}	
 		
-		function addSchedulButton() {
+		function addScheduleButton() {
 			var addScheduleForm = document.addSchedule;
 			if (addScheduleForm.scheduleSubject.value == "" || addScheduleForm.scheduleSubject.value == null) {
 				alert("제목을 입력해주세요.");
@@ -63,4 +63,23 @@
 				}
 			addScheduleForm.submit();
 		}
-
+		
+		function modifyScheduleButton() {
+			var modifyScheduleForm = document.modifySchedule;
+			if (modifyScheduleForm.scheduleSubject.value == "" || modifyScheduleForm.scheduleSubject.value == null) {
+				alert("제목을 입력해주세요.");
+				modifyScheduleForm.scheduleSubject.focus();
+				return false;
+				}
+			modifyScheduleForm.submit();
+		}
+		
+		function deleteScheduleButton(){
+			if (confirm("정말 삭제하시겠습니까??") == true){    
+			   location.replace('deleteSchedule');
+			} else {   
+			    return;
+			
+			}
+		}
+				

@@ -39,6 +39,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="deleteScheduleContent" parameterType="int">
 		delete from scheduleContent where scheduleContentNO = #{scheduleContentNO}
 	</delete>
+	
+	<delete id="deleteSchedule" parameterType="int">
+		delete from schedule where scheduleNO = #{scheduleNO}
+	</delete>
+	
+	<delete id="deleteAllScheduleContentOfSchedule" parameterType="int">
+		delete from scheduleContent where scheduleContent.scheduleNO = #{scheduleNO}
+	</delete>
 
 	<!-- insert -->
 
@@ -57,6 +65,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		set scheduleContentSubject = #{scheduleContentSubject}, scheduleContentDesc = #{scheduleContentDesc},
 		scheduleContentCost = #{scheduleContentCost}
 		where scheduleContentNO = #{scheduleContentNO}
-
+	</update>
+	
+	<update id="modifySchedule" parameterType="com.liveamonth.liveamonth.entity.vo.ScheduleVO">
+		update schedule set scheduleSubject = #{scheduleSubject}, scheduleStatus = #{scheduleStatus}, place = #{place} where scheduleNO = #{scheduleNO}
 	</update>
 </mapper>

@@ -39,5 +39,11 @@ public interface ScheduleMapper {
 
     public int findUserIDToUserNO(String userID)throws Exception;
 
+	public boolean modifySchedule(ScheduleVO scheduleVO) throws Exception;
+
+	public boolean deleteSchedule(int scheduleNO) throws Exception;
+
+	public boolean deleteAllScheduleContentOfSchedule(int scheduleNO) throws Exception;
+
 
 }
