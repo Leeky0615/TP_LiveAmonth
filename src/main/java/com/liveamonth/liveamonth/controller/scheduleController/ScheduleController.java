@@ -170,7 +170,7 @@ public class ScheduleController{
 
     @RequestMapping("/otherSchedule")
     public String otherSchedule(Model model, HttpServletRequest request, CalendarDTO calendarDTO) throws Exception{
-        int useNO =  Integer.parseInt((String) request.getParameter(USER_NO.getText()));
+        int userNO =  Integer.parseInt((String) request.getParameter(USER_NO.getText()));
         int scheduleNO = Integer.parseInt((String) request.getParameter(SCHEDULE_NO.getText()));
 
         CalendarDTO calendarDto = scheduleService.showCalendar(calendarDTO, scheduleNO);

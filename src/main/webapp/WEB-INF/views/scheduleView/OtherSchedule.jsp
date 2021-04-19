@@ -32,11 +32,10 @@
    <script src="resources/js/board.js"></script>
 
    <script type="text/javaScript" language="javascript"></script>
-   <jsp:include page="/incl/Header.jsp" />
 
 </head>
 <body style="background:#ffffff">
-
+<jsp:include page="/incl/Header.jsp" />
 
 <form name="calendarFrm" id="calendarFrm" action="schedule"
       method="GET">
