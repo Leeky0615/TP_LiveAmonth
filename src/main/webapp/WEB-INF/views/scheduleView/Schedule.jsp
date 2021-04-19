@@ -25,8 +25,11 @@
 	integrity="sha384-
 	ggOyROiXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 	crossorigin="anonymous">
+	
 
 <link href="resources/css/schedule.css" rel="stylesheet"
+	type="text/css">
+<link href="resources/css/onOff.css" rel="stylesheet"
 	type="text/css">
 	<script src="resources/js/schedule.js"></script>
 <script src="resources/js/board.js"></script>
@@ -41,12 +44,15 @@
                 <form action="swapSchedule" class="filter-form">
                     <select class="sm-width" name = "selectSchedule" id = "selectSchedule">
             			<c:forEach var="scheduleVO" items="${scheduleVOList}">
-                        	<option value="${scheduleVO.scheduleNO}">${scheduleVO.scheduleSubject}</option>
+                        	<option id = "${scheduleVO.scheduleNO}" value="${scheduleVO.scheduleNO}">${scheduleVO.scheduleSubject}</option>
                        	</c:forEach>
                     </select>
-                    <script> $("#selectSchedule").val(${selectedScheduleNO}).prop("selected",true); </script>
-                    <input type="submit" value="확인">
-                    <button type="button" class="search-btn sm-width" style="float: right;" data-toggle="modal" data-target="#addScheduleModal" >새 스케줄 추가</button>
+                    <script> $("#" + ${selectedScheduleNO}).prop("selected",true); </script>
+                    <input type="submit" class="search-btn sm-width" style="width:5%;" value = "확인">
+                    
+                    <button type="button" class="search-btn sm-width" style="float: right;" data-toggle="modal" data-target="#modifyScheduleModal" >캘린더 수정</button>
+                    <button type="button" class="search-btn sm-width" style="float: right;" data-toggle="modal" data-target="#addScheduleModal" >새 캘린더 추가</button>
+
                 </form>
             </div>
 
@@ -67,16 +73,87 @@
 									<div class="text_subject">제목 :</div>
 									<div class="text_desc">
 										<input type="text" name="scheduleSubject" class="text_type1" />
-									</div>					
+									</div>
+									
+									<div class="text_subject">지역</div>
+										<div class="text_desc">
+											<select class="sm-width" name = "place" id = "schedulePlace">
+						            			<c:forEach var="place" items="${schedulePlace}">
+						                        	<option value="${place}">${place.label}</option>
+						                       	</c:forEach>
+						                    </select>	
+					                    </div>
+				               		</div>
+				               		
+				               		<br><br>
+
+									<div class="text_subject">공개여부</div>
+										<div class="text_desc">
+											<label class="switch">
+											  <input type="checkbox" name="scheduleStatus">
+											  <span class="slider round"></span>
+											</label>
+										</div>			
 									<div>
-									<button type="button" class="board_move_go pointer" onclick="addSchedulButton();">추가</button>
-									<button type="button" class="board_move_go pointer" data-dismiss="modal">취소</button>
+										<button type="button" class="board_move_go pointer" onclick="addScheduleButton();">추가</button>
+										<button type="button" class="board_move_go pointer" data-dismiss="modal">취소</button>
 									</div>
 								</div>
 							</form>
 						</div>
 					</div>
 				</div>
+			</div>
+			
+			<div class="modal fade" id="modifyScheduleModal" role="dialog" aria-labelledby="modifyScheduleLabel" aria-hidden="true">
+			    <c:forEach var="scheduleVO" items="${scheduleVOList}">
+			    	<c:if test = "${scheduleVO.scheduleNO == selectedScheduleNO}">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="modifyScheduleLabel">캘린더 수정/삭제</h5>
+									<button type="button" class="close" data-dismiss="modal"
+										aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<form name="modifySchedule" action="modifySchedule">
+										<div class="contents">					
+											<div class="text_subject">제목 :</div>
+											<div class="text_desc">
+												<input type="text" name="scheduleSubject" class="text_type1" value="${scheduleVO.scheduleSubject}"/>
+											</div>	
+											<div>
+												<div class="text_subject">지역</div>
+													<select class="sm-width" name = "place" id = "modifyPlace">
+								            			<c:forEach var="place" items="${schedulePlace}">
+								                        	<option value="${place}">${place.label}</option>
+								                       	</c:forEach>
+								                    </select>	
+							               		<script> $("#modifyPlace").val("${scheduleVO.place}").prop("selected",true); </script>
+							                </div>
+							                
+							                <br><br>
+							                
+											<div class="text_subject">공개여부</div>
+												<label class="switch">
+												  <input type="checkbox" name="scheduleStatus" id="modiftScheduleStatus">
+												  <span class="slider round"></span>
+												</label>
+												<script> if(${scheduleVO.scheduleStatus}==true){$("input:checkbox[id='modiftScheduleStatus']").prop("checked", true);} </script>
+											<div>
+												<button type="button" class="board_move_go pointer" onclick="modifyScheduleButton();">수정</button>
+												<button type="button" class="board_move_go pointer" data-dismiss="modal">취소</button>
+												<button type="button" class="board_move_go pointer" style="float: right;" onclick="deleteScheduleButton();">삭제</button>
+											</div>
+										</div>
+									</form>
+								</div>
+							 </div>
+						  </div>
+					 </c:if>
+				  </c:forEach>
 			</div>
 
 	
@@ -236,8 +313,7 @@
 							
 							<div>
 							<button type="button" class="board_move_go pointer" onclick="addScheduleContentButton();">일정등록</button>
-							<button type="button" class="board_move_go pointer"
-								data-dismiss="modal" onclick="resetAddScheduleContentButton()">취소</button>
+							<button type="button" class="board_move_go pointer" data-dismiss="modal" onclick="resetAddScheduleContentButton()">취소</button>
 							</div>
 
 						</div>

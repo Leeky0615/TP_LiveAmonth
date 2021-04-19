@@ -17,8 +17,6 @@ public interface ScheduleService {
 
     public int getLastScheduleContentNO() throws Exception;
 
-    public ArrayList<ScheduleContentVO> scheduleContentList(CalendarDTO calendarDTO) throws Exception;
-
     public  List<ScheduleVO> getOtherScheduleInfo() throws Exception;
 
     public void deleteScheduleContent(int scheduleContentNO) throws Exception;
@@ -30,5 +28,9 @@ public interface ScheduleService {
     public ArrayList<ScheduleVO> getScheduleList(String userID) throws Exception;
 
     public int getMaxScheduleNO()  throws Exception;
+
+	boolean modifySchedule(ScheduleVO scheduleVO) throws Exception;
+
+	boolean deleteSchedule(int scheduleNO) throws Exception;
 
 }

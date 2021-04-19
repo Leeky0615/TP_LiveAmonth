@@ -2,7 +2,21 @@ package com.liveamonth.liveamonth.entity.vo;
 
 public class ScheduleVO {
     //should add more city
-    public enum Place {SEOUL, JEJU}
+
+    public enum Place {
+    	SEOUL("서울"), 
+    	JEJU("제주"),
+    	BUSAN("부산"), 
+    	GANGNEUNG("강릉"), 
+    	YEOSU("여수"), 
+    	GYEONGJU("경주"); 
+    	
+    	private String label; 	
+		Place(String label) {this.label = label;}
+		
+		public String getLabel() {return label;}
+		public void setLabel(String label) {this.label = label;} 
+    	}
 
     private int scheduleNO;
     private String scheduleSubject;

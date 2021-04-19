@@ -114,22 +114,12 @@ public class ScheduleServiceImpl implements ScheduleService {
         return scheduleMapper.getOtherScheduleInfo();
     }
 
-    public ArrayList<ScheduleContentVO> scheduleContentList(CalendarDTO calendarDTO) throws Exception {
-        HashMap<String, Object> scheduleCalendarDTO = new HashMap<String, Object>();
-        scheduleCalendarDTO.put("scheduleNO", 101);
-        scheduleCalendarDTO.put("calendarDTO", calendarDTO);
-        return scheduleMapper.scheduleContentList(scheduleCalendarDTO);
-    }
+
 
     @Override
     public boolean addSchedule(ScheduleVO scheduleVO, String userID) throws Exception {
-        int ID = scheduleMapper.getLastScheduleNO();
-        scheduleVO.setScheduleNO(ID + 1);
+        scheduleVO.setScheduleNO(scheduleMapper.getLastScheduleNO() + 1);
         scheduleVO.setScheduleLikeCount(0);
-
-        //이부분은 공개여부 기능이 구현되면 수정해야함.
-        scheduleVO.setScheduleStatus(false);
-
         scheduleVO.setUserNO(scheduleMapper.findUserIDToUserNO(userID));
 
         if (scheduleMapper.addSchedule(scheduleVO)) {
@@ -165,5 +155,21 @@ public class ScheduleServiceImpl implements ScheduleService {
 	public int getMaxScheduleNO() throws Exception {
 		// TODO Auto-generated method stub
 		return scheduleMapper.getMaxScheduleNO();
+	}
+	
+	public boolean modifySchedule(ScheduleVO scheduleVO) throws Exception {
+		if(scheduleMapper.modifySchedule(scheduleVO)) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean deleteSchedule(int scheduleNO) throws Exception {
+		scheduleMapper.deleteAllScheduleContentOfSchedule(scheduleNO);
+		if(scheduleMapper.deleteSchedule(scheduleNO)) {
+			return true;
+		}
+		return false;
 	}
 }
