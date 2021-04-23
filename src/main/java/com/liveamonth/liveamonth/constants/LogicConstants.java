@@ -38,7 +38,9 @@ public class LogicConstants {
     }
 
     public enum EMyPageAttributes {
-        CHECK_USER("checkUser");
+        CHECK_USER("checkUser"),
+    	ONE_TO_ONE_ASK_VO_LIST("oneToOneAskVOList"),
+    	ONE_TO_ONE_ASK_CATEGORY("oneToOneAskCategory");
         private String text;
         private EMyPageAttributes(String text) {this.text = text;}
         public String getText() {return this.text;}

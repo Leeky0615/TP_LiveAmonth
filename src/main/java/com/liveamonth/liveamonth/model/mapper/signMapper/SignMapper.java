@@ -24,5 +24,5 @@ public interface SignMapper {
 
     public String IDFind(String userEmail) throws Exception;
 
-    public void dropUser(String userID) throws Exception;
+    
 }

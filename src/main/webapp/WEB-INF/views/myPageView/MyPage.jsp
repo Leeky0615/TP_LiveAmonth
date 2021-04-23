@@ -20,6 +20,10 @@
         <li>
             <a href="dropUser">회원 탈퇴</a>
         </li>
+        
+        <li>
+            <a href="oneToOneAsk">1:1문의</a>
+        </li>
     </ul>
 </center>
 

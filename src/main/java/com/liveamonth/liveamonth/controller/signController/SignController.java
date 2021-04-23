@@ -81,7 +81,7 @@ public class SignController {
         return nickNameExist;
     }
 
-    @RequestMapping("/ResultMentSignUp")
+    @RequestMapping("/resultMentSignUp")
     private String resultMentSignUp(@ModelAttribute UserVO userVO) throws Exception{
         signService.insertUser(userVO);
         return RESULT_MENT_SIGN_UP.getPath();

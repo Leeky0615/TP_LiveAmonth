@@ -5026,5 +5026,13 @@ li .richText-btn[data-command=toggleCode] {
     z-index: -1;
 }
 
+#oneToOneAskCategoryBlock {
+    z-index: 1;
+}
+
+#oneToOneAskCategoryBlock label {
+    z-index: -1;
+}
+
 /*# sourceMappingURL=style.css.map */
 
