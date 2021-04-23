@@ -6,5 +6,6 @@ import java.util.List;
 
 public interface CityInfoService {
 
-    List<CityInfoVO> getCityInfoList();
+    List<CityInfoVO> getAllCityInfoList();
+    List<CityInfoVO> getCityInfoList(String cityName);
 }

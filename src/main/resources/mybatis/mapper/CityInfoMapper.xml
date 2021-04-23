@@ -5,8 +5,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  
 <mapper namespace="com.liveamonth.liveamonth.model.mapper.cityInfoMapper.CityInfoMapper">
 
-    <select id="getCityInfoList" resultType="com.liveamonth.liveamonth.entity.vo.CityInfoVO">
-        select * from city;
-    </select>
+<!--    <select id="getCityInfoList" resultType="com.liveamonth.liveamonth.entity.vo.CityInfoVO">-->
+<!--        select * from city;-->
+<!--    </select>-->
 
 </mapper>
