@@ -24,6 +24,10 @@
         <li>
             <a href="oneToOneAsk">1:1문의</a>
         </li>
+        
+        <li>
+            <a href="oneToOneAskReply">1:1문의답변(직원용)</a>
+        </li>
     </ul>
 </center>
 
