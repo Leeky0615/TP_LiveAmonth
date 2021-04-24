@@ -42,6 +42,9 @@ public class CityInfoController {
             else if(cityInfoVO.getCityCategory().equals("VIEW")) seoulViewList.add(cityInfoVO);
         }
 
+        System.out.println("리스트 개수: " + seoulInfo.getCityName());
+        System.out.println("리스트 개수: " + seoulInfoList.size());
+        System.out.println("리스트 개수: " + seoulViewList.size());
 
         model.addAttribute("seoulInfo", seoulInfo);
         model.addAttribute("seoulFoodList", seoulFoodList);
@@ -88,5 +91,63 @@ public class CityInfoController {
         model.addAttribute("yeosuViewList", yeosuViewList);
         return YEOSU_INFO.getPath();
     }
+    @GetMapping("/busanInfo")
+    public String busanInfo(Model model) throws Exception {
+        List<CityInfoVO> busanInfoList = cityInfoService.getCityInfoList("부산");
+        CityInfoVO busanInfo = new CityInfoVO();
+        List<CityInfoVO> busanFoodList = new ArrayList<>();
+        List<CityInfoVO> busanViewList = new ArrayList<>();
+        for(CityInfoVO cityInfoVO : busanInfoList){
+            if(cityInfoVO.getCityCategory().equals("CITYINFO")) busanInfo = cityInfoVO;
+            else if(cityInfoVO.getCityCategory().equals("FOOD")) busanFoodList.add(cityInfoVO);
+            else if(cityInfoVO.getCityCategory().equals("VIEW")) busanViewList.add(cityInfoVO);
+        }
 
+
+
+        model.addAttribute("busanInfo", busanInfo);
+        model.addAttribute("busanFoodList", busanFoodList);
+        model.addAttribute("busanViewList", busanViewList);
+        return BUSAN_INFO.getPath();
+    }
+
+    @GetMapping("/gyeongjuInfo")
+    public String gyeongjuInfo(Model model) throws Exception {
+        List<CityInfoVO> gyeongjuInfoList = cityInfoService.getCityInfoList("경주");
+        CityInfoVO gyeongjuInfo = new CityInfoVO();
+        List<CityInfoVO> gyeongjuFoodList = new ArrayList<>();
+        List<CityInfoVO> gyeongjuViewList = new ArrayList<>();
+        for(CityInfoVO cityInfoVO : gyeongjuInfoList){
+            if(cityInfoVO.getCityCategory().equals("CITYINFO")) gyeongjuInfo = cityInfoVO;
+            else if(cityInfoVO.getCityCategory().equals("FOOD")) gyeongjuFoodList.add(cityInfoVO);
+            else if(cityInfoVO.getCityCategory().equals("VIEW")) gyeongjuViewList.add(cityInfoVO);
+        }
+
+
+
+        model.addAttribute("gyeongjuInfo", gyeongjuInfo);
+        model.addAttribute("gyeongjuFoodList", gyeongjuFoodList);
+        model.addAttribute("gyeongjuViewList", gyeongjuViewList);
+        return GYEONGJU_INFO.getPath();
+    }
+
+    @GetMapping("/gangneungInfo")
+    public String gangneungInfo(Model model) throws Exception {
+        List<CityInfoVO> gangneungInfoList = cityInfoService.getCityInfoList("강릉");
+        CityInfoVO gangneungInfo = new CityInfoVO();
+        List<CityInfoVO> gangneungFoodList = new ArrayList<>();
+        List<CityInfoVO> gangneungViewList = new ArrayList<>();
+        for(CityInfoVO cityInfoVO : gangneungInfoList){
+            if(cityInfoVO.getCityCategory().equals("CITYINFO")) gangneungInfo = cityInfoVO;
+            else if(cityInfoVO.getCityCategory().equals("FOOD")) gangneungFoodList.add(cityInfoVO);
+            else if(cityInfoVO.getCityCategory().equals("VIEW")) gangneungViewList.add(cityInfoVO);
+        }
+
+
+
+        model.addAttribute("gangneungInfo", gangneungInfo);
+        model.addAttribute("gangneungFoodList", gangneungFoodList);
+        model.addAttribute("gangneungViewList", gangneungViewList);
+        return GANGNEUNG_INFO.getPath();
+    }
 }

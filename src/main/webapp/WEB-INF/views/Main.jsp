@@ -9,8 +9,8 @@
 </head>
 
 <body>
- 	<jsp:include page="/incl/Header.jsp" />
- 	
+    <jsp:include page="/incl/Header.jsp" />
+
 
 	<!-- Hero Section Begin -->
     <section class="hero-section">
@@ -100,7 +100,7 @@
             </div>
             
             <div class="row property-filter">
-            
+
                  <div class="col-lg-4 col-md-6 mix all seoul">
                                <div class="ih-item square effect13 left_to_right property-item">
                                    <a href="seoulInfo">
@@ -114,7 +114,7 @@
                                    </a>
                                </div>
                            </div>
-                
+
                <div class="col-lg-4 col-md-6 mix all jeju">
                               <div class="ih-item square effect13 left_to_right property-item">
                                   <a href="jejuInfo">
@@ -128,7 +128,7 @@
                                   </a>
                               </div>
                           </div>
-                
+
                   <div class="col-lg-4 col-md-6 mix all yeosu">
                                 <div class="ih-item square effect13 left_to_right property-item">
                                     <a href="yeosuInfo">
@@ -142,7 +142,7 @@
                                     </a>
                                 </div>
                             </div>
-                
+
                      <div class="col-lg-4 col-md-6 mix all busan">
                                 <div class="ih-item square effect13 left_to_right property-item">
                                     <a href="busanInfo">
@@ -180,9 +180,9 @@
                                    <div class="info">
                                        <h3>Gangneung</h3>
                                        <p>강릉입니다.</p>
-					       </div>
-				       </a>
-			       </div>
+                      </div>
+                   </a>
+                </div>
                 </div>
             </div>
         </div>

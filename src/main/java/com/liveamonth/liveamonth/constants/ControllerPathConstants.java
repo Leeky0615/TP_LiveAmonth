@@ -34,8 +34,10 @@ public class ControllerPathConstants {
         CITY_INFO("CityInfo"),
         JEJU_INFO("JejuInfo"),
         YEOSU_INFO("YeosuInfo"),
-        SEOUL_INFO("SeoulInfo");
-
+        SEOUL_INFO("SeoulInfo"),
+        GYEONGJU_INFO("GyeongjuInfo"),
+        BUSAN_INFO("BusanInfo"),
+        GANGNEUNG_INFO("GangneungInfo");
         private String path;
         private ECityInfoPath(String path) {this.path = "cityInfoView/"+path;}
         public String getPath() {return this.path;}

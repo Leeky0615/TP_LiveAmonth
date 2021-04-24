@@ -88,7 +88,7 @@
 
             <div class="col-lg-4 col-md-6 mix all busan">
                 <div class="ih-item square effect13 left_to_right property-item">
-                    <a href="#">
+                    <a href="busanInfo">
                         <div class="pi-pic set-bg" data-setbg="resources/img/info/INFO_BS.png">
                             <div class="label">부산</div>
                         </div>
@@ -103,8 +103,8 @@
             <div class="col-lg-4 col-md-6 mix all gyungju">
                 <div class="ih-item square effect13 left_to_right property-item">
                     <a href="#">
-                        <div class="pi-pic set-bg" data-setbg="resources/img/info/INFO_KJ.png">
-                            <div class="label">경주</div>
+                        <div class="pi-pic set-bg" data-setbg="resources/img/property/property-4.jpg">
+                            <div class="label">부산</div>
                         </div>
                         <div class="info">
                             <h3>Gyungju</h3>
@@ -116,7 +116,7 @@
 
             <div class="col-lg-4 col-md-6 mix all gangneung">
                 <div class="ih-item square effect13 left_to_right property-item">
-                    <a href="#">
+                    <a href="gangneungInfo">
                         <div class="pi-pic set-bg" data-setbg="resources/img/info/INFO_KN.png">
                             <div class="label">강릉</div>
                         </div>
