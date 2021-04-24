@@ -167,22 +167,10 @@ public class ScheduleController{
     public void showScheduleContentList(Model model, HttpServletRequest request, CalendarDTO calendarDTO) throws Exception{
         this.scheduleContentNO = Integer.parseInt(request.getParameter(SCHEDULE_CONTENT_NO.getText()));
     }
-
-    @RequestMapping("/otherSchedule")
-    public String otherSchedule(Model model, HttpServletRequest request, CalendarDTO calendarDTO) throws Exception{
-        int userNO =  Integer.parseInt((String) request.getParameter(USER_NO.getText()));
-        int scheduleNO = Integer.parseInt((String) request.getParameter(SCHEDULE_NO.getText()));
-
-        CalendarDTO calendarDto = scheduleService.showCalendar(calendarDTO, scheduleNO);
-
-        model.addAttribute(DATE_LIST.getText(), calendarDto.getDateList()); //날짜 데이터 배열
-        model.addAttribute(TODAY_INFORMATION.getText(), calendarDto.getTodayInformation());
-
-        return OTHER_SCHEDULE.getPath();
-    }
+    
     @RequestMapping("/otherScheduleList")
     public String otherScheduleList(Model model, HttpServletRequest request, CalendarDTO calendarDTO) throws Exception {
-        List<ScheduleVO> scheduleVOList = scheduleService.getOtherScheduleInfo();
+        List<ScheduleVO> scheduleVOList = scheduleService.getOtherScheduleList(0, 0, null, null);
         List<UserVO> userVOList = myPageService.getOtherScheduleUserInfo(scheduleVOList);
         Place[] placeList = Place.values();
 
@@ -197,14 +185,29 @@ public class ScheduleController{
     public String filteringScheduleList(Model model, HttpServletRequest request, CalendarDTO calendarDTO) throws Exception {
         int sex = Integer.parseInt((String) request.getParameter(SCHEDULE_SEX.getText()));
         int age = Integer.parseInt((String) request.getParameter(SCHEDULE_AGE.getText()));
-        String place = request.getParameter(SCHEDULE_PLACE.getText());
+//        String place = request.getParameter(SCHEDULE_PLACE.getText()); contants 이름 수정 필요     
+        String place = request.getParameter("place");
+        String orderBy = request.getParameter("orderBy");
+        		
+        System.out.println(place);
+        List<ScheduleVO> scheduleVOList = scheduleService.getOtherScheduleList(sex, age, place, orderBy);
+        List<UserVO> userVOList = myPageService.getOtherScheduleUserInfo(scheduleVOList);
 
-        List<ScheduleVO> ScheduleVOList = scheduleService.getOtherScheduleInfo();
-        List<UserVO> UserVOList = myPageService.getOtherScheduleUserInfo(ScheduleVOList);
-
-        model.addAttribute(SCHEDULE_VO_LIST.getText(), ScheduleVOList);
-        model.addAttribute(USER_VO_LIST.getText(), UserVOList);
+        model.addAttribute(SCHEDULE_VO_LIST.getText(), scheduleVOList);
+        model.addAttribute(USER_VO_LIST.getText(), userVOList);
 
         return OTHER_SCHEDULE_LIST.getPath();
+    }
+    
+    @RequestMapping("/otherSchedule")
+    public String otherSchedule(Model model, HttpServletRequest request, CalendarDTO calendarDTO) throws Exception{
+        int scheduleNO = Integer.parseInt((String) request.getParameter(SCHEDULE_NO.getText()));
+
+        CalendarDTO calendarDto = scheduleService.showCalendar(calendarDTO, scheduleNO);
+
+        model.addAttribute(DATE_LIST.getText(), calendarDto.getDateList()); //날짜 데이터 배열
+        model.addAttribute(TODAY_INFORMATION.getText(), calendarDto.getTodayInformation());
+
+        return OTHER_SCHEDULE.getPath();
     }
 }

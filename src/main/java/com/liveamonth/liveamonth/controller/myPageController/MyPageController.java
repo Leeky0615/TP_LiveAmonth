@@ -31,6 +31,7 @@ public class MyPageController {
         HttpSession session = request.getSession();
         Object session_UserID = session.getAttribute(USER_ID.getText());
         String userID = (String)session_UserID;
+        model.addAttribute(CHECK_USER.getText(), true);
 
         session.setAttribute(USER_VO.getText(), myPageService.getUserInfo(userID));
         return MY_PAGE.getPath();
@@ -41,7 +42,7 @@ public class MyPageController {
         model.addAttribute(USER_VO.getText(), request.getAttribute(USER_VO.getText()));
         model.addAttribute(CHECK_USER.getText(), true);
 
-        return RE_CHECK_USER_PW.getPath();
+        return "myPageView/MyPage.jsp?page=ReCheckUserPW";
     }
 
     @GetMapping("/goToModifyUserInfo")

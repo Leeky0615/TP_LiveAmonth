@@ -16,31 +16,6 @@
    <div class="row">
       <div class="col-lg-12 p-0">  -->
 
-<!-- <div>
-   <form action="/filteringScheduleList" class="filter-form">
-      <h4>필터 검색</h4>
-      <label>성별</label> <br> <select name="sex" id="sex"
-         class="sm-width">
-         <option value="0">기본</option>
-         <option value="1">남성</option>
-         <option value="2">여성</option>
-      </select> <label>나이</label> <br> <select name="age" id="age"
-         class="sm-width">
-         <option value="0">기본</option>
-         <option value="20">20대</option>
-         <option value="30">30대</option>
-         <option value="40">40대</option>
-         <option value="50">50대</option>
-         <option value="60">60대</option>
-      </select> <label>장소</label> <br> <select name="place" id="place"
-         class="sm-width">
-         <option value="NULL">기본</option>
-         <option value="SEOUL">서울</option>
-         <option value="JEJU">제주</option>
-      </select> <input type="submit" value="조회">
-   </form>
-</div> -->
-
 <form action="/filteringScheduleList" class="filter-form">
    <h4>필터 검색</h4>
    <table>
@@ -68,12 +43,31 @@
             <option value="60">60대</option>
          </select></td>
          <td><select name="place" id="place" class="sm-width">
-            <option value="NULL">기본</option>
+            <option value= null>기본</option>
             <c:forEach var="place" items="${placeList}">
                <option value="${place}">${place.label}</option>
             </c:forEach>
          </select></td>
-         <td><input type="submit" value="조회"></td>
+<!--          <td><input type="submit" name="filter" value="조회"></td> -->
+      </tr>
+      </tbody>
+   </table>
+   
+   <h4>정렬</h4>
+   <table>
+      <thead>
+      <tr>
+         <th><label>정렬 조건</label></th>
+         <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+         <td>
+        	 <input type="radio" name="orderBy" value="orderByLiked" class="sm-width" checked="checked">좋아요 순
+        	 <input type="radio" name="orderBy" value="orderByNew" class="sm-width">최신 순
+		 </td>
+         <td><input type="submit" name="filter" value="적용"></td>
       </tr>
       </tbody>
    </table>
@@ -113,7 +107,7 @@
          <tr>
             <td>
                <div class="title">스케줄 제목</div> <a
-                    href="/otherSchedule?useNO=${userVOList[i].getUserNO()}&scheduleNO=${scheduleVOList[i].getScheduleNO()}">
+                    href="/otherSchedule?userNO=${userVOList[i].getUserNO()}&scheduleNO=${scheduleVOList[i].getScheduleNO()}">
                <img src="resources/img/scheduleImg.png" alt="">
             </a>
             </td>

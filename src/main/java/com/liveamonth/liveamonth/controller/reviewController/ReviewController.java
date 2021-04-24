@@ -7,15 +7,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class ReviewController {
-    private final ReviewService reviewService;
-
-    public ReviewController(ReviewService reviewService) {
-        this.reviewService = reviewService;
-    }
-
-    @GetMapping("/review")
-    public String hello(Model model) {
-        return "reviewView/Review";
-    }
+	/*
+	 * private final ReviewService reviewService;
+	 * 
+	 * public ReviewController(ReviewService reviewService) { this.reviewService =
+	 * reviewService; }
+	 * 
+	 * @GetMapping("/review") public String hello(Model model) { return
+	 * "reviewView/Review"; }
+	 */
 
 }

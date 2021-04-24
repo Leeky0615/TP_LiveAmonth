@@ -22,8 +22,8 @@ public interface ScheduleMapper {
 
     public int beforeScheduleAddSearch(ScheduleContentVO scheduleContentVO)  throws Exception;
 
-    public List<ScheduleVO> getOtherScheduleInfo();
-
+    public List<ScheduleVO> getOtherScheduleList(HashMap<String, String> sqlParameter);
+    
     public void deleteScheduleContent(int scheduleContentNO)  throws Exception;
 
     public void modifyScheduleContent(ScheduleContentVO scheduleContentVO)  throws Exception;

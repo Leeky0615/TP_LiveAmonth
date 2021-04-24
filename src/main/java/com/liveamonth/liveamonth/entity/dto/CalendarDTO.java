@@ -11,8 +11,6 @@ import com.liveamonth.liveamonth.entity.vo.ScheduleVO;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
 public class CalendarDTO {
     private String year = "";
     private String month = "";
@@ -27,9 +25,9 @@ public class CalendarDTO {
     private Map<String, Integer> todayInformation;
     private List<CalendarDTO> dateList;
 
-    // 날짜에 관련된 달력정보를 가지는 메서드
+    // �궇吏쒖뿉 愿��젴�맂 �떖�젰�젙蹂대�� 媛�吏��뒗 硫붿꽌�뱶
     public Map<String, Integer> todayInformation(CalendarDTO calendarDTO) {
-        // 날짜 캘린더 함수에 삽입.
+        // �궇吏� 罹섎┛�뜑 �븿�닔�뿉 �궫�엯.
         Map<String, Integer> todayData = new HashMap<String, Integer>();
         Calendar cal = Calendar.getInstance();
         cal.set(Integer.parseInt(calendarDTO.getYear()), Integer.parseInt(calendarDTO.getMonth()), 1);
@@ -58,9 +56,9 @@ public class CalendarDTO {
 
         Map<String, Integer> beforeAfterCalendar = beforeAfterCalendar(searchYear,searchMonth);
 
-        //날짜 관련
+        //�궇吏� 愿��젴
         System.out.println("search_month : " + searchMonth);
-        // 캘린더 함수 end
+        // 罹섎┛�뜑 �븿�닔 end
         todayData.put("start", start);
         todayData.put("startDay", startDay);
         todayData.put("endDay", endDay);
@@ -78,7 +76,7 @@ public class CalendarDTO {
         return todayData;
     }
 
-    //이전달 다음달 및 이전년도 다음년도
+    //�씠�쟾�떖 �떎�쓬�떖 諛� �씠�쟾�뀈�룄 �떎�쓬�뀈�룄
     private Map<String, Integer> beforeAfterCalendar(int searchYear, int searchMonth){
         Map<String, Integer> beforeAfterData = new HashMap<String, Integer>();
         int beforeYear = searchYear;
@@ -104,7 +102,7 @@ public class CalendarDTO {
         return beforeAfterData;
     }
 
-    // 스케줄 사용시 사용될 생성자
+    // �뒪耳�以� �궗�슜�떆 �궗�슜�맆 �깮�꽦�옄
 
     public CalendarDTO(String year, String month, String date, String value, ScheduleContentVO[] scheduleDataArray) {
         if ((month != null && month != "") && (date != null && date != "")) {
@@ -125,6 +123,78 @@ public class CalendarDTO {
     public String toString() {
         return "DateData [year=" + year + ", month=" + month + ", date=" + date + ", value=" + value + "]";
     }
+
+	public String getYear() {
+		return year;
+	}
+
+	public void setYear(String year) {
+		this.year = year;
+	}
+
+	public String getMonth() {
+		return month;
+	}
+
+	public void setMonth(String month) {
+		this.month = month;
+	}
+
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
+
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
+	}
+
+	public String getDbStartDate() {
+		return dbStartDate;
+	}
+
+	public void setDbStartDate(String dbStartDate) {
+		this.dbStartDate = dbStartDate;
+	}
+
+	public String getDbEndDate() {
+		return dbEndDate;
+	}
+
+	public void setDbEndDate(String dbEndDate) {
+		this.dbEndDate = dbEndDate;
+	}
+
+	public ScheduleContentVO[] getScheduleDataArray() {
+		return scheduleDataArray;
+	}
+
+	public void setScheduleDataArray(ScheduleContentVO[] scheduleDataArray) {
+		this.scheduleDataArray = scheduleDataArray;
+	}
+
+	public Map<String, Integer> getTodayInformation() {
+		return todayInformation;
+	}
+
+	public void setTodayInformation(Map<String, Integer> todayInformation) {
+		this.todayInformation = todayInformation;
+	}
+
+	public List<CalendarDTO> getDateList() {
+		return dateList;
+	}
+
+	public void setDateList(List<CalendarDTO> dateList) {
+		this.dateList = dateList;
+	}
 
 }
 

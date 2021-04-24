@@ -32,6 +32,6 @@ public interface ScheduleService {
 
 	boolean deleteSchedule(int scheduleNO) throws Exception;
 	
-	public  List<ScheduleVO> getOtherScheduleInfo() throws Exception;
+	public  List<ScheduleVO> getOtherScheduleList(int sex, int age, String place, String orderBy) throws Exception;
 
 }
