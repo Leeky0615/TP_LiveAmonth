@@ -32,7 +32,15 @@ public class ControllerPathConstants {
     }
     public enum ECityInfoPath {
         CITY_INFO("CityInfo"),
-        SEOUL_INFO("SeoulInfo");
+        JEJU_INFO("JejuInfo"),
+        YEOSU_INFO("YeosuInfo"),
+        SEOUL_INFO("SeoulInfo"),
+        GYEONGJU_INFO("GyeongjuInfo"),
+        BUSAN_INFO("BusanInfo"),
+        GANGNEUNG_INFO("GangneungInfo");
+
+
+
         private String path;
         private ECityInfoPath(String path) {this.path = "cityInfoView/"+path;}
         public String getPath() {return this.path;}
