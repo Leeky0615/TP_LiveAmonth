@@ -105,7 +105,7 @@
 								<li class="active"><a href="cityInfo">CITY</a>
 									<ul class="dropdown">
 										<li><a href="cityInfo">ALL</a></li>
-										<li><a href="cityInfo">서울</a></li>
+										<li><a href="seoulInfo">서울</a></li>
 										<li><a href="cityInfo">제주</a></li>
 										<li><a href="cityInfo">여수</a></li>
 										<li><a href="cityInfo">부산</a></li>

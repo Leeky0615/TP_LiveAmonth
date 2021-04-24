@@ -176,7 +176,7 @@ ol {
 }
 
 .spad {
-    padding-top: 100px;
+    padding-top: 50px;
     padding-bottom: 100px;
 }
 
@@ -2062,7 +2062,7 @@ ol {
     text-align: center;
     color: #111111;
     width: 300px;
-    height: 30px;
+    height: 50px;
     display: inline-block;
 }
 .tab-content button{
@@ -3872,7 +3872,13 @@ li .richText-btn[data-command=toggleCode] {
 .cf-content .check-pw-form {
     text-align: left;
 }
-
+.check-pw-form button{
+    margin-top: 10px;
+    margin-left: 460px;
+}
+.check-pw{
+    padding: 5px 50px 50px 50px;
+}
 /*--------------------------------- Responsive Media Quaries -----------------------------*/
 @media only screen and (min-width: 1600px) and (max-width: 1920px) {
     .hs-slider.owl-carousel .owl-nav button {
@@ -3897,6 +3903,11 @@ li .richText-btn[data-command=toggleCode] {
 @media only screen and (min-width: 1200px) {
     .container {
         max-width: 1170px;
+    }
+}
+@media only screen and (min-width: 1200px) {
+    .profileContainer {
+        max-width: 800px;
     }
 }
 
