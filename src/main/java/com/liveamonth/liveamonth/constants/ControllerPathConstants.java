@@ -13,8 +13,13 @@ public class ControllerPathConstants {
         RE_CHECK_USER_PW("ReCheckUserPW"),
         DROP_USER("DropUser"),
         RESULT_MENT_DROP_USER("ResultMentDropUser"),
-        RESULT_MENT_MODIFY_USER_INFO("ResultMentModifyUserInfo");
-        private String path;
+        RESULT_MENT_MODIFY_USER_INFO("ResultMentModifyUserInfo"),
+    	FINALLY_ASK_DROP_USER("FinallyAskDropUser"),
+    	ONE_TO_ONE_ASK("OneToOneAsk"),
+    	ONE_TO_ONE_ASK_WRITE("OneToOneAskWrite"),
+    	RESULT_MENT_ONE_TO_ONE_ASK("ResultMentOneToOneAsk");
+    	
+    	private String path;
         private EMyPagePath(String path) {this.path = "myPageView/"+path;}
         public String getPath() {return this.path;}
     }

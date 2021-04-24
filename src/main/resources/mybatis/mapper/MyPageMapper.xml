@@ -8,5 +8,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="getOtherScheduleUserInfo" parameterType = "int" resultType="com.liveamonth.liveamonth.entity.vo.UserVO">
       select * from user where userNO = #{userNO};
     </select>
+    
+    <select id = "getOneToOneAskVOList" resultType="com.liveamonth.liveamonth.entity.vo.OneToOneAskVO">
+    	select * from oneToOneAsk;
+    </select>
+    
+    <select id="getLastOneToOneAskNO" resultType="int">
+      select max(oneToOneAskNO) from oneToOneAsk;
+    </select>
+    
+    <insert id = "addOneToOneAsk" parameterType="com.liveamonth.liveamonth.entity.vo.OneToOneAskVO">
+    	insert into oneToOneAsk 
+    	values(#{oneToOneAskNO}, #{oneToOneAskCategory}, #{oneToOneAskSubject}, #{oneToOneAskDesc}, #{oneToOneAskDate},
+    	      #{oneToOneAskViewCount}, #{oneToOneAskImageURL},#{oneToOneAskUserEmail}, #{oneToOneAskReply}, #{userNO});
+    </insert>
+    
+    <!-- delete -->
+	<delete id="dropUser" parameterType="String">
+		delete from user where userID = #{userID}
+	</delete>
 
 </mapper>

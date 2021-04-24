@@ -87,4 +87,11 @@ public class EntityConstants {
         private EUser(String text) {this.text = text;}
         public String getText() {return this.text;}
     }
+    
+    public enum EOneToOneAsk{
+        ONE_TO_ONE_ASK_VO("oneToOneAskVO");
+        private String text;
+        private EOneToOneAsk(String text) {this.text = text;}
+        public String getText() {return this.text;}
+    }
 }

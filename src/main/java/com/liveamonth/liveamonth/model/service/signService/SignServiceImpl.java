@@ -88,10 +88,6 @@ public class SignServiceImpl implements SignService {
 		}
 	}
 
-	@Override
-	public void dropUser(String userID) throws Exception {
-		signMapper.dropUser(userID);
-		
-	}
+	
 
 }

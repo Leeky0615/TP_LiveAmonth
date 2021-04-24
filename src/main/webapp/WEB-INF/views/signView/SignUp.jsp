@@ -28,7 +28,7 @@
 
     <div class="container">
 
-        <form action=ResultMentSignUp method="post" class="signup-form" name="SignInfo" onsubmit="return checkValue()">
+        <form action=resultMentSignUp method="post" class="signup-form" name="SignInfo" onsubmit="return checkValue()">
 
             <div class="row justify-content-center">
                 <div class="col-md-6 text-center mb-5">

@@ -30,4 +30,54 @@ public class ScheduleContentVO {
 		// Reference
 		this.scheduleNO = 0;
 	}
+
+	public int getScheduleContentNO() {
+		return scheduleContentNO;
+	}
+
+	public void setScheduleContentNO(int scheduleContentNO) {
+		this.scheduleContentNO = scheduleContentNO;
+	}
+
+	public String getScheduleContentSubject() {
+		return scheduleContentSubject;
+	}
+
+	public void setScheduleContentSubject(String scheduleContentSubject) {
+		this.scheduleContentSubject = scheduleContentSubject;
+	}
+
+	public String getScheduleContentDesc() {
+		return scheduleContentDesc;
+	}
+
+	public void setScheduleContentDesc(String scheduleContentDesc) {
+		this.scheduleContentDesc = scheduleContentDesc;
+	}
+
+	public String getScheduleContentDate() {
+		return scheduleContentDate;
+	}
+
+	public void setScheduleContentDate(String scheduleContentDate) {
+		this.scheduleContentDate = scheduleContentDate;
+	}
+
+	public int getScheduleContentCost() {
+		return scheduleContentCost;
+	}
+
+	public void setScheduleContentCost(int scheduleContentCost) {
+		this.scheduleContentCost = scheduleContentCost;
+	}
+
+	public int getScheduleNO() {
+		return scheduleNO;
+	}
+
+	public void setScheduleNO(int scheduleNO) {
+		this.scheduleNO = scheduleNO;
+	}
+	
+	
 }

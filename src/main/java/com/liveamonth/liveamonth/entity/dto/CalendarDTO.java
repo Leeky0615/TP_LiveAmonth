@@ -126,6 +126,80 @@ public class CalendarDTO {
         return "DateData [year=" + year + ", month=" + month + ", date=" + date + ", value=" + value + "]";
     }
 
+	public String getYear() {
+		return year;
+	}
+
+	public void setYear(String year) {
+		this.year = year;
+	}
+
+	public String getMonth() {
+		return month;
+	}
+
+	public void setMonth(String month) {
+		this.month = month;
+	}
+
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
+
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
+	}
+
+	public String getDbStartDate() {
+		return dbStartDate;
+	}
+
+	public void setDbStartDate(String dbStartDate) {
+		this.dbStartDate = dbStartDate;
+	}
+
+	public String getDbEndDate() {
+		return dbEndDate;
+	}
+
+	public void setDbEndDate(String dbEndDate) {
+		this.dbEndDate = dbEndDate;
+	}
+
+	public ScheduleContentVO[] getScheduleDataArray() {
+		return scheduleDataArray;
+	}
+
+	public void setScheduleDataArray(ScheduleContentVO[] scheduleDataArray) {
+		this.scheduleDataArray = scheduleDataArray;
+	}
+
+	public Map<String, Integer> getTodayInformation() {
+		return todayInformation;
+	}
+
+	public void setTodayInformation(Map<String, Integer> todayInformation) {
+		this.todayInformation = todayInformation;
+	}
+
+	public List<CalendarDTO> getDateList() {
+		return dateList;
+	}
+
+	public void setDateList(List<CalendarDTO> dateList) {
+		this.dateList = dateList;
+	}
+    
+    
+
 }
 
 

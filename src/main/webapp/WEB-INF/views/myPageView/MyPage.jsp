@@ -7,7 +7,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
+
     <title>한달 살기</title>
 </head>
 <%
