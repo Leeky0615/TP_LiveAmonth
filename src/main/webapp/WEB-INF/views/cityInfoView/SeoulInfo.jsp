@@ -16,14 +16,14 @@
     ArrayList<CityInfoVO> seoulViewList = (ArrayList<CityInfoVO>) request.getAttribute("seoulViewList");
 %>
 <jsp:include page="/incl/Header.jsp"/>
-<%--탭누를때마다 정보가 3개--%>
-<p>info : <c:out value="${seoulInfo.getCityDesc()}" /></p>
+
+<p>정보 : <c:out value="${seoulInfo.getCityDesc()}" /></p>
 <p>
-    food : <c:out value="${seoulFoodList[0].getCityDesc()}" />
+   먹을거리 : <c:out value="${seoulFoodList[0].getCityDesc()}" />
     <img src="/resources/img/food/+<c:out value='${seoulFoodList[0].getCityDesc()}' />" alt>
 </p>
 <p>
-    view : <c:out value="${seoulViewList[0].getCityDesc()}" />
+    볼거리 : <c:out value="${seoulViewList[0].getCityDesc()}" />
 </p>
 
 <jsp:include page="/incl/Footer.jsp"/>

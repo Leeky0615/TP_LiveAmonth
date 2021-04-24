@@ -11,19 +11,19 @@
 </head>
 <body>
 <%
-    CityInfoVO jejuInfo = (CityInfoVO) request.getAttribute("jejuInfo");
-    ArrayList<CityInfoVO> jejuFoodList = (ArrayList<CityInfoVO>) request.getAttribute("jejuFoodList");
-    ArrayList<CityInfoVO> jejuViewList = (ArrayList<CityInfoVO>) request.getAttribute("jejuViewList");
+    CityInfoVO yeosuInfo = (CityInfoVO) request.getAttribute("yeosuInfo");
+    ArrayList<CityInfoVO> yeosuFoodList = (ArrayList<CityInfoVO>) request.getAttribute("yeosuFoodList");
+    ArrayList<CityInfoVO> yeosuViewList = (ArrayList<CityInfoVO>) request.getAttribute("yeosuViewList");
 %>
 <jsp:include page="/incl/Header.jsp"/>
 
-<p>info : <c:out value="${jejuInfo.getCityDesc()}" /></p>
+<p> 정보 : <c:out value="${yeosuInfo.getCityDesc()}" /></p>
 <p>
-    food : <c:out value="${jejuFoodList[0].getCityDesc()}" />
-    <img src="/resources/img/food/+<c:out value='${jejuFoodList[0].getCityDesc()}' />" alt>
+    먹을거리 : <c:out value="${yeosuFoodList[0].getCityDesc()}" />
+    <img src="/resources/img/food/+<c:out value='${yeosuFoodList[0].getCityDesc()}' />" alt>
 </p>
 <p>
-    view : <c:out value="${jejuViewList[0].getCityDesc()}" />
+    볼거리 : <c:out value="${yeosuViewList[0].getCityDesc()}" />
 </p>
 
 <jsp:include page="/incl/Footer.jsp"/>

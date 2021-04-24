@@ -42,13 +42,51 @@ public class CityInfoController {
             else if(cityInfoVO.getCityCategory().equals("VIEW")) seoulViewList.add(cityInfoVO);
         }
 
-        System.out.println("리스트 개수: " + seoulInfo.getCityName());
-        System.out.println("리스트 개수: " + seoulInfoList.size());
-        System.out.println("리스트 개수: " + seoulViewList.size());
 
         model.addAttribute("seoulInfo", seoulInfo);
         model.addAttribute("seoulFoodList", seoulFoodList);
         model.addAttribute("seoulViewList", seoulViewList);
         return SEOUL_INFO.getPath();
     }
+
+    @GetMapping("/jejuInfo")
+    public String jejuInfo(Model model) throws Exception {
+        List<CityInfoVO> jejuInfoList = cityInfoService.getCityInfoList("제주");
+        CityInfoVO jejuInfo = new CityInfoVO();
+        List<CityInfoVO> jejuFoodList = new ArrayList<>();
+        List<CityInfoVO> jejuViewList = new ArrayList<>();
+        for(CityInfoVO cityInfoVO : jejuInfoList){
+            if(cityInfoVO.getCityCategory().equals("CITYINFO")) jejuInfo = cityInfoVO;
+            else if(cityInfoVO.getCityCategory().equals("FOOD")) jejuFoodList.add(cityInfoVO);
+            else if(cityInfoVO.getCityCategory().equals("VIEW")) jejuViewList.add(cityInfoVO);
+        }
+
+
+
+        model.addAttribute("jejuInfo", jejuInfo);
+        model.addAttribute("jejuFoodList", jejuFoodList);
+        model.addAttribute("jejuViewList", jejuViewList);
+        return JEJU_INFO.getPath();
+    }
+
+    @GetMapping("/yeosuInfo")
+    public String yeosuInfo(Model model) throws Exception {
+        List<CityInfoVO> yeosuInfoList = cityInfoService.getCityInfoList("여수");
+        CityInfoVO yeosuInfo = new CityInfoVO();
+        List<CityInfoVO> yeosuFoodList = new ArrayList<>();
+        List<CityInfoVO> yeosuViewList = new ArrayList<>();
+        for(CityInfoVO cityInfoVO : yeosuInfoList){
+            if(cityInfoVO.getCityCategory().equals("CITYINFO")) yeosuInfo = cityInfoVO;
+            else if(cityInfoVO.getCityCategory().equals("FOOD")) yeosuFoodList.add(cityInfoVO);
+            else if(cityInfoVO.getCityCategory().equals("VIEW")) yeosuViewList.add(cityInfoVO);
+        }
+
+
+
+        model.addAttribute("yeosuInfo", yeosuInfo);
+        model.addAttribute("yeosuFoodList", yeosuFoodList);
+        model.addAttribute("yeosuViewList", yeosuViewList);
+        return YEOSU_INFO.getPath();
+    }
+
 }

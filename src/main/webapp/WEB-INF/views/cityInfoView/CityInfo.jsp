@@ -32,11 +32,11 @@
                     <ul>
                         <li data-filter="all">All</li>
                         <li data-filter=".seoul">서울</li>
-                        <li data-filter=".gyeonggi">제주</li>
-                        <li data-filter=".gangwon">여수</li>
-                        <li data-filter=".chungcheong">부산</li>
-                        <li data-filter=".jeolla">강릉</li>
-                        <li data-filter=".gyeongsang">경주</li>
+                        <li data-filter=".jeju">제주</li>
+                        <li data-filter=".yeosu">여수</li>
+                        <li data-filter=".busan">부산</li>
+                        <li data-filter=".gangneung">강릉</li>
+                        <li data-filter=".gyeongju">경주</li>
                     </ul>
                 </div>
             </div>
@@ -58,10 +58,10 @@
                 </div>
             </div>
 
-            <div class="col-lg-4 col-md-6 mix all gyeonggi">
+            <div class="col-lg-4 col-md-6 mix all jeju">
                 <div class="ih-item square effect13 left_to_right property-item">
-                    <a href="#">
-                        <div class="pi-pic set-bg" data-setbg="resources/img/property/property-2.jpg">
+                    <a href="jejuInfo">
+                        <div class="pi-pic set-bg" data-setbg="resources/img/info/INFO_JJ.png">
                             <div class="label">제주</div>
                         </div>
                         <div class="info">
@@ -72,10 +72,10 @@
                 </div>
             </div>
 
-            <div class="col-lg-4 col-md-6 mix all gangwon">
+            <div class="col-lg-4 col-md-6 mix all yeosu">
                 <div class="ih-item square effect13 left_to_right property-item">
-                    <a href="#">
-                        <div class="pi-pic set-bg" data-setbg="resources/img/property/property-3.jpg">
+                    <a href="yeosuInfo">
+                        <div class="pi-pic set-bg" data-setbg="resources/img/info/INFO_YS.png">
                             <div class="label">여수</div>
                         </div>
                         <div class="info">
@@ -86,10 +86,10 @@
                 </div>
             </div>
 
-            <div class="col-lg-4 col-md-6 mix all chungcheong">
+            <div class="col-lg-4 col-md-6 mix all busan">
                 <div class="ih-item square effect13 left_to_right property-item">
                     <a href="#">
-                        <div class="pi-pic set-bg" data-setbg="resources/img/property/property-4.jpg">
+                        <div class="pi-pic set-bg" data-setbg="resources/img/info/INFO_BS.png">
                             <div class="label">부산</div>
                         </div>
                         <div class="info">
@@ -100,24 +100,24 @@
                 </div>
             </div>
 
-            <div class="col-lg-4 col-md-6 mix all chungcheong">
+            <div class="col-lg-4 col-md-6 mix all gyungju">
                 <div class="ih-item square effect13 left_to_right property-item">
                     <a href="#">
-                        <div class="pi-pic set-bg" data-setbg="resources/img/property/property-4.jpg">
-                            <div class="label">부산</div>
+                        <div class="pi-pic set-bg" data-setbg="resources/img/info/INFO_KJ.png">
+                            <div class="label">경주</div>
                         </div>
                         <div class="info">
-                            <h3>Busan</h3>
-                            <p>부산입니다.</p>
+                            <h3>Gyungju</h3>
+                            <p>경주입니다.</p>
                         </div>
                     </a>
                 </div>
             </div>
 
-            <div class="col-lg-4 col-md-6 mix all jeju">
+            <div class="col-lg-4 col-md-6 mix all gangneung">
                 <div class="ih-item square effect13 left_to_right property-item">
                     <a href="#">
-                        <div class="pi-pic set-bg" data-setbg="resources/img/property/property-5.jpg">
+                        <div class="pi-pic set-bg" data-setbg="resources/img/info/INFO_KN.png">
                             <div class="label">강릉</div>
                         </div>
                         <div class="info">
