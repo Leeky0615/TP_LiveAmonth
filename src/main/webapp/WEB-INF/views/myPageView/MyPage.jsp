@@ -26,7 +26,7 @@
 <section class="blog-section spad">
     <div class="container">
         <div class="row">
-            <jsp:include page="/views/myPageView/MyPageSideBar.jsp"/>
+            <jsp:include page="/WEB-INF/views/myPageView/MyPageSideBar.jsp"/>
             <div class="col-lg-10">
                 <jsp:include page='<%="/WEB-INF/views/myPageView/"+pagefile%>'/>
             </div>

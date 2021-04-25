@@ -29,7 +29,7 @@
 <body>
 <%
     UserVO userVO = (UserVO) request.getAttribute("userVO");
-//    boolean checkUser = (boolean) request.getAttribute("checkUser");
+    boolean checkUser = (boolean) request.getAttribute("checkUser");
 %>
 <div class="check-pw">
     <div class="section-title">
@@ -54,9 +54,9 @@
                 </li>
             </ul>
         </div>
-<%--        <%if (checkUser == false) {%>--%>
-<%--        <p class="text-center" style="color:#ff0000">잘못된 비밀번호입니다. 다시 확인해 주세요</p>--%>
-<%--        <% }%>--%>
+        <%if (checkUser == false) {%>
+        <p class="text-center" style="color:#ff0000">잘못된 비밀번호입니다. 다시 확인해 주세요</p>
+        <% }%>
         <button type="submit" class="site-btn">확인</button>
     </form>
 </div>

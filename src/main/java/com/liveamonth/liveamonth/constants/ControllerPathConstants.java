@@ -1,12 +1,27 @@
 package com.liveamonth.liveamonth.constants;
 
 public class ControllerPathConstants {
+    /*
+     * View(JSP)의 파일 경로를 모아놓은 클래스
+     * 1. getPath() : View에 해당하는 directory를 더해서 리턴.
+     * 2. getText() : 텍스트만 리턴
+     * 3. 'redirect:'를 사용하는 경우 enum에 'REDIRECT_+@@@@' 형식으로 enum 선언 -> 가져올때는 getText() 사용
+     */
+    public ControllerPathConstants() {}
+
+    /*
+     * MainController Path Constants
+     */
     public enum EMainPath {
         MAIN("Main");
         private String path;
         private EMainPath(String path) {this.path = path;}
         public String getPath() {return this.path;}
     }
+
+    /*
+     * MyPageController Path Constants
+     */
     public enum EMyPagePath {
         MY_PAGE("MyPage"),
         MODIFY_USER_INFO("ModifyUserInfo"),
@@ -20,9 +35,15 @@ public class ControllerPathConstants {
     	RESULT_MENT_ONE_TO_ONE_ASK("ResultMentOneToOneAsk");
     	
     	private String path;
-        private EMyPagePath(String path) {this.path = "myPageView/"+path;}
-        public String getPath() {return this.path;}
+        private EMyPagePath(String path) {this.path = path;}
+        public String getPath() {return "myPageView/"+this.path;}
+        public String getSectionPath() {return "myPageView/MyPage.jsp?page="+this.path;}
+        public String getText() {return this.path;}
     }
+
+    /*
+     * SignController Path Constants
+     */
     public enum ESignPath {
         FIND_ID("FindID"),
         FIND_PW("FindPW"),
@@ -32,34 +53,45 @@ public class ControllerPathConstants {
         SIGN_IN("SignIn"),
         SIGN_UP("SignUp");
         private String path;
-        private ESignPath(String path) {this.path = "signView/"+path;}
-        public String getPath() {return this.path;}
+        private ESignPath(String path) {this.path = path;}
+        public String getPath() {return "signView/"+ this.path;}
+        public String getText() {return this.path;}
     }
+
+    /*
+     * CityInfoController Path Constants
+     */
     public enum ECityInfoPath {
         CITY_INFO("CityInfo"),
-        JEJU_INFO("JejuInfo"),
-        YEOSU_INFO("YeosuInfo"),
-        SEOUL_INFO("SeoulInfo"),
-        GYEONGJU_INFO("GyeongjuInfo"),
-        BUSAN_INFO("BusanInfo"),
-        GANGNEUNG_INFO("GangneungInfo");
+        REDIRECT_CITY_INFO("redirect:cityInfo");
         private String path;
-        private ECityInfoPath(String path) {this.path = "cityInfoView/"+path;}
-        public String getPath() {return this.path;}
+        private ECityInfoPath(String path) {this.path = path;}
+        public String getPath() {return "cityInfoView/"+this.path;}
+        public String getText() {return this.path;}
     }
+
+    /*
+     * ReviewController Path Constants
+     */
     public enum EReviewPath {
         REVIEW("Review");
-        private String text;
-        private EReviewPath(String path) {this.text = "reviewView/"+path;}
-        public String getPath() {return this.text;}
+        private String path;
+        private EReviewPath(String path) {this.path = path;}
+        public String getPath() {return "reviewView/"+this.path;}
+        public String getText() {return this.path;}
     }
+
+    /*
+     * ScheduleController Path Constants
+     */
     public enum ESchedulePath {
-        OTHER_SCHEDULE("scheduleView/OtherSchedule"),
-        OTHER_SCHEDULE_LIST("scheduleView/OtherScheduleList"),
-        SCHEDULE("scheduleView/Schedule"),
+        OTHER_SCHEDULE("OtherSchedule"),
+        OTHER_SCHEDULE_LIST("OtherScheduleList"),
+        SCHEDULE("Schedule"),
         REDIRECT_SCHEDULE("redirect:schedule");
-        private String text;
-        private ESchedulePath(String path) {this.text = path;}
-        public String getPath() {return this.text;}
+        private String path;
+        private ESchedulePath(String path) {this.path = path;}
+        public String getPath() {return "scheduleView/"+this.path;}
+        public String getText() {return this.path;}
     }
 }

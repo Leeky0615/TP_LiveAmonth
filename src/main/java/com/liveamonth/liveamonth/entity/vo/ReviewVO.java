@@ -5,8 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 @Data
-@Getter
-@Setter
 public class ReviewVO {
 
     private int reviewNO;

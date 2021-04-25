@@ -1,10 +1,10 @@
 package com.liveamonth.liveamonth.entity.vo;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
+@Data
 public class ScheduleVO {
     //should add more city
 

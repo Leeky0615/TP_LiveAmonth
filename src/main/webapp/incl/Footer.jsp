@@ -82,6 +82,5 @@
     <script src="resources/js/jquery.richtext.min.js"></script>
     <script src="resources/js/image-uploader.min.js"></script>
     <script src="resources/js/main.js"></script>
-    <script src="resources/js/script.js"></script>
 </body>
 </html>

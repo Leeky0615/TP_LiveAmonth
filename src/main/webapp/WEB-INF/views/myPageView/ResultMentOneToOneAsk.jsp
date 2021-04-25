@@ -7,9 +7,6 @@
     <title>1:1문의 완료</title>
 </head>
 <body>
-<jsp:include page="/incl/Header.jsp" />
-
-<!-- Contact Form Section Begin -->
 <section class="contact-form-section spad">
     <div class="container">
         <div class="row">
@@ -27,8 +24,5 @@
         </div>
     </div>
 </section>
-<!-- Contact Form Section End -->
-
-<jsp:include page="/incl/Footer.jsp" />
 </body>
 </html>

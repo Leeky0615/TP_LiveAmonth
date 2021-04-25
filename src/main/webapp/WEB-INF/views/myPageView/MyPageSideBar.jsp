@@ -25,7 +25,6 @@
             <div class="section-title sidebar-title-b">
                 <h6>커뮤니티</h6>
             </div>
-
             <div class="recent-post">
                 <div class="rp-item">
                     <div class="rp-text">
@@ -50,7 +49,7 @@
                     <div class="rp-text">
                         <div class="rp-item">
                             <div class="rp-text">
-                                <a href="#">1:1 문의하기</a>
+                                <a href="oneToOneAsk">1:1 문의하기</a>
                             </div>
                         </div>
                         <div class="rp-item">

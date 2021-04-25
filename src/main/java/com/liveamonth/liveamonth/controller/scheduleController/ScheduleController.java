@@ -22,12 +22,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.liveamonth.liveamonth.constants.ControllerPathConstants.ESchedulePath.*;
-import static com.liveamonth.liveamonth.constants.EntityConstants.ESchedule.SCHEDULE_NO;
-import static com.liveamonth.liveamonth.constants.EntityConstants.ESchedule.SCHEDULE_PLACE;
+import static com.liveamonth.liveamonth.constants.EntityConstants.ESchedule.*;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EScheduleContent.*;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EAlertMessage.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleAttributes.*;
+import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleAttributes.SCHEDULE_PLACE;
 import static com.liveamonth.liveamonth.entity.vo.ScheduleVO.*;
 
 @Controller
@@ -55,7 +55,7 @@ public class ScheduleController{
         }
 
         rttr.addFlashAttribute(MESSAGE.getText(),message);
-        return REDIRECT_SCHEDULE.getPath();
+        return REDIRECT_SCHEDULE.getText();
     }
 
     @RequestMapping(value="deleteScheduleContent")
@@ -63,7 +63,7 @@ public class ScheduleController{
         scheduleService.deleteScheduleContent(scheduleContentNO);
 
         rttr.addFlashAttribute(MESSAGE.getText(), COMPLETE_SCHEDULE_DELETION.getText());
-        return REDIRECT_SCHEDULE.getPath();
+        return REDIRECT_SCHEDULE.getText();
     }
 
     @RequestMapping(value="modifyScheduleContent")
@@ -74,7 +74,7 @@ public class ScheduleController{
         scheduleService.modifyScheduleContent(scheduleContentNO,scheduleContentSubject,scheduleContentDesc,scheduleContentCost);
 
         rttr.addFlashAttribute(MESSAGE.getText(), COMPLETE_SCHEDULE_MODIFICATION.getText());
-        return REDIRECT_SCHEDULE.getPath();
+        return REDIRECT_SCHEDULE.getText();
     }
 
     @RequestMapping("/schedule")
@@ -126,7 +126,7 @@ public class ScheduleController{
             message = FAIL_TO_ADD_SCHEDULE.getText();
         }
         rttr.addFlashAttribute(MESSAGE.getText(), message);
-        return REDIRECT_SCHEDULE.getPath();
+        return REDIRECT_SCHEDULE.getText();
     }
 
 
@@ -144,7 +144,7 @@ public class ScheduleController{
         }
         rttr.addFlashAttribute(MESSAGE.getText(), message);
 
-        return REDIRECT_SCHEDULE.getPath();
+        return REDIRECT_SCHEDULE.getText();
     }
 
     @RequestMapping(value="deleteSchedule")
@@ -159,7 +159,7 @@ public class ScheduleController{
         }
         rttr.addFlashAttribute(MESSAGE.getText(), message);
 
-        return REDIRECT_SCHEDULE.getPath();
+        return REDIRECT_SCHEDULE.getText();
     }
 
     @ResponseBody

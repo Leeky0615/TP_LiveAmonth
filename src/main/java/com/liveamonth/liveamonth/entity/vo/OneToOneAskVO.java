@@ -1,29 +1,39 @@
 package com.liveamonth.liveamonth.entity.vo;
+
+import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
+@Data
 public class OneToOneAskVO {
-	  public enum OneToOneAskCategory {
-		  CATEGORY("카테고리"),
-	    	CATEGORY1("카테고리1"), 
-	    	CATEGORY2("카테고리2"),
-	    	CATEGORY3("카테고리3"), 
-	    	CATEGORY4("카테고리4");
-	    	
-	    	private String label; 	
-	    	OneToOneAskCategory(String label) {this.label = label;}
-			
-			public String getLabel() {return label;}
-			public void setLabel(String label) {this.label = label;} 
-	    	}
-	private int oneToOneAskNO;  
-	private OneToOneAskCategory oneToOneAskCategory;
-	private String oneToOneAskSubject;
-	private String oneToOneAskDesc;
+    public enum OneToOneAskCategory {
+        CATEGORY("카테고리"),
+        CATEGORY1("카테고리1"),
+        CATEGORY2("카테고리2"),
+        CATEGORY3("카테고리3"),
+        CATEGORY4("카테고리4");
+
+        private String label;
+
+        OneToOneAskCategory(String label) {
+            this.label = label;
+        }
+
+        public String getLabel() {
+            return label;
+        }
+
+        public void setLabel(String label) {
+            this.label = label;
+        }
+    }
+
+    private int oneToOneAskNO;
+    private OneToOneAskCategory oneToOneAskCategory;
+    private String oneToOneAskSubject;
+    private String oneToOneAskDesc;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private String oneToOneAskDate;
     int oneToOneAskViewCount;
@@ -31,108 +41,107 @@ public class OneToOneAskVO {
     String oneToOneAskUserEmail;
     String oneToOneAskReply;
     int userNO;
-    
-    public  OneToOneAskVO() {
-    	this.oneToOneAskNO = 0;
-    	this.oneToOneAskCategory = null;
-    	this.oneToOneAskSubject = null;
-    	this.oneToOneAskDesc = null;
-    	this.oneToOneAskDate = null;
-    	this.oneToOneAskViewCount = 0;
-    	this.oneToOneAskImageURL = null;
-    	this.oneToOneAskUserEmail = null;
-    	this.oneToOneAskReply = null;
-    	this.userNO = 0;
+
+    public OneToOneAskVO() {
+        this.oneToOneAskNO = 0;
+        this.oneToOneAskCategory = null;
+        this.oneToOneAskSubject = null;
+        this.oneToOneAskDesc = null;
+        this.oneToOneAskDate = null;
+        this.oneToOneAskViewCount = 0;
+        this.oneToOneAskImageURL = null;
+        this.oneToOneAskUserEmail = null;
+        this.oneToOneAskReply = null;
+        this.userNO = 0;
     }
 
-    
-	public int getOneToOneAskNO() {
-		return oneToOneAskNO;
-	}
 
-	public void setOneToOneAskNO(int oneToOneAskNO) {
-		this.oneToOneAskNO = oneToOneAskNO;
-	}
+    public int getOneToOneAskNO() {
+        return oneToOneAskNO;
+    }
 
-	public OneToOneAskCategory getOneToOneAskCategory() {
-		return oneToOneAskCategory;
-	}
+    public void setOneToOneAskNO(int oneToOneAskNO) {
+        this.oneToOneAskNO = oneToOneAskNO;
+    }
 
-	public void setOneToOneAskCategory(OneToOneAskCategory oneToOneAskCategory) {
-		this.oneToOneAskCategory = oneToOneAskCategory;
-	}
+    public OneToOneAskCategory getOneToOneAskCategory() {
+        return oneToOneAskCategory;
+    }
 
-	public String getOneToOneAskSubject() {
-		return oneToOneAskSubject;
-	}
+    public void setOneToOneAskCategory(OneToOneAskCategory oneToOneAskCategory) {
+        this.oneToOneAskCategory = oneToOneAskCategory;
+    }
 
-	public void setOneToOneAskSubject(String oneToOneAskSubject) {
-		this.oneToOneAskSubject = oneToOneAskSubject;
-	}
+    public String getOneToOneAskSubject() {
+        return oneToOneAskSubject;
+    }
 
-	public String getOneToOneAskDesc() {
-		return oneToOneAskDesc;
-	}
+    public void setOneToOneAskSubject(String oneToOneAskSubject) {
+        this.oneToOneAskSubject = oneToOneAskSubject;
+    }
 
-	public void setOneToOneAskDesc(String oneToOneAskDesc) {
-		this.oneToOneAskDesc = oneToOneAskDesc;
-	}
+    public String getOneToOneAskDesc() {
+        return oneToOneAskDesc;
+    }
 
-	public String getOneToOneAskDate() {
-		return oneToOneAskDate;
-	}
+    public void setOneToOneAskDesc(String oneToOneAskDesc) {
+        this.oneToOneAskDesc = oneToOneAskDesc;
+    }
 
-
-	public void setOneToOneAskDate(String oneToOneAskDate) {
-		this.oneToOneAskDate = oneToOneAskDate;
-	}
+    public String getOneToOneAskDate() {
+        return oneToOneAskDate;
+    }
 
 
-	public int getOneToOneAskViewCount() {
-		return oneToOneAskViewCount;
-	}
+    public void setOneToOneAskDate(String oneToOneAskDate) {
+        this.oneToOneAskDate = oneToOneAskDate;
+    }
 
 
-	public void setOneToOneAskViewCount(int oneToOneAskViewCount) {
-		this.oneToOneAskViewCount = oneToOneAskViewCount;
-	}
+    public int getOneToOneAskViewCount() {
+        return oneToOneAskViewCount;
+    }
 
 
-	public String getOneToOneAskImageURL() {
-		return oneToOneAskImageURL;
-	}
-
-	public void setOneToOneAskImageURL(String oneToOneAskImageURL) {
-		this.oneToOneAskImageURL = oneToOneAskImageURL;
-	}
-	
-	
-
-	public String getOneToOneAskUserEmail() {
-		return oneToOneAskUserEmail;
-	}
+    public void setOneToOneAskViewCount(int oneToOneAskViewCount) {
+        this.oneToOneAskViewCount = oneToOneAskViewCount;
+    }
 
 
-	public void setOneToOneAskUserEmail(String oneToOneAskUserEmail) {
-		this.oneToOneAskUserEmail = oneToOneAskUserEmail;
-	}
+    public String getOneToOneAskImageURL() {
+        return oneToOneAskImageURL;
+    }
+
+    public void setOneToOneAskImageURL(String oneToOneAskImageURL) {
+        this.oneToOneAskImageURL = oneToOneAskImageURL;
+    }
 
 
-	public String getOneToOneAskReply() {
-		return oneToOneAskReply;
-	}
+    public String getOneToOneAskUserEmail() {
+        return oneToOneAskUserEmail;
+    }
 
-	public void setOneToOneAskReply(String oneToOneAskReply) {
-		this.oneToOneAskReply = oneToOneAskReply;
-	}
 
-	public int getUserNO() {
-		return userNO;
-	}
+    public void setOneToOneAskUserEmail(String oneToOneAskUserEmail) {
+        this.oneToOneAskUserEmail = oneToOneAskUserEmail;
+    }
 
-	public void setUserNO(int userNO) {
-		this.userNO = userNO;
-	}
 
-    
+    public String getOneToOneAskReply() {
+        return oneToOneAskReply;
+    }
+
+    public void setOneToOneAskReply(String oneToOneAskReply) {
+        this.oneToOneAskReply = oneToOneAskReply;
+    }
+
+    public int getUserNO() {
+        return userNO;
+    }
+
+    public void setUserNO(int userNO) {
+        this.userNO = userNO;
+    }
+
+
 }

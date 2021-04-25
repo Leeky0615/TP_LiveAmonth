@@ -17,9 +17,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import static com.liveamonth.liveamonth.constants.ControllerPathConstants.EMyPagePath.*;
-import static com.liveamonth.liveamonth.constants.EntityConstants.ESchedule.SCHEDULE_PLACE;
+import static com.liveamonth.liveamonth.constants.EntityConstants.EOneToOneAsk.ONE_TO_ONE_ASK_CATEGORY;
+import static com.liveamonth.liveamonth.constants.EntityConstants.EOneToOneAsk.ONE_TO_ONE_ASK_VO_LIST;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.*;
-import static com.liveamonth.liveamonth.constants.LogicConstants.EMyPageAttributes.*;
+import static com.liveamonth.liveamonth.constants.LogicConstants.ECityInfoAttributes.*;
+import static com.liveamonth.liveamonth.constants.LogicConstants.EMyPageAttributes.CHECK_USER;
 import static com.liveamonth.liveamonth.constants.LogicConstants.ESignAttributes.*;
 
 import java.util.ArrayList;
@@ -47,7 +49,7 @@ public class MyPageController {
         model.addAttribute(USER_VO.getText(), request.getAttribute(USER_VO.getText()));
         model.addAttribute(CHECK_USER.getText(), true);
 
-        return "myPageView/MyPage.jsp?page=ReCheckUserPW";
+        return RE_CHECK_USER_PW.getSectionPath();
     }
 
     @GetMapping("/goToModifyUserInfo")
@@ -60,10 +62,10 @@ public class MyPageController {
 
         if (userName == null) {
             model.addAttribute(CHECK_USER.getText(), false);
-            return RE_CHECK_USER_PW.getPath();
+            return RE_CHECK_USER_PW.getSectionPath();
         } else {
             model.addAttribute(USER_VO.getText(), request.getAttribute(USER_VO.getText()));
-            return MODIFY_USER_INFO.getPath();
+            return MODIFY_USER_INFO.getSectionPath();
         }
     }
 
@@ -72,7 +74,7 @@ public class MyPageController {
         UserVO previousUser = myPageService.getUserInfo(userVO.getUserID());
 
         myPageService.modifyUserInfo(this.checkUserData(userVO, previousUser));
-        return RESULT_MENT_MODIFY_USER_INFO.getPath();
+        return RESULT_MENT_MODIFY_USER_INFO.getSectionPath();
     }
 
     private UserVO checkUserData(UserVO changeData, UserVO previousData){
@@ -93,7 +95,7 @@ public class MyPageController {
 	public String dropUser(Model model) throws Exception{
     	 // this.firstIn = true; -> 바로 true로 넣어줌
          model.addAttribute(FIRST_IN.getText(), true);
-    	return DROP_USER.getPath();
+    	return DROP_USER.getSectionPath();
 	}
 
     @RequestMapping("/checkDropUserPassword")
@@ -105,9 +107,9 @@ public class MyPageController {
         if (userName == null) {
             // this.firstIn = false; -> 바로 false로 넣어줌
             model.addAttribute(FIRST_IN.getText(), false);
-            return DROP_USER.getPath();
+            return DROP_USER.getSectionPath();
         } else {
-        	return FINALLY_ASK_DROP_USER.getPath();
+        	return FINALLY_ASK_DROP_USER.getSectionPath();
 
         }
     }
@@ -118,7 +120,7 @@ public class MyPageController {
     	String userID = (String)session_UserID;
     	session.invalidate();
     	myPageService.dropUser(userID);
-    	return RESULT_MENT_DROP_USER.getPath();
+    	return RESULT_MENT_DROP_USER.getSectionPath();
 
     }
     
@@ -126,14 +128,14 @@ public class MyPageController {
     private String oneToOneAsk(Model model, HttpServletRequest request) throws Exception {
     	ArrayList<OneToOneAskVO> oneToOneAskVOList = myPageService.getOneToOneAskVOList();
     	model.addAttribute(ONE_TO_ONE_ASK_VO_LIST.getText(),oneToOneAskVOList);
-    	return ONE_TO_ONE_ASK.getPath();
+    	return ONE_TO_ONE_ASK.getSectionPath();
 
     }
      
     @RequestMapping("/oneToOneAskWrite")
     private String oneToOneAskWrite(Model model) throws Exception {
     	model.addAttribute(ONE_TO_ONE_ASK_CATEGORY.getText(), OneToOneAskCategory.values());
-    	return ONE_TO_ONE_ASK_WRITE.getPath();
+    	return ONE_TO_ONE_ASK_WRITE.getSectionPath();
     }
     
     @RequestMapping("/resultMentOneToOneAsk")

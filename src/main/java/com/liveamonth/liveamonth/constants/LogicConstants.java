@@ -1,6 +1,10 @@
 package com.liveamonth.liveamonth.constants;
 
 public class LogicConstants {
+    /*
+     * Controller 클래스에서 사용되는 Static & model.attribute 상수
+     * -> VO와 관련된 Enum은 모두 EntityConstants로
+     */
     public LogicConstants() {}
 
     public enum EAlertMessage{
@@ -20,7 +24,6 @@ public class LogicConstants {
     public enum EScheduleAttributes{
         SELECTED_SCHEDULE_NO("selectedScheduleNO"),
         MESSAGE("message"),
-        SCHEDULE_VO_LIST("scheduleVOList"),
         USER_VO_LIST("userVOList"),
         PLACE_LIST("placeList"),
         SCHEDULE_SEX("sex"),
@@ -38,11 +41,19 @@ public class LogicConstants {
     }
 
     public enum EMyPageAttributes {
-        CHECK_USER("checkUser"),
-    	ONE_TO_ONE_ASK_VO_LIST("oneToOneAskVOList"),
-    	ONE_TO_ONE_ASK_CATEGORY("oneToOneAskCategory");
+        CHECK_USER("checkUser");
+
         private String text;
         private EMyPageAttributes(String text) {this.text = text;}
+        public String getText() {return this.text;}
+    }
+
+    public enum ECityInfoAttributes {
+        CITY_NAME("cityName"),
+        CITY_INTRO_LIST("cityIntroList"),
+        CITY_NAME_LIST("cityNameList");
+        private String text;
+        private ECityInfoAttributes(String text) {this.text = text;}
         public String getText() {return this.text;}
     }
 
@@ -52,4 +63,5 @@ public class LogicConstants {
         private ESignAttributes(String text){this.text = text;}
         public String getText() {return this.text;}
     }
+
 }

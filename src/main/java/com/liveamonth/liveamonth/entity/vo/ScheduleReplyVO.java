@@ -6,8 +6,6 @@ import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Data
-@Getter
-@Setter
 public class ScheduleReplyVO {
     private int scheduleReplyNO;
     private String scheduleReplyDesc;

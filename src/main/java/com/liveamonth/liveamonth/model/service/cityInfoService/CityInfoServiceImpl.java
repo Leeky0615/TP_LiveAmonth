@@ -19,5 +19,15 @@ public class CityInfoServiceImpl implements CityInfoService {
     }
 
     @Override
-    public List<CityInfoVO> getCityInfoList(String cityName) {return cityInfoMapper.getCityInfoList(cityName); }
+    public List<CityInfoVO> getCityTotalInfoList(String cityInfoName) {return cityInfoMapper.getCityTotalInfoList(cityInfoName); }
+
+    @Override
+    public List<CityInfoVO> getCityInfoList(String cityInfoName, String cityInfoCategory) {return cityInfoMapper.getCityInfoList(cityInfoName,cityInfoCategory);}
+
+    @Override
+    public List<CityInfoVO> getCityInfoListByCategory(String cityInfoCategory) {return cityInfoMapper.getCityInfoListByCategory(cityInfoCategory);}
+
+    @Override
+    public List<String> getCityInfoNameList() {return cityInfoMapper.getCityInfoNameList();}
+
 }

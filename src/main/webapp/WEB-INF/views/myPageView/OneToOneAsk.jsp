@@ -7,13 +7,11 @@
 <head>
 <meta charset="UTF-8">
 <title>1:1문의</title>
-
-
-
-<jsp:include page="/incl/Header.jsp" />
 </head>
-
 <body>
+<div class="section-title">
+	<h4>1:1 문의내역</h4>
+</div>
 <div class="pc-table">
 	<table>
 		<thead>
@@ -42,9 +40,5 @@
 	<form action="oneToOneAskWrite" method=post class="cc-form">
 		<button type="submit" class="site-btn">문의하기</button>
 	</form>
-
-
-
-	<jsp:include page="/incl/Footer.jsp" />
 </body>
 </html>

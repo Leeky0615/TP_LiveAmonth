@@ -11,7 +11,7 @@
     <title>회원정보수정</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap"
-            rel="stylesheet">
+          rel="stylesheet">
     <link rel="stylesheet"
           href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -23,24 +23,19 @@
 <%
     UserVO userVO = (UserVO) request.getAttribute("userVO");
 %>
-<jsp:include page="/incl/Header.jsp"/>
-
 <section class="ftco-section">
+    <div class="section-title">
+        <h4>회원정보 수정</h4>
+    </div>
     <div class="container">
         <form action=resultMentModifyUserInfo method="post" class="signup-form" name="SignInfo">
             <div class="row justify-content-center">
-                <div class="col-md-6 text-center mb-5">
-                    <h2 class="heading-section">Sign Up</h2>
-                </div>
-            </div>
-
-            <div class="row justify-content-center">
-                <div class="col-md-7 col-lg-6 col-xl-5">
+                <div class="col-md-10 col-lg-10 col-xl-10">
                     <div class="login-wrap p-4 p-md-5">
                         <div class="icon d-flex align-items-center justify-content-center">
                             <span class="fa fa-edit"></span>
                         </div>
-                        <h3 class="text-center mb-4">회원 정보 수정</h3>
+                        <h3 class="text-center mb-4">정보 수정</h3>
 
                         <form action="#" class="signup-form">
                             <div class="form-group mb-3">
@@ -60,13 +55,14 @@
                             <div class="form-group mb-3">
                                 <label class="label" for="userName">이름</label>
                                 <input
-                                    type="text" id="userName" class="form-control" placeholder="이름" name="userName"
-                                    value="${userVO.userName}" readonly>
+                                        type="text" id="userName" class="form-control" placeholder="이름" name="userName"
+                                        value="${userVO.userName}" readonly>
                             </div>
 
                             <div class="form-group mb-3">
                                 <label class="label" for="userNickname">닉네임</label>
-                                <input type="text" id="userNickname" class="form-control" placeholder="${userVO.userNickname}"
+                                <input type="text" id="userNickname" class="form-control"
+                                       placeholder="${userVO.userNickname}"
                                        name="userNickname">
                                 <button type="button" class="checkNickName">중복확인</button>
                                 <p class="nickNameResult">
@@ -77,7 +73,7 @@
                             <div class="form-group mb-3">
                                 <label class="label" for="userEmail">이메일</label>
                                 <input type="text" id="userEmail" class="form-control result-email"
-                                    placeholder="${userVO.userEmail}" name="userEmail">
+                                       placeholder="${userVO.userEmail}" name="userEmail">
                             </div>
 
                             <div class="form-group d-md-flex">
@@ -131,7 +127,5 @@
         $("#submit").attr("disabled", "disabled");
     });
 </script>
-<jsp:include page="/incl/Footer.jsp"/>
-
 </body>
 </html>
