@@ -11,7 +11,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class ScheduleReplyVO {
     private int scheduleReplyNO;
     private String scheduleReplyDesc;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:MM:SS")
     private String scheduleReplyDate;
 
     // Reference
@@ -27,7 +27,7 @@ public class ScheduleReplyVO {
         // Reference
         this.scheduleReplyRefNO = 0;
         this.userNO = 0;
-        this.userNO = 0;
+        this.scheduleNO = 0;
     }
 
 }

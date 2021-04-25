@@ -3,6 +3,7 @@ package com.liveamonth.liveamonth.controller.scheduleController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.liveamonth.liveamonth.entity.vo.ScheduleReplyVO;
 import com.liveamonth.liveamonth.entity.vo.UserVO;
 import com.liveamonth.liveamonth.model.service.myPageService.MyPageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import com.liveamonth.liveamonth.entity.vo.ScheduleVO;
 import com.liveamonth.liveamonth.model.service.scheduleService.ScheduleService;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static com.liveamonth.liveamonth.constants.ControllerPathConstants.ESchedulePath.*;
@@ -62,7 +64,7 @@ public class ScheduleController{
     public String deleteScheduleContent(HttpServletRequest request, RedirectAttributes rttr) throws Exception{
         scheduleService.deleteScheduleContent(scheduleContentNO);
 
-        rttr.addFlashAttribute(MESSAGE.getText(), COMPLETE_SCHEDULE_DELETION.getText());
+        rttr.addFlashAttribute(MESSAGE.getText(), COMPLETE_SCHEDULE_DELETION_CONTENT.getText());
         return REDIRECT_SCHEDULE.getPath();
     }
 
@@ -73,7 +75,7 @@ public class ScheduleController{
         int scheduleContentCost = Integer.parseInt(request.getParameter(MODIFY_SCHEDULE_CONTENT_COST.getText()));
         scheduleService.modifyScheduleContent(scheduleContentNO,scheduleContentSubject,scheduleContentDesc,scheduleContentCost);
 
-        rttr.addFlashAttribute(MESSAGE.getText(), COMPLETE_SCHEDULE_MODIFICATION.getText());
+        rttr.addFlashAttribute(MESSAGE.getText(), COMPLETE_SCHEDULE_MODIFICATION_CONTENT.getText());
         return REDIRECT_SCHEDULE.getPath();
     }
 
@@ -121,7 +123,7 @@ public class ScheduleController{
 
         String message = "";
         if(scheduleService.addSchedule(scheduleVO, userID)) {
-            message = ADD_SCHEDULE_CONTENT.getText();
+            message = ADD_SCHEDULE.getText();
         } else {
             message = FAIL_TO_ADD_SCHEDULE.getText();
         }
@@ -133,11 +135,10 @@ public class ScheduleController{
     @RequestMapping(value="modifySchedule")
     public String modifySchedule(HttpServletRequest request, ScheduleVO scheduleVO, RedirectAttributes rttr) throws Exception{
     	HttpSession session = request.getSession();
-    	scheduleVO.setScheduleNO(Integer.parseInt((String)session.getAttribute(SELECTED_SCHEDULE_NO.getText())));
+    	scheduleVO.setScheduleNO(Integer.parseInt(String.valueOf(session.getAttribute(SELECTED_SCHEDULE_NO.getText()))));
 
         String message = "";
         if(scheduleService.modifySchedule(scheduleVO)) {
-//        	session.setAttribute(message, scheduleService.getScheduleList(String.valueOf(session.getAttribute("userID")).get));
             message = COMPLETE_SCHEDULE_MODIFICATION.getText();
         } else {
             message = FAIL_TO_MODIFY_SCHEDULE.getText();
@@ -153,6 +154,7 @@ public class ScheduleController{
 
         String message = "";
         if(scheduleService.deleteSchedule(Integer.parseInt(String.valueOf(session.getAttribute(SELECTED_SCHEDULE_NO.getText()))))) {
+            session.setAttribute(SELECTED_SCHEDULE_NO.getText(), null);
             message = COMPLETE_SCHEDULE_DELETION.getText();
         } else {
             message = FAIL_TO_DELETE_SCHEDULE.getText();
@@ -170,11 +172,12 @@ public class ScheduleController{
 
     @RequestMapping("/otherSchedule")
     public String otherSchedule(Model model, HttpServletRequest request, CalendarDTO calendarDTO) throws Exception{
-        int userNO =  Integer.parseInt((String) request.getParameter(USER_NO.getText()));
         int scheduleNO = Integer.parseInt((String) request.getParameter(SCHEDULE_NO.getText()));
 
         CalendarDTO calendarDto = scheduleService.showCalendar(calendarDTO, scheduleNO);
 
+        model.addAttribute(SCHEDULEREPLY_VO_LIST.getText(), scheduleService.getScheduleReplyList(scheduleNO));
+        model.addAttribute(SCHEDULE_NO.getText(), scheduleNO);
         model.addAttribute(DATE_LIST.getText(), calendarDto.getDateList()); //날짜 데이터 배열
         model.addAttribute(TODAY_INFORMATION.getText(), calendarDto.getTodayInformation());
 
@@ -207,4 +210,23 @@ public class ScheduleController{
 
         return OTHER_SCHEDULE_LIST.getPath();
     }
+
+    @RequestMapping(value="addScheduleReply")
+    public String addScheduleReply(HttpServletRequest request, ScheduleReplyVO scheduleReplyVO, RedirectAttributes rttr) throws Exception{
+        HttpSession session = request.getSession();
+        String userID = String.valueOf(session.getAttribute(USER_ID.getText()));
+
+        String message = "";
+        if(scheduleService.addScheduleReplyVO(scheduleReplyVO, userID)) {
+            message = ADD_SCHEDULEREPLY.getText();
+        } else {
+            message = FAIL_TO_ADD_SCHEDULEREPLY.getText();
+        }
+
+        rttr.addFlashAttribute(MESSAGE.getText(), message);
+        rttr.addAttribute(SCHEDULE_NO.getText(), scheduleReplyVO.getScheduleNO());
+
+        return REDIRECT_OTHER_SCHEDULE.getPath();
+    }
+
 }

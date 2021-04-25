@@ -46,7 +46,8 @@ public class ControllerPathConstants {
         OTHER_SCHEDULE("scheduleView/OtherSchedule"),
         OTHER_SCHEDULE_LIST("scheduleView/OtherScheduleList"),
         SCHEDULE("scheduleView/Schedule"),
-        REDIRECT_SCHEDULE("redirect:schedule");
+        REDIRECT_SCHEDULE("redirect:schedule"),
+        REDIRECT_OTHER_SCHEDULE("redirect:otherSchedule");
         private String text;
         private ESchedulePath(String path) {this.text = path;}
         public String getPath() {return this.text;}

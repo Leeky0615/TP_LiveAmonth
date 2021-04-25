@@ -22,10 +22,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select max(scheduleNO) from schedule;
 	</select>
 
-	<select id="getLastScheduleNO" resultType="int">
-		select max(scheduleNO) from schedule;
-	</select>
-
 	<select id="getScheduleList" resultType="com.liveamonth.liveamonth.entity.vo.ScheduleVO" parameterType="String">
 		select * from schedule where schedule.userNO in (select userNO from user where userID = #{userID});
 	</select>
@@ -37,6 +33,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 <select id="getOtherScheduleInfo" resultType="com.liveamonth.liveamonth.entity.vo.ScheduleVO">
       select * from schedule where schedule.scheduleStatus = true order by scheduleLikeCount DESC;
     </select>
+
+	<resultMap type = "java.util.HashMap" id="scheduleReplyAndNickname">
+		<id column="scheduleReplyNO" property="scheduleReplyNO"/>
+		<result column="userNickname" property="userNickname"/>
+		<association property="scheduleReply" javaType="com.liveamonth.liveamonth.entity.vo.ScheduleReplyVO">
+			<id column="scheduleReplyNO" property="scheduleReplyNO"/>
+			<result column="scheduleReplyDesc" property="scheduleReplyDesc"/>
+			<result column="scheduleReplyDate" property="scheduleReplyDate"/>
+			<result column="scheduleReplyRefNO" property="scheduleReplyRefNO"/>
+			<result column="userNO" property="userNO"/>
+			<result column="scheduleNO" property="scheduleNO"/>
+		</association>
+	</resultMap>
+
+	<select id="getScheduleReplyList" parameterType="int" resultMap="scheduleReplyAndNickname">
+		select scheduleReplyNO, scheduleReplyDesc, scheduleReplyDate, scheduleReplyRefNO, scheduleReply.userNO, scheduleNO, userNickname  from user, scheduleReply where scheduleReply.userNO = user.userNO AND scheduleReply.scheduleNO = #{scheduleNO};
+	</select>
+
+	<select id="getMaxScheduleReplyNO" resultType="int">
+		select max(scheduleReplyNO) from scheduleReply;
+	</select>
 
 	<!-- delete -->
 	<delete id="deleteScheduleContent" parameterType="int">
@@ -59,6 +76,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<insert id="addScheduleContent" parameterType="com.liveamonth.liveamonth.entity.vo.ScheduleContentVO">
 		insert into scheduleContent values (#{scheduleContentNO}, #{scheduleContentSubject}, #{scheduleContentDesc}, #{scheduleContentDate}, #{scheduleContentCost}, #{scheduleNO})
+	</insert>
+
+	<insert id="addScheduleReplyVO" parameterType="com.liveamonth.liveamonth.entity.vo.ScheduleReplyVO">
+		insert into scheduleReply values (#{scheduleReplyNO}, #{scheduleReplyDesc}, #{scheduleReplyDate}, #{scheduleReplyRefNO}, #{userNO}, #{scheduleNO})
 	</insert>
 
 	<!-- update -->

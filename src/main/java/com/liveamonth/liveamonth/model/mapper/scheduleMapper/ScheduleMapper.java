@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.liveamonth.liveamonth.entity.vo.ScheduleReplyVO;
 import com.liveamonth.liveamonth.entity.vo.ScheduleVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
@@ -28,7 +29,6 @@ public interface ScheduleMapper {
 
     public void modifyScheduleContent(ScheduleContentVO scheduleContentVO)  throws Exception;
 
-    public int getLastScheduleNO()throws Exception;
     public boolean addSchedule(ScheduleVO scheduleVO)throws Exception;
 
     public ArrayList<ScheduleVO> getScheduleList(String userID)throws Exception;
@@ -43,5 +43,9 @@ public interface ScheduleMapper {
 
 	public boolean deleteAllScheduleContentOfSchedule(int scheduleNO) throws Exception;
 
+	public ArrayList<HashMap<String, Object>> getScheduleReplyList(int scheduleNO) throws Exception;
 
+    public Object getMaxScheduleReplyNO() throws Exception;
+
+    public boolean addScheduleReplyVO(ScheduleReplyVO scheduleReplyVO) throws Exception;
 }

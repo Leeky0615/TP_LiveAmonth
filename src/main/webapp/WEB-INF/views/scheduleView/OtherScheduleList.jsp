@@ -113,7 +113,7 @@
          <tr>
             <td>
                <div class="title">스케줄 제목</div> <a
-                    href="/otherSchedule?useNO=${userVOList[i].getUserNO()}&scheduleNO=${scheduleVOList[i].getScheduleNO()}">
+                    href="/otherSchedule?userNO=${userVOList[i].getUserNO()}&scheduleNO=${scheduleVOList[i].getScheduleNO()}">
                <img src="resources/img/scheduleImg.png" alt="">
             </a>
             </td>

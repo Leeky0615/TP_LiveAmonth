@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
+import com.liveamonth.liveamonth.entity.vo.ScheduleReplyVO;
 import com.liveamonth.liveamonth.entity.vo.ScheduleVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -118,7 +119,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     public boolean addSchedule(ScheduleVO scheduleVO, String userID) throws Exception {
-        scheduleVO.setScheduleNO(scheduleMapper.getLastScheduleNO() + 1);
+        scheduleVO.setScheduleNO(scheduleMapper.getMaxScheduleNO() + 1);
         scheduleVO.setScheduleLikeCount(0);
         scheduleVO.setUserNO(scheduleMapper.findUserIDToUserNO(userID));
 
@@ -171,11 +172,22 @@ public class ScheduleServiceImpl implements ScheduleService {
 		}
 		return false;
 	}
-	
-	
-	
-	
-	
-	
-	
+
+    @Override
+	public ArrayList<HashMap<String, Object>> getScheduleReplyList(int scheduleNO) throws Exception {
+        return scheduleMapper.getScheduleReplyList(scheduleNO);
+    }
+
+    @Override
+    public boolean addScheduleReplyVO(ScheduleReplyVO scheduleReplyVO, String userID) throws Exception {
+        String MaxNO = String.valueOf(scheduleMapper.getMaxScheduleReplyNO());
+        if(MaxNO == "null") {
+            scheduleReplyVO.setScheduleReplyNO(4001);
+        } else {
+            scheduleReplyVO.setScheduleReplyNO(Integer.parseInt(MaxNO) + 1);
+        }
+        scheduleReplyVO.setUserNO(scheduleMapper.findUserIDToUserNO(userID));
+
+        return scheduleMapper.addScheduleReplyVO(scheduleReplyVO);
+    }
 }

@@ -3,9 +3,12 @@
 <%@page import="java.util.Calendar"%>
 <%@ page contentType="text/html; charset=utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="com.liveamonth.liveamonth.entity.dto.CalendarDTO"%>
 <%@ page import="com.liveamonth.liveamonth.entity.vo.ScheduleVO"%>
 <%@page import="java.util.*"%>
+
+
 
 <html lang="ko">
 <head>
@@ -20,15 +23,12 @@
    <!-- jquery datepicker 끝 -->
    <meta http-equiv="content-type" content="text/html; charset=utf-8">
 
-   <link rel="stylesheet"
-         href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-         integrity="sha384-
-   ggOyROiXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-         crossorigin="anonymous">
 
-   <link href="resources/css/schedule.css" rel="stylesheet"
-         type="text/css">
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyROiXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"  crossorigin="anonymous">
+   <link href="resources/css/schedule.css" rel="stylesheet" type="text/css">
+   <link href="resources/css/reply.css" rel="stylesheet" type="text/css">
    <script src="resources/js/schedule.js"></script>
+   <script src="resources/js/reply.js"></script>
    <script src="resources/js/board.js"></script>
 
    <script type="text/javaScript" language="javascript"></script>
@@ -183,6 +183,94 @@
       </div>
    </div>
 </div>
+
+      <div class="container bootdey">
+         <div class="col-lg-7">
+            <div class="section-title">
+               <h4>Comments</h4>
+            </div>
+         </div>
+         <div class="col-md-12 bootstrap snippets">
+            <div class="panel">
+               <form id = "addScheduleReply1" action="addScheduleReply">
+                  <div class="panel-body">
+                     <textarea name="scheduleReplyDesc" id="scheduleReplyDesc" class="form-control" rows="4" placeholder="의견을 남겨주세요."></textarea>
+                     <c:set var="today" value="<%=new java.util.Date()%>" />
+                     <c:set var="date"><fmt:formatDate value="${today}" pattern="yyyy-MM-dd hh:mm:ss" /></c:set>
+                     <input type="hidden" name="scheduleReplyDate" id="scheduleReplyDate" value="<c:out value="${date}" />" />
+                     <input type="hidden" name="scheduleNO" id="scheduleNO" value="${scheduleNO}" />
+                     <div class="mar-top clearfix">
+                        <button type="button" class="btn btn-sm btn-primary pull-right" onclick="addScheduleReply(1);" ><i class="fa fa-pencil fa-fw"></i> 등록 </button>
+                     </div>
+                  </div>
+               </form>
+            </div>
+            <div class="panel">
+               <div class="panel-body">
+                  <c:forEach var="scheduleVOReply" items="${scheduleVOReplyList}">
+                     <c:if test = "${scheduleVOReply.scheduleReply.scheduleReplyRefNO == 0}">
+                        <div class="media-block">
+                           <!-- 프로필 링크, 닉네임 링크 -->
+                           <a class="media-left" href="#"><img class="img-circle img-sm" alt="Profile Picture" src="https://blog.kakaocdn.net/dn/c3vWTf/btqUuNfnDsf/VQMbJlQW4ywjeI8cUE91OK/img.jpg"></a>
+                           <div class="media-body">
+                              <div class="mar-btm">
+                                 <a href="#" class="btn-link text-semibold media-heading box-inline"> ${scheduleVOReply.userNickname} </a>
+                                 <p class="text-muted text-sm"> ${scheduleVOReply.scheduleReply.scheduleReplyDate} </p>
+                              </div>
+                              <p>
+                                  ${scheduleVOReply.scheduleReply.scheduleReplyDesc}
+                              </p>
+                              <div class="pad-ver">
+                                 <button id = "replyButton" class="btn btn-sm btn-default btn-hover-primary" onclick="showReplyDiv(${scheduleVOReply.scheduleReply.scheduleReplyNO});">Comment</button>
+                              </div>
+                              <hr>
+
+                              <div id = "replyDiv${scheduleVOReply.scheduleReply.scheduleReplyNO}" class="panel replyDiv">
+                                 <form id = "addScheduleReply${scheduleVOReply.scheduleReply.scheduleReplyNO}" action="addScheduleReply">
+                                    <div class="panel-body">
+                                       <textarea name="scheduleReplyDesc" id="scheduleReplyDesc" class="form-control" rows="4" placeholder="의견을 남겨주세요."></textarea>
+                                       <c:set var="today" value="<%=new java.util.Date()%>" />
+                                       <c:set var="date"><fmt:formatDate value="${today}" pattern="yyyy-MM-dd hh:mm:ss" /></c:set>
+                                       <input type="hidden" name="scheduleReplyDate" id="scheduleReplyDate" value="<c:out value="${date}" />" />
+                                       <input type="hidden" name="scheduleReplyRefNO" id="scheduleReplyRefNO" value="${scheduleVOReply.scheduleReply.scheduleReplyNO}" />
+                                       <input type="hidden" name="scheduleNO" id="scheduleNO" value="${scheduleNO}" />
+                                       <div class="mar-top clearfix">
+                                          <button type="button" class="btn btn-sm btn-primary pull-right" onclick="addScheduleReply(${scheduleVOReply.scheduleReply.scheduleReplyNO});" ><i class="fa fa-pencil fa-fw"></i> 등록 </button>
+                                       </div>
+                                    </div>
+                                 </form>
+                              </div>
+
+                              <c:forEach var="scheduleVOReplyRef" items="${scheduleVOReplyList}">
+                                    <c:if test = "${scheduleVOReply.scheduleReply.scheduleReplyNO == scheduleVOReplyRef.scheduleReply.scheduleReplyRefNO}">
+                                       <div>
+                                          <div class="media-block">
+                                             <a class="media-left" href="#"><img class="img-circle img-sm" alt="Profile Picture" src="https://blog.kakaocdn.net/dn/c3vWTf/btqUuNfnDsf/VQMbJlQW4ywjeI8cUE91OK/img.jpg"></a>
+                                             <div class="media-body">
+                                                <div class="mar-btm">
+                                                   <a href="#" class="btn-link text-semibold media-heading box-inline"> ${scheduleVOReplyRef.userNickname} </a>
+                                                   <p class="text-muted text-sm"> ${scheduleVOReplyRef.scheduleReply.scheduleReplyDate} </p>
+                                                </div>
+                                                <p>
+                                                   ${scheduleVOReplyRef.scheduleReply.scheduleReplyDesc}
+                                                </p>
+                                                <hr>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </c:if>
+                              </c:forEach>
+                           </div>
+                        </div>
+                     </c:if>
+                  </c:forEach>
+               </div>
+            </div>
+         </div>
+      </div>
+
+
+
 <div width="100%">
    <jsp:include page="/incl/Footer.jsp" />
 </div>
