@@ -10,13 +10,13 @@ import org.springframework.stereotype.Repository;
 @Mapper
 public interface MyPageMapper {
     @Select("SELECT * FROM user WHERE userID=#{userID}")
-    UserVO getUserInfo(String userID) throws Exception;
+    public UserVO getUserInfo(String userID) throws Exception;
 
     @Update("UPDATE user SET userPassword=#{userPassword}," +
             "userNickname=#{userNickname}," +
             "userEmail=#{userEmail}" +
             "WHERE userID=#{userID}")
-    void modifyUserInfo(UserVO userVO)throws Exception;
+    public void modifyUserInfo(UserVO userVO)throws Exception;
 
-	UserVO getOtherScheduleUserInfo(int userNO) throws Exception;
+	public UserVO getOtherScheduleUserInfo(int userNO) throws Exception;
 }

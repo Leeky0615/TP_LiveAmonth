@@ -18,7 +18,6 @@ import com.liveamonth.liveamonth.entity.vo.ScheduleContentVO;
 import com.liveamonth.liveamonth.model.mapper.scheduleMapper.ScheduleMapper;
 
 
-@SuppressWarnings("unused")
 @Service
 public class ScheduleServiceImpl implements ScheduleService {
     @Autowired
@@ -170,8 +169,10 @@ public class ScheduleServiceImpl implements ScheduleService {
 		}
 
 		// place
-		if (place != null) {
-			placeStatement += " AND place = '" + place + "' ";
+		if(place!=null) {
+			if (!place.equals("null")) {
+				placeStatement += " AND place = '" + place + "' ";
+			}
 		}
 		
 		if(orderBy == null || orderBy.contentEquals("orderByLiked")) {
@@ -180,14 +181,13 @@ public class ScheduleServiceImpl implements ScheduleService {
 			orderBy = "scheduleNO";
 		}
 		sqlSubQuery = sqlSubQuery + placeStatement;
+		System.out.println("int shceduleServiceImpl sql" + sqlSubQuery);
 		
 		sqlParameter.put("filter", sqlSubQuery);
 		sqlParameter.put("orderBy", orderBy);
 
 		return scheduleMapper.getOtherScheduleList(sqlParameter);
 	}
-
-
 
     @Override
     public boolean addSchedule(ScheduleVO scheduleVO, String userID) throws Exception {

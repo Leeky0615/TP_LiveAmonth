@@ -21,4 +21,44 @@ public class CityInfoVO {
         this.cityImageURL = null;
         this.cityDesc = null;
     }
+
+	public int getCityNO() {
+		return cityNO;
+	}
+
+	public void setCityNO(int cityNO) {
+		this.cityNO = cityNO;
+	}
+
+	public String getCityCategory() {
+		return cityCategory;
+	}
+
+	public void setCityCategory(String cityCategory) {
+		this.cityCategory = cityCategory;
+	}
+
+	public String getCityName() {
+		return cityName;
+	}
+
+	public void setCityName(String cityName) {
+		this.cityName = cityName;
+	}
+
+	public String getCityImageURL() {
+		return cityImageURL;
+	}
+
+	public void setCityImageURL(String cityImageURL) {
+		this.cityImageURL = cityImageURL;
+	}
+
+	public String getCityDesc() {
+		return cityDesc;
+	}
+
+	public void setCityDesc(String cityDesc) {
+		this.cityDesc = cityDesc;
+	}
 }

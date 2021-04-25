@@ -38,9 +38,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       select * from schedule where schedule.scheduleStatus = true order by scheduleLikeCount DESC;
     </select> -->
     
-    <select id="getOtherScheduleList" parameterType="HashMap" resultType="com.liveamonth.liveamonth.entity.vo.ScheduleVO">
+<!--     <select id="getOtherScheduleList" parameterType="HashMap" resultType="com.liveamonth.liveamonth.entity.vo.ScheduleVO">
 		select * from schedule	
-		<!-- <where>
+		<where>
 		<choose>
 			<when test="filter!=null">
 				AND schedule.scheduleStatus = true #{filter}
@@ -49,9 +49,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				AND schedule.scheduleStatus = true
 			</otherwise>
 		</choose>
-		</where> -->
+		</where>
 
-	</select> 
+	</select>  -->
 	
  	<select id="getOtherScheduleList" parameterType="HashMap" resultType="com.liveamonth.liveamonth.entity.vo.ScheduleVO">
 		select * from schedule	
@@ -66,7 +66,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</choose>
 		</where>
 		<trim prefix="ORDER BY"> 
-		   ${orderBy} DESC
+			<if test="orderBy =='scheduleNO'">${orderBy} ASC</if>
+			<if test="orderBy =='scheduleLikeCount'">${orderBy} DESC</if>	 
 		</trim> 	
 	</select>
 

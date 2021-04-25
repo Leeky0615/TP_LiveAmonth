@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.liveamonth.liveamonth.constants.LogicConstants.EScheduleAttributes;
 import com.liveamonth.liveamonth.entity.dto.CalendarDTO;
 import com.liveamonth.liveamonth.entity.vo.ScheduleContentVO;
 import com.liveamonth.liveamonth.entity.vo.ScheduleVO;
@@ -170,7 +171,22 @@ public class ScheduleController{
     
     @RequestMapping("/otherScheduleList")
     public String otherScheduleList(Model model, HttpServletRequest request, CalendarDTO calendarDTO) throws Exception {
-        List<ScheduleVO> scheduleVOList = scheduleService.getOtherScheduleList(0, 0, null, null);
+    	String action = request.getParameter(SCHEDULE_ACTION.getText());
+    	
+    	List<ScheduleVO> scheduleVOList = null;
+    	
+    	if(action.contains(SCHEDULE_LIST.getText())) {
+    		scheduleVOList = scheduleService.getOtherScheduleList(0, 0, null, null);
+            
+    	}else if(action.contains(SCHEDULE_FILTER.getText())) {
+    		int sex = Integer.parseInt((String) request.getParameter(SCHEDULE_SEX.getText()));
+            int age = Integer.parseInt((String) request.getParameter(SCHEDULE_AGE.getText()));
+            String place = request.getParameter(EScheduleAttributes.SCHEDULE_PLACE.getText());
+            String orderBy = request.getParameter(SCHEDULE_ORDERBY.getText());
+            
+            scheduleVOList = scheduleService.getOtherScheduleList(sex, age, place, orderBy);
+    	}
+        
         List<UserVO> userVOList = myPageService.getOtherScheduleUserInfo(scheduleVOList);
         Place[] placeList = Place.values();
 
@@ -178,27 +194,9 @@ public class ScheduleController{
         model.addAttribute(USER_VO_LIST.getText(), userVOList);
         model.addAttribute(PLACE_LIST.getText(), placeList);
 
-        return OTHER_SCHEDULE_LIST.getPath();
+        return OTHER_SCHEDULE_LIST.getPath();   	
     }
 
-    @RequestMapping("/filteringScheduleList")
-    public String filteringScheduleList(Model model, HttpServletRequest request, CalendarDTO calendarDTO) throws Exception {
-        int sex = Integer.parseInt((String) request.getParameter(SCHEDULE_SEX.getText()));
-        int age = Integer.parseInt((String) request.getParameter(SCHEDULE_AGE.getText()));
-//        String place = request.getParameter(SCHEDULE_PLACE.getText()); contants 이름 수정 필요     
-        String place = request.getParameter("place");
-        String orderBy = request.getParameter("orderBy");
-        		
-        System.out.println(place);
-        List<ScheduleVO> scheduleVOList = scheduleService.getOtherScheduleList(sex, age, place, orderBy);
-        List<UserVO> userVOList = myPageService.getOtherScheduleUserInfo(scheduleVOList);
-
-        model.addAttribute(SCHEDULE_VO_LIST.getText(), scheduleVOList);
-        model.addAttribute(USER_VO_LIST.getText(), userVOList);
-
-        return OTHER_SCHEDULE_LIST.getPath();
-    }
-    
     @RequestMapping("/otherSchedule")
     public String otherSchedule(Model model, HttpServletRequest request, CalendarDTO calendarDTO) throws Exception{
         int scheduleNO = Integer.parseInt((String) request.getParameter(SCHEDULE_NO.getText()));

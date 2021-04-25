@@ -115,7 +115,7 @@
 								<li class="active"><a href="schedule">Schedule</a>
                                     <ul class="dropdown">
 									    <li><a href="schedule">내 스케줄 보기</a></li>
-									    <li><a href="otherScheduleList">다른 사람 스케줄 보기</a></li>
+									    <li><a href="otherScheduleList?action=list">다른 사람 스케줄 보기</a></li>
 									</ul></li>
 								<li class="active"><a href="review">Review</a>
 									<ul class="dropdown">
