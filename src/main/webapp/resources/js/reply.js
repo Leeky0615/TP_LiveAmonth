@@ -29,3 +29,12 @@
             return;
         }
     }
+
+    function deleteScheduleReplyButton(scheduleReplyNO){
+        var scheduleNO = document.getElementById("selectedScheduleNO").value;
+        if (confirm("정말 삭제하시겠습니까??") == true){
+            location.replace('/deleteScheduleReply?reviewReplyNO='+scheduleReplyNO+'&scheduleNO='+scheduleNO);
+        } else {
+            return;
+        }
+    }

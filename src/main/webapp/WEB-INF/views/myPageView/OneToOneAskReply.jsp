@@ -7,10 +7,6 @@
 <head>
 <meta charset="UTF-8">
 <title>1:1문의</title>
-
-
-
-<jsp:include page="/incl/Header.jsp" />
 </head>
 
 <body>
@@ -29,24 +25,16 @@
 		<tbody>
 			<c:forEach var="oneToOneAskReplyVOList" items="${oneToOneAskReplyVOList}">
 				<tr>
-				
 					<td>${oneToOneAskReplyVOList.oneToOneAskNO}</td>
 					<td>${oneToOneAskReplyVOList.oneToOneAskCategory}</td>
 					<td><a href="oneToOneAskReplyWrite?oneToOneAskNO=${oneToOneAskReplyVOList.oneToOneAskNO}">${oneToOneAskReplyVOList.oneToOneAskSubject}</a></td>
 					<td>${oneToOneAskReplyVOList.oneToOneAskDate}</td>
 					<td>${oneToOneAskReplyVOList.oneToOneAskViewCount}</td>
-					
-					
-				
 				</tr>
 			</c:forEach>
 		</tbody>
 
 	</table>
 	</div>
-
-
-
-	<jsp:include page="/incl/Footer.jsp" />
 </body>
 </html>

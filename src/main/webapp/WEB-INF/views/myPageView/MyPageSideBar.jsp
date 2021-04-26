@@ -54,14 +54,15 @@
                         </div>
                         <div class="rp-item">
                             <div class="rp-text">
-                                <a href="#">공지사항</a>
+                                <a href="oneToOneAskReply">1:1문의답변(직원용)</a>
                             </div>
                         </div>
                         <div class="rp-item">
                             <div class="rp-text">
-                                <a href="#">서비스 이용약관</a>
+                                <a href="#">공지사항</a>
                             </div>
                         </div>
+
                         <div class="rp-item">
                             <div class="rp-text">
                                 <a href="#">개인정보 처리방침</a>

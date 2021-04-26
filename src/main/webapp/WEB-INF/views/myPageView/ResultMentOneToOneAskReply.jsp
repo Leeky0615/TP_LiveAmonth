@@ -7,7 +7,6 @@
     <title>1:1문의 완료</title>
 </head>
 <body>
-<jsp:include page="/incl/Header.jsp" />
 
 <!-- Contact Form Section Begin -->
 <section class="contact-form-section spad">
@@ -19,7 +18,7 @@
                         <h4>문의에대한 답변이 완료되었습니다.</h4>
                         <p>사용자의 이메일로 해당 내용을 발송했습니다.</p>
                     </div>
-                    <form action="/" method = post class="cc-form">
+                    <form action="/myPage"  class="cc-form">
                         <button type="submit" class="site-btn">확인</button>
                     </form>
                 </div>
@@ -29,6 +28,5 @@
 </section>
 <!-- Contact Form Section End -->
 
-<jsp:include page="/incl/Footer.jsp" />
 </body>
 </html>

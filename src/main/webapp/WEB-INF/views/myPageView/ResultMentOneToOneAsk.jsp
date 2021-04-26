@@ -16,7 +16,7 @@
                         <h4>문의가 완료되었습니다.</h4>
                         <p>문의내용을 확인한 뒤 신속한 답변드리겠습니다. 감사합니다.</p>
                     </div>
-                    <form action="/" method = post class="cc-form">
+                    <form action="/myPage" class="cc-form">
                         <button type="submit" class="site-btn">확인</button>
                     </form>
                 </div>
