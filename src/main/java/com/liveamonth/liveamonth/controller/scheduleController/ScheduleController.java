@@ -114,7 +114,7 @@ public class ScheduleController{
     public String swapSchedule(HttpServletRequest request) throws Exception{
         HttpSession session = request.getSession();
         session.setAttribute(SELECTED_SCHEDULE_NO.getText(), request.getParameter(SELECT_SCHEDULE.getText()));
-        return REDIRECT_SCHEDULE.getPath();
+        return REDIRECT_SCHEDULE.getRedirectPath();
     }
     @RequestMapping(value="addSchedule")
     public String addSchedule(HttpServletRequest request, ScheduleVO scheduleVO, RedirectAttributes rttr) throws Exception{

@@ -4,5 +4,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
  
 <mapper namespace="com.liveamonth.liveamonth.model.mapper.cityInfoMapper.CityInfoMapper">
+<!--    <select id="getAllCityInfoList" resultType="com.liveamonth.liveamonth.entity.vo.CityInfoVO">-->
+<!--        SELECT * FROM cityInfo;-->
+<!--    </select>-->
+<!--    <select id="getCityTotalInfoList" parameterType = "String" resultType="com.liveamonth.liveamonth.entity.vo.CityInfoVO">-->
+<!--        SELECT * FROM cityInfo WHERE cityInfoName=#{cityInfoName};-->
+<!--    </select>-->
 
+<!--    <select id="getCityInfoList" parameterType = "String" resultType="com.liveamonth.liveamonth.entity.vo.CityInfoVO">-->
+<!--        SELECT * FROM cityInfo WHERE cityInfoName=#{cityInfoName} AND cityInfoCategory=#{cityInfoCategory};-->
+<!--    </select>-->
+<!--    <select id="getCityInfoListByCategory" parameterType = "String" resultType="com.liveamonth.liveamonth.entity.vo.CityInfoVO">-->
+<!--        SELECT * FROM cityInfo WHERE cityInfoCategory=#{cityInfoCategory};-->
+<!--    </select>-->
+<!--    <select id="getCityInfoNameList" resultType="String">-->
+<!--        SELECT cityInfoName FROM cityInfo WHERE cityInfoCategory='INTRO';-->
+<!--    </select>-->
 </mapper>

@@ -23,7 +23,7 @@ public class MainController {
 	private CityInfoService cityInfoService;
 
 	@RequestMapping(value = "/")
-	public String main(Model model, HttpServletRequest request) {
+	public String main(Model model, HttpServletRequest request)  throws Exception{
 		List<CityInfoVO> cityIntroList = cityInfoService.getCityInfoListByCategory(CATEGORY_INTRO.getCategoryUppercase());
 		List<String> cityNameList = cityInfoService.getCityInfoNameList();
 

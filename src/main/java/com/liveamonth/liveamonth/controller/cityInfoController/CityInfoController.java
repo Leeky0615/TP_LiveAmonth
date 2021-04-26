@@ -21,7 +21,7 @@ public class CityInfoController {
     private CityInfoService cityInfoService;
 
     @GetMapping(value="/cityInfo")
-    public String cityInfo(Model model){
+    public String cityInfo(Model model) throws Exception{
         // 카테고리가 'INTRO'인 CityInfo를 받아옴
         List<CityInfoVO> cityIntroList = cityInfoService.getCityInfoListByCategory(CATEGORY_INTRO.getCategoryUppercase());
         // INTRO 카테고리에 있는 CityInfoName컬럼만 가져옴
@@ -32,7 +32,7 @@ public class CityInfoController {
         return CITY_INFO.getPath();
     }
     @GetMapping(value = "selectCityInfo")
-    public String selectCityInfo(RedirectAttributes rttr, HttpServletRequest request){
+    public String selectCityInfo(RedirectAttributes rttr, HttpServletRequest request) throws Exception{
         /*
          * request에서 클릭한 메뉴의 페이지 정보를 가져옴(getParameter())
          * 받아온 파라미터를 사용해 해당 도시의 정보를 보냄
@@ -44,7 +44,7 @@ public class CityInfoController {
     /*
     * Controller 내부에서 사용되는 Method
     */
-    private void setModel(RedirectAttributes rttr, String cityName){
+    private void setModel(RedirectAttributes rttr, String cityName)  throws Exception{
         // cityName과 cityCategory를 파라미터로 받아서 리스트에 담음
         List<CityInfoVO> cityIntro = cityInfoService.getCityInfoList(cityName,CATEGORY_INTRO.getCategoryUppercase());
         List<CityInfoVO> foodList = cityInfoService.getCityInfoList(cityName,CATEGORY_FOOD.getCategoryUppercase());

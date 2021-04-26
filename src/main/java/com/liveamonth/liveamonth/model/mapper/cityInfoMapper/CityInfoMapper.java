@@ -11,17 +11,17 @@ import java.util.List;
 @Mapper
 public interface CityInfoMapper {
     @Select("SELECT * FROM cityInfo")
-    List<CityInfoVO> getAllCityInfoList();
+    List<CityInfoVO> getAllCityInfoList() throws Exception;;
 
     @Select("SELECT * FROM cityInfo WHERE cityInfoName=#{cityInfoName}")
-    List<CityInfoVO> getCityTotalInfoList(String cityName);
+    List<CityInfoVO> getCityTotalInfoList(String cityName) throws Exception;;
 
     @Select("SELECT * FROM cityInfo WHERE cityInfoName=#{cityInfoName} AND cityInfoCategory=#{cityInfoCategory}")
-    List<CityInfoVO> getCityInfoList(String cityInfoName, String cityInfoCategory);
+    List<CityInfoVO> getCityInfoList(String cityInfoName, String cityInfoCategory) throws Exception;;
 
     @Select("SELECT * FROM cityInfo WHERE cityInfoCategory=#{cityInfoCategory}")
-    List<CityInfoVO> getCityInfoListByCategory(String cityInfoCategory);
+    List<CityInfoVO> getCityInfoListByCategory(String cityInfoCategory) throws Exception;;
 
     @Select("SELECT cityInfoName FROM cityInfo WHERE cityInfoCategory='INTRO'")
-    List<String> getCityInfoNameList();
+    List<String> getCityInfoNameList() throws Exception;;
 }
