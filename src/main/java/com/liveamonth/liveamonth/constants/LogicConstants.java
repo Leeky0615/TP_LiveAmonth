@@ -24,7 +24,11 @@ public class LogicConstants {
         FAIL_TO_DELETE_SCHEDULE("캘린더 삭제에 실패하였습니다."),
 
         ADD_SCHEDULEREPLY("댓글 등록이 완료되었습니다."),
-        FAIL_TO_ADD_SCHEDULEREPLY("댓글 등록에 실패하였습니다.");
+        FAIL_TO_ADD_SCHEDULEREPLY("댓글 등록에 실패하였습니다."),
+        COMPLETE_SCHEDULEREPLY_MODIFICATION("댓글이 수정되었습니다."),
+        FAIL_TO_MODIFY_SCHEDULEREPLY("댓글 수정에 실패하였습니다."),
+        COMPLETE_SCHEDULEREPLY_DELETION("댓글이 삭제되었습니다.."),
+        FAIL_TO_DELETE_SCHEDULEREPLY("댓글 삭제에 실패하였습니다.");
 
         private String text;
         private EAlertMessage(String text) {this.text = text;}

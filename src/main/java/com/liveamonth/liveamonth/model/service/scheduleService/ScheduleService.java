@@ -39,4 +39,6 @@ public interface ScheduleService {
     public List<HashMap<String, Object>> getScheduleReplyList(int scheduleNO) throws Exception;
 
     public boolean addScheduleReplyVO(ScheduleReplyVO scheduleReplyVO, String userID) throws Exception;
+
+    public boolean deleteScheduleReply(int scheduleReplyNO) throws Exception;
 }

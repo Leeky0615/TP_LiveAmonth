@@ -43,7 +43,7 @@ public class SignController {
     }
 
     @RequestMapping("/logout")
-    private String logout(Model model, HttpSession session) throws Exception {
+    private String logout(HttpSession session) throws Exception {
         session.invalidate();
         List<CityInfoVO> cityIntroList = cityInfoService.getCityInfoListByCategory(CATEGORY_INTRO.getCategoryUppercase());
         List<String> cityNameList = cityInfoService.getCityInfoNameList();
