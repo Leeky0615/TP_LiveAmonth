@@ -13,7 +13,7 @@
     <section class="hero-section">
         <div class="container">
             <div class="hs-slider owl-carousel">
-                <div class="hs-item set-bg" data-setbg="resources/img/intro/INTRO_SE.png">
+                <div class="hs-item set-bg" data-setbg="https://liveamonth-resources.s3.ap-northeast-2.amazonaws.com/img/intro/INTRO_SE.png">
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="hc-inner-text">
@@ -31,7 +31,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="hs-item set-bg" data-setbg="resources/img/intro/INTRO_JJ.png">
+                <div class="hs-item set-bg" data-setbg="https://liveamonth-resources.s3.ap-northeast-2.amazonaws.com/img/intro/INTRO_JJ.png">
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="hc-inner-text">
@@ -49,7 +49,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="hs-item set-bg" data-setbg="resources/img/intro/INTRO_GN.png">
+                <div class="hs-item set-bg" data-setbg="https://liveamonth-resources.s3.ap-northeast-2.amazonaws.com/img/intro/INTRO_GN.png">
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="hc-inner-text">
@@ -70,7 +70,6 @@
             </div>
         </div>
     </section>
-
     <jsp:include page="/WEB-INF/views/cityInfoView/CityInfoGrid.jsp"/>
     <jsp:include page="/incl/Footer.jsp" />
 </body>

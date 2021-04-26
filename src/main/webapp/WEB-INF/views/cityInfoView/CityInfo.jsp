@@ -33,7 +33,7 @@
                     <div class="col-lg-4 col-md-6 mix">
                         <div class="ih-item square effect13 left_to_right property-item">
                             <div class="pi-pic set-bg"
-                                 data-setbg="/resources/img/view/<c:out value='${View[0].getCityInfoImageURL()}'/>">
+                                 data-setbg="https://liveamonth-resources.s3.ap-northeast-2.amazonaws.com/img/view/<c:out value='${View[0].getCityInfoImageURL()}'/>">
                                 <div class="label">
                                     <c:out value="${View[0].getCityInfoDesc()}"/>
                                 </div>
@@ -43,7 +43,7 @@
                     <div class="col-lg-4 col-md-6 mix all seoul">
                         <div class="ih-item square effect13 left_to_right property-item">
                             <div class="pi-pic set-bg"
-                                 data-setbg="/resources/img/food/<c:out value='${Food[0].getCityInfoImageURL()}'/>">
+                                 data-setbg="https://liveamonth-resources.s3.ap-northeast-2.amazonaws.com/img/food/<c:out value='${Food[0].getCityInfoImageURL()}'/>">
                                 <div class="label">
                                     <c:out value="${Food[0].getCityInfoDesc()}"/>
                                 </div>

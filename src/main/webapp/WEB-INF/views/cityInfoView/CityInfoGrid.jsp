@@ -20,7 +20,7 @@
                         <a href="selectCityInfo?page=${name}">
                             <c:set var="i" value="${status.count-1}"/>
                             <c:set var="imageurl" value="${cityIntroList[i].getCityInfoImageURL()}"/>
-                            <div class="pi-pic set-bg" data-setbg="resources/img/intro/${imageurl}">
+                            <div class="pi-pic set-bg" data-setbg="https://liveamonth-resources.s3.ap-northeast-2.amazonaws.com/img/intro/${imageurl}">
                                 <div class="label">
                                     <c:out value="${cityIntroList[i].getCityInfoName()}"/>
                                 </div>
