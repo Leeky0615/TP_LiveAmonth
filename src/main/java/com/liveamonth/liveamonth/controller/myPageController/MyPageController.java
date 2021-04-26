@@ -113,7 +113,7 @@ public class MyPageController {
 
         }
     }
-    
+
     @RequestMapping("/resultMentDropUser")
     private String resultMentDropUser(Model model, HttpServletRequest request,HttpSession session) throws Exception {
     	Object session_UserID = session.getAttribute(USER_ID.getText());
@@ -123,7 +123,7 @@ public class MyPageController {
     	return RESULT_MENT_DROP_USER.getSectionPath();
 
     }
-    
+
     @RequestMapping("/oneToOneAsk")
     private String oneToOneAsk(Model model, HttpServletRequest request) throws Exception {
     	ArrayList<OneToOneAskVO> oneToOneAskVOList = myPageService.getOneToOneAskVOList();
@@ -131,19 +131,19 @@ public class MyPageController {
     	return ONE_TO_ONE_ASK.getSectionPath();
 
     }
-     
+
     @RequestMapping("/oneToOneAskWrite")
     private String oneToOneAskWrite(Model model) throws Exception {
     	model.addAttribute(ONE_TO_ONE_ASK_CATEGORY.getText(), OneToOneAskCategory.values());
     	return ONE_TO_ONE_ASK_WRITE.getSectionPath();
     }
-    
+
     @RequestMapping("/resultMentOneToOneAsk")
     private String resultMentOneToOneAsk(HttpSession session,OneToOneAskVO oneToOneAskVO) throws Exception {
         String userID = String.valueOf(session.getAttribute(USER_ID.getText()));
     	myPageService.addOneToOneAsk(oneToOneAskVO,userID);
     	return RESULT_MENT_ONE_TO_ONE_ASK.getPath();
     }
-    
-   
+
+
 }

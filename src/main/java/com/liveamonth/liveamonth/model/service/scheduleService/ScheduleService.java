@@ -32,9 +32,9 @@ public interface ScheduleService {
 
     boolean modifySchedule(ScheduleVO scheduleVO) throws Exception;
 
-    boolean deleteSchedule(int scheduleNO) throws Exception;
-
-    public List<ScheduleVO> getOtherScheduleInfo() throws Exception;
+	boolean deleteSchedule(int scheduleNO) throws Exception;
+	
+	public  List<ScheduleVO> getOtherScheduleList(int sex, int age, String place, String orderBy) throws Exception;
 
     public List<HashMap<String, Object>> getScheduleReplyList(int scheduleNO) throws Exception;
 

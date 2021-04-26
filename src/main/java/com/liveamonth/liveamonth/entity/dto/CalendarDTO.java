@@ -197,8 +197,6 @@ public class CalendarDTO {
 	public void setDateList(List<CalendarDTO> dateList) {
 		this.dateList = dateList;
 	}
-    
-    
 
 }
 

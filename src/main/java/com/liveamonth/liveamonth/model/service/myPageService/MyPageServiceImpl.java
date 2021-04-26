@@ -19,7 +19,7 @@ public class MyPageServiceImpl implements MyPageService {
 
     @Autowired
     private MyPageMapper myPageMapper;
-    
+
     @Autowired
     private ScheduleMapper scheduleMapper;
 
@@ -46,22 +46,22 @@ public class MyPageServiceImpl implements MyPageService {
     public void modifyUserInfo(UserVO userVO) throws Exception {
         myPageMapper.modifyUserInfo(userVO);
     }
-    
+
     @Override
 	public void dropUser(String userID) throws Exception {
     	myPageMapper.dropUser(userID);
-		
+
 	}
 
 	@Override
 	public ArrayList<OneToOneAskVO> getOneToOneAskVOList() throws Exception {
 		return myPageMapper.getOneToOneAskVOList();
-		
+
 	}
 
 	@Override
 	public void addOneToOneAsk(OneToOneAskVO oneToOneAskVO, String userID) throws Exception {
-		
+
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.KOREA);
 		Date currentTime = new Date();
 		String dTime = formatter.format(currentTime);
@@ -72,6 +72,6 @@ public class MyPageServiceImpl implements MyPageService {
 		oneToOneAskVO.setOneToOneAskViewCount(0);
 		oneToOneAskVO.setUserNO(scheduleMapper.findUserIDToUserNO(userID));
 		myPageMapper.addOneToOneAsk(oneToOneAskVO);
-		
+
 	}
 }

@@ -7,7 +7,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class ReviewServiceImpl implements ReviewService {
 
-    @Autowired
+    @SuppressWarnings("unused")
+	@Autowired
     private ReviewMapper reviewMapper;
 
 }

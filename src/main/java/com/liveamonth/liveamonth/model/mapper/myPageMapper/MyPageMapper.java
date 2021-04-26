@@ -15,7 +15,7 @@ import java.util.List;
 @Mapper
 public interface MyPageMapper {
     @Select("SELECT * FROM user WHERE userID=#{userID}")
-    UserVO getUserInfo(String userID) throws Exception;
+    public UserVO getUserInfo(String userID) throws Exception;
 
     @Update("UPDATE user SET userPassword=#{userPassword}," +
             "userNickname=#{userNickname}," +
@@ -24,7 +24,7 @@ public interface MyPageMapper {
     public void modifyUserInfo(UserVO userVO)throws Exception;
 
     public UserVO getOtherScheduleUserInfo(int userNO) throws Exception;
-	
+
 	public void dropUser(String userID) throws Exception;
 
 	public ArrayList<OneToOneAskVO> getOneToOneAskVOList() throws Exception;
@@ -33,5 +33,3 @@ public interface MyPageMapper {
 
 	public void addOneToOneAsk(OneToOneAskVO oneToOneAskVO) throws Exception;
 }
-
-

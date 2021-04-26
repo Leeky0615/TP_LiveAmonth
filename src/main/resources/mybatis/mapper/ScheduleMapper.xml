@@ -30,9 +30,42 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select userNO from user where userID = #{userID};
 	</select>
 	
-	 <select id="getOtherScheduleInfo" resultType="com.liveamonth.liveamonth.entity.vo.ScheduleVO">
+<!-- 	 <select id="getOtherScheduleInfo" resultType="com.liveamonth.liveamonth.entity.vo.ScheduleVO">
       select * from schedule where schedule.scheduleStatus = true order by scheduleLikeCount DESC;
-    </select>
+    </select> -->
+    
+<!--     <select id="getOtherScheduleList" parameterType="HashMap" resultType="com.liveamonth.liveamonth.entity.vo.ScheduleVO">
+		select * from schedule	
+		<where>
+		<choose>
+			<when test="filter!=null">
+				AND schedule.scheduleStatus = true #{filter}
+			</when>
+			<otherwise>
+				AND schedule.scheduleStatus = true
+			</otherwise>
+		</choose>
+		</where>
+
+	</select>  -->
+	
+ 	<select id="getOtherScheduleList" parameterType="HashMap" resultType="com.liveamonth.liveamonth.entity.vo.ScheduleVO">
+		select * from schedule	
+		<where> 
+		<choose>
+			<when test="filter!=null">
+				AND schedule.scheduleStatus = true ${filter}
+			</when>
+			<otherwise>
+				AND schedule.scheduleStatus = true
+			</otherwise>
+		</choose>
+		</where>
+		<trim prefix="ORDER BY"> 
+			<if test="orderBy =='scheduleNO'">${orderBy} ASC</if>
+			<if test="orderBy =='scheduleLikeCount'">${orderBy} DESC</if>	 
+		</trim> 	
+	</select>
 
 	<resultMap type = "java.util.HashMap" id="scheduleReplyAndNickname">
 		<id column="scheduleReplyNO" property="scheduleReplyNO"/>

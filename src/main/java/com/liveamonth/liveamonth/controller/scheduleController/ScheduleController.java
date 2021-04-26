@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.liveamonth.liveamonth.constants.LogicConstants.EScheduleAttributes;
 import com.liveamonth.liveamonth.entity.dto.CalendarDTO;
 import com.liveamonth.liveamonth.entity.vo.ScheduleContentVO;
 import com.liveamonth.liveamonth.entity.vo.ScheduleVO;
 import com.liveamonth.liveamonth.model.service.scheduleService.ScheduleService;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import static com.liveamonth.liveamonth.constants.ControllerPathConstants.ESchedulePath.*;
@@ -56,7 +56,7 @@ public class ScheduleController{
         }
 
         rttr.addFlashAttribute(MESSAGE.getText(),message);
-        return REDIRECT_SCHEDULE.getText();
+        return REDIRECT_SCHEDULE.getRedirectPath();
     }
 
     @RequestMapping(value="deleteScheduleContent")
@@ -64,7 +64,7 @@ public class ScheduleController{
         scheduleService.deleteScheduleContent(scheduleContentNO);
 
         rttr.addFlashAttribute(MESSAGE.getText(), COMPLETE_SCHEDULE_DELETION.getText());
-        return REDIRECT_SCHEDULE.getText();
+        return REDIRECT_SCHEDULE.getRedirectPath();
     }
 
     @RequestMapping(value="modifyScheduleContent")
@@ -75,7 +75,7 @@ public class ScheduleController{
         scheduleService.modifyScheduleContent(scheduleContentNO,scheduleContentSubject,scheduleContentDesc,scheduleContentCost);
 
         rttr.addFlashAttribute(MESSAGE.getText(), COMPLETE_SCHEDULE_MODIFICATION.getText());
-        return REDIRECT_SCHEDULE.getText();
+        return REDIRECT_SCHEDULE.getRedirectPath();
     }
 
     @RequestMapping("/schedule")
@@ -127,7 +127,7 @@ public class ScheduleController{
             message = FAIL_TO_ADD_SCHEDULE.getText();
         }
         rttr.addFlashAttribute(MESSAGE.getText(), message);
-        return REDIRECT_SCHEDULE.getText();
+        return REDIRECT_SCHEDULE.getRedirectPath();
     }
 
 
@@ -144,7 +144,7 @@ public class ScheduleController{
         }
         rttr.addFlashAttribute(MESSAGE.getText(), message);
 
-        return REDIRECT_SCHEDULE.getText();
+        return REDIRECT_SCHEDULE.getRedirectPath();
     }
 
     @RequestMapping(value="deleteSchedule")
@@ -160,7 +160,7 @@ public class ScheduleController{
         }
         rttr.addFlashAttribute(MESSAGE.getText(), message);
 
-        return REDIRECT_SCHEDULE.getText();
+        return REDIRECT_SCHEDULE.getRedirectPath();
     }
 
     @ResponseBody
@@ -169,22 +169,24 @@ public class ScheduleController{
         this.scheduleContentNO = Integer.parseInt(request.getParameter(SCHEDULE_CONTENT_NO.getText()));
     }
 
-    @RequestMapping("/otherSchedule")
-    public String otherSchedule(Model model, HttpServletRequest request, CalendarDTO calendarDTO) throws Exception{
-        int scheduleNO = Integer.parseInt((String) request.getParameter(SCHEDULE_NO.getText()));
-
-        CalendarDTO calendarDto = scheduleService.showCalendar(calendarDTO, scheduleNO);
-
-        model.addAttribute(SCHEDULEREPLY_VO_LIST.getText(), scheduleService.getScheduleReplyList(scheduleNO));
-        model.addAttribute(SCHEDULE_NO.getText(), scheduleNO);
-        model.addAttribute(DATE_LIST.getText(), calendarDto.getDateList()); //날짜 데이터 배열
-        model.addAttribute(TODAY_INFORMATION.getText(), calendarDto.getTodayInformation());
-
-        return OTHER_SCHEDULE.getPath();
-    }
     @RequestMapping("/otherScheduleList")
     public String otherScheduleList(Model model, HttpServletRequest request, CalendarDTO calendarDTO) throws Exception {
-        List<ScheduleVO> scheduleVOList = scheduleService.getOtherScheduleInfo();
+    	String action = request.getParameter(SCHEDULE_ACTION.getText());
+
+    	List<ScheduleVO> scheduleVOList = null;
+
+    	if(action.contains(SCHEDULE_LIST.getText())) {
+    		scheduleVOList = scheduleService.getOtherScheduleList(0, 0, null, null);
+
+    	}else if(action.contains(SCHEDULE_FILTER.getText())) {
+    		int sex = Integer.parseInt((String) request.getParameter(SCHEDULE_SEX.getText()));
+            int age = Integer.parseInt((String) request.getParameter(SCHEDULE_AGE.getText()));
+            String place = request.getParameter(EScheduleAttributes.SCHEDULE_PLACE.getText());
+            String orderBy = request.getParameter(SCHEDULE_ORDERBY.getText());
+
+            scheduleVOList = scheduleService.getOtherScheduleList(sex, age, place, orderBy);
+    	}
+
         List<UserVO> userVOList = myPageService.getOtherScheduleUserInfo(scheduleVOList);
         Place[] placeList = Place.values();
 
@@ -194,20 +196,16 @@ public class ScheduleController{
 
         return OTHER_SCHEDULE_LIST.getPath();
     }
+    @RequestMapping("/otherSchedule")
+    public String otherSchedule(Model model, HttpServletRequest request, CalendarDTO calendarDTO) throws Exception{
+        int scheduleNO = Integer.parseInt((String) request.getParameter(SCHEDULE_NO.getText()));
 
-    @RequestMapping("/filteringScheduleList")
-    public String filteringScheduleList(Model model, HttpServletRequest request, CalendarDTO calendarDTO) throws Exception {
-        int sex = Integer.parseInt((String) request.getParameter(SCHEDULE_SEX.getText()));
-        int age = Integer.parseInt((String) request.getParameter(SCHEDULE_AGE.getText()));
-        String place = request.getParameter(SCHEDULE_PLACE.getText());
+        CalendarDTO calendarDto = scheduleService.showCalendar(calendarDTO, scheduleNO);
 
-        List<ScheduleVO> ScheduleVOList = scheduleService.getOtherScheduleInfo();
-        List<UserVO> UserVOList = myPageService.getOtherScheduleUserInfo(ScheduleVOList);
+        model.addAttribute(DATE_LIST.getText(), calendarDto.getDateList()); //날짜 데이터 배열
+        model.addAttribute(TODAY_INFORMATION.getText(), calendarDto.getTodayInformation());
 
-        model.addAttribute(SCHEDULE_VO_LIST.getText(), ScheduleVOList);
-        model.addAttribute(USER_VO_LIST.getText(), UserVOList);
-
-        return OTHER_SCHEDULE_LIST.getPath();
+        return OTHER_SCHEDULE.getPath();
     }
 
     @RequestMapping(value="addScheduleReply")

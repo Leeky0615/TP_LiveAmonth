@@ -16,32 +16,7 @@
    <div class="row">
       <div class="col-lg-12 p-0">  -->
 
-<!-- <div>
-   <form action="/filteringScheduleList" class="filter-form">
-      <h4>필터 검색</h4>
-      <label>성별</label> <br> <select name="sex" id="sex"
-         class="sm-width">
-         <option value="0">기본</option>
-         <option value="1">남성</option>
-         <option value="2">여성</option>
-      </select> <label>나이</label> <br> <select name="age" id="age"
-         class="sm-width">
-         <option value="0">기본</option>
-         <option value="20">20대</option>
-         <option value="30">30대</option>
-         <option value="40">40대</option>
-         <option value="50">50대</option>
-         <option value="60">60대</option>
-      </select> <label>장소</label> <br> <select name="place" id="place"
-         class="sm-width">
-         <option value="NULL">기본</option>
-         <option value="SEOUL">서울</option>
-         <option value="JEJU">제주</option>
-      </select> <input type="submit" value="조회">
-   </form>
-</div> -->
-
-<form action="/filteringScheduleList" class="filter-form">
+<form action="/otherScheduleList" class="filter-form">
    <h4>필터 검색</h4>
    <table>
       <thead>
@@ -58,7 +33,8 @@
             <option value="0">기본</option>
             <option value="1">남성</option>
             <option value="2">여성</option>
-         </select></td>
+         </select>
+         </td>       
          <td><select name="age" id="age" class="sm-width">
             <option value="0">기본</option>
             <option value="20">20대</option>
@@ -68,15 +44,35 @@
             <option value="60">60대</option>
          </select></td>
          <td><select name="place" id="place" class="sm-width">
-            <option value="NULL">기본</option>
+            <option value= "null">기본</option>
             <c:forEach var="place" items="${placeList}">
                <option value="${place}">${place.label}</option>
             </c:forEach>
          </select></td>
-         <td><input type="submit" value="조회"></td>
+	<!-- 	<td><input type="submit" name="filter" value="조회"></td> -->
       </tr>
       </tbody>
    </table>
+   
+   <h4>정렬</h4>
+   <table>
+      <thead>
+      <tr>
+         <th><label>정렬 조건</label></th>
+         <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+         <td>
+        	 <input type="radio" name="orderBy" value="orderByLiked" checked = "checked" class="sm-width">좋아요 순
+        	 <input type="radio" name="orderBy" value="orderByNew" class="sm-width">최신 순
+		 </td>
+         <td><input type="submit" name="order" value="적용"></td>
+      </tr>
+      </tbody>
+   </table>
+   <input type="hidden" name = "action" value = "filter">
 </form>
 
 <div class="pc-table">
@@ -97,7 +93,8 @@
       <c:set var="sysYear">
          <fmt:formatDate value="${now}" pattern="yyyy" />
       </c:set>
-
+		
+	  <c:if test="${userVOList.size()>0}">
       <c:set var="size" value="${fn:length(userVOList)}" />
       <c:forEach var="i" begin="0" end="${size-1}">
          <c:choose>
@@ -125,6 +122,7 @@
                     value="${scheduleVOList[i].getScheduleLikeCount()}" /></td>
          </tr>
       </c:forEach>
+      </c:if>
       </tbody>
    </table>
 </div>

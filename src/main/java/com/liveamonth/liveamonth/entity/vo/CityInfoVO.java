@@ -7,17 +7,17 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Data
 public class CityInfoVO {
-    private int cityInfoNO;
-    private String cityInfoCategory;
-    private String cityInfoName;
-    private String cityInfoImageURL;
-    private String cityInfoDesc;
+    private int cityNO;
+    private String cityCategory;
+    private String cityName;
+    private String cityImageURL;
+    private String cityDesc;
 
     public CityInfoVO() {
-        this.cityInfoNO = 0;
-        this.cityInfoCategory = null;
-        this.cityInfoName = null;
-        this.cityInfoImageURL = null;
-        this.cityInfoDesc = null;
+        this.cityNO = 0;
+        this.cityCategory = null;
+        this.cityName = null;
+        this.cityImageURL = null;
+        this.cityDesc = null;
     }
 }
