@@ -35,7 +35,7 @@ public class CityInfoController {
     public String selectCityInfo(RedirectAttributes rttr, HttpServletRequest request) throws Exception{
         /*
          * request에서 클릭한 메뉴의 페이지 정보를 가져옴(getParameter())
-         * 받아온 파라미터를 사용해 해당 도시의 정보를 보냄
+         * 받아온 파라미터를 사용해 해당 도시의 정보를 보냄.
          */
         this.setModel(rttr, request.getParameter("page"));
         return REDIRECT_CITY_INFO.getRedirectPath();
