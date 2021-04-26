@@ -59,7 +59,6 @@ public class OneToOneAskVO {
     public int getOneToOneAskNO() {
         return oneToOneAskNO;
     }
-
     public void setOneToOneAskNO(int oneToOneAskNO) {
         this.oneToOneAskNO = oneToOneAskNO;
     }
@@ -67,15 +66,11 @@ public class OneToOneAskVO {
     public OneToOneAskCategory getOneToOneAskCategory() {
         return oneToOneAskCategory;
     }
-
-    public void setOneToOneAskCategory(OneToOneAskCategory oneToOneAskCategory) {
-        this.oneToOneAskCategory = oneToOneAskCategory;
-    }
+    public void setOneToOneAskCategory(OneToOneAskCategory oneToOneAskCategory) {this.oneToOneAskCategory = oneToOneAskCategory;}
 
     public String getOneToOneAskSubject() {
         return oneToOneAskSubject;
     }
-
     public void setOneToOneAskSubject(String oneToOneAskSubject) {
         this.oneToOneAskSubject = oneToOneAskSubject;
     }
@@ -83,7 +78,6 @@ public class OneToOneAskVO {
     public String getOneToOneAskDesc() {
         return oneToOneAskDesc;
     }
-
     public void setOneToOneAskDesc(String oneToOneAskDesc) {
         this.oneToOneAskDesc = oneToOneAskDesc;
     }
@@ -91,46 +85,32 @@ public class OneToOneAskVO {
     public String getOneToOneAskDate() {
         return oneToOneAskDate;
     }
-
-
     public void setOneToOneAskDate(String oneToOneAskDate) {
         this.oneToOneAskDate = oneToOneAskDate;
     }
 
-
     public int getOneToOneAskViewCount() {
         return oneToOneAskViewCount;
     }
-
-
     public void setOneToOneAskViewCount(int oneToOneAskViewCount) {
         this.oneToOneAskViewCount = oneToOneAskViewCount;
     }
 
-
     public String getOneToOneAskImageURL() {
         return oneToOneAskImageURL;
     }
-
     public void setOneToOneAskImageURL(String oneToOneAskImageURL) {
         this.oneToOneAskImageURL = oneToOneAskImageURL;
     }
 
-
     public String getOneToOneAskUserEmail() {
         return oneToOneAskUserEmail;
     }
-
-
-    public void setOneToOneAskUserEmail(String oneToOneAskUserEmail) {
-        this.oneToOneAskUserEmail = oneToOneAskUserEmail;
-    }
-
+    public void setOneToOneAskUserEmail(String oneToOneAskUserEmail) {this.oneToOneAskUserEmail = oneToOneAskUserEmail;}
 
     public String getOneToOneAskReply() {
         return oneToOneAskReply;
     }
-
     public void setOneToOneAskReply(String oneToOneAskReply) {
         this.oneToOneAskReply = oneToOneAskReply;
     }
@@ -138,10 +118,7 @@ public class OneToOneAskVO {
     public int getUserNO() {
         return userNO;
     }
-
     public void setUserNO(int userNO) {
         this.userNO = userNO;
     }
-
-
 }
