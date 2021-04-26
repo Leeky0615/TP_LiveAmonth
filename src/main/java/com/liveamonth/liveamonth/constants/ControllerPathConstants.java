@@ -38,7 +38,7 @@ public class ControllerPathConstants {
         private EMyPagePath(String path) {this.path = path;}
         public String getPath() {return "myPageView/"+this.path;}
         public String getSectionPath() {return "myPageView/MyPage.jsp?page="+this.path;}
-        public String getText() {return this.path;}
+        public String getRedirectPath() {return this.path;}
     }
 
     /*
@@ -55,7 +55,7 @@ public class ControllerPathConstants {
         private String path;
         private ESignPath(String path) {this.path = path;}
         public String getPath() {return "signView/"+ this.path;}
-        public String getText() {return this.path;}
+        public String getRedirectPath() {return this.path;}
     }
 
     /*
@@ -67,7 +67,7 @@ public class ControllerPathConstants {
         private String path;
         private ECityInfoPath(String path) {this.path = path;}
         public String getPath() {return "cityInfoView/"+this.path;}
-        public String getText() {return this.path;}
+        public String getRedirectPath() {return this.path;}
     }
 
     /*
@@ -78,28 +78,21 @@ public class ControllerPathConstants {
         private String path;
         private EReviewPath(String path) {this.path = path;}
         public String getPath() {return "reviewView/"+this.path;}
-        public String getText() {return this.path;}
+        public String getRedirectPath() {return this.path;}
     }
 
     /*
      * ScheduleController Path Constants
      */
     public enum ESchedulePath {
-        OTHER_SCHEDULE("scheduleView/OtherSchedule"),
-        OTHER_SCHEDULE_LIST("scheduleView/OtherScheduleList"),
-        SCHEDULE("scheduleView/Schedule"),
-        REDIRECT_SCHEDULE("redirect:schedule"),
-        REDIRECT_OTHER_SCHEDULE("redirect:otherSchedule");
-        private String text;
-        private ESchedulePath(String path) {this.text = path;}
-        public String getPath() {return this.text;}
         OTHER_SCHEDULE("OtherSchedule"),
         OTHER_SCHEDULE_LIST("OtherScheduleList"),
         SCHEDULE("Schedule"),
-        REDIRECT_SCHEDULE("redirect:schedule");
+        REDIRECT_SCHEDULE("redirect:schedule"),
+        REDIRECT_OTHER_SCHEDULE("redirect:otherSchedule");
         private String path;
         private ESchedulePath(String path) {this.path = path;}
         public String getPath() {return "scheduleView/"+this.path;}
-        public String getText() {return this.path;}
+        public String getRedirectPath() {return this.path;}
     }
 }

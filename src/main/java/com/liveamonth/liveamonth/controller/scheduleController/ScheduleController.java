@@ -3,6 +3,7 @@ package com.liveamonth.liveamonth.controller.scheduleController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.liveamonth.liveamonth.entity.vo.ScheduleReplyVO;
 import com.liveamonth.liveamonth.entity.vo.UserVO;
 import com.liveamonth.liveamonth.model.service.myPageService.MyPageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -223,7 +224,7 @@ public class ScheduleController{
         rttr.addFlashAttribute(MESSAGE.getText(), message);
         rttr.addAttribute(SCHEDULE_NO.getText(), scheduleReplyVO.getScheduleNO());
 
-        return REDIRECT_OTHER_SCHEDULE.getPath();
+        return REDIRECT_OTHER_SCHEDULE.getRedirectPath();
     }
 
 }

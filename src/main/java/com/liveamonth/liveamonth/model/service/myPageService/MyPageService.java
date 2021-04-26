@@ -1,8 +1,10 @@
 package com.liveamonth.liveamonth.model.service.myPageService;
 
+import com.liveamonth.liveamonth.entity.vo.OneToOneAskVO;
 import com.liveamonth.liveamonth.entity.vo.ScheduleVO;
 import com.liveamonth.liveamonth.entity.vo.UserVO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface MyPageService {

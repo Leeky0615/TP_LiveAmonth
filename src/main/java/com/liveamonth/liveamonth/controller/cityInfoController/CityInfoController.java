@@ -1,16 +1,11 @@
 package com.liveamonth.liveamonth.controller.cityInfoController;
 
-import com.liveamonth.liveamonth.constants.EntityConstants;
-import com.liveamonth.liveamonth.constants.LogicConstants;
 import com.liveamonth.liveamonth.entity.vo.CityInfoVO;
 import com.liveamonth.liveamonth.model.service.cityInfoService.CityInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,7 +21,7 @@ public class CityInfoController {
     private CityInfoService cityInfoService;
 
     @GetMapping(value="/cityInfo")
-    public String cityInfo(Model model) throws Exception {
+    public String cityInfo(Model model){
         // 카테고리가 'INTRO'인 CityInfo를 받아옴
         List<CityInfoVO> cityIntroList = cityInfoService.getCityInfoListByCategory(CATEGORY_INTRO.getCategoryUppercase());
         // INTRO 카테고리에 있는 CityInfoName컬럼만 가져옴
@@ -37,19 +32,19 @@ public class CityInfoController {
         return CITY_INFO.getPath();
     }
     @GetMapping(value = "selectCityInfo")
-    public String selectCityInfo(RedirectAttributes rttr, HttpServletRequest request) throws Exception {
+    public String selectCityInfo(RedirectAttributes rttr, HttpServletRequest request){
         /*
          * request에서 클릭한 메뉴의 페이지 정보를 가져옴(getParameter())
          * 받아온 파라미터를 사용해 해당 도시의 정보를 보냄
          */
         this.setModel(rttr, request.getParameter("page"));
-        return REDIRECT_CITY_INFO.getText();
+        return REDIRECT_CITY_INFO.getRedirectPath();
     }
 
     /*
     * Controller 내부에서 사용되는 Method
     */
-    private void setModel(RedirectAttributes rttr, String cityName) throws Exception{
+    private void setModel(RedirectAttributes rttr, String cityName){
         // cityName과 cityCategory를 파라미터로 받아서 리스트에 담음
         List<CityInfoVO> cityIntro = cityInfoService.getCityInfoList(cityName,CATEGORY_INTRO.getCategoryUppercase());
         List<CityInfoVO> foodList = cityInfoService.getCityInfoList(cityName,CATEGORY_FOOD.getCategoryUppercase());

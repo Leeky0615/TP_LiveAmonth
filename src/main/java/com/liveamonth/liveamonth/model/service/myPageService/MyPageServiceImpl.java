@@ -61,7 +61,6 @@ public class MyPageServiceImpl implements MyPageService {
 
 	@Override
 	public void addOneToOneAsk(OneToOneAskVO oneToOneAskVO, String userID) throws Exception {
-
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.KOREA);
 		Date currentTime = new Date();
 		String dTime = formatter.format(currentTime);
@@ -72,6 +71,5 @@ public class MyPageServiceImpl implements MyPageService {
 		oneToOneAskVO.setOneToOneAskViewCount(0);
 		oneToOneAskVO.setUserNO(scheduleMapper.findUserIDToUserNO(userID));
 		myPageMapper.addOneToOneAsk(oneToOneAskVO);
-
 	}
 }

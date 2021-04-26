@@ -65,7 +65,10 @@ public class LogicConstants {
 
     public enum ECityInfoAttributes {
         CITY_NAME("cityName"),
+        CITY_INTRO("cityIntro"),
         CITY_INTRO_LIST("cityIntroList"),
+        CITY_VIEW_LIST("cityViewList"),
+        CITY_FOOD_LIST("cityFoodList"),
         CITY_NAME_LIST("cityNameList");
         private String text;
         private ECityInfoAttributes(String text) {this.text = text;}
