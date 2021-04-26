@@ -58,7 +58,6 @@ public class SignController {
         String userID = request.getParameter(USER_ID.getText());
         String userPassword = request.getParameter(USER_PASSWORD.getText());
         String userName = signService.checkSign(userID, userPassword);
-        //userNO를 사용하기 위한 Code -- userID로 하는건 비효율적. 매번 SQL문을 통해 NO를 알아내야 함.
         int userNO = signService.checkSign2(userID, userPassword);
 
         if (userName == null) {
@@ -69,9 +68,14 @@ public class SignController {
             HttpSession session = request.getSession();
             session.setAttribute(USER_ID.getText(), userID);
             session.setAttribute(USER_NAME.getText(), userName);
-            //userNO를 사용하기 위한 Code
-
             session.setAttribute(USER_NO.getText(), userNO);
+
+            List<CityInfoVO> cityIntroList = cityInfoService.getCityInfoListByCategory(CATEGORY_INTRO.getCategoryUppercase());
+            List<String> cityNameList = cityInfoService.getCityInfoNameList();
+
+            model.addAttribute(CITY_NAME_LIST.getText(), cityNameList);
+            model.addAttribute(CITY_INTRO_LIST.getText(), cityIntroList);
+
             return MAIN.getPath();
         }
     }
