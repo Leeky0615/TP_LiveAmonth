@@ -205,6 +205,8 @@ public class ScheduleController{
 
         CalendarDTO calendarDto = scheduleService.showCalendar(calendarDTO, scheduleNO);
 
+        model.addAttribute(SCHEDULEREPLY_VO_LIST.getText(), scheduleService.getScheduleReplyList(scheduleNO));
+        model.addAttribute(SCHEDULE_NO.getText(), scheduleNO);
         model.addAttribute(DATE_LIST.getText(), calendarDto.getDateList()); //날짜 데이터 배열
         model.addAttribute(TODAY_INFORMATION.getText(), calendarDto.getTodayInformation());
 
@@ -232,6 +234,7 @@ public class ScheduleController{
     @RequestMapping("/deleteScheduleReply")
     public String deleteScheduleReply(HttpServletRequest request, RedirectAttributes rttr) throws Exception{
         int scheduleReplyNO = Integer.parseInt(String.valueOf(request.getParameter(SCHEDULE_REPLY_NO.getText())));
+        int scheduleNO = Integer.parseInt(String.valueOf(request.getParameter(SCHEDULE_NO.getText())));
 
         String message = "";
         if(scheduleService.deleteScheduleReply(scheduleReplyNO)) {
@@ -241,7 +244,7 @@ public class ScheduleController{
         }
 
         rttr.addFlashAttribute(MESSAGE.getText(), message);
-        rttr.addAttribute(SCHEDULE_NO.getText(), 203);
+        rttr.addAttribute(SCHEDULE_NO.getText(), scheduleNO);
 
         return REDIRECT_OTHER_SCHEDULE.getPath();
     }

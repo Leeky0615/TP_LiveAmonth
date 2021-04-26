@@ -37,16 +37,16 @@ create table scheduleContent
 
 create table scheduleReply
 (
-    scheduleReplyNO    int not null auto_increment,
-    scheduleReplyDesc  varchar(200),
-    scheduleReplyDate  date,
-    scheduleReplyRefNO int,
-    userNO             int,
-    scheduleNO         int,
-    primary key (scheduleReplyNO),
-    foreign key (scheduleReplyRefNO) references scheduleReply (scheduleReplyNO) on delete cascade,
-    foreign key (userNO) references user (userNO) on delete cascade,
-    foreign key (scheduleNO) references schedule (scheduleNO) on delete cascade
+      scheduleReplyNO int not null auto_increment,
+      scheduleReplyDesc varchar(200),
+      scheduleReplyDate datetime,
+      scheduleReplyRefNO int,
+      userNO int,
+      scheduleNO int,
+      primary key (scheduleReplyNO),
+      foreign key (userNO) references user(userNO) on delete cascade,
+      foreign key (scheduleReplyRefNO) references scheduleReply(scheduleReplyNO) on delete cascade,
+      foreign key (scheduleNO) references schedule(scheduleNO) on delete cascade
 );
 
 create table review
