@@ -59,7 +59,7 @@
                            </div>
                            
                            <div class="w-50 text-md-right">
-                              <a href="PWFind">Forgot Password</a>
+                              <a href="findPW">Forgot Password</a>
                            </div>
 		            </div>
 		          </form>

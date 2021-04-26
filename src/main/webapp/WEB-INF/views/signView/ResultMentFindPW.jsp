@@ -18,22 +18,43 @@
 <jsp:include page="/incl/Header.jsp" />
 </head>
 <body>
-   <div class="w3-content w3-container w3-margin-top">
-      <div class="w3-container w3-card-4">
-         <div class="w3-center w3-large w3-margin-top">
-            <h3>비밀번호 찾기 검색결과</h3>
-         </div>
-         <div>
-            <h5>
-               ${ userPassword }
-            </h5>
-            <p class="w3-center">
-               <button type="button" id=loginBtn class="w3-button w3-block w3-black w3-ripple w3-margin-top w3-round">Login</button>
-               <button type="button" onclick="history.go(-1);" class="w3-button w3-block w3-black w3-ripple w3-margin-top w3-margin-bottom w3-round">Cancel</button>
-            </p>
-         </div>
-      </div>
-   </div>
+<section class="ftco-section">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-md-6 text-center mb-5">
+					<h2 class="heading-section">비밀번호 찾기 검색결과</h2>
+				</div>
+				</div>
+				
+			<form action="/resultMentFindPW" method="post">
+			<div class="row justify-content-center">
+				<div class="col-md-7 col-lg-5">
+				
+			      	<div class="d-flex">
+			      		<div class="w-100">
+					<h3 class="mb-4">${ userPassword }</h3>
+					  		</div>
+			      	</div>
+			      	
+			      						
+			      		<div class="form-group mt-3">			      		    
+			      		</div>
+			      	<div class="form-group">
+
+		            	<button type="button" onclick="history.go(-1);" class="form-control btn btn-primary rounded submit px-3">Cancel</button>
+		            </div>
+		            
+				</div>
+				<div>
+
+					
+				</div>
+			</form>
+		</div>
+		
+	</section>
+----
+   
 </body>
 <jsp:include page="/incl/Footer.jsp" />
 </html>

@@ -10,29 +10,51 @@
 <jsp:include page="/incl/Header.jsp" />
 </head>
 <body>
-   <div class="w3-content w3-container w3-margin-top">
-      <div class="w3-container w3-card-4">
-         <form action="/ResultMentFindPW" method="post">
-            <div class="w3-center w3-large w3-margin-top">
-               <h3>비밀번호 찾기</h3>
-            </div>
-            <div>
-               <p>
-                  <label>ID</label>
-                  <input class="w3-input" type="text" id="userID" name="userID" required>
-               </p>
-               <p>
-                  <label>Email</label>
-                  <input class="w3-input" type="text" id="userEmail" name="userEmail" required>
-               </p>
-               <p class="w3-center">
-                  <button type="submit" id=findBtn class="w3-button w3-block w3-black w3-ripple w3-margin-top w3-round">find</button>
-                  <button type="button" onclick="history.go(-1);" class="w3-button w3-block w3-black w3-ripple w3-margin-top w3-margin-bottom w3-round">Cancel</button>
-               </p>
-            </div>
-         </form>
-      </div>
-   </div>
+
+    	<section class="ftco-section">
+		<div class="container">
+		<form action="/ResultMentFindPW" method="post">
+			<div class="row justify-content-center">
+				<div class="col-md-6 text-center mb-5">
+					<h2 class="heading-section">Login Page</h2>
+				</div>
+				</div>
+				
+			
+			<div class="row justify-content-center">
+				<div class="col-md-7 col-lg-5">
+				
+			      	<div class="d-flex">
+			      		<div class="w-100">
+					<h3 class="mb-4">Find PW</h3>
+					  		</div>
+			      	</div>
+			      	
+			      		<div class="form-group mt-3">
+			      			<input type="text" class="form-control" id="userID" name ="userID" required>
+			      			<label class="form-control-placeholder" for="userID">ID</label>			      		    
+			      		</div>			
+			      		<div class="form-group mt-3">
+			      			<input type="text" class="form-control" id="userEmail" name ="userEmail" required>
+			      			<label class="form-control-placeholder" for="userEmail">Email</label>			      		    
+			      		</div>
+			      		
+			      		
+			      	<div class="form-group">
+			      		<button type="submit" id=findBtn class="form-control btn btn-primary rounded submit px-3">find</button>
+			      		<P>
+			      		</P>
+		            	<button type="button" onclick="history.go(-1);" class="form-control btn btn-primary rounded submit px-3">Cancel</button>
+		            </div>
+		            
+				</div>
+				<div>				
+				</div>
+			</form>
+		</div>
+
+	</section>
+	
 </body>
 <jsp:include page="/incl/Footer.jsp" />
 </html>

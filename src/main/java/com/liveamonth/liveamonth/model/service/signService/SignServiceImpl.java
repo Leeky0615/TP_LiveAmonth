@@ -53,50 +53,32 @@ public class SignServiceImpl implements SignService {
         return userNO;
     }
 
-    @Override
-    public String findID(String userEmail) throws Exception {
-        return signMapper.findID(userEmail);
-    }
 
-    @Override
-    public String findID(HttpServletResponse response, String userEmail) throws Exception {
-        response.setContentType("text/html;charset=utf-8");
-        PrintWriter out = response.getWriter();
-        String id = signMapper.IDFind(userEmail);
+	@Override
+	public String findID(HttpServletResponse response, String userEmail) throws Exception {
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();
+		String id = signMapper.findID(userEmail);
 
-        if (id == null) {
-            out.println("<script>");
-            out.println("alert('가입된 아이디가 없습니다.');");
-            out.println("history.go(-1);");
-            out.println("</script>");
-            out.close();
-            return null;
-        } else {
-            return id;
-        }
-    }
+			return id;
 
-    // 비밀번호 찾기
-    @Override
-    public String findPW(HttpServletResponse response, String userID, String userEmail) throws Exception {
-        response.setContentType("text/html;charset=utf-8");
-        PrintWriter out = response.getWriter();
-        HashMap<String, Object> hash = new HashMap<String, Object>();
-        hash.put("userID", userID);
-        hash.put("userEmail", userEmail);
+	}
 
-        String pw = signMapper.PWFind(hash);
-        if (pw == null) {
-            out.println("<script>");
-            out.println("alert('가입하지 않은 아이디이거나, 잘못된 이메일입니다.');");
-            out.println("history.go(-1);");
-            out.println("</script>");
-            out.close();
-            return null;
-        } else {
-            return pw;
-        }
-    }
 
+
+	// 비밀번호 찾기
+	@Override
+	public String findPW(HttpServletResponse response, String userID, String userEmail) throws Exception {
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();
+		HashMap<String, Object> hash = new HashMap<String, Object>();
+		hash.put("userID", userID);
+		hash.put("userEmail", userEmail);
+
+		String pw = signMapper.findPW(hash);
+
+			return pw;
+
+	}
 
 }
