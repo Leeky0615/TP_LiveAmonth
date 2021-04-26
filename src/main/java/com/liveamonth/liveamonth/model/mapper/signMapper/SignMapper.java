@@ -20,9 +20,7 @@ public interface SignMapper {
 
     public String findID(String userEmail) throws Exception;
 
-    public String PWFind(HashMap<String, Object> hash) throws Exception;
-
-    public String IDFind(String userEmail) throws Exception;
+    public String findPW(HashMap<String, Object> hash) throws Exception;
 
     public void dropUser(String userID) throws Exception;
 }

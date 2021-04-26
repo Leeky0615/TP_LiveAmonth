@@ -30,23 +30,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		#{userNickName}
 	</select>
 
+
 	<!-- IDFind -->
 	<select id="findID" parameterType="String" resultType="String">
-		select
-		userID from user where userEmail = #{userEmail}
-	</select>
-
-
-	<!-- IDFind -->
-	<select id="IDFind" parameterType="String" resultType="String">
 		select CONCAT(SUBSTR(userID, 1, 3), REPEAT('*', CHAR_LENGTH(userID) - 3))
 		AS userID from user where userEmail = #{userEmail}
 	</select>
 
+
+
+
 	<!-- PWFind -->
-	<select id="PWFind" parameterType="HashMap" resultType="String">
+	<select id="findPW" parameterType="HashMap" resultType="String">
 		select userPassword from user where userID = #{userID} and userEmail = #{userEmail}
 	</select>
+	
+
 	
 	<!-- delete -->
 	<delete id="dropUser" parameterType="String">

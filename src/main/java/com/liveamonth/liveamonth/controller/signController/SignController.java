@@ -43,6 +43,8 @@ public class SignController {
         String userID = request.getParameter(USER_ID.getText());
         String userPassword = request.getParameter(USER_PASSWORD.getText());
         String userName = signService.checkSign(userID, userPassword);
+        
+      
 
         if (userName == null) {
             this.firstIn = false;
@@ -104,8 +106,8 @@ public class SignController {
         return FIND_PW.getPath();
     }
 
-    // 비밀번호 찾기
-    @RequestMapping(value = "/ResultMentPWFind", method = RequestMethod.POST)
+
+    @RequestMapping(value = "/ResultMentFindPW", method = RequestMethod.POST)
     public String findPW(HttpServletResponse response, @RequestParam("userID")String userID, @RequestParam("userEmail") String userEmail, Model model) throws Exception{
         model.addAttribute(USER_PASSWORD.getText(), signService.findPW(response, userID, userEmail));
         return RESULT_MENT_FIND_PW.getPath();
