@@ -246,6 +246,6 @@ public class ScheduleController{
         rttr.addFlashAttribute(MESSAGE.getText(), message);
         rttr.addAttribute(SCHEDULE_NO.getText(), scheduleNO);
 
-        return REDIRECT_OTHER_SCHEDULE.getPath();
+        return REDIRECT_OTHER_SCHEDULE.getRedirectPath();
     }
 }
