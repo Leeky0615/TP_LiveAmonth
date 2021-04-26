@@ -189,6 +189,7 @@
             <div class="section-title">
                <h4>Comments</h4>
                <input type = "hidden" id = "userID" name = "userID"value="${userID}"/>
+               <input type = "hidden" id = "selectedScheduleNO" name = "selectedScheduleNO" value="${scheduleNO}"/>
             </div>
          </div>
          <div class="col-md-12 bootstrap snippets">
