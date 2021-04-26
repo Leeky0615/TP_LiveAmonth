@@ -20,7 +20,6 @@ public interface SignService {
 
     public int checkSign2(String userID, String userPassword) throws Exception;
 
-    public String findID(String userEmail) throws Exception;
 
     public String findPW(HttpServletResponse response, String userID, String userEmail) throws Exception;
 
