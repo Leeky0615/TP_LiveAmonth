@@ -35,7 +35,7 @@
                     <div class="form-group">
                         <button type="submit" id=findBtn class="form-control btn btn-primary rounded submit px-3">find
                         </button>
-                        <br>
+                        <p></p>
                         <button type="button" onclick="history.go(-1);"
                                 class="form-control btn btn-primary rounded submit px-3">Cancel
                         </button>
