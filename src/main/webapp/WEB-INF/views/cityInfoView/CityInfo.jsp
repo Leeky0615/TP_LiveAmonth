@@ -29,7 +29,6 @@
                     </div>
                 </div>
                 <div class="row property-filter">
-                    ${Intro == null}
                     <p><c:out value="${Intro.getCityInfoDesc()}"/></p>
                     <div class="col-lg-4 col-md-6 mix">
                         <div class="ih-item square effect13 left_to_right property-item">
