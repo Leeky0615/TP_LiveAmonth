@@ -188,11 +188,12 @@
          <div class="col-lg-7">
             <div class="section-title">
                <h4>Comments</h4>
+               <input type = "hidden" id = "userID" name = "userID"value="${userID}"/>
             </div>
          </div>
          <div class="col-md-12 bootstrap snippets">
             <div class="panel">
-               <form id = "addScheduleReply1" action="addScheduleReply">
+               <form id = "addScheduleReply0" action="addScheduleReply">
                   <div class="panel-body">
                      <textarea name="scheduleReplyDesc" id="scheduleReplyDesc" class="form-control" rows="4" placeholder="의견을 남겨주세요."></textarea>
                      <c:set var="today" value="<%=new java.util.Date()%>" />
@@ -200,7 +201,7 @@
                      <input type="hidden" name="scheduleReplyDate" id="scheduleReplyDate" value="<c:out value="${date}" />" />
                      <input type="hidden" name="scheduleNO" id="scheduleNO" value="${scheduleNO}" />
                      <div class="mar-top clearfix">
-                        <button type="button" class="btn btn-sm btn-primary pull-right" onclick="addScheduleReply(1);" ><i class="fa fa-pencil fa-fw"></i> 등록 </button>
+                        <button type="button" class="btn btn-sm btn-primary pull-right" onclick="addScheduleReply(0);" ><i class="fa fa-pencil fa-fw"></i> 등록 </button>
                      </div>
                   </div>
                </form>
