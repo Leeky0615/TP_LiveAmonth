@@ -1,10 +1,12 @@
 package com.liveamonth.liveamonth.model.service.scheduleService;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import com.liveamonth.liveamonth.entity.dto.CalendarDTO;
 import com.liveamonth.liveamonth.entity.vo.ScheduleContentVO;
+import com.liveamonth.liveamonth.entity.vo.ScheduleReplyVO;
 import com.liveamonth.liveamonth.entity.vo.ScheduleVO;
 
 
@@ -26,12 +28,15 @@ public interface ScheduleService {
 
     public ArrayList<ScheduleVO> getScheduleList(String userID) throws Exception;
 
-    public int getMaxScheduleNO()  throws Exception;
+    public int getMaxScheduleNO() throws Exception;
 
-	boolean modifySchedule(ScheduleVO scheduleVO) throws Exception;
+    boolean modifySchedule(ScheduleVO scheduleVO) throws Exception;
 
-	boolean deleteSchedule(int scheduleNO) throws Exception;
-	
-	public  List<ScheduleVO> getOtherScheduleInfo() throws Exception;
+    boolean deleteSchedule(int scheduleNO) throws Exception;
 
+    public List<ScheduleVO> getOtherScheduleInfo() throws Exception;
+
+    public List<HashMap<String, Object>> getScheduleReplyList(int scheduleNO) throws Exception;
+
+    public boolean addScheduleReplyVO(ScheduleReplyVO scheduleReplyVO, String userID) throws Exception;
 }

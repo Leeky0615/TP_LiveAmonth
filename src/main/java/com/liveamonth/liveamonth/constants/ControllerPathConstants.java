@@ -33,7 +33,7 @@ public class ControllerPathConstants {
     	ONE_TO_ONE_ASK("OneToOneAsk"),
     	ONE_TO_ONE_ASK_WRITE("OneToOneAskWrite"),
     	RESULT_MENT_ONE_TO_ONE_ASK("ResultMentOneToOneAsk");
-    	
+
     	private String path;
         private EMyPagePath(String path) {this.path = path;}
         public String getPath() {return "myPageView/"+this.path;}
@@ -85,6 +85,14 @@ public class ControllerPathConstants {
      * ScheduleController Path Constants
      */
     public enum ESchedulePath {
+        OTHER_SCHEDULE("scheduleView/OtherSchedule"),
+        OTHER_SCHEDULE_LIST("scheduleView/OtherScheduleList"),
+        SCHEDULE("scheduleView/Schedule"),
+        REDIRECT_SCHEDULE("redirect:schedule"),
+        REDIRECT_OTHER_SCHEDULE("redirect:otherSchedule");
+        private String text;
+        private ESchedulePath(String path) {this.text = path;}
+        public String getPath() {return this.text;}
         OTHER_SCHEDULE("OtherSchedule"),
         OTHER_SCHEDULE_LIST("OtherScheduleList"),
         SCHEDULE("Schedule"),

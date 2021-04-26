@@ -31,4 +31,5 @@ public class MainController {
 		model.addAttribute(CITY_INTRO_LIST.getText(), cityIntroList);
 		return "Main";
 	}
+
 }

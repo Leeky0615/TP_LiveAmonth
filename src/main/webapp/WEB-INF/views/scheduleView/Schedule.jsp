@@ -98,8 +98,8 @@
 						<button type="button" class="board_move_go pointer" onclick="addScheduleButton();">추가</button>
 						<button type="button" class="board_move_go pointer" data-dismiss="modal">취소</button>
 					</div>
+				</form>
 			</div>
-			</form>
 		</div>
 	</div>
 </div>
