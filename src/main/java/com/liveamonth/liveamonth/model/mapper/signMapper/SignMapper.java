@@ -18,6 +18,8 @@ public interface SignMapper {
 
     public String checkSign(HashMap<String, Object> hash) throws Exception;
 
+    public int checkSign2(HashMap<String, Object> hash) throws Exception;
+
     public String findID(String userEmail) throws Exception;
 
     public String PWFind(HashMap<String, Object> hash) throws Exception;

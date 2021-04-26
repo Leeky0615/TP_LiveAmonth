@@ -63,9 +63,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="deleteSchedule" parameterType="int">
 		delete from schedule where scheduleNO = #{scheduleNO}
 	</delete>
-	
-	<delete id="deleteAllScheduleContentOfSchedule" parameterType="int">
-		delete from scheduleContent where scheduleContent.scheduleNO = #{scheduleNO}
+
+	<delete id="deleteScheduleReply" parameterType="int">
+		delete from scheduleReply where scheduleReplyNO = #{scheduleReplyNO}
 	</delete>
 
 	<!-- insert -->
@@ -79,7 +79,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 
 	<insert id="addScheduleReplyVO" parameterType="com.liveamonth.liveamonth.entity.vo.ScheduleReplyVO">
-		insert into scheduleReply values (#{scheduleReplyNO}, #{scheduleReplyDesc}, #{scheduleReplyDate}, #{scheduleReplyRefNO}, #{userNO}, #{scheduleNO})
+		insert into scheduleReply values (#{scheduleReplyNO}, #{scheduleReplyDesc}, #{scheduleReplyDate},
+		<choose>
+			<when test = "scheduleReplyRefNO == 0">
+				null
+			</when>
+			<otherwise>
+				#{scheduleReplyRefNO}
+			</otherwise>
+		</choose>
+		, #{userNO}, #{scheduleNO})
 	</insert>
 
 	<!-- update -->

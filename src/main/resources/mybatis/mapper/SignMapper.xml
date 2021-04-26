@@ -20,6 +20,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		#{userPassword}
 	</select>
 
+	<select id="checkSign2" parameterType="HashMap" resultType="int">
+		select userNO from user where userID = #{userID} and userPassword = #{userPassword}
+	</select>
+
 	<select id="checkID" parameterType="String" resultType="String">
 		select userID from user where userID = #{userID}
 	</select>

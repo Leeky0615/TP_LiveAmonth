@@ -3,6 +3,7 @@ package com.liveamonth.liveamonth.controller.scheduleController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.liveamonth.liveamonth.constants.EntityConstants;
 import com.liveamonth.liveamonth.entity.vo.ScheduleReplyVO;
 import com.liveamonth.liveamonth.entity.vo.UserVO;
 import com.liveamonth.liveamonth.model.service.myPageService.MyPageService;
@@ -27,6 +28,7 @@ import static com.liveamonth.liveamonth.constants.ControllerPathConstants.ESched
 import static com.liveamonth.liveamonth.constants.EntityConstants.ESchedule.SCHEDULE_NO;
 import static com.liveamonth.liveamonth.constants.EntityConstants.ESchedule.SCHEDULE_PLACE;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EScheduleContent.*;
+import static com.liveamonth.liveamonth.constants.EntityConstants.EScheduleReply.*;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EAlertMessage.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleAttributes.*;
@@ -229,4 +231,20 @@ public class ScheduleController{
         return REDIRECT_OTHER_SCHEDULE.getPath();
     }
 
+    @RequestMapping("/deleteScheduleReply")
+    public String deleteScheduleReply(HttpServletRequest request, RedirectAttributes rttr) throws Exception{
+        int scheduleReplyNO = Integer.parseInt(String.valueOf(request.getParameter(SCHEDULE_REPLY_NO.getText())));
+
+        String message = "";
+        if(scheduleService.deleteScheduleReply(scheduleReplyNO)) {
+            message = COMPLETE_SCHEDULEREPLY_DELETION.getText();
+        } else {
+            message = FAIL_TO_DELETE_SCHEDULEREPLY.getText();
+        }
+
+        rttr.addFlashAttribute(MESSAGE.getText(), message);
+        rttr.addAttribute(SCHEDULE_NO.getText(), 203);
+
+        return REDIRECT_OTHER_SCHEDULE.getPath();
+    }
 }

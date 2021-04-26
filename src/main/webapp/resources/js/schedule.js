@@ -79,7 +79,6 @@
 			   location.replace('deleteSchedule');
 			} else {   
 			    return;
-			
 			}
 		}
 				

@@ -190,4 +190,12 @@ public class ScheduleServiceImpl implements ScheduleService {
 
         return scheduleMapper.addScheduleReplyVO(scheduleReplyVO);
     }
+
+    @Override
+    public boolean deleteScheduleReply(int scheduleReplyNO) throws Exception {
+        if(scheduleMapper.deleteScheduleReply(scheduleReplyNO)){
+            return true;
+        }
+        return false;
+    }
 }

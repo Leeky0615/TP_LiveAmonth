@@ -44,6 +44,17 @@ public class SignServiceImpl implements SignService {
 	}
 
 	@Override
+	public int checkSign2(String userID, String userPassword) throws Exception {
+		HashMap<String, Object> hash = new HashMap<String, Object>();
+		hash.put("userID", userID);
+		hash.put("userPassword", userPassword);
+		int userNO = signMapper.checkSign2(hash);
+
+		return userNO;
+	}
+
+
+	@Override
 	public String findID(String userEmail) throws Exception {
 		return signMapper.findID(userEmail);
 	}

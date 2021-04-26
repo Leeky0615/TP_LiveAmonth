@@ -16,6 +16,8 @@ public interface SignService {
 
     String checkSign(String userID, String userPassword) throws Exception;
 
+    int checkSign2(String userID, String userPassword) throws Exception;
+
     String findID(HttpServletResponse response, String userEmail) throws Exception;
 
     String findID(String userEmail) throws Exception;

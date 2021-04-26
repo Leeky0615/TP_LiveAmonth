@@ -216,6 +216,10 @@
                            <div class="media-body">
                               <div class="mar-btm">
                                  <a href="#" class="btn-link text-semibold media-heading box-inline"> ${scheduleVOReply.userNickname} </a>
+                                 <c:if test = "${userNO == scheduleVOReply.scheduleReply.userNO}">
+                                    <button id = "deleteReply" class="btn btn-sm btn-default btn-hover-primary" style="float: right;"
+                                            onclick="deleteScheduleReplyButton(${scheduleVOReply.scheduleReplyNO});" > 삭제 </button>
+                                 </c:if>
                                  <p class="text-muted text-sm"> ${scheduleVOReply.scheduleReply.scheduleReplyDate} </p>
                               </div>
                               <p>
@@ -250,6 +254,10 @@
                                              <div class="media-body">
                                                 <div class="mar-btm">
                                                    <a href="#" class="btn-link text-semibold media-heading box-inline"> ${scheduleVOReplyRef.userNickname} </a>
+                                                   <c:if test = "${userNO == scheduleVOReplyRef.scheduleReply.userNO}">
+                                                      <button id = "deleteReply" class="btn btn-sm btn-default btn-hover-primary" style="float: right;"
+                                                              onclick="deleteScheduleReplyButton(${scheduleVOReplyRef.scheduleReplyNO});" > 삭제 </button>
+                                                   </c:if>
                                                    <p class="text-muted text-sm"> ${scheduleVOReplyRef.scheduleReply.scheduleReplyDate} </p>
                                                 </div>
                                                 <p>
@@ -272,8 +280,8 @@
 
 
 
-<div width="100%">
-   <jsp:include page="/incl/Footer.jsp" />
-</div>
+   <div width="100%">
+      <jsp:include page="/incl/Footer.jsp" />
+   </div>
 </body>
 </html>
