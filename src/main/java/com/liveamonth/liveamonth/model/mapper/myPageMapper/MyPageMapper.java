@@ -27,9 +27,13 @@ public interface MyPageMapper {
 
 	public void dropUser(String userID) throws Exception;
 
-	public ArrayList<OneToOneAskVO> getOneToOneAskVOList() throws Exception;
+	public ArrayList<OneToOneAskVO> getOneToOneAskVOList(int userNO) throws Exception;
 
 	public int getLastOneToOneAskNO() throws Exception;
 
 	public void addOneToOneAsk(OneToOneAskVO oneToOneAskVO) throws Exception;
+
+	public OneToOneAskVO findOneToOneAskVO(int oneToOneAskNO) throws Exception;
+
+	public void deleteOneToOneAsk(int oneToOneAskNO)  throws Exception;
 }

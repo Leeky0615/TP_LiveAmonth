@@ -24,11 +24,11 @@ public class MainController {
 
 	@RequestMapping(value = "/")
 	public String main(Model model, HttpServletRequest request)  throws Exception{
-		List<CityInfoVO> cityIntroList = cityInfoService.getCityInfoListByCategory(CATEGORY_INTRO.getCategoryUppercase());
-		List<String> cityNameList = cityInfoService.getCityInfoNameList();
-
-		model.addAttribute(CITY_NAME_LIST.getText(), cityNameList);
-		model.addAttribute(CITY_INTRO_LIST.getText(), cityIntroList);
+//		List<CityInfoVO> cityIntroList = cityInfoService.getCityInfoListByCategory(CATEGORY_INTRO.getCategoryUppercase());
+//		List<String> cityNameList = cityInfoService.getCityInfoNameList();
+//
+//		model.addAttribute(CITY_NAME_LIST.getText(), cityNameList);
+//		model.addAttribute(CITY_INTRO_LIST.getText(), cityIntroList);
 		return "Main";
 	}
 

@@ -15,8 +15,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 
 	<!-- select -->
-	<select id="checkSign" parameterType="HashMap" resultType="String">
-		select userName from user where userID = #{userID} and userPassword =
+	<select id="checkSign" parameterType="HashMap" resultType="com.liveamonth.liveamonth.entity.vo.UserVO">
+		select * from user where userID = #{userID} and userPassword =
 		#{userPassword}
 	</select>
 
@@ -32,6 +32,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			resultType="String">
 		select userNickName from user where userNickName =
 		#{userNickName}
+	</select>
+	
+	<select id="checkEmail" parameterType="String" resultType="String">
+		select userEmail from user where userEmail = #{userEmail}
 	</select>
 
 	<!-- IDFind -->

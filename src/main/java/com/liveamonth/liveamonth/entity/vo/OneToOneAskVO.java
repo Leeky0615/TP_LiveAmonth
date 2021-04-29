@@ -13,7 +13,8 @@ public class OneToOneAskVO {
         CATEGORY1("카테고리1"),
         CATEGORY2("카테고리2"),
         CATEGORY3("카테고리3"),
-        CATEGORY4("카테고리4");
+        CATEGORY4("카테고리4"),
+    	CATEGORY5("카테고리10");
 
         private String label;
 
@@ -36,8 +37,8 @@ public class OneToOneAskVO {
     private String oneToOneAskDesc;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private String oneToOneAskDate;
-    int oneToOneAskViewCount;
-    String oneToOneAskImageURL;
+  
+    String oneToOneAskImage;
     String oneToOneAskUserEmail;
     String oneToOneAskReply;
     int userNO;
@@ -48,8 +49,8 @@ public class OneToOneAskVO {
         this.oneToOneAskSubject = null;
         this.oneToOneAskDesc = null;
         this.oneToOneAskDate = null;
-        this.oneToOneAskViewCount = 0;
-        this.oneToOneAskImageURL = null;
+        
+        this.oneToOneAskImage = null;
         this.oneToOneAskUserEmail = null;
         this.oneToOneAskReply = null;
         this.userNO = 0;
@@ -98,22 +99,15 @@ public class OneToOneAskVO {
     }
 
 
-    public int getOneToOneAskViewCount() {
-        return oneToOneAskViewCount;
+   
+
+
+    public String getOneToOneAskImage() {
+        return oneToOneAskImage;
     }
 
-
-    public void setOneToOneAskViewCount(int oneToOneAskViewCount) {
-        this.oneToOneAskViewCount = oneToOneAskViewCount;
-    }
-
-
-    public String getOneToOneAskImageURL() {
-        return oneToOneAskImageURL;
-    }
-
-    public void setOneToOneAskImageURL(String oneToOneAskImageURL) {
-        this.oneToOneAskImageURL = oneToOneAskImageURL;
+    public void setOneToOneAskImageURL(String oneToOneAskImage) {
+        this.oneToOneAskImage = oneToOneAskImage;
     }
 
 

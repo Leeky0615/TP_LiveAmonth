@@ -156,6 +156,7 @@ public class EntityConstants {
      * OneToOneAsk Table Constants
      */
     public enum EOneToOneAsk{
+    	ONE_TO_ONE_ASK_NO("oneToOneAskNO"),
         ONE_TO_ONE_ASK_VO("oneToOneAskVO"),
         ONE_TO_ONE_ASK_VO_LIST("oneToOneAskVOList"),
         ONE_TO_ONE_ASK_CATEGORY("oneToOneAskCategory");

@@ -5,12 +5,16 @@ import com.liveamonth.liveamonth.entity.vo.ScheduleVO;
 import com.liveamonth.liveamonth.entity.vo.UserVO;
 import com.liveamonth.liveamonth.model.mapper.myPageMapper.MyPageMapper;
 import com.liveamonth.liveamonth.model.mapper.scheduleMapper.ScheduleMapper;
+import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
 import java.util.*;
 import java.text.*;
 
@@ -54,13 +58,13 @@ public class MyPageServiceImpl implements MyPageService {
 	}
 
 	@Override
-	public ArrayList<OneToOneAskVO> getOneToOneAskVOList() throws Exception {
-		return myPageMapper.getOneToOneAskVOList();
+	public ArrayList<OneToOneAskVO> getOneToOneAskVOList(int userNO) throws Exception {
+		return myPageMapper.getOneToOneAskVOList(userNO);
 
 	}
 
 	@Override
-	public void addOneToOneAsk(OneToOneAskVO oneToOneAskVO, String userID) throws Exception {
+	public void addOneToOneAsk(OneToOneAskVO oneToOneAskVO, int userNO) throws Exception {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.KOREA);
 		Date currentTime = new Date();
 		String dTime = formatter.format(currentTime);
@@ -68,8 +72,20 @@ public class MyPageServiceImpl implements MyPageService {
 
 		oneToOneAskVO.setOneToOneAskNO(myPageMapper.getLastOneToOneAskNO() + 1);
 		oneToOneAskVO.setOneToOneAskDate(dTime);
-		oneToOneAskVO.setOneToOneAskViewCount(0);
-		oneToOneAskVO.setUserNO(scheduleMapper.findUserIDToUserNO(userID));
+		oneToOneAskVO.setUserNO(userNO);
 		myPageMapper.addOneToOneAsk(oneToOneAskVO);
 	}
+
+	@Override
+	public OneToOneAskVO findOneToOneAskVO(int oneToOneAskNO) throws Exception {
+		return myPageMapper.findOneToOneAskVO(oneToOneAskNO);
+	}
+
+	@Override
+	public void deleteOneToOneAsk(int oneToOneAskNO) throws Exception {
+		myPageMapper.deleteOneToOneAsk(oneToOneAskNO);
+		
+	}
+
+	
 }
