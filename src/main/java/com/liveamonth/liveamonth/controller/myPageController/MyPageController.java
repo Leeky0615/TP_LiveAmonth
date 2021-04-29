@@ -1,8 +1,7 @@
 package com.liveamonth.liveamonth.controller.myPageController;
 
+import com.liveamonth.liveamonth.constants.EntityConstants;
 import com.liveamonth.liveamonth.entity.vo.OneToOneAskVO;
-import com.liveamonth.liveamonth.entity.vo.OneToOneAskVO.OneToOneAskCategory;
-import com.liveamonth.liveamonth.entity.vo.ScheduleVO.Place;
 import com.liveamonth.liveamonth.entity.vo.UserVO;
 import com.liveamonth.liveamonth.model.service.myPageService.MyPageService;
 import com.liveamonth.liveamonth.model.service.signService.SignService;
@@ -17,8 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import static com.liveamonth.liveamonth.constants.ControllerPathConstants.EMyPagePath.*;
-import static com.liveamonth.liveamonth.constants.EntityConstants.EOneToOneAsk.ONE_TO_ONE_ASK_CATEGORY;
-import static com.liveamonth.liveamonth.constants.EntityConstants.EOneToOneAsk.ONE_TO_ONE_ASK_VO_LIST;
+import static com.liveamonth.liveamonth.constants.EntityConstants.*;
+import static com.liveamonth.liveamonth.constants.EntityConstants.EOneToOneAsk.*;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.ECityInfoAttributes.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EMyPageAttributes.CHECK_USER;
@@ -36,8 +35,9 @@ public class MyPageController {
     @GetMapping("/myPage")
     public String myPage(Model model, HttpServletRequest request) throws Exception {
         HttpSession session = request.getSession();
-        Object session_UserID = session.getAttribute(USER_ID.getText());
-        String userID = (String)session_UserID;
+        UserVO session_UserVO = (UserVO)session.getAttribute(USER_VO.getText());
+ 
+        String userID = session_UserVO.getUserID();
         model.addAttribute(CHECK_USER.getText(), true);
 
         session.setAttribute(USER_VO.getText(), myPageService.getUserInfo(userID));
@@ -53,14 +53,15 @@ public class MyPageController {
     }
 
     @GetMapping("/goToModifyUserInfo")
-    public String goToModifyUserInfo(Model model, HttpServletRequest request) throws Exception {
+    public String goToModifyUserInfo(Model model, HttpServletRequest request, HttpSession session) throws Exception {
         model.addAttribute(USER_VO.getText(), request.getAttribute(USER_VO.getText()));
 
         String userID = request.getParameter(USER_ID.getText());
         String userPassword = request.getParameter(USER_PASSWORD.getText());
-        String userName = signService.checkSign(userID, userPassword);
+  
+        UserVO userVO = signService.checkSign(userID, userPassword);
 
-        if (userName == null) {
+        if (userVO == null) {
             model.addAttribute(CHECK_USER.getText(), false);
             return RE_CHECK_USER_PW.getSectionPath();
         } else {
@@ -102,9 +103,9 @@ public class MyPageController {
     private String checkDropUserPassword(Model model, HttpServletRequest request,HttpSession session) throws Exception {
         String userID = request.getParameter(USER_ID.getText());
         String userPassword = request.getParameter(USER_PASSWORD.getText());
-        String userName = signService.checkSign(userID, userPassword);
+        UserVO userVO = signService.checkSign(userID, userPassword);
 
-        if (userName == null) {
+        if (userVO == null) {
             // this.firstIn = false; -> 바로 false로 넣어줌
             model.addAttribute(FIRST_IN.getText(), false);
             return DROP_USER.getSectionPath();
@@ -125,25 +126,47 @@ public class MyPageController {
     }
 
     @RequestMapping("/oneToOneAsk")
-    private String oneToOneAsk(Model model, HttpServletRequest request) throws Exception {
-    	ArrayList<OneToOneAskVO> oneToOneAskVOList = myPageService.getOneToOneAskVOList();
+    private String oneToOneAsk(Model model, HttpServletRequest request,HttpSession session) throws Exception {
+    	UserVO session_UserVO = (UserVO)session.getAttribute(USER_VO.getText());
+        int userNO = session_UserVO.getUserNO();
+        
+    	ArrayList<OneToOneAskVO> oneToOneAskVOList = myPageService.getOneToOneAskVOList(userNO);
     	model.addAttribute(ONE_TO_ONE_ASK_VO_LIST.getText(),oneToOneAskVOList);
     	return ONE_TO_ONE_ASK.getSectionPath();
 
     }
+    @RequestMapping("/showOneToOneAsk")
+    private String showOneToOneAsk(Model model, HttpServletRequest request) throws Exception {
+    	OneToOneAskVO oneToOneAskVO = myPageService.findOneToOneAskVO(Integer.parseInt(request.getParameter(ONE_TO_ONE_ASK_NO.getText())));
+		 model.addAttribute("oneToOneAskVO",oneToOneAskVO);
+    	return SHOW_ONE_TO_ONE_ASK.getSectionPath();
 
-    @RequestMapping("/oneToOneAskWrite")
+    }
+    
+    
+
+    @RequestMapping("/writeOneToOneAsk")
     private String oneToOneAskWrite(Model model) throws Exception {
     	model.addAttribute(ONE_TO_ONE_ASK_CATEGORY.getText(), OneToOneAskCategory.values());
-    	return ONE_TO_ONE_ASK_WRITE.getSectionPath();
+    	return Write_ONE_TO_ONE_ASK.getSectionPath();
     }
 
     @RequestMapping("/resultMentOneToOneAsk")
     private String resultMentOneToOneAsk(HttpSession session,OneToOneAskVO oneToOneAskVO) throws Exception {
-        String userID = String.valueOf(session.getAttribute(USER_ID.getText()));
-    	myPageService.addOneToOneAsk(oneToOneAskVO,userID);
-    	return RESULT_MENT_ONE_TO_ONE_ASK.getPath();
+        
+        UserVO session_UserVO = (UserVO)session.getAttribute(USER_VO.getText());
+        int userNO = session_UserVO.getUserNO();
+        
+    	myPageService.addOneToOneAsk(oneToOneAskVO,userNO);
+    	return RESULT_MENT_ONE_TO_ONE_ASK.getSectionPath();
     }
-
+    
+    @RequestMapping("/deleteOneToOneAsk")
+    private String deleteOneToOneAsk(HttpServletRequest request) throws Exception {
+    	int oneToOneAskNO = Integer.parseInt(request.getParameter(ONE_TO_ONE_ASK_NO.getText()));
+       myPageService.deleteOneToOneAsk(oneToOneAskNO);
+    	return RESULT_MENT_DELETE_ONE_TO_ONE_ASK.getSectionPath();
+    }
+    
 
 }

@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.liveamonth.liveamonth.constants.ControllerPathConstants.ESchedulePath.*;
+import static com.liveamonth.liveamonth.constants.EntityConstants.*;
 import static com.liveamonth.liveamonth.constants.EntityConstants.ESchedule.*;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EScheduleContent.*;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EScheduleReply.*;
@@ -83,10 +84,11 @@ public class ScheduleController{
 
     @RequestMapping("/schedule")
     public String schedule(Model model, HttpServletRequest request, CalendarDTO calendarDTO) throws Exception{
-        HttpSession session = request.getSession();
-        String userID = String.valueOf(session.getAttribute(USER_ID.getText()));
+    	HttpSession session = request.getSession();
+        UserVO session_UserVO = (UserVO)session.getAttribute(USER_VO.getText());
+        int userNO = session_UserVO.getUserNO();
 
-        ArrayList<ScheduleVO> scheduleVOList = scheduleService.getScheduleList(userID);
+        ArrayList<ScheduleVO> scheduleVOList = scheduleService.getScheduleList(userNO);
 
         int scheduleNO;
 
@@ -107,7 +109,7 @@ public class ScheduleController{
         model.addAttribute(SCHEDULE_VO_LIST.getText(), scheduleVOList);
         model.addAttribute(DATE_LIST.getText(), calendarDto.getDateList()); //날짜 데이터 배열
         model.addAttribute(TODAY_INFORMATION.getText(), calendarDto.getTodayInformation());
-        model.addAttribute(EntityConstants.ESchedule.SCHEDULE_PLACE.getText(), Place.values());
+        model.addAttribute(SCHEDULE_PLACE.getText(), CityName.values());
         return SCHEDULE.getPath();
     }
 
@@ -121,10 +123,11 @@ public class ScheduleController{
     @RequestMapping(value="addSchedule")
     public String addSchedule(HttpServletRequest request, ScheduleVO scheduleVO, RedirectAttributes rttr) throws Exception{
         HttpSession session = request.getSession();
-        String userID = String.valueOf(session.getAttribute(USER_ID.getText()));
+        UserVO session_UserVO = (UserVO)session.getAttribute(USER_VO.getText());
+        int userNO = session_UserVO.getUserNO();
 
         String message = "";
-        if(scheduleService.addSchedule(scheduleVO, userID)) {
+        if(scheduleService.addSchedule(scheduleVO, userNO)) {
             message = ADD_SCHEDULE.getText();
         } else {
             message = FAIL_TO_ADD_SCHEDULE.getText();
@@ -191,7 +194,7 @@ public class ScheduleController{
     	}
 
         List<UserVO> userVOList = myPageService.getOtherScheduleUserInfo(scheduleVOList);
-        Place[] placeList = Place.values();
+        CityName[] placeList = CityName.values();
 
         model.addAttribute(SCHEDULE_VO_LIST.getText(), scheduleVOList);
         model.addAttribute(USER_VO_LIST.getText(), userVOList);
@@ -215,11 +218,12 @@ public class ScheduleController{
 
     @RequestMapping(value="addScheduleReply")
     public String addScheduleReply(HttpServletRequest request, ScheduleReplyVO scheduleReplyVO, RedirectAttributes rttr) throws Exception{
-        HttpSession session = request.getSession();
-        String userID = String.valueOf(session.getAttribute(USER_ID.getText()));
+    	HttpSession session = request.getSession();
+        UserVO session_UserVO = (UserVO)session.getAttribute(USER_VO.getText());
+        int userNO = session_UserVO.getUserNO();
 
         String message = "";
-        if(scheduleService.addScheduleReplyVO(scheduleReplyVO, userID)) {
+        if(scheduleService.addScheduleReplyVO(scheduleReplyVO, userNO)) {
             message = ADD_SCHEDULEREPLY.getText();
         } else {
             message = FAIL_TO_ADD_SCHEDULEREPLY.getText();

@@ -27,7 +27,7 @@
                 <form action="checkDropUserPassword" method="post" class="signin-form">
                     <div class="form-group mt-3">
 
-                        <input type="text" class="form-control" id="userID" name="userID" value="${userID}" readonly
+                        <input type="text" class="form-control" id="userID" name="userID" value="${userVO.userID}" readonly
                                required>
 
                     </div>

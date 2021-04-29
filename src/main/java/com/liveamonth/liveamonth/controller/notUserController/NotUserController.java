@@ -28,12 +28,12 @@ public class NotUserController {
 	        return "myPageView/MyPage.jsp?page=OneToOneAskReply";
 	    }
 	 
-	 @GetMapping("/oneToOneAskReplyWrite")
-	    public String oneToOneAskReplyWrite(Model model, HttpServletRequest request) throws Exception {
-	    	OneToOneAskVO oneToOneAskVO = notUserService.findOneToOneAskVO(Integer.parseInt(request.getParameter("oneToOneAskNO")));
+	 @GetMapping("/writeOneToOneAskReply")
+	 public String oneToOneAskReplyWrite(Model model, HttpServletRequest request) throws Exception {
+		 OneToOneAskVO oneToOneAskVO = notUserService.findOneToOneAskVO(Integer.parseInt(request.getParameter("oneToOneAskNO")));
 		 model.addAttribute("oneToOneAskVO",oneToOneAskVO);
-	        return "myPageView/MyPage.jsp?page=OneToOneAskReplyWrite";
-	    }
+		 return "myPageView/MyPage.jsp?page=WriteOneToOneAskReply";
+	 }
 
 	 @GetMapping("/resultMentOneToOneAskReply")
 	 public String resultMentOneToOneAskReply(Model model, HttpServletRequest request,OneToOneAskVO oneToOneAskVO) throws Exception {

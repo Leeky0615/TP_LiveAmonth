@@ -31,9 +31,7 @@ public interface ScheduleMapper {
 
     public boolean addSchedule(ScheduleVO scheduleVO)throws Exception;
 
-    public ArrayList<ScheduleVO> getScheduleList(String userID)throws Exception;
-
-    public int findUserIDToUserNO(String userID)throws Exception;
+    public ArrayList<ScheduleVO> getScheduleList(int userNO)throws Exception;
 
 	public int getMaxScheduleNO() throws Exception;
 	

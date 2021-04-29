@@ -45,7 +45,7 @@ public class NotUserServiceImpl implements NotUserService{
         message.setText(oneToOneAskVO.getOneToOneAskReply());
         
         //밑에 문장 주석풀면 메일전송감.
-        mailSender.send(message);
+       // mailSender.send(message);
 		
 	}
 }

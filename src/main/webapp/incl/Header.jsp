@@ -79,12 +79,12 @@
                     </div>
                 </div>
                 <div class="col-lg-10">
-                    <c:if test="${empty userName}">
+                    <c:if test="${empty userVO.userNO}">
                         <div class="ht-widget">
                             <a href="signIn" class="hw-btn">Login</a>
                         </div>
                     </c:if>
-                    <c:if test="${userName != null}">
+                    <c:if test="${userVO.userNO != null}">
                         <div class="ht-widget">
                             <a href="logout" class="hw-btn">Logout</a>
                         </div>
@@ -130,9 +130,9 @@
                 </div>
                 <div class="col-lg-3">
                     <div class="hn-social">
-                        <c:if test="${userName != null}">
+                        <c:if test="${userVO.userName != null}">
 
-                            <p>환영합니다 ${userName}님.</p>
+                            <p>환영합니다 ${userVO.userName}님.</p>
 
                         </c:if>
                         <!--         <a href="#"><i class="fa fa-facebook"></i></a>

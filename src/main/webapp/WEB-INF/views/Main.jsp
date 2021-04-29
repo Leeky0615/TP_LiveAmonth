@@ -70,7 +70,7 @@
             </div>
         </div>
     </section>
-    <jsp:include page="/WEB-INF/views/cityInfoView/CityInfoGrid.jsp"/>
+   <!--  <jsp:include page="/WEB-INF/views/cityInfoView/CityInfoGrid.jsp"/>--> 
     <jsp:include page="/incl/Footer.jsp" />
 </body>
 

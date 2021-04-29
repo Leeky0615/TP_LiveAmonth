@@ -1,103 +1,49 @@
 package com.liveamonth.liveamonth.entity.vo;
 
+import com.liveamonth.liveamonth.constants.EntityConstants;
+import com.liveamonth.liveamonth.constants.EntityConstants.CityName;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 @Data
 public class ScheduleVO {
-    //should add more city
-
-    public enum Place {
-        SEOUL("서울"),
-        JEJU("제주"),
-        BUSAN("부산"),
-        GANGNEUNG("강릉"),
-        YEOSU("여수"),
-        GYEONGJU("경주");
-
-        private String label;
-
-        Place(String label) {
-            this.label = label;
-        }
-
-        public String getLabel() {
-            return label;
-        }
-
-        public void setLabel(String label) {
-            this.label = label;
-        }
-    }
-
+    // Attributes
     private int scheduleNO;
     private String scheduleSubject;
-    private int scheduleLikeCount;
+    private int scheduleViewCount;
     private boolean scheduleStatus;
-    private Place place;
+    private CityName schedulePlace;
 
-    // Reference
-    private int userNO;
+    private int userNO; // Reference
 
+    // Constructor
     public ScheduleVO() {
         this.scheduleNO = 0;
         this.scheduleSubject = null;
-        this.scheduleLikeCount = 0;
+        this.scheduleViewCount = 0;
         this.scheduleStatus = false;
-        this.place = Place.SEOUL;
+        this.schedulePlace = schedulePlace.SEOUL;
 
-        // Reference
         this.userNO = 0;
     }
 
-    public int getScheduleNO() {
-        return scheduleNO;
-    }
+    // Getter & setter
+    public int getScheduleNO() {return scheduleNO;}
+    public void setScheduleNO(int scheduleNO) {this.scheduleNO = scheduleNO;}
 
-    public void setScheduleNO(int scheduleNO) {
-        this.scheduleNO = scheduleNO;
-    }
+    public String getScheduleSubject() {return scheduleSubject;}
+    public void setScheduleSubject(String scheduleSubject) {this.scheduleSubject = scheduleSubject;}
 
-    public String getScheduleSubject() {
-        return scheduleSubject;
-    }
+    public int getScheduleViewCount() {return scheduleViewCount;}
+    public void setScheduleViewCount(int scheduleViewCount) {this.scheduleViewCount = scheduleViewCount;}
 
-    public void setScheduleSubject(String scheduleSubject) {
-        this.scheduleSubject = scheduleSubject;
-    }
+    public boolean isScheduleStatus() {return scheduleStatus;}
+    public void setScheduleStatus(boolean scheduleStatus) {this.scheduleStatus = scheduleStatus;}
 
-    public int getScheduleLikeCount() {
-        return scheduleLikeCount;
-    }
+    public CityName getSchedulePlace() {return schedulePlace;}
+    public void setSchedulePlace(CityName schedulePlace) {this.schedulePlace = schedulePlace;}
 
-    public void setScheduleLikeCount(int scheduleLikeCount) {
-        this.scheduleLikeCount = scheduleLikeCount;
-    }
-
-    public boolean isScheduleStatus() {
-        return scheduleStatus;
-    }
-
-    public void setScheduleStatus(boolean scheduleStatus) {
-        this.scheduleStatus = scheduleStatus;
-    }
-
-    public Place getPlace() {
-        return place;
-    }
-
-    public void setPlace(Place place) {
-        this.place = place;
-    }
-
-    public int getUserNO() {
-        return userNO;
-    }
-
-    public void setUserNO(int userNO) {
-        this.userNO = userNO;
-    }
-
-
+    public int getUserNO() {return userNO;}
+    public void setUserNO(int userNO) {this.userNO = userNO;}
 }
