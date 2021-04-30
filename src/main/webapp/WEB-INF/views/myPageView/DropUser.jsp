@@ -1,11 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>user Drop</title>
-</head>
 <body>
 <% boolean firstIn = (boolean) request.getAttribute("firstIn"); %>
 <section class="ftco-section">
@@ -50,4 +44,3 @@
     </div>
 </section>
 </body>
-</html>

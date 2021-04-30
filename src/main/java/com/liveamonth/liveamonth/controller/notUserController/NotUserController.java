@@ -25,21 +25,21 @@ public class NotUserController {
 	    public String oneToOneAskReply(Model model, HttpServletRequest request) throws Exception {
 		 ArrayList<OneToOneAskVO> oneToOneAskReplyVOList = notUserService.getOneToOneAskReplyVOList();
 	    	model.addAttribute("oneToOneAskReplyVOList",oneToOneAskReplyVOList);
-	        return "myPageView/MyPage.jsp?page=OneToOneAskReply";
+	        return "myPageView/OneToOneAskReply";
 	    }
 	 
 	 @GetMapping("/writeOneToOneAskReply")
 	 public String oneToOneAskReplyWrite(Model model, HttpServletRequest request) throws Exception {
 		 OneToOneAskVO oneToOneAskVO = notUserService.findOneToOneAskVO(Integer.parseInt(request.getParameter("oneToOneAskNO")));
 		 model.addAttribute("oneToOneAskVO",oneToOneAskVO);
-		 return "myPageView/MyPage.jsp?page=WriteOneToOneAskReply";
+		 return "myPageView/WriteOneToOneAskReply";
 	 }
 
 	 @GetMapping("/resultMentOneToOneAskReply")
 	 public String resultMentOneToOneAskReply(Model model, HttpServletRequest request,OneToOneAskVO oneToOneAskVO) throws Exception {
 		 notUserService.addOneToOneAskReply(oneToOneAskVO);
 		 notUserService.postOneToOneAskReplyFromEmail(oneToOneAskVO);
-		 return "myPageView/MyPage.jsp?page=ResultMentOneToOneAskReply";
+		 return "myPageView/ResultMentOneToOneAskReply";
 	 }
 	
 	 

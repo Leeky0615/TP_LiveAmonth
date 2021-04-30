@@ -35,8 +35,6 @@
 	<script src="resources/js/board.js"></script>
 
 	<script type="text/javaScript" language="javascript"></script>
-	<jsp:include page="/incl/Header.jsp" />
-
 </head>
 <body style="background:#ffffff">
 
@@ -431,7 +429,6 @@
 </div>
 
 <div width="100%">
-	<jsp:include page="/incl/Footer.jsp" />
 </div>
 </body>
 </html>

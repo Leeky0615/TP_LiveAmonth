@@ -10,7 +10,6 @@
 </head>
 
 <body>
-<jsp:include page="/incl/Header.jsp" />
 
 <!--  <div class="container">
    <div class="row">
@@ -126,6 +125,5 @@
       </tbody>
    </table>
 </div>
-<jsp:include page="/incl/Footer.jsp" />
 </body>
 </html>

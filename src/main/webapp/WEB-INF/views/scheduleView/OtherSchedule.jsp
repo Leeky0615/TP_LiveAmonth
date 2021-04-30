@@ -35,8 +35,6 @@
 
 </head>
 <body style="background:#ffffff">
-<jsp:include page="/incl/Header.jsp" />
-
 <form name="calendarFrm" id="calendarFrm" action="schedule"
       method="GET">
    <input type="hidden" name="year" value="${todayInformation.searchYear}" />
@@ -282,7 +280,6 @@
 
 
    <div width="100%">
-      <jsp:include page="/incl/Footer.jsp" />
    </div>
 </body>
 </html>

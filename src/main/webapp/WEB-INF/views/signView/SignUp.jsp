@@ -22,8 +22,6 @@
     <script src='https://code.jquery.com/jquery-3.3.1.min.js'></script>
 </head>
 <body>
-<jsp:include page="/incl/Header.jsp"/>
-
 <section class="ftco-section">
 
     <div class="container">
@@ -247,6 +245,5 @@
 
     });
 </script>
-<jsp:include page="/incl/Footer.jsp"/>
 </body>
 </html>

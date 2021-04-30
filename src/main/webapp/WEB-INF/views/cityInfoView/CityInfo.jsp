@@ -17,8 +17,6 @@
     ArrayList<String> cityNameList = (ArrayList<String>) request.getAttribute(CITY_NAME_LIST.getText());
     ArrayList<CityInfoVO> cityIntroList = (ArrayList<CityInfoVO>) request.getAttribute(CITY_INTRO_LIST.getText());
 %>
-<jsp:include page="/incl/Header.jsp"/>
-<jsp:include page="/WEB-INF/views/cityInfoView/CityInfoGrid.jsp"/>
 <c:if test="${cityName != null}">
     <section class="property-section latest-property-section spad">
         <div class="container">
@@ -26,6 +24,16 @@
                 <div class="col-lg-5">
                     <div class="section-title">
                         <h4>도시소개</h4>
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <div class="property-controls">
+                        <ul>
+                            <li><a href="cityInfo">전체</a></li>
+                            <c:forEach var="name" items="${cityNameList}">
+                                <li><a href="selectCityInfo?page=${name}">${name}</a></li>
+                            </c:forEach>
+                        </ul>
                     </div>
                 </div>
                 <div class="row property-filter">
@@ -55,7 +63,6 @@
         </div>
     </section>
 </c:if>
-<jsp:include page="/incl/Footer.jsp"/>
 </body>
 
 </html>

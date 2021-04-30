@@ -1,12 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
          pageEncoding="EUC-KR" %>
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="EUC-KR">
-
-    <title>Finally Ask Drop</title>
-</head>
 <body>
 <section class="contact-form-section spad">
     <div class="container">
@@ -29,12 +22,9 @@
         </div>
     </div>
 </section>
-<!-- Contact Form Section End -->
 <script>
     function cancelDropUser() {
-
         $("#resultMentDropUser").attr("action", "/").submit();
     }
 </script>
 </body>
-</html>

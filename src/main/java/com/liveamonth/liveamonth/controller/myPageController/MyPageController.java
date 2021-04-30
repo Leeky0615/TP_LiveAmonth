@@ -41,15 +41,14 @@ public class MyPageController {
         model.addAttribute(CHECK_USER.getText(), true);
 
         session.setAttribute(USER_VO.getText(), myPageService.getUserInfo(userID));
-        return MY_PAGE.getPath();
+        return "MyPage";
     }
 
     @GetMapping("/reCheckUserPW")
     public String reCheckUserPW(Model model, HttpServletRequest request) throws Exception {
         model.addAttribute(USER_VO.getText(), request.getAttribute(USER_VO.getText()));
         model.addAttribute(CHECK_USER.getText(), true);
-
-        return RE_CHECK_USER_PW.getSectionPath();
+        return RE_CHECK_USER_PW.getPath();
     }
 
     @GetMapping("/goToModifyUserInfo")
@@ -63,10 +62,10 @@ public class MyPageController {
 
         if (userVO == null) {
             model.addAttribute(CHECK_USER.getText(), false);
-            return RE_CHECK_USER_PW.getSectionPath();
+            return RE_CHECK_USER_PW.getPath();
         } else {
             model.addAttribute(USER_VO.getText(), request.getAttribute(USER_VO.getText()));
-            return MODIFY_USER_INFO.getSectionPath();
+            return MODIFY_USER_INFO.getPath();
         }
     }
 
@@ -75,7 +74,7 @@ public class MyPageController {
         UserVO previousUser = myPageService.getUserInfo(userVO.getUserID());
 
         myPageService.modifyUserInfo(this.checkUserData(userVO, previousUser));
-        return RESULT_MENT_MODIFY_USER_INFO.getSectionPath();
+        return RESULT_MENT_MODIFY_USER_INFO.getPath();
     }
 
     private UserVO checkUserData(UserVO changeData, UserVO previousData){
@@ -96,7 +95,7 @@ public class MyPageController {
 	public String dropUser(Model model) throws Exception{
     	 // this.firstIn = true; -> 바로 true로 넣어줌
          model.addAttribute(FIRST_IN.getText(), true);
-    	return DROP_USER.getSectionPath();
+    	return DROP_USER.getPath();
 	}
 
     @RequestMapping("/checkDropUserPassword")
@@ -108,20 +107,18 @@ public class MyPageController {
         if (userVO == null) {
             // this.firstIn = false; -> 바로 false로 넣어줌
             model.addAttribute(FIRST_IN.getText(), false);
-            return DROP_USER.getSectionPath();
+            return DROP_USER.getPath();
         } else {
-        	return FINALLY_ASK_DROP_USER.getSectionPath();
-
+        	return FINALLY_ASK_DROP_USER.getPath();
         }
     }
 
     @RequestMapping("/resultMentDropUser")
-    private String resultMentDropUser(Model model, HttpServletRequest request,HttpSession session) throws Exception {
-    	Object session_UserID = session.getAttribute(USER_ID.getText());
-    	String userID = (String)session_UserID;
-    	session.invalidate();
-    	myPageService.dropUser(userID);
-    	return RESULT_MENT_DROP_USER.getSectionPath();
+    private String resultMentDropUser(HttpServletRequest request,HttpSession session) throws Exception {
+    	UserVO session_UserVO = (UserVO) session.getAttribute(USER_VO.getText());
+    	myPageService.dropUser(session_UserVO.getUserID());
+        session.invalidate();
+        return RESULT_MENT_DROP_USER.getPath();
 
     }
 
@@ -132,23 +129,21 @@ public class MyPageController {
         
     	ArrayList<OneToOneAskVO> oneToOneAskVOList = myPageService.getOneToOneAskVOList(userNO);
     	model.addAttribute(ONE_TO_ONE_ASK_VO_LIST.getText(),oneToOneAskVOList);
-    	return ONE_TO_ONE_ASK.getSectionPath();
+    	return ONE_TO_ONE_ASK.getPath();
 
     }
     @RequestMapping("/showOneToOneAsk")
     private String showOneToOneAsk(Model model, HttpServletRequest request) throws Exception {
     	OneToOneAskVO oneToOneAskVO = myPageService.findOneToOneAskVO(Integer.parseInt(request.getParameter(ONE_TO_ONE_ASK_NO.getText())));
 		 model.addAttribute("oneToOneAskVO",oneToOneAskVO);
-    	return SHOW_ONE_TO_ONE_ASK.getSectionPath();
+    	return SHOW_ONE_TO_ONE_ASK.getPath();
 
     }
-    
-    
 
     @RequestMapping("/writeOneToOneAsk")
     private String oneToOneAskWrite(Model model) throws Exception {
     	model.addAttribute(ONE_TO_ONE_ASK_CATEGORY.getText(), OneToOneAskCategory.values());
-    	return Write_ONE_TO_ONE_ASK.getSectionPath();
+    	return Write_ONE_TO_ONE_ASK.getPath();
     }
 
     @RequestMapping("/resultMentOneToOneAsk")
@@ -158,14 +153,14 @@ public class MyPageController {
         int userNO = session_UserVO.getUserNO();
         
     	myPageService.addOneToOneAsk(oneToOneAskVO,userNO);
-    	return RESULT_MENT_ONE_TO_ONE_ASK.getSectionPath();
+    	return RESULT_MENT_ONE_TO_ONE_ASK.getPath();
     }
     
     @RequestMapping("/deleteOneToOneAsk")
     private String deleteOneToOneAsk(HttpServletRequest request) throws Exception {
     	int oneToOneAskNO = Integer.parseInt(request.getParameter(ONE_TO_ONE_ASK_NO.getText()));
        myPageService.deleteOneToOneAsk(oneToOneAskNO);
-    	return RESULT_MENT_DELETE_ONE_TO_ONE_ASK.getSectionPath();
+    	return RESULT_MENT_DELETE_ONE_TO_ONE_ASK.getPath();
     }
     
 

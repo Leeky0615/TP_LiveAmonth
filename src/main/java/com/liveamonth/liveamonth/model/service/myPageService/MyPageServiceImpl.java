@@ -29,7 +29,6 @@ public class MyPageServiceImpl implements MyPageService {
 
     @Override
     public List<UserVO> getOtherScheduleUserInfo(List<ScheduleVO> scheduleVOList) throws Exception {
-
         int userNO = 0;
         List<UserVO> userVOList = new ArrayList<UserVO>();
 
@@ -42,20 +41,13 @@ public class MyPageServiceImpl implements MyPageService {
     }
 
     @Override
-    public UserVO getUserInfo(String userID) throws Exception {
-        return myPageMapper.getUserInfo(userID);
-    }
+    public UserVO getUserInfo(String userID) throws Exception {return myPageMapper.getUserInfo(userID);}
 
     @Override
-    public void modifyUserInfo(UserVO userVO) throws Exception {
-        myPageMapper.modifyUserInfo(userVO);
-    }
+    public void modifyUserInfo(UserVO userVO) throws Exception {myPageMapper.modifyUserInfo(userVO);}
 
     @Override
-	public void dropUser(String userID) throws Exception {
-    	myPageMapper.dropUser(userID);
-
-	}
+	public void dropUser(String userID) throws Exception {myPageMapper.dropUser(userID);}
 
 	@Override
 	public ArrayList<OneToOneAskVO> getOneToOneAskVOList(int userNO) throws Exception {
@@ -86,6 +78,4 @@ public class MyPageServiceImpl implements MyPageService {
 		myPageMapper.deleteOneToOneAsk(oneToOneAskNO);
 		
 	}
-
-	
 }

@@ -10,12 +10,12 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 public interface MyPageService {
-	public UserVO getUserInfo(String userID) throws Exception;
-	public void modifyUserInfo(UserVO userVO) throws Exception;
-	public List<UserVO> getOtherScheduleUserInfo(List<ScheduleVO> scheduleVOList) throws Exception;
-	public void dropUser(String userID) throws Exception;
-	public ArrayList<OneToOneAskVO> getOneToOneAskVOList(int userNO) throws Exception;
-	public void addOneToOneAsk(OneToOneAskVO oneToOneAskVO, int userNO) throws Exception;
-	public OneToOneAskVO findOneToOneAskVO(int oneToOneAskNO) throws Exception;
-	public void deleteOneToOneAsk(int oneToOneAskNO) throws Exception;
+	UserVO getUserInfo(String userID) throws Exception;
+	void modifyUserInfo(UserVO userVO) throws Exception;
+	List<UserVO> getOtherScheduleUserInfo(List<ScheduleVO> scheduleVOList) throws Exception;
+	void dropUser(String userID) throws Exception;
+	ArrayList<OneToOneAskVO> getOneToOneAskVOList(int userNO) throws Exception;
+	void addOneToOneAsk(OneToOneAskVO oneToOneAskVO, int userNO) throws Exception;
+	OneToOneAskVO findOneToOneAskVO(int oneToOneAskNO) throws Exception;
+	void deleteOneToOneAsk(int oneToOneAskNO) throws Exception;
 }

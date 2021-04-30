@@ -1,24 +1,5 @@
-<%@ page import="com.liveamonth.liveamonth.entity.vo.UserVO" %><%--
-  Created by IntelliJ IDEA.
-  User: rbdus
-  Date: 2021-04-17
-  Time: 오전 12:07
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="com.liveamonth.liveamonth.entity.vo.UserVO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>회원정보수정</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap"
-          rel="stylesheet">
-    <link rel="stylesheet"
-          href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/style.css">
-    <script src="/resources/js/modify.js"></script>
-    <script src='https://code.jquery.com/jquery-3.3.1.min.js'></script>
-</head>
 <body>
 <%
     UserVO userVO = (UserVO) request.getAttribute("userVO");
@@ -128,4 +109,3 @@
     });
 </script>
 </body>
-</html>

@@ -9,8 +9,6 @@
 
 </head>
 <body>
-<jsp:include page="/incl/Header.jsp" />
-    
       <%  boolean firstIn = (boolean)request.getAttribute("firstIn"); %>
     <!-- login -->
     	<section class="ftco-section">
@@ -72,6 +70,5 @@
 
 
     <!-- login End -->
-<jsp:include page="/incl/Footer.jsp" />
 </body>
 </html>

@@ -6,14 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
 import java.util.List;
 
+import static com.liveamonth.liveamonth.constants.ControllerPathConstants.ECityInfoPath.CITY_INFO_GRID;
 import static com.liveamonth.liveamonth.constants.ControllerPathConstants.ECityInfoPath.CITY_INFO;
-import static com.liveamonth.liveamonth.constants.ControllerPathConstants.ECityInfoPath.REDIRECT_CITY_INFO;
 import static com.liveamonth.liveamonth.constants.EntityConstants.CityInfoCategory.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.ECityInfoAttributes.*;
 
@@ -31,30 +29,32 @@ public class CityController {
 
         model.addAttribute(CITY_NAME_LIST.getText(), cityNameList);
         model.addAttribute(CITY_INTRO_LIST.getText(), cityIntroList);
-        return CITY_INFO.getPath();
+        return CITY_INFO_GRID.getPath();
     }
     @GetMapping(value = "selectCityInfo")
-    public String selectCityInfo(RedirectAttributes rttr, HttpServletRequest request) throws Exception{
+    public String selectCityInfo(Model rttr, HttpServletRequest request) throws Exception{
         /*
          * request에서 클릭한 메뉴의 페이지 정보를 가져옴(getParameter())
          * 받아온 파라미터를 사용해 해당 도시의 정보를 보냄
          */
         this.setModel(rttr, request.getParameter(PAGE.getText()));
-        return REDIRECT_CITY_INFO.getRedirectPath();
+        return CITY_INFO.getPath();
     }
 
     /*
     * Controller 내부에서 사용되는 Method
     */
-    private void setModel(RedirectAttributes rttr, String cityName)  throws Exception{
+    private void setModel(Model rttr, String cityName)  throws Exception{
         // cityName과 cityCategory를 파라미터로 받아서 리스트에 담음
+        List<String> cityNameList = cityService.getCityNameList();
         List<CityInfoVO> cityIntro = cityService.getCityInfoList(cityName,INTRO.name());
         List<CityInfoVO> foodList = cityService.getCityInfoList(cityName,FOOD.name());
         List<CityInfoVO> viewList = cityService.getCityInfoList(cityName,VIEW.name());
 
-        rttr.addFlashAttribute(CITY_NAME.getText(), cityName);
-        rttr.addFlashAttribute(INTRO.getText(), cityIntro.get(0));
-        rttr.addFlashAttribute(FOOD.getText(), foodList);
-        rttr.addFlashAttribute(VIEW.getText(), viewList);
+        rttr.addAttribute(CITY_NAME.getText(), cityName);
+        rttr.addAttribute(CITY_NAME_LIST.getText(), cityNameList);
+        rttr.addAttribute(INTRO.getText(), cityIntro.get(0));
+        rttr.addAttribute(FOOD.getText(), foodList);
+        rttr.addAttribute(VIEW.getText(), viewList);
     }
 }

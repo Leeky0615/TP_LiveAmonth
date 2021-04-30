@@ -19,7 +19,6 @@ public interface ScheduleService {
 
     public int getLastScheduleContentNO() throws Exception;
 
-
     public void deleteScheduleContent(int scheduleContentNO) throws Exception;
 
     public void modifyScheduleContent(int scheduleContentNO, String scheduleContentSubject, String scheduleContentDesc, int scheduleContentCost) throws Exception;

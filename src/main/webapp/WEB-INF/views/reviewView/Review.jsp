@@ -8,8 +8,6 @@
 </head>
 
 <body>
- 	<jsp:include page="/incl/Header.jsp" />
-    <jsp:include page="/incl/Footer.jsp" />
 </body>
 
 </html>

@@ -15,7 +15,6 @@
         })
     </script>
     <title>비밀번호 찾기</title>
-    <jsp:include page="/incl/Header.jsp"/>
 </head>
 <body>
 <section class="ftco-section">
@@ -51,5 +50,4 @@
     </div>
 </section>
 </body>
-<jsp:include page="/incl/Footer.jsp"/>
 </html>

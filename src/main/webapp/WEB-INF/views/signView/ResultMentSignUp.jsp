@@ -7,7 +7,6 @@
     <title>Sign Up Done</title>
 </head>
 <body>
-<jsp:include page="/incl/Header.jsp" />
 
 <!-- Contact Form Section Begin -->
 <section class="contact-form-section spad">
@@ -29,6 +28,5 @@
 </section>
 <!-- Contact Form Section End -->
 
-<jsp:include page="/incl/Footer.jsp" />
 </body>
 </html>

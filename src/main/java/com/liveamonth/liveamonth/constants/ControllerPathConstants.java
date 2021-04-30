@@ -35,13 +35,9 @@ public class ControllerPathConstants {
     	Write_ONE_TO_ONE_ASK("WriteOneToOneAsk"),
     	RESULT_MENT_ONE_TO_ONE_ASK("ResultMentOneToOneAsk"),
     	RESULT_MENT_DELETE_ONE_TO_ONE_ASK("ResultMentDeleteOneToOneAsk");
-    	
-
     	private String path;
         private EMyPagePath(String path) {this.path = path;}
         public String getPath() {return "myPageView/"+this.path;}
-        public String getSectionPath() {return "myPageView/MyPage.jsp?page="+this.path;}
-        public String getRedirectPath() {return this.path;}
     }
 
     /*
@@ -58,19 +54,17 @@ public class ControllerPathConstants {
         private String path;
         private ESignPath(String path) {this.path = path;}
         public String getPath() {return "signView/"+ this.path;}
-        public String getRedirectPath() {return this.path;}
     }
 
     /*
      * CityInfoController Path Constants
      */
     public enum ECityInfoPath {
-        CITY_INFO("CityInfo"),
-        REDIRECT_CITY_INFO("redirect:cityInfo");
+        CITY_INFO_GRID("CityInfoGrid"),
+        CITY_INFO("CityInfo");
         private String path;
         private ECityInfoPath(String path) {this.path = path;}
         public String getPath() {return "cityInfoView/"+this.path;}
-        public String getRedirectPath() {return this.path;}
     }
 
     /*

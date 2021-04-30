@@ -1,13 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
          pageEncoding="EUC-KR"%>
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="EUC-KR">
-    <title>1:1문의 완료</title>
-</head>
 <body>
-
 <!-- Contact Form Section Begin -->
 <section class="contact-form-section spad">
     <div class="container">
@@ -26,7 +19,4 @@
         </div>
     </div>
 </section>
-<!-- Contact Form Section End -->
-
 </body>
-</html>
