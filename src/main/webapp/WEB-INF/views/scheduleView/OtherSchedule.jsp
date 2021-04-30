@@ -202,7 +202,8 @@
                      <input type="hidden" name="scheduleReplyDate" id="scheduleReplyDate" value="<c:out value="${date}" />" />
                      <input type="hidden" name="scheduleNO" id="scheduleNO" value="${scheduleNO}" />
                      <div class="mar-top clearfix">
-                        <button type="button" class="btn btn-sm btn-primary pull-right" onclick="addScheduleReply(0);" ><i class="fa fa-pencil fa-fw"></i> 등록 </button>
+                        <button type="button" class="btn btn-sm btn-primary pull-right" onclick="addScheduleReply(0);" >
+                           <i class="fa fa-pencil fa-fw"></i> 등록 </button>
                      </div>
                   </div>
                </form>
@@ -227,7 +228,8 @@
                                   ${scheduleVOReply.scheduleReply.scheduleReplyDesc}
                               </p>
                               <div class="pad-ver">
-                                 <button id = "replyButton" class="btn btn-sm btn-default btn-hover-primary" onclick="showReplyDiv(${scheduleVOReply.scheduleReply.scheduleReplyNO});">Comment</button>
+                                 <button id = "replyButton" class="btn btn-sm btn-default btn-hover-primary"
+                                         onclick="showReplyDiv(${scheduleVOReply.scheduleReply.scheduleReplyNO});">Comment</button>
                               </div>
                               <hr>
 

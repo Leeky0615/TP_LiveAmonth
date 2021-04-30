@@ -59,6 +59,15 @@ public class LogicConstants {
         public String getText() {return this.text;}
     }
 
+    public enum EScheduleStaticInt {
+        FIRST_SCHEDULEREPLY_NO(501);
+
+        private int text;
+        private EScheduleStaticInt(int text) {this.text = text;}
+        public int getText(){return this.text;}
+    }
+
+
     public enum EMyPageAttributes {
         CHECK_USER("checkUser");
 

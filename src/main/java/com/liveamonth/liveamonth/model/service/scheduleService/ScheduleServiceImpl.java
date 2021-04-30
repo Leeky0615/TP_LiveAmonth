@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import com.liveamonth.liveamonth.constants.LogicConstants;
 import com.liveamonth.liveamonth.entity.vo.ScheduleReplyVO;
 import com.liveamonth.liveamonth.entity.vo.ScheduleVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -255,10 +256,11 @@ public class ScheduleServiceImpl implements ScheduleService {
     public boolean addScheduleReplyVO(ScheduleReplyVO scheduleReplyVO, String userID) throws Exception {
         String MaxNO = String.valueOf(scheduleMapper.getMaxScheduleReplyNO());
         if(MaxNO == "null") {
-            scheduleReplyVO.setScheduleReplyNO(4001);
+            scheduleReplyVO.setScheduleReplyNO(LogicConstants.EScheduleStaticInt.FIRST_SCHEDULEREPLY_NO.getText());
         } else {
             scheduleReplyVO.setScheduleReplyNO(Integer.parseInt(MaxNO) + 1);
         }
+        //session 리팩토링시 수정
         scheduleReplyVO.setUserNO(scheduleMapper.findUserIDToUserNO(userID));
 
         return scheduleMapper.addScheduleReplyVO(scheduleReplyVO);
