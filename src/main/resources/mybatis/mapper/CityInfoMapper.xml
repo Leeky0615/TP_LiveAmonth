@@ -2,22 +2,33 @@
 <!DOCTYPE mapper 
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
- 
-<mapper namespace="com.liveamonth.liveamonth.model.mapper.cityInfoMapper.CityInfoMapper">
-<!--    <select id="getAllCityInfoList" resultType="com.liveamonth.liveamonth.entity.vo.CityInfoVO">-->
-<!--        SELECT * FROM cityInfo;-->
-<!--    </select>-->
-<!--    <select id="getCityTotalInfoList" parameterType = "String" resultType="com.liveamonth.liveamonth.entity.vo.CityInfoVO">-->
-<!--        SELECT * FROM cityInfo WHERE cityInfoName=#{cityInfoName};-->
-<!--    </select>-->
 
-<!--    <select id="getCityInfoList" parameterType = "String" resultType="com.liveamonth.liveamonth.entity.vo.CityInfoVO">-->
-<!--        SELECT * FROM cityInfo WHERE cityInfoName=#{cityInfoName} AND cityInfoCategory=#{cityInfoCategory};-->
-<!--    </select>-->
-<!--    <select id="getCityInfoListByCategory" parameterType = "String" resultType="com.liveamonth.liveamonth.entity.vo.CityInfoVO">-->
-<!--        SELECT * FROM cityInfo WHERE cityInfoCategory=#{cityInfoCategory};-->
-<!--    </select>-->
-<!--    <select id="getCityInfoNameList" resultType="String">-->
-<!--        SELECT cityInfoName FROM cityInfo WHERE cityInfoCategory='INTRO';-->
-<!--    </select>-->
+<mapper namespace="com.liveamonth.liveamonth.model.mapper.cityInfoMapper.CityInfoMapper">
+        <select id="getCityInfoList" parameterType = "String" resultType="CityInfoVO">
+            select cityInfoCategory, cityInfoDesc, cityInfoImage
+            from city, cityInfo
+            where city.cityNO = cityInfo.cityNO
+              and cityInfoCategory=#{cityInfoCategory}
+              and cityName = #{cityName};
+        </select>
+
+    <resultMap type= "CityInfoVO" id="cityInfoList">
+        <id column="cityInfoNO" property="cityInfoNO"/>
+        <result column="cityInfoCategory" property="cityInfoCategory"/>
+        <result column="cityInfoDesc" property="cityInfoDesc"/>
+        <result column="cityInfoImage" property="cityInfoImage"/>
+        <association property="cityVO" javaType="CityVO">
+            <id column="cityNO" property="cityNO"/>
+            <result column="cityName" property="cityName"/>
+        </association>
+    </resultMap>
+
+    <select id="getCityInfoListByCategory" parameterType = "String" resultMap="cityInfoList">
+        SELECT * FROM cityInfo WHERE cityInfoCategory=#{cityInfoCategory};
+    </select>
+
+
+    <select id="getCityInfoNameList" resultType="String">
+        SELECT cityName FROM city;
+    </select>
 </mapper>

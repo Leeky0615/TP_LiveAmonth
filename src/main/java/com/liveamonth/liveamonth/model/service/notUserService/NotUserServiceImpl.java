@@ -12,9 +12,7 @@ import com.liveamonth.liveamonth.model.mapper.notUserMapper.NotUserMapper;
 
 @Service
 public class NotUserServiceImpl implements NotUserService{
-	@Autowired
-	JavaMailSender mailSender;
-	
+
 	@Autowired
 	private NotUserMapper notUserMapper;
 	

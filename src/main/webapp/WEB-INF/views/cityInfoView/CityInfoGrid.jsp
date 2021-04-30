@@ -19,23 +19,21 @@
                     <div class="ih-item square effect13 left_to_right property-item">
                         <a href="selectCityInfo?page=${name}">
                             <c:set var="i" value="${status.count-1}"/>
-                            <c:set var="imageurl" value="${cityIntroList[i].getCityInfoImageURL()}"/>
-                            <div class="pi-pic set-bg" data-setbg="https://liveamonth-resources.s3.ap-northeast-2.amazonaws.com/img/intro/${imageurl}">
+                            <div class="pi-pic set-bg" data-setbg="${cityIntroList[i].getCityInfoImageURL()}">
                                 <div class="label">
-                                    <c:out value="${cityIntroList[i].getCityInfoName()}"/>
+                                    <c:out value="${name}"/>
                                 </div>
                             </div>
                             <div class="info">
-                                <h3><c:out value="${cityIntroList[i].getCityInfoName()}"/></h3>
+                                <h3><c:out value="${name}"/></h3>
                                 <p>
-                                    <c:out value="${cityIntroList[i].getCityInfoName()}"/>
+                                    <c:out value="${name}"/>
                                     입니다.
                                 </p>
                             </div>
                         </a>
                     </div>
                 </div>
-                <p><c:out value="${boardVO.title}"/></p>
             </c:forEach>
         </div>
     </div>

@@ -11,10 +11,9 @@ public class CityWeatherVO {
 	private float cityWeatherMinTemp;
 	private float cityWeatherAVGTemp;
 
-	private int cityNO; // Reference
+	private CityVO cityVO; // Reference
 
 	// Constructor
-
 	public CityWeatherVO() {
 		this.cityWeatherNO = 0;
 		this.cityWeatherMonth = 0;
@@ -22,7 +21,7 @@ public class CityWeatherVO {
 		this.cityWeatherMinTemp = 0;
 		this.cityWeatherAVGTemp = 0;
 
-		this.cityNO = 0;
+		this.cityVO = null;
 	}
 
 	// Getter & Setter
@@ -41,7 +40,6 @@ public class CityWeatherVO {
 	public float getCityWeatherAVGTemp() {return cityWeatherAVGTemp;}
 	public void setCityWeatherAVGTemp(float cityWeatherAVGTemp) {this.cityWeatherAVGTemp = cityWeatherAVGTemp;}
 
-	public int getCityNO() {return cityNO;}
-	public void setCityNO(int cityNO) {this.cityNO = cityNO;}
-
+	public CityVO getCityVO() {return cityVO;}
+	public void setCityVO(CityVO cityVO) {this.cityVO = cityVO;}
 }

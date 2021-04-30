@@ -5,24 +5,24 @@ import lombok.Data;
 @Data
 public class CityTransportVO {
 	// Attributes
-	private int cityNO;
+	private int cityTransportNO;
 	private String cityTransportCategory;
 	private int cityStationCount;
 
-	private int cityNo; // Reference
+	private CityVO cityVO; // Reference
 
 	// Constructor
 	public CityTransportVO() {
-		this.cityNO = 0;
+		this.cityTransportNO = 0;
 		this.cityTransportCategory = null;
 		this.cityStationCount = 0;
 
-		this.cityNo = 0;
+		this.cityVO = null;
 	}
 
 	// Getter & Setter
-	public int getCityNO() {return cityNO;}
-	public void setCityNO(int cityNO) {this.cityNO = cityNO;}
+	public int getCityTransportNO() {return cityTransportNO;}
+	public void setCityTransportNO(int cityTransportNO) {this.cityTransportNO = cityTransportNO;}
 
 	public String getCityTransportCategory() {return cityTransportCategory;}
 	public void setCityTransportCategory(String cityTransportCategory) {this.cityTransportCategory = cityTransportCategory;}
@@ -30,6 +30,6 @@ public class CityTransportVO {
 	public int getCityStationCount() {return cityStationCount;}
 	public void setCityStationCount(int cityStationCount) {this.cityStationCount = cityStationCount;}
 
-	public int getCityNo() {return cityNo;}
-	public void setCityNo(int cityNo) {this.cityNo = cityNo;}
+	public CityVO getCityVO() {return cityVO;}
+	public void setCityVO(CityVO cityVO) {this.cityVO = cityVO;}
 }

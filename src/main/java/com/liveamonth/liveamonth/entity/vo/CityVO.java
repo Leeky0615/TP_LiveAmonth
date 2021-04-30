@@ -1,6 +1,7 @@
 package com.liveamonth.liveamonth.entity.vo;
 
 import lombok.Data;
+import org.apache.ibatis.type.Alias;
 
 @Data
 public class CityVO {

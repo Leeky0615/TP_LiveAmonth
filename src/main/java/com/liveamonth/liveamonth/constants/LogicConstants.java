@@ -68,6 +68,7 @@ public class LogicConstants {
     }
 
     public enum ECityInfoAttributes {
+        PAGE("page"),
         CITY_NAME("cityName"),
         CITY_INTRO("cityIntro"),
         CITY_INTRO_LIST("cityIntroList"),

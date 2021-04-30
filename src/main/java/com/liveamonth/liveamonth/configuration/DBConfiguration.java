@@ -15,7 +15,6 @@ import javax.sql.DataSource;
 @Configuration
 @EnableTransactionManagement
 @MapperScan(value={"com.liveamonth.liveamonth.model.mapper"})
-
 public class DBConfiguration {
 
     @Bean
@@ -23,6 +22,7 @@ public class DBConfiguration {
         SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
         sessionFactory.setDataSource(dataSource);
         sessionFactory.setMapperLocations();
+        sessionFactory.setTypeAliasesPackage("com.liveamonth.liveamonth.entity.vo");
         Resource[] res = new PathMatchingResourcePatternResolver().getResources("classpath:mybatis/mapper/*.xml");
 
         sessionFactory.setMapperLocations(res);

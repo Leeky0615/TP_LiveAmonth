@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.liveamonth.liveamonth.entity.vo.UserVO;
-import com.liveamonth.liveamonth.model.service.cityInfoService.CityInfoService;
+import com.liveamonth.liveamonth.model.service.cityInfoService.CityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,7 +26,7 @@ public class SignController {
     private SignService signService;
 
     @Autowired
-    private CityInfoService cityInfoService;
+    private CityService cityService;
 
     @RequestMapping("/signIn")
     public String SignInPage(Model model) throws Exception {

@@ -1,30 +1,28 @@
 package com.liveamonth.liveamonth.entity.vo;
 
 import lombok.Data;
+import org.apache.ibatis.type.Alias;
 
 import static com.liveamonth.liveamonth.constants.EntityConstants.*;
-import static com.liveamonth.liveamonth.constants.EntityConstants.CityInfoCategory.*;
 
 @Data
 public class CityInfoVO {
     // Attributes
     private int cityInfoNO;
     private String cityInfoCategory;
-    private String cityInfoName;
     private String cityInfoImage;
     private String cityInfoDesc;
 
-    private int cityNo; // Reference
+    private CityVO cityVO; // Reference
 
     // Constructor
     public CityInfoVO() {
         this.cityInfoNO = 0;
         this.cityInfoCategory = null;
-        this.cityInfoName = null;
         this.cityInfoImage = null;
         this.cityInfoDesc = null;
 
-        this.cityNo = 0;
+        this.cityVO = null;
     }
 
     // Getter & Setter
@@ -34,23 +32,20 @@ public class CityInfoVO {
     public String getCityInfoCategory() {return cityInfoCategory;}
     public void setCityInfoCategory(String cityInfoCategory) {this.cityInfoCategory = cityInfoCategory;}
 
-    public String getCityInfoName() {return cityInfoName;}
-    public void setCityInfoName(String cityInfoName) {this.cityInfoName = cityInfoName;}
-
     public String getCityInfoImage() {return cityInfoImage;}
     public void setCityInfoImage(String cityInfoImage) {this.cityInfoImage = cityInfoImage;}
 
     public String getCityInfoDesc() {return cityInfoDesc;}
     public void setCityInfoDesc(String cityInfoDesc) {this.cityInfoDesc = cityInfoDesc;}
 
-    public int getCityNo() {return cityNo;}
-    public void setCityNo(int cityNo) {this.cityNo = cityNo;}
+    public CityVO getCityVO() {return cityVO;}
+    public void setCityVO(CityVO cityVO) {this.cityVO = cityVO;}
 
     // Get URL
     public String getCityInfoImageURL(){
         String imageURL = "";
         for(CityInfoCategory category : CityInfoCategory.values()){
-            if (category.equals(this.cityInfoCategory)){
+            if (category.name().equals(this.getCityInfoCategory())){
                 imageURL = ImageURL+category.getPath()+this.getCityInfoImage();
             }
         }
