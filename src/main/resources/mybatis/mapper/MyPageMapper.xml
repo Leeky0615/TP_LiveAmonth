@@ -4,12 +4,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
  
 <mapper namespace="com.liveamonth.liveamonth.model.mapper.myPageMapper.MyPageMapper">
+    <select id="getUserInfo" parameterType = "String" resultType="UserVO">
+       SELECT * FROM user WHERE userID=#{userID}
+    </select>
 
-    <select id="getOtherScheduleUserInfo" parameterType = "int" resultType="com.liveamonth.liveamonth.entity.vo.UserVO">
+    <update id="modifyUserInfo" parameterType="UserVO">
+       UPDATE user SET userPassword=#{userPassword},userNickname=#{userNickname},userEmail=#{userEmail}
+       WHERE userID=#{userID}
+    </update>
+
+    <select id="getOtherScheduleUserInfo" parameterType = "int" resultType="UserVO">
    		  select * from user where userNO = #{userNO}
     </select>
-    
-    <select id = "getOneToOneAskVOList" parameterType = "int" resultType="com.liveamonth.liveamonth.entity.vo.OneToOneAskVO">
+
+    <select id = "getOneToOneAskVOList" parameterType = "int" resultType="OneToOneAskVO">
     	select * from oneToOneAsk where userNO = #{userNO};
     </select>
     
@@ -17,11 +25,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       select max(oneToOneAskNO) from oneToOneAsk;
     </select>
     
-    <select id="findOneToOneAskVO" parameterType = "int" resultType="com.liveamonth.liveamonth.entity.vo.OneToOneAskVO">
+    <select id="findOneToOneAskVO" parameterType = "int" resultType="OneToOneAskVO">
       select * from oneToOneAsk where oneToOneAskNO = #{oneToOneAskNO};
     </select>
     
-    <insert id = "addOneToOneAsk" parameterType="com.liveamonth.liveamonth.entity.vo.OneToOneAskVO">
+    <insert id = "addOneToOneAsk" parameterType="OneToOneAskVO">
     	insert into oneToOneAsk 
     	values(#{oneToOneAskNO}, #{oneToOneAskCategory}, #{oneToOneAskSubject}, #{oneToOneAskDesc}, #{oneToOneAskDate},
     	      #{oneToOneAskImage},#{oneToOneAskUserEmail}, #{oneToOneAskReply}, #{userNO});

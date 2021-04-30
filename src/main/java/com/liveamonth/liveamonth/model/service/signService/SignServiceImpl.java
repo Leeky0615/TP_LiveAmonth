@@ -55,25 +55,16 @@ public class SignServiceImpl implements SignService {
 
     @Override
     public String findID(HttpServletResponse response, String userEmail) throws Exception {
-        response.setContentType("text/html;charset=utf-8");
-        PrintWriter out = response.getWriter();
-        String id = signMapper.findID(userEmail);
-
-        return id;
+        return signMapper.findID(userEmail);
     }
 
     // 비밀번호 찾기
     @Override
     public String findPW(HttpServletResponse response, String userID, String userEmail) throws Exception {
-        response.setContentType("text/html;charset=utf-8");
-        PrintWriter out = response.getWriter();
         HashMap<String, Object> hash = new HashMap<String, Object>();
         hash.put("userID", userID);
         hash.put("userEmail", userEmail);
-
-        String pw = signMapper.findPW(hash);
-
-        return pw;
+        return signMapper.findPW(hash);
     }
 
     @Override
