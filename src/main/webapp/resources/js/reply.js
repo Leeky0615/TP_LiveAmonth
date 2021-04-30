@@ -22,11 +22,15 @@
         addScheduleReplyForm.submit();
     }
 
-    function modifyScheduleReplyButton(scheduleReplyNO){
-        if (confirm("정말 삭제하시겠습니까??") == true){
-            location.replace('/deleteScheduleReply?reviewReplyNO='+scheduleReplyNO);
+    function showModifyScheduleReplyDesc(scheduleReplyNO){
+        var modifyScheduleForm = document.getElementById("modifyScheduleReplyDesc"+scheduleReplyNO);
+        var scheduleP = document.getElementById("scheduleReplyDesc"+scheduleReplyNO);
+        if(modifyScheduleForm.style.display == "none" || modifyScheduleForm.style.display == ""){
+            modifyScheduleForm.style.display = "block";
+            scheduleP.style.display = "none";
         } else {
-            return;
+            modifyScheduleForm.style.display = "none";
+            scheduleP.style.display = "block";
         }
     }
 

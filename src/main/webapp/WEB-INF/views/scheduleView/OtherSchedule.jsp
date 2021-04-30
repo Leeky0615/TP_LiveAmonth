@@ -222,13 +222,26 @@
                                     <button id = "deleteReply" class="btn btn-sm btn-default btn-hover-primary" style="float: right;"
                                             onclick="deleteScheduleReplyButton(${scheduleVOReply.scheduleReplyNO});" > 삭제 </button>
                                     <button id = "modifyReply" class="btn btn-sm btn-default btn-hover-primary" style="float: right;"
-                                            onclick="modifyScheduleReplyButton(${scheduleVOReply.scheduleReplyNO});" > 수정 </button>
+                                            onclick="showModifyScheduleReplyDesc(${scheduleVOReply.scheduleReplyNO});" > 수정 </button>
                                  </c:if>
                                  <p class="text-muted text-sm"> ${scheduleVOReply.scheduleReply.scheduleReplyDate} </p>
                               </div>
-                              <p>
-                                  ${scheduleVOReply.scheduleReply.scheduleReplyDesc}
+
+                              <p id = "scheduleReplyDesc${scheduleVOReply.scheduleReplyNO}" class = "scheduleReplyDesc">
+                                    ${scheduleVOReply.scheduleReply.scheduleReplyDesc}
                               </p>
+
+                              <div id = "modifyScheduleReplyDesc${scheduleVOReply.scheduleReplyNO}" class = "modifyScheduleReplyDesc">
+                                 <form action="modifyScheduleReply">
+                                    <textarea name="scheduleReplyDesc" id="modifyScheduleReplyDescText" class="form-control" rows="2"
+                                              placeholder="의견을 남겨주세요.">${scheduleVOReply.scheduleReply.scheduleReplyDesc}</textarea>
+                                    <div class="mar-top clearfix">
+                                       <button type="button" class="btn btn-sm btn-primary pull-right" onclick="showModifyScheduleReplyDesc(${scheduleVOReply.scheduleReplyNO})" ><i class="fa fa-pencil fa-fw"></i> 취소 </button>
+                                       <button type="button" class="btn btn-sm btn-primary pull-right" style="margin-right: 5px;" onclick="" ><i class="fa fa-pencil fa-fw"></i> 수정 </button>
+                                    </div>
+                                 </form>
+                              </div>
+
                               <div class="pad-ver">
                                  <button id = "replyButton" class="btn btn-sm btn-default btn-hover-primary"
                                          onclick="showReplyDiv(${scheduleVOReply.scheduleReply.scheduleReplyNO});">Comment</button>
