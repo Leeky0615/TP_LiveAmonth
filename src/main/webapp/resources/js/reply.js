@@ -9,8 +9,8 @@
 
     function addScheduleReply(scheduleReplyNO) {
         var addScheduleReplyForm = document.getElementById("addScheduleReply"+scheduleReplyNO);
-        var userID = document.getElementById("userID").value;
-        if(userID == "" || userID == null){
+        var userNO = document.getElementById("userNO").value;
+        if(userNO == "" || userNO == null){
             alert("로그인 후 이용해주세요.");
             addScheduleReplyForm.scheduleReplyDesc.focus();
             return false;
@@ -22,7 +22,7 @@
         addScheduleReplyForm.submit();
     }
 
-    function deleteScheduleReplyButton(scheduleReplyNO){
+    function modifyScheduleReplyButton(scheduleReplyNO){
         if (confirm("정말 삭제하시겠습니까??") == true){
             location.replace('/deleteScheduleReply?reviewReplyNO='+scheduleReplyNO);
         } else {

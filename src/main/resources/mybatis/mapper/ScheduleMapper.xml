@@ -64,7 +64,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</where>
 		<trim prefix="ORDER BY"> 
 			<if test="orderBy =='scheduleNO'">${orderBy} ASC</if>
-			<if test="orderBy =='scheduleLikeCount'">${orderBy} DESC</if>	 
+<!--			<if test="orderBy =='scheduleLikeCount'">${orderBy} DESC</if>	 -->
 		</trim> 	
 	</select>
 

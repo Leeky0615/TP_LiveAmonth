@@ -46,7 +46,7 @@
          <td><select name="place" id="place" class="sm-width">
             <option value= "null">기본</option>
             <c:forEach var="place" items="${placeList}">
-               <option value="${place}">${place.label}</option>
+               <option value="${place}">${place.nameKR}</option>
             </c:forEach>
          </select></td>
 	<!-- 	<td><input type="submit" name="filter" value="조회"></td> -->
@@ -114,12 +114,12 @@
                <img src="resources/img/scheduleImg.png" alt="">
             </a>
             </td>
-            <td><c:out value="${scheduleVOList[i].getPlace()}" /></td>
+            <td><c:out value="${scheduleVOList[i].getSchedulePlace()}" /></td>
             <td><c:out value="${userVOList[i].getUserNickname()}" /></td>
             <td><c:out value="${sex}" /></td>
             <td><c:out value="${sysYear-userVOList[i].getUserAge()}세" /></td>
-            <td><c:out
-                    value="${scheduleVOList[i].getScheduleLikeCount()}" /></td>
+<%--            <td><c:out--%>
+<%--                    value="${scheduleVOList[i].getScheduleLikeCount()}" /></td>--%>
          </tr>
       </c:forEach>
       </c:if>

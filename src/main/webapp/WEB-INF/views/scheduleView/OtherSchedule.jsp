@@ -188,7 +188,7 @@
          <div class="col-lg-7">
             <div class="section-title">
                <h4>Comments</h4>
-               <input type = "hidden" id = "userID" name = "userID"value="${userID}"/>
+               <input type = "hidden" id = "userNO" name = "userNO" value="${userVO.userNO}"/>
                <input type = "hidden" id = "selectedScheduleNO" name = "selectedScheduleNO" value="${scheduleNO}"/>
             </div>
          </div>
@@ -218,9 +218,11 @@
                            <div class="media-body">
                               <div class="mar-btm">
                                  <a href="#" class="btn-link text-semibold media-heading box-inline"> ${scheduleVOReply.userNickname} </a>
-                                 <c:if test = "${userNO == scheduleVOReply.scheduleReply.userNO}">
+                                 <c:if test = "${userVO.userNO == scheduleVOReply.scheduleReply.userNO}">
                                     <button id = "deleteReply" class="btn btn-sm btn-default btn-hover-primary" style="float: right;"
                                             onclick="deleteScheduleReplyButton(${scheduleVOReply.scheduleReplyNO});" > 삭제 </button>
+                                    <button id = "modifyReply" class="btn btn-sm btn-default btn-hover-primary" style="float: right;"
+                                            onclick="modifyScheduleReplyButton(${scheduleVOReply.scheduleReplyNO});" > 수정 </button>
                                  </c:if>
                                  <p class="text-muted text-sm"> ${scheduleVOReply.scheduleReply.scheduleReplyDate} </p>
                               </div>
@@ -257,7 +259,7 @@
                                              <div class="media-body">
                                                 <div class="mar-btm">
                                                    <a href="#" class="btn-link text-semibold media-heading box-inline"> ${scheduleVOReplyRef.userNickname} </a>
-                                                   <c:if test = "${userNO == scheduleVOReplyRef.scheduleReply.userNO}">
+                                                   <c:if test = "${userVO.userNO == scheduleVOReplyRef.scheduleReply.userNO}">
                                                       <button id = "deleteReply" class="btn btn-sm btn-default btn-hover-primary" style="float: right;"
                                                               onclick="deleteScheduleReplyButton(${scheduleVOReplyRef.scheduleReplyNO});" > 삭제 </button>
                                                    </c:if>
