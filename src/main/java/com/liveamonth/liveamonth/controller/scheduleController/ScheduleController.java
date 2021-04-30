@@ -109,7 +109,7 @@ public class ScheduleController{
         model.addAttribute(SCHEDULE_VO_LIST.getText(), scheduleVOList);
         model.addAttribute(DATE_LIST.getText(), calendarDto.getDateList()); //날짜 데이터 배열
         model.addAttribute(TODAY_INFORMATION.getText(), calendarDto.getTodayInformation());
-        model.addAttribute(SCHEDULE_PLACE.getText(), CityName.values());
+        model.addAttribute(PLACE_LIST.getText(), CityName.values());
         return SCHEDULE.getPath();
     }
 
