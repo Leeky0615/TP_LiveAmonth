@@ -179,11 +179,9 @@ public class ScheduleController{
     public String otherScheduleList(Model model, HttpServletRequest request, CalendarDTO calendarDTO) throws Exception {
     	String action = request.getParameter(SCHEDULE_ACTION.getText());
 
-    	List<ScheduleVO> scheduleVOList = null;
-
+    	List<ScheduleVO> scheduleVOList = new ArrayList<>();
     	if(action.contains(SCHEDULE_LIST.getText())) {
     		scheduleVOList = scheduleService.getOtherScheduleList(0, 0, null, null);
-
     	}else if(action.contains(SCHEDULE_FILTER.getText())) {
     		int sex = Integer.parseInt((String) request.getParameter(SCHEDULE_SEX.getText()));
             int age = Integer.parseInt((String) request.getParameter(SCHEDULE_AGE.getText()));

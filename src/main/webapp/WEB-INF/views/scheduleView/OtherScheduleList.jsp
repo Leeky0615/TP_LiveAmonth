@@ -3,18 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-<!DOCTYPE html>
-<html lang="utf-8">
-
-<head>
-</head>
-
 <body>
-
-<!--  <div class="container">
-   <div class="row">
-      <div class="col-lg-12 p-0">  -->
-
 <form action="/otherScheduleList" class="filter-form">
    <h4>필터 검색</h4>
    <table>
@@ -45,7 +34,7 @@
          <td><select name="place" id="place" class="sm-width">
             <option value= "null">기본</option>
             <c:forEach var="place" items="${placeList}">
-               <option value="${place}">${place.label}</option>
+               <option value="${place}">${place.nameKR}</option>
             </c:forEach>
          </select></td>
 	<!-- 	<td><input type="submit" name="filter" value="조회"></td> -->
@@ -126,4 +115,3 @@
    </table>
 </div>
 </body>
-</html>

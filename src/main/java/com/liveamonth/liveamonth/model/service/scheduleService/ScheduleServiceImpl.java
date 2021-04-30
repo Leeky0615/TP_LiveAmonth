@@ -172,7 +172,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 		// place
 		if(place!=null) {
 			if (!place.equals("null")) {
-				placeStatement += " AND place = '" + place + "' ";
+				placeStatement += " AND schedulePlace = '" + place + "' ";
 			}
 		}
 
