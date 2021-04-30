@@ -7,52 +7,93 @@ public class EntityConstants {
      * 2. 테이블의 row값을 하나의 객체로 받아오기 위해 "테이블 명+VO" 추가.
      * 3. 테이블의 row값을 여러개의 객체로 받아오기 위해 "테이블 명+VO_LIST" 추가
      */
-
     public EntityConstants() { }
 
+    public static String ImageURL = "https://liveamonth-resources.s3.ap-northeast-2.amazonaws.com/img/";
     /*
-    * CityInfo Table Constants
+    * City Table Constants
     */
+    public enum ECity{
+        CITY_VO("cityVO"),
+        CITY_VO_LIST("cityVOList"),
+        CITY_NO("cityNO"),
+        CITY_NAME("cityName");
+        private String text;
+        private ECity(String text){this.text = text;}
+        public String getText() {return this.text;}
+    }
+
+    public enum CityName{
+        SEOUL("서울"),
+        GANGNEUNG("강릉"),
+        GYEONGJU("경주"),
+        BUSAN("부산"),
+        YEOSU("여수"),
+        JEJU("제주");
+        private String nameKR;
+        private CityName(String nameKR){this.nameKR = nameKR;}
+        public String getNameKR() {return this.nameKR;}
+    }
+
     public enum ECityInfo {
         CITY_INFO_VO("cityInfoVO"),
         CITY_INFO_VO_LIST("cityInfoVOList"),
         CITY_INFO_NO("cityInfoNO"),
         CITY_INFO_CATEGORY("cityInfoCategory"),
-        CITY_INFO_NAME("cityInfoName"),
-        CITY_INFO_IMAGE_URL("cityInfoImageURL"),
-        CITY_INFO_DESC("cityInfoDesc");
+        CITY_INFO_DESC("cityInfoDesc"),
+        CITY_INFO_IMAGE("cityInfoImage");
         private String text;
         private ECityInfo(String text) {this.text = text;}
         public String getText() {return this.text;}
     }
-    public enum ECityName{
-        CITY_GN("강릉","gangneung"),
-        CITY_SE("서울","seoul"),
-        CITY_KJ("경주","kyungju"),
-        CITY_YS("여수","yeosu"),
-        CITY_BS("부산","busan"),
-        CITY_JJ("제주","jeju");
-        private String nameKR, nameEN;
-        private ECityName(String nameKR, String nameEN){
-            this.nameKR = nameKR;
-            this.nameEN = nameEN;
+
+    public enum CityInfoCategory {
+        INTRO("Intro", "intro/"),
+        FOOD("Food", "food/"),
+        VIEW("View", "view/");
+        private String text;
+        private String path;
+        private CityInfoCategory(String text,String path) {
+            this.text = text;
+            this.path = path;
         }
+        public String getText() {return this.text;}
+        public String getPath() {return this.path;}
+    }
+
+    public enum ECityTransport {
+        CITY_TRANSPORT_VO("cityTransportVO"),
+        CITY_TRANSPOR_VO_LIST("cityTransportVOList"),
+        CITY_TRANSPOR_NO("cityTransportNO"),
+        CITY_TRANSPOR_CATEGORY("cityTransportCategory"),
+        CITY_TRANSPOR_DESC("cityTransportCount");
+        private String text;
+        private ECityTransport(String text) {this.text = text;}
+        public String getText() {return this.text;}
+    }
+
+    public enum CityTransportCategory {
+        SUBWAY("지하철"),
+        BUS("버스"),
+        TRAIN("기차");
+        private String nameKR;
+        private CityTransportCategory(String nameKR) {this.nameKR = nameKR;}
         public String getNameKR() {return this.nameKR;}
-        public String getNameEN() {return this.nameEN;}
     }
-    public enum ECityCategory{
-        CATEGORY_INTRO("INTRO","Intro"),
-        CATEGORY_FOOD("FOOD","Food"),
-        CATEGORY_VIEW("VIEW","View");
-        private String category_uc;
-        private String category_lc;
-        private ECityCategory(String category_uc,String category_lc) {
-            this.category_uc = category_uc;
-            this.category_lc = category_lc;
-        }
-        public String getCategoryUppercase() {return this.category_uc;}
-        public String getCategoryLowerCase() {return this.category_lc;}
+
+    public enum ECityWeather {
+        CITY_WEATHER_VO("cityTransportVO"),
+        CITY_WEATHER_VO_LIST("cityTransportVOList"),
+        CITY_WEATHER_NO("cityTransportNO"),
+        CITY_WEATHER_MONTH("cityWeatherMonth"),
+        CITY_WEATHER_MAX_TEMP("cityWeatherMaxTemp"),
+        CITY_WEATHER_MIN_TEMP("cityWeatherMinTemp"),
+        CITY_WEATHER_AVG_TEMP("cityWeatherAVGTemp");
+        private String text;
+        private ECityWeather(String text) {this.text = text;}
+        public String getText() {return this.text;}
     }
+    public enum Month{Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sept,Oct,Nov,Dec}
 
     /*
      * ReviewReply Table Constants
@@ -156,11 +197,26 @@ public class EntityConstants {
      * OneToOneAsk Table Constants
      */
     public enum EOneToOneAsk{
+    	ONE_TO_ONE_ASK_NO("oneToOneAskNO"),
         ONE_TO_ONE_ASK_VO("oneToOneAskVO"),
         ONE_TO_ONE_ASK_VO_LIST("oneToOneAskVOList"),
         ONE_TO_ONE_ASK_CATEGORY("oneToOneAskCategory");
         private String text;
         private EOneToOneAsk(String text) {this.text = text;}
         public String getText() {return this.text;}
+    }
+    public enum OneToOneAskCategory {
+        CATEGORY("카테고리"),
+        CATEGORY1("카테고리1"),
+        CATEGORY2("카테고리2"),
+        CATEGORY3("카테고리3"),
+        CATEGORY4("카테고리4");
+        private String label;
+        OneToOneAskCategory(String label) {
+            this.label = label;
+        }
+        public String getLabel() {
+            return label;
+        }
     }
 }

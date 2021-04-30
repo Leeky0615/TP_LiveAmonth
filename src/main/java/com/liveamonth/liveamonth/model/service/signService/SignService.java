@@ -14,14 +14,16 @@ public interface SignService {
 
     public void insertUser(UserVO userVO) throws Exception;
 
-    public String checkSign(String userID, String userPassword) throws Exception;
+    public UserVO checkSign(String userID, String userPassword) throws Exception;
 
     public String findID(HttpServletResponse response, String userEmail) throws Exception;
 
-    public int checkSign2(String userID, String userPassword) throws Exception;
+   // public int checkSign2(String userID, String userPassword) throws Exception;
 
 
     public String findPW(HttpServletResponse response, String userID, String userEmail) throws Exception;
+
+	public String checkEmail(String userEmail) throws Exception;
 
 
 }

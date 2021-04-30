@@ -18,8 +18,7 @@
 				<th>카테고리</th>
 				<th>제목</th>
 				<th>날짜</th>
-				<th>조회수</th>
-				<th>버튼</th>
+				
 			</tr>
 		</thead>
 		<tbody>
@@ -27,9 +26,8 @@
 				<tr>
 					<td>${oneToOneAskReplyVOList.oneToOneAskNO}</td>
 					<td>${oneToOneAskReplyVOList.oneToOneAskCategory}</td>
-					<td><a href="oneToOneAskReplyWrite?oneToOneAskNO=${oneToOneAskReplyVOList.oneToOneAskNO}">${oneToOneAskReplyVOList.oneToOneAskSubject}</a></td>
+					<td><a href="writeOneToOneAskReply?oneToOneAskNO=${oneToOneAskReplyVOList.oneToOneAskNO}">${oneToOneAskReplyVOList.oneToOneAskSubject}</a></td>
 					<td>${oneToOneAskReplyVOList.oneToOneAskDate}</td>
-					<td>${oneToOneAskReplyVOList.oneToOneAskViewCount}</td>
 				</tr>
 			</c:forEach>
 		</tbody>

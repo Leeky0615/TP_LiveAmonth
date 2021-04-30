@@ -5,26 +5,18 @@ import com.liveamonth.liveamonth.model.mapper.cityInfoMapper.CityInfoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Service
-public class CityInfoServiceImpl implements CityInfoService {
+public class CityServiceImpl implements CityService {
 
     @Autowired
     private CityInfoMapper cityInfoMapper;
 
     @Override
-    public List<CityInfoVO> getAllCityInfoList() throws Exception{
-        return cityInfoMapper.getAllCityInfoList();
-    }
-
-    @Override
-    public List<CityInfoVO> getCityTotalInfoList(String cityInfoName) throws Exception {
-        return cityInfoMapper.getCityTotalInfoList(cityInfoName); }
-
-    @Override
-    public List<CityInfoVO> getCityInfoList(String cityInfoName, String cityInfoCategory) throws Exception{
-        return cityInfoMapper.getCityInfoList(cityInfoName,cityInfoCategory);
+    public List<CityInfoVO> getCityInfoList(String cityName, String cityInfoCategory) throws Exception{
+        return cityInfoMapper.getCityInfoList(cityName,cityInfoCategory);
     }
 
     @Override
@@ -33,7 +25,7 @@ public class CityInfoServiceImpl implements CityInfoService {
     }
 
     @Override
-    public List<String> getCityInfoNameList() throws Exception{
+    public List<String> getCityNameList() throws Exception{
         return cityInfoMapper.getCityInfoNameList();
     }
 

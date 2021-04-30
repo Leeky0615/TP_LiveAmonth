@@ -22,13 +22,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select max(scheduleNO) from schedule;
 	</select>
 
-	<select id="getScheduleList" resultType="com.liveamonth.liveamonth.entity.vo.ScheduleVO" parameterType="String">
-		select * from schedule where schedule.userNO in (select userNO from user where userID = #{userID});
+	<select id="getScheduleList" resultType="com.liveamonth.liveamonth.entity.vo.ScheduleVO" parameterType="int">
+		select * from schedule where userNO = #{userNO};
 	</select>
 
-	<select id="findUserIDToUserNO" resultType="int" parameterType="String">
+<!-- 	<select id="findUserIDToUserNO" resultType="int" parameterType="String">
 		select userNO from user where userID = #{userID};
 	</select>
+	 -->
 	
 <!-- 	 <select id="getOtherScheduleInfo" resultType="com.liveamonth.liveamonth.entity.vo.ScheduleVO">
       select * from schedule where schedule.scheduleStatus = true order by scheduleLikeCount DESC;
@@ -104,7 +105,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- insert -->
 
 	<insert id="addSchedule" parameterType="com.liveamonth.liveamonth.entity.vo.ScheduleVO">
-		insert into schedule values(#{scheduleNO}, #{scheduleSubject}, #{scheduleLikeCount}, #{scheduleStatus},#{place},#{userNO})
+		insert into schedule values(#{scheduleNO}, #{scheduleSubject}, #{scheduleStatus}, #{schedulePlace},#{scheduleViewCount},#{userNO})
 	</insert>
 
 	<insert id="addScheduleContent" parameterType="com.liveamonth.liveamonth.entity.vo.ScheduleContentVO">
@@ -134,6 +135,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 	
 	<update id="modifySchedule" parameterType="com.liveamonth.liveamonth.entity.vo.ScheduleVO">
-		update schedule set scheduleSubject = #{scheduleSubject}, scheduleStatus = #{scheduleStatus}, place = #{place} where scheduleNO = #{scheduleNO}
+		update schedule set scheduleSubject = #{scheduleSubject}, scheduleStatus = #{scheduleStatus}, schedulePlace = #{schedulePlace} where scheduleNO = #{scheduleNO}
 	</update>
 </mapper>

@@ -23,9 +23,10 @@ public class CalendarDTO {
     private String dbEndDate = "";
     private ScheduleContentVO[] scheduleDataArray = new ScheduleContentVO[4];
 
-
     private Map<String, Integer> todayInformation;
     private List<CalendarDTO> dateList;
+
+    public CalendarDTO() {}
 
     // 날짜에 관련된 달력정보를 가지는 메서드
     public Map<String, Integer> todayInformation(CalendarDTO calendarDTO) {
@@ -114,22 +115,15 @@ public class CalendarDTO {
             this.value = value;
             this.scheduleDataArray = scheduleDataArray;
         }
-
-    }
-
-
-    public CalendarDTO() {
     }
 
     @Override
-    public String toString() {
-        return "DateData [year=" + year + ", month=" + month + ", date=" + date + ", value=" + value + "]";
+    public String toString() {return "DateData [year=" + year + ", month=" + month + ", date=" + date + ", value=" + value + "]";
     }
 
 	public String getYear() {
 		return year;
 	}
-
 	public void setYear(String year) {
 		this.year = year;
 	}
@@ -137,7 +131,6 @@ public class CalendarDTO {
 	public String getMonth() {
 		return month;
 	}
-
 	public void setMonth(String month) {
 		this.month = month;
 	}
@@ -145,7 +138,6 @@ public class CalendarDTO {
 	public String getDate() {
 		return date;
 	}
-
 	public void setDate(String date) {
 		this.date = date;
 	}
@@ -153,7 +145,6 @@ public class CalendarDTO {
 	public String getValue() {
 		return value;
 	}
-
 	public void setValue(String value) {
 		this.value = value;
 	}
@@ -161,7 +152,6 @@ public class CalendarDTO {
 	public String getDbStartDate() {
 		return dbStartDate;
 	}
-
 	public void setDbStartDate(String dbStartDate) {
 		this.dbStartDate = dbStartDate;
 	}
@@ -169,7 +159,6 @@ public class CalendarDTO {
 	public String getDbEndDate() {
 		return dbEndDate;
 	}
-
 	public void setDbEndDate(String dbEndDate) {
 		this.dbEndDate = dbEndDate;
 	}
@@ -177,7 +166,6 @@ public class CalendarDTO {
 	public ScheduleContentVO[] getScheduleDataArray() {
 		return scheduleDataArray;
 	}
-
 	public void setScheduleDataArray(ScheduleContentVO[] scheduleDataArray) {
 		this.scheduleDataArray = scheduleDataArray;
 	}
@@ -185,7 +173,6 @@ public class CalendarDTO {
 	public Map<String, Integer> getTodayInformation() {
 		return todayInformation;
 	}
-
 	public void setTodayInformation(Map<String, Integer> todayInformation) {
 		this.todayInformation = todayInformation;
 	}
@@ -193,11 +180,9 @@ public class CalendarDTO {
 	public List<CalendarDTO> getDateList() {
 		return dateList;
 	}
-
 	public void setDateList(List<CalendarDTO> dateList) {
 		this.dateList = dateList;
 	}
-
 }
 
 

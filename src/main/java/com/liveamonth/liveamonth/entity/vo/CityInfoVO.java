@@ -1,61 +1,54 @@
 package com.liveamonth.liveamonth.entity.vo;
 
 import lombok.Data;
+import org.apache.ibatis.type.Alias;
+
+import static com.liveamonth.liveamonth.constants.EntityConstants.*;
 
 @Data
 public class CityInfoVO {
+    // Attributes
     private int cityInfoNO;
     private String cityInfoCategory;
-    private String cityInfoName;
-    private String cityInfoImageURL;
+    private String cityInfoImage;
     private String cityInfoDesc;
 
-    public int getCityInfoNO() {
-        return cityInfoNO;
-    }
+    private CityVO cityVO; // Reference
 
-    public void setCityInfoNO(int cityInfoNO) {
-        this.cityInfoNO = cityInfoNO;
-    }
-
-    public String getCityInfoCategory() {
-        return cityInfoCategory;
-    }
-
-    public void setCityInfoCategory(String cityInfoCategory) {
-        this.cityInfoCategory = cityInfoCategory;
-    }
-
-    public String getCityInfoName() {
-        return cityInfoName;
-    }
-
-    public void setCityInfoName(String cityInfoName) {
-        this.cityInfoName = cityInfoName;
-    }
-
-    public String getCityInfoImageURL() {
-        return cityInfoImageURL;
-    }
-
-    public void setCityInfoImageURL(String cityInfoImageURL) {
-        this.cityInfoImageURL = cityInfoImageURL;
-    }
-
-    public String getCityInfoDesc() {
-        return cityInfoDesc;
-    }
-
-    public void setCityInfoDesc(String cityInfoDesc) {
-        this.cityInfoDesc = cityInfoDesc;
-    }
-
+    // Constructor
     public CityInfoVO() {
         this.cityInfoNO = 0;
         this.cityInfoCategory = null;
-        this.cityInfoName = null;
-        this.cityInfoImageURL = null;
+        this.cityInfoImage = null;
         this.cityInfoDesc = null;
+
+        this.cityVO = null;
     }
 
+    // Getter & Setter
+    public int getCityInfoNO() {return cityInfoNO;}
+    public void setCityInfoNO(int cityInfoNO) {this.cityInfoNO = cityInfoNO;}
+
+    public String getCityInfoCategory() {return cityInfoCategory;}
+    public void setCityInfoCategory(String cityInfoCategory) {this.cityInfoCategory = cityInfoCategory;}
+
+    public String getCityInfoImage() {return cityInfoImage;}
+    public void setCityInfoImage(String cityInfoImage) {this.cityInfoImage = cityInfoImage;}
+
+    public String getCityInfoDesc() {return cityInfoDesc;}
+    public void setCityInfoDesc(String cityInfoDesc) {this.cityInfoDesc = cityInfoDesc;}
+
+    public CityVO getCityVO() {return cityVO;}
+    public void setCityVO(CityVO cityVO) {this.cityVO = cityVO;}
+
+    // Get URL
+    public String getCityInfoImageURL(){
+        String imageURL = "";
+        for(CityInfoCategory category : CityInfoCategory.values()){
+            if (category.name().equals(this.getCityInfoCategory())){
+                imageURL = ImageURL+category.getPath()+this.getCityInfoImage();
+            }
+        }
+        return imageURL;
+    }
 }

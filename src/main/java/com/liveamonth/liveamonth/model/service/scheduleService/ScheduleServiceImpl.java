@@ -19,6 +19,8 @@ import com.liveamonth.liveamonth.entity.dto.CalendarDTO;
 import com.liveamonth.liveamonth.entity.vo.ScheduleContentVO;
 import com.liveamonth.liveamonth.model.mapper.scheduleMapper.ScheduleMapper;
 
+import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleStaticInt.*;
+
 
 @Service
 public class ScheduleServiceImpl implements ScheduleService {
@@ -105,13 +107,13 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     public void addScheduleContent(ScheduleContentVO scheduleContentVO) throws Exception {
+        Object LastNO = scheduleMapper.getLastScheduleContentNO();
+        if(LastNO != null){
+            scheduleContentVO.setScheduleContentNO(Integer.parseInt(String.valueOf(LastNO))+1);
+        } else {
+            scheduleContentVO.setScheduleContentNO(FIRST_SCHEDULECONTENT_NO.getText());
+        }
         scheduleMapper.addScheduleContent(scheduleContentVO);
-
-    }
-
-    @Override
-    public int getLastScheduleContentNO() throws Exception {
-        return scheduleMapper.getLastScheduleContentNO();
     }
 
     //otherList
@@ -192,10 +194,8 @@ public class ScheduleServiceImpl implements ScheduleService {
 	}
 
     @Override
-    public boolean addSchedule(ScheduleVO scheduleVO, String userID) throws Exception {
-        scheduleVO.setScheduleNO(scheduleMapper.getMaxScheduleNO() + 1);
-        scheduleVO.setScheduleLikeCount(0);
-        scheduleVO.setUserNO(scheduleMapper.findUserIDToUserNO(userID));
+    public boolean addSchedule(ScheduleVO scheduleVO) throws Exception {
+        scheduleVO.setScheduleNO(getMaxScheduleNO() + 1);
 
         if (scheduleMapper.addSchedule(scheduleVO)) {
             return true;
@@ -204,8 +204,8 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public ArrayList<ScheduleVO> getScheduleList(String userID) throws Exception {
-        return scheduleMapper.getScheduleList(userID);
+    public ArrayList<ScheduleVO> getScheduleList(int userNO) throws Exception {
+        return scheduleMapper.getScheduleList(userNO);
     }
 
     @Override
@@ -216,20 +216,23 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     public void modifyScheduleContent(int scheduleContentNO, String scheduleContentSubject, String scheduleContentDesc,
-                                      int scheduleContentCost) throws Exception {
-        ScheduleContentVO scheduleContentVO = new ScheduleContentVO();
-        scheduleContentVO.setScheduleContentNO(scheduleContentNO);
-        scheduleContentVO.setScheduleContentSubject(scheduleContentSubject);
-        scheduleContentVO.setScheduleContentDesc(scheduleContentDesc);
-        scheduleContentVO.setScheduleContentCost(scheduleContentCost);
-        scheduleMapper.modifyScheduleContent(scheduleContentVO);
+    		int scheduleContentCost) throws Exception {
+    	ScheduleContentVO scheduleContentVO = new ScheduleContentVO();
+    	scheduleContentVO.setScheduleContentNO(scheduleContentNO);
+    	scheduleContentVO.setScheduleContentSubject(scheduleContentSubject);
+    	scheduleContentVO.setScheduleContentDesc(scheduleContentDesc);
+    	scheduleContentVO.setScheduleContentCost(scheduleContentCost);
+    	scheduleMapper.modifyScheduleContent(scheduleContentVO);
 
     }
 
-	@Override
+    @Override
 	public int getMaxScheduleNO() throws Exception {
-		// TODO Auto-generated method stub
-		return scheduleMapper.getMaxScheduleNO();
+        Object MaxNO = scheduleMapper.getMaxScheduleNO();
+        if(MaxNO != null) {
+            return Integer.parseInt(String.valueOf(MaxNO));
+        }
+		return FIRST_SCHEDULE_NO.getText();
 	}
 	
 	public boolean modifySchedule(ScheduleVO scheduleVO) throws Exception {
@@ -253,15 +256,14 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public boolean addScheduleReplyVO(ScheduleReplyVO scheduleReplyVO, String userID) throws Exception {
+    public boolean addScheduleReplyVO(ScheduleReplyVO scheduleReplyVO, int userNO) throws Exception {
         String MaxNO = String.valueOf(scheduleMapper.getMaxScheduleReplyNO());
         if(MaxNO == "null") {
-            scheduleReplyVO.setScheduleReplyNO(LogicConstants.EScheduleStaticInt.FIRST_SCHEDULEREPLY_NO.getText());
+            scheduleReplyVO.setScheduleReplyNO(FIRST_SCHEDULEREPLY_NO.getText());
         } else {
             scheduleReplyVO.setScheduleReplyNO(Integer.parseInt(MaxNO) + 1);
         }
-        //session 리팩토링시 수정
-        scheduleReplyVO.setUserNO(scheduleMapper.findUserIDToUserNO(userID));
+        scheduleReplyVO.setUserNO(userNO);
 
         return scheduleMapper.addScheduleReplyVO(scheduleReplyVO);
     }

@@ -110,13 +110,17 @@
                                     name="userAge" oninput="maxLengthCheck(this)">
                             </div>
 
-                            <div class="form-group mb-3">
-                                <label class="label" for="userEmail">이메일</label> <input
-                                    type="text" id="userEmail" class="form-control result-email"
-                                    placeholder="johndoe@gmail.com" name="userEmail">
-                            </div>
+								<div class="form-group mb-3">
+									<label class="label" for="userEmail">이메일</label> <input
+										type="text" id="userEmail" class="form-control result-email"
+										placeholder="johndoe@gmail.com" name="userEmail">
+									<button type="button" class="checkEmail">중복확인</button>
+									<p class="emailResult">
+										<span class="emailMsg">중복확인을 해주세요.</span>
+									</p>
+								</div>
 
-                            <div class="form-group d-md-flex">
+								<div class="form-group d-md-flex">
                                 <div class="w-100 text-left">
                                     <label class="checkbox-wrap checkbox-primary">I agree
                                         all statements in terms of service <input type="checkbox"
@@ -207,6 +211,37 @@
     $("#userNickname").keyup(function () {
         $(".nickNameResult .nickNameMsg").text("중복확인을 해주세요");
         $(".nickNameResult .nickNameMsg").attr("style", "color:#000");
+
+        $("#submit").attr("disabled", "disabled");
+
+    });
+    /////////////////////////////////////////////////////////////////
+        $(".checkEmail").click(function () {
+        var query = {userEmail: $("#userEmail").val()};
+
+        $.ajax({
+            url: "checkEmail",
+            type: "post",
+            data: query,
+            success: function (data) {
+
+                if (data == 1) {
+                    $(".emailResult .emailMsg").text("사용불가");
+                    $(".emailResult .emailMsg").attr("style", "color:#f00");
+                    $("#submit").attr("disabled", "disabled");
+                } else {
+                    $(".emailResult .emailMsg").text("사용가능");
+                    $(".emailResult .emailMsg").attr("style", "color:#00f");
+
+                    $("#submit").removeAttr("disabled");
+                }
+            }
+        });  // ajax ��
+    });
+
+    $("#userEmail").keyup(function () {
+        $(".emailResult .emailMsg").text("중복확인을 해주세요");
+        $(".emailResult .emailMsg").attr("style", "color:#000");
 
         $("#submit").attr("disabled", "disabled");
 

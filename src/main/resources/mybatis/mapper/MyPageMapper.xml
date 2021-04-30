@@ -4,28 +4,43 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
  
 <mapper namespace="com.liveamonth.liveamonth.model.mapper.myPageMapper.MyPageMapper">
+    <select id="getUserInfo" parameterType = "String" resultType="UserVO">
+       SELECT * FROM user WHERE userID=#{userID}
+    </select>
 
-    <select id="getOtherScheduleUserInfo" parameterType = "int" resultType="com.liveamonth.liveamonth.entity.vo.UserVO">
+    <update id="modifyUserInfo" parameterType="UserVO">
+       UPDATE user SET userPassword=#{userPassword},userNickname=#{userNickname},userEmail=#{userEmail}
+       WHERE userID=#{userID}
+    </update>
+
+    <select id="getOtherScheduleUserInfo" parameterType = "int" resultType="UserVO">
    		  select * from user where userNO = #{userNO}
     </select>
-    
-    <select id = "getOneToOneAskVOList" resultType="com.liveamonth.liveamonth.entity.vo.OneToOneAskVO">
-    	select * from oneToOneAsk;
+
+    <select id = "getOneToOneAskVOList" parameterType = "int" resultType="OneToOneAskVO">
+    	select * from oneToOneAsk where userNO = #{userNO};
     </select>
     
     <select id="getLastOneToOneAskNO" resultType="int">
       select max(oneToOneAskNO) from oneToOneAsk;
     </select>
     
-    <insert id = "addOneToOneAsk" parameterType="com.liveamonth.liveamonth.entity.vo.OneToOneAskVO">
+    <select id="findOneToOneAskVO" parameterType = "int" resultType="OneToOneAskVO">
+      select * from oneToOneAsk where oneToOneAskNO = #{oneToOneAskNO};
+    </select>
+    
+    <insert id = "addOneToOneAsk" parameterType="OneToOneAskVO">
     	insert into oneToOneAsk 
     	values(#{oneToOneAskNO}, #{oneToOneAskCategory}, #{oneToOneAskSubject}, #{oneToOneAskDesc}, #{oneToOneAskDate},
-    	      #{oneToOneAskViewCount}, #{oneToOneAskImageURL},#{oneToOneAskUserEmail}, #{oneToOneAskReply}, #{userNO});
+    	      #{oneToOneAskImage},#{oneToOneAskUserEmail}, #{oneToOneAskReply}, #{userNO});
     </insert>
     
     <!-- delete -->
 	<delete id="dropUser" parameterType="String">
 		delete from user where userID = #{userID}
 	</delete>
-
+	
+	<delete id="deleteOneToOneAsk" parameterType="int">
+		delete from oneToOneAsk where oneToOneAskNO = #{oneToOneAskNO}
+	</delete>
 </mapper>

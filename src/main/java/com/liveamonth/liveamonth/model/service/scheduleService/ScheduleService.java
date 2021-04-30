@@ -17,16 +17,13 @@ public interface ScheduleService {
 
     public void addScheduleContent(ScheduleContentVO scheduleContentVO) throws Exception;
 
-    public int getLastScheduleContentNO() throws Exception;
-
-
     public void deleteScheduleContent(int scheduleContentNO) throws Exception;
 
     public void modifyScheduleContent(int scheduleContentNO, String scheduleContentSubject, String scheduleContentDesc, int scheduleContentCost) throws Exception;
 
-    public boolean addSchedule(ScheduleVO scheduleVO, String userID) throws Exception;
+    public boolean addSchedule(ScheduleVO scheduleVO) throws Exception;
 
-    public ArrayList<ScheduleVO> getScheduleList(String userID) throws Exception;
+    public ArrayList<ScheduleVO> getScheduleList(int userNO) throws Exception;
 
     public int getMaxScheduleNO() throws Exception;
 
@@ -38,7 +35,7 @@ public interface ScheduleService {
 
     public List<HashMap<String, Object>> getScheduleReplyList(int scheduleNO) throws Exception;
 
-    public boolean addScheduleReplyVO(ScheduleReplyVO scheduleReplyVO, String userID) throws Exception;
+    public boolean addScheduleReplyVO(ScheduleReplyVO scheduleReplyVO, int userNO) throws Exception;
 
     public boolean deleteScheduleReply(int scheduleReplyNO) throws Exception;
 }

@@ -34,48 +34,43 @@ public class SignServiceImpl implements SignService {
     }
 
     @Override
-    public String checkSign(String userID, String userPassword) throws Exception {
+    public UserVO checkSign(String userID, String userPassword) throws Exception {
         HashMap<String, Object> hash = new HashMap<String, Object>();
         hash.put("userID", userID);
         hash.put("userPassword", userPassword);
-        String userName = signMapper.checkSign(hash);
+        UserVO userVO = signMapper.checkSign(hash);
 
-        return userName;
+        return userVO;
     }
 
-    @Override
-    public int checkSign2(String userID, String userPassword) throws Exception {
-        HashMap<String, Object> hash = new HashMap<String, Object>();
-        hash.put("userID", userID);
-        hash.put("userPassword", userPassword);
-        int userNO = signMapper.checkSign2(hash);
-
-        return userNO;
-    }
-
+//    @Override
+//    public int checkSign2(String userID, String userPassword) throws Exception {
+//        HashMap<String, Object> hash = new HashMap<String, Object>();
+//        hash.put("userID", userID);
+//        hash.put("userPassword", userPassword);
+//        int userNO = signMapper.checkSign2(hash);
+//
+//        return userNO;
+//    }
 
     @Override
     public String findID(HttpServletResponse response, String userEmail) throws Exception {
-        response.setContentType("text/html;charset=utf-8");
-        PrintWriter out = response.getWriter();
-        String id = signMapper.findID(userEmail);
-
-        return id;
+        return signMapper.findID(userEmail);
     }
-
 
     // 비밀번호 찾기
     @Override
     public String findPW(HttpServletResponse response, String userID, String userEmail) throws Exception {
-        response.setContentType("text/html;charset=utf-8");
-        PrintWriter out = response.getWriter();
         HashMap<String, Object> hash = new HashMap<String, Object>();
         hash.put("userID", userID);
         hash.put("userEmail", userEmail);
+        return signMapper.findPW(hash);
+    }
 
-        String pw = signMapper.findPW(hash);
-
-        return pw;
+    @Override
+    public String checkEmail(String userEmail) throws Exception {
+        System.out.println(signMapper.checkEmail(userEmail));
+        return signMapper.checkEmail(userEmail);
     }
 
 }

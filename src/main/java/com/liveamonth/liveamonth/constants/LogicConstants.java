@@ -60,8 +60,9 @@ public class LogicConstants {
     }
 
     public enum EScheduleStaticInt {
-        FIRST_SCHEDULEREPLY_NO(501);
-
+        FIRST_SCHEDULEREPLY_NO(501),
+        FIRST_SCHEDULE_NO(200),
+        FIRST_SCHEDULECONTENT_NO(301);
         private int text;
         private EScheduleStaticInt(int text) {this.text = text;}
         public int getText(){return this.text;}
@@ -77,6 +78,7 @@ public class LogicConstants {
     }
 
     public enum ECityInfoAttributes {
+        PAGE("page"),
         CITY_NAME("cityName"),
         CITY_INTRO("cityIntro"),
         CITY_INTRO_LIST("cityIntroList"),

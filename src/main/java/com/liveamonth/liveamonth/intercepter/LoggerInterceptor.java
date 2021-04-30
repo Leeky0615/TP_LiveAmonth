@@ -17,7 +17,7 @@ public class LoggerInterceptor implements HandlerInterceptor {
             throws Exception {
         HttpSession session = request.getSession(false);
 
-        if(session.getAttribute("userName") != null) {
+        if(session.getAttribute("userVO") != null) {
             return true;
         }else {
         	response.sendRedirect("signIn");

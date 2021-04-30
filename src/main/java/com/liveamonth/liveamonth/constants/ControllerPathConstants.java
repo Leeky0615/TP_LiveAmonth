@@ -31,8 +31,11 @@ public class ControllerPathConstants {
         RESULT_MENT_MODIFY_USER_INFO("ResultMentModifyUserInfo"),
     	FINALLY_ASK_DROP_USER("FinallyAskDropUser"),
     	ONE_TO_ONE_ASK("OneToOneAsk"),
-    	ONE_TO_ONE_ASK_WRITE("OneToOneAskWrite"),
-    	RESULT_MENT_ONE_TO_ONE_ASK("ResultMentOneToOneAsk");
+    	SHOW_ONE_TO_ONE_ASK("ShowOneToOneAsk"),
+    	Write_ONE_TO_ONE_ASK("WriteOneToOneAsk"),
+    	RESULT_MENT_ONE_TO_ONE_ASK("ResultMentOneToOneAsk"),
+    	RESULT_MENT_DELETE_ONE_TO_ONE_ASK("ResultMentDeleteOneToOneAsk");
+    	
 
     	private String path;
         private EMyPagePath(String path) {this.path = path;}

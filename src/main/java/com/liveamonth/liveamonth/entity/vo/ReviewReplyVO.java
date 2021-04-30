@@ -6,32 +6,33 @@ import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 @Data
 public class ReviewReplyVO {
-
+	// Attributes
     private int reviewReplyNO;
     private String reviewReplyDesc;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private String reviewReplyDate;
 
-    // Reference
+    // References
     private int reviewReplyRefNO;
     private int userNO;
     private int reviewNO;
 
+    // Constructor
     public ReviewReplyVO() {
         this.reviewReplyNO = 0;
         this.reviewReplyDesc = null;
         this.reviewReplyDate = null;
 
-        // Reference
         this.reviewReplyRefNO = 0;
         this.userNO = 0;
         this.userNO = 0;
     }
 
+
+    // Getter & Setter
 	public int getReviewReplyNO() {
 		return reviewReplyNO;
 	}
-
 	public void setReviewReplyNO(int reviewReplyNO) {
 		this.reviewReplyNO = reviewReplyNO;
 	}
@@ -39,7 +40,6 @@ public class ReviewReplyVO {
 	public String getReviewReplyDesc() {
 		return reviewReplyDesc;
 	}
-
 	public void setReviewReplyDesc(String reviewReplyDesc) {
 		this.reviewReplyDesc = reviewReplyDesc;
 	}
@@ -47,7 +47,6 @@ public class ReviewReplyVO {
 	public String getReviewReplyDate() {
 		return reviewReplyDate;
 	}
-
 	public void setReviewReplyDate(String reviewReplyDate) {
 		this.reviewReplyDate = reviewReplyDate;
 	}
@@ -55,7 +54,6 @@ public class ReviewReplyVO {
 	public int getReviewReplyRefNO() {
 		return reviewReplyRefNO;
 	}
-
 	public void setReviewReplyRefNO(int reviewReplyRefNO) {
 		this.reviewReplyRefNO = reviewReplyRefNO;
 	}
@@ -63,7 +61,6 @@ public class ReviewReplyVO {
 	public int getUserNO() {
 		return userNO;
 	}
-
 	public void setUserNO(int userNO) {
 		this.userNO = userNO;
 	}
@@ -71,10 +68,7 @@ public class ReviewReplyVO {
 	public int getReviewNO() {
 		return reviewNO;
 	}
-
 	public void setReviewNO(int reviewNO) {
 		this.reviewNO = reviewNO;
 	}
-    
-    
 }

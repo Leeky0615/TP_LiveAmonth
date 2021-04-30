@@ -14,22 +14,21 @@ import java.util.List;
 @Repository
 @Mapper
 public interface MyPageMapper {
-    @Select("SELECT * FROM user WHERE userID=#{userID}")
-    public UserVO getUserInfo(String userID) throws Exception;
+    UserVO getUserInfo(String userID) throws Exception;
 
-    @Update("UPDATE user SET userPassword=#{userPassword}," +
-            "userNickname=#{userNickname}," +
-            "userEmail=#{userEmail}" +
-            "WHERE userID=#{userID}")
-    public void modifyUserInfo(UserVO userVO)throws Exception;
+    void modifyUserInfo(UserVO userVO)throws Exception;
 
-    public UserVO getOtherScheduleUserInfo(int userNO) throws Exception;
+    UserVO getOtherScheduleUserInfo(int userNO) throws Exception;
 
-	public void dropUser(String userID) throws Exception;
+	void dropUser(String userID) throws Exception;
 
-	public ArrayList<OneToOneAskVO> getOneToOneAskVOList() throws Exception;
+	ArrayList<OneToOneAskVO> getOneToOneAskVOList(int userNO) throws Exception;
 
-	public int getLastOneToOneAskNO() throws Exception;
+	int getLastOneToOneAskNO() throws Exception;
 
-	public void addOneToOneAsk(OneToOneAskVO oneToOneAskVO) throws Exception;
+	void addOneToOneAsk(OneToOneAskVO oneToOneAskVO) throws Exception;
+
+	OneToOneAskVO findOneToOneAskVO(int oneToOneAskNO) throws Exception;
+
+	public void deleteOneToOneAsk(int oneToOneAskNO)  throws Exception;
 }

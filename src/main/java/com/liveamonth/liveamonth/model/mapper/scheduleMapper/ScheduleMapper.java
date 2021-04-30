@@ -17,7 +17,7 @@ public interface ScheduleMapper {
 
     public ArrayList<ScheduleContentVO> scheduleContentList(HashMap<String, Object> scheduleCalendarDTO) throws Exception;
 
-    public int getLastScheduleContentNO() throws Exception;
+    public Object getLastScheduleContentNO() throws Exception;
 
     public void addScheduleContent(ScheduleContentVO scheduleContentVO) throws Exception;
 
@@ -31,11 +31,9 @@ public interface ScheduleMapper {
 
     public boolean addSchedule(ScheduleVO scheduleVO)throws Exception;
 
-    public ArrayList<ScheduleVO> getScheduleList(String userID)throws Exception;
+    public ArrayList<ScheduleVO> getScheduleList(int userNO)throws Exception;
 
-    public int findUserIDToUserNO(String userID)throws Exception;
-
-	public int getMaxScheduleNO() throws Exception;
+	public Object getMaxScheduleNO() throws Exception;
 	
 	public boolean modifySchedule(ScheduleVO scheduleVO) throws Exception;
 
