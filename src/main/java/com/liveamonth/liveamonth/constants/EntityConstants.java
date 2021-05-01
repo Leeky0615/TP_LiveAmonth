@@ -219,4 +219,14 @@ public class EntityConstants {
             return label;
         }
     }
+    public enum EPage {
+        DISPLAY_PAGE("displayPage");
+        private String text;
+        private EPage(String text) {
+            this.text = text;
+        }
+        public String getText() {
+            return text;
+        }
+    }
 }

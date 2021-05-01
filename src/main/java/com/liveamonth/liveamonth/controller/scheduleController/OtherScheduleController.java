@@ -34,6 +34,7 @@ import static com.liveamonth.liveamonth.constants.LogicConstants.EAlertMessage.*
 import static com.liveamonth.liveamonth.constants.LogicConstants.EAlertMessage.FAIL_TO_DELETE_SCHEDULEREPLY;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleAttributes.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleAttributes.MESSAGE;
+import static com.liveamonth.liveamonth.constants.LogicConstants.EPaging.*;
 
 @Controller
 public class OtherScheduleController {
@@ -79,8 +80,8 @@ public class OtherScheduleController {
         CalendarDTO calendarDto = scheduleService.showCalendar(calendarDTO, scheduleNO);
 
         int page = 1;
-        if(request.getParameter("page") != null){
-            page = Integer.parseInt(request.getParameter("page"));
+        if(request.getParameter(SELECTED_PAGE.getText()) != null){
+            page = Integer.parseInt(request.getParameter(SELECTED_PAGE.getText()));
         }
         Paging paging = new Paging();
         paging.setPage(page);
@@ -90,12 +91,12 @@ public class OtherScheduleController {
             ScheduleLikeVO scheduleLikeVO = new ScheduleLikeVO();
             scheduleLikeVO.setScheduleNO(scheduleNO);
             scheduleLikeVO.setScheduleLikeUserNO(session_UserVO.getUserNO());
-            model.addAttribute("likeStatus", scheduleService.getScheduleLikeStatus(scheduleLikeVO));
+            model.addAttribute(LIKE_STATUS.getText(), scheduleService.getScheduleLikeStatus(scheduleLikeVO));
         }
 
-        model.addAttribute("likeCount", scheduleService.getScheduleLikeCount(scheduleNO));
+        model.addAttribute(LIKE_COUNT.getText(), scheduleService.getScheduleLikeCount(scheduleNO));
         model.addAttribute(SCHEDULEREPLY_VO_LIST.getText(), scheduleService.getScheduleReplyList(scheduleNO, page));
-        model.addAttribute("paging", paging);
+        model.addAttribute(PAIGING.getText(), paging);
         model.addAttribute(SCHEDULE_NO.getText(), scheduleNO);
         model.addAttribute(DATE_LIST.getText(), calendarDto.getDateList()); //날짜 데이터 배열
         model.addAttribute(TODAY_INFORMATION.getText(), calendarDto.getTodayInformation());
@@ -108,6 +109,8 @@ public class OtherScheduleController {
         HttpSession session = request.getSession();
         UserVO session_UserVO = (UserVO)session.getAttribute(USER_VO.getText());
         int userNO = session_UserVO.getUserNO();
+
+        System.out.println("dd : "+scheduleReplyVO.getScheduleReplyDate());
 
         String message = "";
         if(scheduleService.addScheduleReplyVO(scheduleReplyVO, userNO)) {

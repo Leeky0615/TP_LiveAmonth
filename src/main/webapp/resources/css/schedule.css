@@ -140,7 +140,11 @@
 	font-size:2em;
 }
 
-#likeCount{
+.likeSpan{
 	font-size:2em;
 	color:#00C89E;
+}
+
+.likeDiv{
+	margin-bottom:100px;
 }

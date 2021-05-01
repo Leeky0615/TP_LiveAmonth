@@ -1,20 +1,23 @@
 package com.liveamonth.liveamonth.model.service.scheduleService;
 
+
+import com.liveamonth.liveamonth.entity.dto.CalendarDTO;
+import com.liveamonth.liveamonth.entity.vo.ScheduleContentVO;
+import com.liveamonth.liveamonth.entity.vo.ScheduleLikeVO;
+import com.liveamonth.liveamonth.entity.vo.ScheduleReplyVO;
+import com.liveamonth.liveamonth.entity.vo.ScheduleVO;
+import com.liveamonth.liveamonth.model.mapper.scheduleMapper.ScheduleMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
-import com.liveamonth.liveamonth.entity.vo.ScheduleLikeVO;
-import com.liveamonth.liveamonth.entity.vo.ScheduleReplyVO;
-import com.liveamonth.liveamonth.entity.vo.ScheduleVO;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.liveamonth.liveamonth.entity.dto.CalendarDTO;
-import com.liveamonth.liveamonth.entity.vo.ScheduleContentVO;
-import com.liveamonth.liveamonth.model.mapper.scheduleMapper.ScheduleMapper;
-
+import static com.liveamonth.liveamonth.constants.EntityConstants.EPage.DISPLAY_PAGE;
+import static com.liveamonth.liveamonth.constants.EntityConstants.ESchedule.SCHEDULE_NO;
+import static com.liveamonth.liveamonth.constants.LogicConstants.EPaging.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleStaticInt.*;
 
 
@@ -250,8 +253,10 @@ public class ScheduleServiceImpl implements ScheduleService {
 	public ArrayList<HashMap<String, Object>> getScheduleReplyList(int scheduleNO, int page) throws Exception {
         int startNum = (page-1)*15;
         HashMap<String, Integer> scheduleNOAndPage = new HashMap<String, Integer>();
-        scheduleNOAndPage.put("scheduleNO", scheduleNO);
-        scheduleNOAndPage.put("startNO", startNum);
+        scheduleNOAndPage.put(SCHEDULE_NO.getText(), scheduleNO);
+        scheduleNOAndPage.put(START_NO.getText(), startNum);
+        scheduleNOAndPage.put(DISPLAY_PAGE.getText(), STATIC_DISPLAY_PAGE_NUM.getText());
+
         return scheduleMapper.getScheduleReplyList(scheduleNOAndPage);
     }
 
@@ -305,14 +310,14 @@ public class ScheduleServiceImpl implements ScheduleService {
         int likeStatus = getScheduleLikeStatus(scheduleLikeVO);
         if(likeStatus == 0){
            if(scheduleMapper.addScheduleLike(scheduleLikeVO)){
-               like.put("likeStatus", 1);
-               like.put("likeCount", getScheduleLikeCount(scheduleLikeVO.getScheduleNO()));
+               like.put(LIKE_STATUS.getText(), 1);
+               like.put(LIKE_COUNT.getText(), getScheduleLikeCount(scheduleLikeVO.getScheduleNO()));
                return like;
            }
         } else if(likeStatus == 1){
             if(scheduleMapper.deleteScheduleLike(scheduleLikeVO)){
-                like.put("likeStatus", 0);
-                like.put("likeCount", getScheduleLikeCount(scheduleLikeVO.getScheduleNO()));
+                like.put(LIKE_STATUS.getText(), 0);
+                like.put(LIKE_COUNT.getText(), getScheduleLikeCount(scheduleLikeVO.getScheduleNO()));
                 return like;
             }
         }

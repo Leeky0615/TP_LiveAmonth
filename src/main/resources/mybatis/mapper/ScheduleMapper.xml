@@ -91,7 +91,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			(select IF(scheduleReplyRefNO >= 0, scheduleReplyRefNO, scheduleReplyNO) as sortScheduleReplyNO, scheduleReply.*, userNickName
 				from scheduleReply, user where scheduleReply.userNO = user.userNO AND scheduleNO= #{scheduleNO} order by sortScheduleReplyNO, scheduleReplyNO) sortScheduleReply,
 		   	(select @rownum:=#{startNO})TMP
-		limit #{startNO}, 15;
+		limit #{startNO}, #{displayPage};
 	</select>
 
 	<select id="getMaxScheduleReplyNO" resultType="int">
