@@ -31,165 +31,229 @@
    <script src="resources/js/reply.js"></script>
    <script src="resources/js/board.js"></script>
 
+   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
    <script type="text/javaScript" language="javascript"></script>
+
+   <script>
+      $(function(){
+         // 추천버튼 클릭시(추천 추가 또는 추천 제거)
+         $("#rec_update").click(function(){
+            $.ajax({
+               url: "/expro/RecUpdate.do",
+               type: "POST",
+               data: {
+                  no: ${content.board_no},
+                  id: '${id}'
+               },
+               success: function () {
+                  recCount();
+               },
+            })
+         })
+
+         // 게시글 추천수
+         function recCount() {
+            $.ajax({
+               url: "/expro/RecCount.do",
+               type: "POST",
+               data: {
+                  no: ${content.board_no}
+               },
+               success: function (count) {
+                  $(".rec_count").html(count);
+               },
+            })
+         };
+         recCount(); // 처음 시작했을 때 실행되도록 해당 함수 호출
+
+         // 로그인 클릭
+         $("#newLogin").click(function(){
+            var ww=400;    //띄울 창의 넓이
+            var wh=250;    //띄울 창의 높이
+
+            // 중앙 좌표
+            var top=(screen.availHeight-wh)/2;
+            var left=(screen.availWidth-ww)/2;
+            // 새창 띄움
+            window.open("/expro/NewLoginForm.do", "window", "width="+ww+", height="+wh+", top="+top+", left="+left+", toolbar=no, menubar=no, scrollbars=no, resizable=no");
+         });
+      })
+   </script>
 
 </head>
 <body style="background:#ffffff">
 <jsp:include page="/incl/Header.jsp" />
 
-<form name="calendarFrm" id="calendarFrm" action="schedule"
-      method="GET">
-   <input type="hidden" name="year" value="${todayInformation.searchYear}" />
-   <input type="hidden" name="month" value="${todayInformation.searchMonth-1}" />
-   <script>
-      var message = "${message}";
-      console.log(message);
-      if (message != "") {
-         alert(message);
-      }
-   </script>
-   <div class="calendar">
+   <form name="calendarFrm" id="calendarFrm" action="schedule"
+         method="GET">
+      <input type="hidden" name="year" value="${todayInformation.searchYear}" />
+      <input type="hidden" name="month" value="${todayInformation.searchMonth-1}" />
+      <script>
+         var message = "${message}";
+         console.log(message);
+         if (message != "") {
+            alert(message);
+         }
+      </script>
+      <div class="calendar">
 
-      <!--날짜 네비게이션  -->
-      <div class="navigation">
+         <!--날짜 네비게이션  -->
+         <div class="navigation">
 
-         <a class="before_after_year"
-            href="./schedule?year=${todayInformation.searchYear-1}&month=${todayInformation.searchMonth-1}">
-            &lt;&lt; <!-- 이전해 -->
-         </a>
-         <a class="before_after_month"
-            href="./schedule?year=${todayInformation.beforeYear}&month=${todayInformation.beforeMonth}">
-            &lt; <!-- 이전달 -->
-         </a>
-         <span class="this_month"> &nbsp;${todayInformation.searchYear}. <c:if
-                 test="${todayInformation.searchMonth<10}">0</c:if>${todayInformation.searchMonth}
-            </span>
-         <a class="before_after_month"
-            href="/schedule?year=${todayInformation.afterYear}&month=${todayInformation.afterMonth}">
-            <!-- 다음달 --> &gt;
-         </a>
-         <a class="before_after_year"
-            href="/schedule?year=${todayInformation.searchYear+1}&month=${todayInformation.searchMonth-1}">
-            <!-- 다음해 --> &gt;&gt;
-         </a>
-         <span>
-            <div>
-         </div>
-         </span>
-      </div>
-
-      <table class="calendar_body">
-
-         <thead>
-         <tr bgcolor="#CECECE">
-            <td class="day sun">일</td>
-            <td class="day">월</td>
-            <td class="day">화</td>
-            <td class="day">수</td>
-            <td class="day">목</td>
-            <td class="day">금</td>
-            <td class="day sat">토</td>
-         </tr>
-         </thead>
-         <tbody>
-         <tr>
-            <c:forEach var="dateList" items="${dateList}"
-                       varStatus="dateStatus">
-            <c:choose>
-            <c:when test="${dateList.value=='today'}">
-            <c:if test="${dateStatus.index%7==0}">
-         <tr>
-            </c:if>
-            <td class="today">
-               <div class="date"></div>
-               </c:when>
-               <c:when test="${dateStatus.index%7==6}">
-            <td class="sat_day">
-               <div class="sat"></div>
-               </c:when>
-               <c:when test="${dateStatus.index%7==0}">
-         </tr>
-         <tr>
-            <td class="sun_day">
-               <div class="sun">
-                  </c:when>
-                  <c:otherwise>
-            <td class="normal_day">
-               <div class="date"></div>
-               </c:otherwise>
-               </c:choose>
-                  ${dateList.date}
-   </div>
-   <div>
-
-      <c:forEach var="scheduleList"
-                 items="${dateList.scheduleDataArray}"
-                 varStatus="scheduleDataArrayStatus">
-         <div class="hoverScheduleSubject">
-            <a href="#" data-toggle="modal"
-               data-target="#showScheduleContentModal"
-               onclick="showScheduleContentList('${scheduleList.scheduleContentNO}','${scheduleList.scheduleContentSubject}','${scheduleList.scheduleContentDate}',
-                       '${scheduleList.scheduleContentDesc}','${scheduleList.scheduleContentCost}')">
-                                 <span class="thick">
-                                       ${scheduleList.scheduleContentSubject} </span>
+            <a class="before_after_year"
+               href="./schedule?year=${todayInformation.searchYear-1}&month=${todayInformation.searchMonth-1}">
+               &lt;&lt; <!-- 이전해 -->
             </a>
+            <a class="before_after_month"
+               href="./schedule?year=${todayInformation.beforeYear}&month=${todayInformation.beforeMonth}">
+               &lt; <!-- 이전달 -->
+            </a>
+            <span class="this_month"> &nbsp;${todayInformation.searchYear}. <c:if
+                    test="${todayInformation.searchMonth<10}">0</c:if>${todayInformation.searchMonth}
+               </span>
+            <a class="before_after_month"
+               href="/schedule?year=${todayInformation.afterYear}&month=${todayInformation.afterMonth}">
+               <!-- 다음달 --> &gt;
+            </a>
+            <a class="before_after_year"
+               href="/schedule?year=${todayInformation.searchYear+1}&month=${todayInformation.searchMonth-1}">
+               <!-- 다음해 --> &gt;&gt;
+            </a>
+            <span>
+               <div>
+            </div>
+            </span>
          </div>
 
+         <table class="calendar_body">
+
+            <thead>
+            <tr bgcolor="#CECECE">
+               <td class="day sun">일</td>
+               <td class="day">월</td>
+               <td class="day">화</td>
+               <td class="day">수</td>
+               <td class="day">목</td>
+               <td class="day">금</td>
+               <td class="day sat">토</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+               <c:forEach var="dateList" items="${dateList}"
+                          varStatus="dateStatus">
+               <c:choose>
+               <c:when test="${dateList.value=='today'}">
+               <c:if test="${dateStatus.index%7==0}">
+            <tr>
+               </c:if>
+               <td class="today">
+                  <div class="date"></div>
+                  </c:when>
+                  <c:when test="${dateStatus.index%7==6}">
+               <td class="sat_day">
+                  <div class="sat"></div>
+                  </c:when>
+                  <c:when test="${dateStatus.index%7==0}">
+            </tr>
+            <tr>
+               <td class="sun_day">
+                  <div class="sun">
+                     </c:when>
+                     <c:otherwise>
+               <td class="normal_day">
+                  <div class="date"></div>
+                  </c:otherwise>
+                  </c:choose>
+                     ${dateList.date}
+      </div>
+      <div>
+
+         <c:forEach var="scheduleList"
+                    items="${dateList.scheduleDataArray}"
+                    varStatus="scheduleDataArrayStatus">
+            <div class="hoverScheduleSubject">
+               <a href="#" data-toggle="modal"
+                  data-target="#showScheduleContentModal"
+                  onclick="showScheduleContentList('${scheduleList.scheduleContentNO}','${scheduleList.scheduleContentSubject}','${scheduleList.scheduleContentDate}',
+                          '${scheduleList.scheduleContentDesc}','${scheduleList.scheduleContentCost}')">
+                                    <span class="thick">
+                                          ${scheduleList.scheduleContentSubject} </span>
+               </a>
+            </div>
+
+         </c:forEach>
+      </div>
+      </td>
       </c:forEach>
-   </div>
-   </td>
-   </c:forEach>
-   </tbody>
+      </tbody>
 
-   </table>
-   </div>
+      </table>
+      </div>
 
-</form>
+   </form>
 
-<div class="modal fade" id="showScheduleContentModal" role="dialog"
-     aria-labelledby="showScheduleLabel" aria-hidden="true">
-   <div class="modal-dialog" role="document">
-      <div class="modal-content">
-         <div class="modal-header">
-            <h5 class="modal-title" id="showScheduleLabel">스케줄</h5>
-            <button type="button" class="close" data-dismiss="modal" onclick="resetAddScheduleContentButton()"
-                    aria-label="Close">
-               <span aria-hidden="true">&times;</span>
-            </button>
-         </div>
-         <div class="modal-body">
-
-            <div class="info"></div>
-            <form name="deleteScheduleContent" action="deleteScheduleContent">
-               <input type="hidden" name="year" value="${todayInformation.searchYear}" /> <input type="hidden" name="month"
-                                                                                                 value="${todayInformation.searchMonth-1}" />
-               <div class="contents">
-                  <p class="scheduleContentSubject">
-                     <span class="scheduleContentSubjectMessage"></span>
-                  </p>
-                  <p class="scheduleContentDesc">
-                     <span class="scheduleContentDescMessage"></span>
-                  </p>
-                  <p class="scheduleContentCost">
-                     <span class="scheduleContentCostMessage"></span>
-                  </p>
-
-                  <div>
-                  </div>
-
+      <div class="modal fade" id="showScheduleContentModal" role="dialog"
+           aria-labelledby="showScheduleLabel" aria-hidden="true">
+         <div class="modal-dialog" role="document">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title" id="showScheduleLabel">스케줄</h5>
+                  <button type="button" class="close" data-dismiss="modal" onclick="resetAddScheduleContentButton()"
+                          aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                  </button>
                </div>
-            </form>
+               <div class="modal-body">
+
+                  <div class="info"></div>
+                  <form name="deleteScheduleContent" action="deleteScheduleContent">
+                     <input type="hidden" name="year" value="${todayInformation.searchYear}" /> <input type="hidden" name="month"
+                                                                                                       value="${todayInformation.searchMonth-1}" />
+                     <div class="contents">
+                        <p class="scheduleContentSubject">
+                           <span class="scheduleContentSubjectMessage"></span>
+                        </p>
+                        <p class="scheduleContentDesc">
+                           <span class="scheduleContentDescMessage"></span>
+                        </p>
+                        <p class="scheduleContentCost">
+                           <span class="scheduleContentCostMessage"></span>
+                        </p>
+
+                        <div>
+                        </div>
+
+                     </div>
+                  </form>
+               </div>
+            </div>
          </div>
       </div>
-   </div>
-</div>
 
+   <div class="container bootdey" style="margin-bottom:100px;">
+      <a href="#" class="heart-icon" onclick="updateScheduleLike(); return false; ">
+         <c:choose>
+            <c:when test="${likeStatus == 1}">
+               <span id = "like" class="icon_heart dis-none"></span>
+            </c:when>
+            <c:otherwise>
+               <span id = "like" class="icon_heart_alt"></span>
+            </c:otherwise>
+         </c:choose>
+      </a>
+      <span id = "likeCount"> &nbsp;${likeCount} </span>
+   </div>
+
+<%--      <a href="#" class="heart-icon"><span class="icon_heart dis-none"></span></a>--%>
       <div class="container bootdey">
          <div class="col-lg-7">
             <div class="section-title">
                <h4>Comments</h4>
                <input type = "hidden" id = "userNO" name = "userNO" value="${userVO.userNO}"/>
                <input type = "hidden" id = "selectedScheduleNO" name = "selectedScheduleNO" value="${scheduleNO}"/>
+               <input type = "hidden" id = "likeStatus" name = "likeStatus" value="${likeStatus}"/>
             </div>
          </div>
          <div class="col-md-12 bootstrap snippets">

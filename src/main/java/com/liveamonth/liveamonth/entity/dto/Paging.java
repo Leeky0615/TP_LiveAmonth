@@ -51,10 +51,8 @@ public class Paging {
     }
     private void paging(){
         endPage = ((int)Math.ceil(page/(double)displayPage))*displayPage;
-        System.out.println("endPage : " + endPage);
 
         beginPage = endPage - (displayPage - 1);
-        System.out.println("beginPage : " + beginPage);
 
         int totalPage = (int)Math.ceil(totalCount/(double)displayRow);
 
@@ -65,8 +63,6 @@ public class Paging {
             next = true;
         }
         prev = (beginPage==1)?false:true;
-        System.out.println("endPage : " + endPage);
-        System.out.println("totalPage : " + totalPage);
 
     }
 }

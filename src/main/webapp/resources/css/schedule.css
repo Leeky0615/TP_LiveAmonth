@@ -43,7 +43,7 @@
 			width:100%;
 			background-color: #FFFFFF;
 			border:1px solid white;
-			margin-bottom: 180px;
+			margin-bottom: 60px;
 			border-collapse: collapse;
 		}
 		.calendar_body .today{
@@ -134,4 +134,13 @@
 .hoverScheduleSubject2 a, .hoverScheduleSubject2 a:before {
   -webkit-transition: all 0.2s ease;
           transition: all 0.2s ease;
+}
+
+#like{
+	font-size:2em;
+}
+
+#likeCount{
+	font-size:2em;
+	color:#00C89E;
 }

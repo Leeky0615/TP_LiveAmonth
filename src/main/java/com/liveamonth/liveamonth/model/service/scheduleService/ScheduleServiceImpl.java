@@ -5,11 +5,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-
-import com.liveamonth.liveamonth.constants.LogicConstants;
+import com.liveamonth.liveamonth.entity.vo.ScheduleLikeVO;
 import com.liveamonth.liveamonth.entity.vo.ScheduleReplyVO;
 import com.liveamonth.liveamonth.entity.vo.ScheduleVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -291,5 +287,35 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public int getScheduleReplyCount(int scheduleNO) throws Exception {
         return scheduleMapper.getScheduleReplyCount(scheduleNO);
+    }
+
+    @Override
+    public int getScheduleLikeStatus(ScheduleLikeVO scheduleLikeVO) throws Exception {
+        return scheduleMapper.getScheduleLikeStatus(scheduleLikeVO);
+    }
+
+    @Override
+    public int getScheduleLikeCount(int scheduleNO) throws Exception {
+        return scheduleMapper.getScheduleLikeCount(scheduleNO);
+    }
+
+    @Override
+    public HashMap<String, Integer> getScheduleLikeAndCount(ScheduleLikeVO scheduleLikeVO) throws Exception {
+        HashMap<String, Integer> like = new HashMap<>();
+        int likeStatus = getScheduleLikeStatus(scheduleLikeVO);
+        if(likeStatus == 0){
+           if(scheduleMapper.addScheduleLike(scheduleLikeVO)){
+               like.put("likeStatus", 1);
+               like.put("likeCount", getScheduleLikeCount(scheduleLikeVO.getScheduleNO()));
+               return like;
+           }
+        } else if(likeStatus == 1){
+            if(scheduleMapper.deleteScheduleLike(scheduleLikeVO)){
+                like.put("likeStatus", 0);
+                like.put("likeCount", getScheduleLikeCount(scheduleLikeVO.getScheduleNO()));
+                return like;
+            }
+        }
+        return like;
     }
 }

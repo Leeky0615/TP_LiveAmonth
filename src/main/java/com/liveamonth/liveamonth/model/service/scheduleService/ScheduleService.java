@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.liveamonth.liveamonth.entity.dto.CalendarDTO;
 import com.liveamonth.liveamonth.entity.vo.ScheduleContentVO;
+import com.liveamonth.liveamonth.entity.vo.ScheduleLikeVO;
 import com.liveamonth.liveamonth.entity.vo.ScheduleReplyVO;
 import com.liveamonth.liveamonth.entity.vo.ScheduleVO;
 
@@ -42,4 +43,10 @@ public interface ScheduleService {
     public boolean modifyScheduleReply(ScheduleReplyVO scheduleReplyVO)throws Exception;
 
     public int getScheduleReplyCount(int scheduleNO) throws Exception;
+
+    public int getScheduleLikeStatus(ScheduleLikeVO scheduleLikeVO) throws Exception;
+
+    public int getScheduleLikeCount(int scheduleNO) throws Exception;
+
+    public HashMap<String, Integer> getScheduleLikeAndCount(ScheduleLikeVO scheduleLikeVO) throws Exception;
 }

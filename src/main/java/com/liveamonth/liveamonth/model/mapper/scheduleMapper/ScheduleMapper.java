@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.liveamonth.liveamonth.entity.vo.ScheduleLikeVO;
 import com.liveamonth.liveamonth.entity.vo.ScheduleReplyVO;
 import com.liveamonth.liveamonth.entity.vo.ScheduleVO;
 import org.apache.ibatis.annotations.Mapper;
@@ -50,4 +51,12 @@ public interface ScheduleMapper {
     public boolean modifyScheduleReply(ScheduleReplyVO scheduleReplyVO) throws Exception;
 
     public int getScheduleReplyCount(int scheduleNO) throws Exception;
+
+    public int getScheduleLikeStatus(ScheduleLikeVO scheduleLikeVO) throws Exception;
+
+    public int getScheduleLikeCount(int scheduleNO)throws Exception;
+
+    public boolean addScheduleLike(ScheduleLikeVO scheduleLikeVO)throws Exception;
+
+    public boolean deleteScheduleLike(ScheduleLikeVO scheduleLikeVO)throws Exception;
 }

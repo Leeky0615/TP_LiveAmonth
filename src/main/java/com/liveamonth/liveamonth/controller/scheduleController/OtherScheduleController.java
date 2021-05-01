@@ -4,6 +4,7 @@ import com.liveamonth.liveamonth.constants.EntityConstants;
 import com.liveamonth.liveamonth.constants.LogicConstants;
 import com.liveamonth.liveamonth.entity.dto.CalendarDTO;
 import com.liveamonth.liveamonth.entity.dto.Paging;
+import com.liveamonth.liveamonth.entity.vo.ScheduleLikeVO;
 import com.liveamonth.liveamonth.entity.vo.ScheduleReplyVO;
 import com.liveamonth.liveamonth.entity.vo.ScheduleVO;
 import com.liveamonth.liveamonth.entity.vo.UserVO;
@@ -13,11 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -26,6 +28,7 @@ import static com.liveamonth.liveamonth.constants.ControllerPathConstants.ESched
 import static com.liveamonth.liveamonth.constants.EntityConstants.ESchedule.SCHEDULE_NO;
 import static com.liveamonth.liveamonth.constants.EntityConstants.ESchedule.SCHEDULE_VO_LIST;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EScheduleReply.SCHEDULE_REPLY_NO;
+import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.USER_NO;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.USER_VO;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EAlertMessage.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EAlertMessage.FAIL_TO_DELETE_SCHEDULEREPLY;
@@ -69,10 +72,11 @@ public class OtherScheduleController {
     }
     @RequestMapping("/otherSchedule")
     public String otherSchedule(Model model, HttpServletRequest request, CalendarDTO calendarDTO) throws Exception{
+        HttpSession session = request.getSession();
+        UserVO session_UserVO = (UserVO)session.getAttribute(USER_VO.getText());
         int scheduleNO = Integer.parseInt((String) request.getParameter(SCHEDULE_NO.getText()));
 
         CalendarDTO calendarDto = scheduleService.showCalendar(calendarDTO, scheduleNO);
-        int count = scheduleService.getScheduleReplyCount(scheduleNO);
 
         int page = 1;
         if(request.getParameter("page") != null){
@@ -80,9 +84,16 @@ public class OtherScheduleController {
         }
         Paging paging = new Paging();
         paging.setPage(page);
-        paging.setTotalCount(count);
+        paging.setTotalCount(scheduleService.getScheduleReplyCount(scheduleNO));
 
+        if(session_UserVO != null){
+            ScheduleLikeVO scheduleLikeVO = new ScheduleLikeVO();
+            scheduleLikeVO.setScheduleNO(scheduleNO);
+            scheduleLikeVO.setScheduleLikeUserNO(session_UserVO.getUserNO());
+            model.addAttribute("likeStatus", scheduleService.getScheduleLikeStatus(scheduleLikeVO));
+        }
 
+        model.addAttribute("likeCount", scheduleService.getScheduleLikeCount(scheduleNO));
         model.addAttribute(SCHEDULEREPLY_VO_LIST.getText(), scheduleService.getScheduleReplyList(scheduleNO, page));
         model.addAttribute("paging", paging);
         model.addAttribute(SCHEDULE_NO.getText(), scheduleNO);
@@ -143,5 +154,16 @@ public class OtherScheduleController {
         rttr.addAttribute(SCHEDULE_NO.getText(), scheduleReplyVO.getScheduleNO());
 
         return REDIRECT_OTHER_SCHEDULE.getRedirectPath();
+    }
+    @ResponseBody
+    @RequestMapping(value = "/updateScheduleLike", method = RequestMethod.GET)
+    public HashMap<String, Integer> getScheduleLikeAndCount(HttpServletRequest request) throws Exception{
+        int scheduleNO = Integer.parseInt(String.valueOf(request.getParameter(SCHEDULE_NO.getText())));
+        int userNO = Integer.parseInt(String.valueOf(request.getParameter(USER_NO.getText())));
+        ScheduleLikeVO scheduleLikeVO = new ScheduleLikeVO();
+        scheduleLikeVO.setScheduleNO(scheduleNO);
+        scheduleLikeVO.setScheduleLikeUserNO(userNO);
+
+        return scheduleService.getScheduleLikeAndCount(scheduleLikeVO);
     }
 }

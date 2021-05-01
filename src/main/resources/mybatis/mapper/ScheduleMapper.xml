@@ -102,6 +102,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select count(scheduleReplyNO) as count from scheduleReply;
 	</select>
 
+	<select id="getScheduleLikeStatus" parameterType="com.liveamonth.liveamonth.entity.vo.ScheduleLikeVO" resultType="int">
+		select EXISTS (select * from scheduleLike where scheduleNO = #{scheduleNO} and scheduleLikeUserNO =  #{scheduleLikeUserNO}) as success;
+	</select>
+
+	<select id ="getScheduleLikeCount" parameterType="int" resultType="int">
+		select count(scheduleNO) as count from scheduleLike where scheduleNO = #{scheduleNO};
+	</select>
+
 	<!-- delete -->
 	<delete id="deleteScheduleContent" parameterType="int">
 		delete from scheduleContent where scheduleContentNO = #{scheduleContentNO}
@@ -113,6 +121,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<delete id="deleteScheduleReply" parameterType="int">
 		delete from scheduleReply where scheduleReplyNO = #{scheduleReplyNO}
+	</delete>
+
+	<delete id="deleteScheduleLike" parameterType="com.liveamonth.liveamonth.entity.vo.ScheduleLikeVO">
+		delete from scheduleLike where scheduleNO = #{scheduleNO} AND scheduleLikeUserNO = #{scheduleLikeUserNO};
 	</delete>
 
 	<!-- insert -->
@@ -136,6 +148,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			</otherwise>
 		</choose>
 		, #{userNO}, #{scheduleNO})
+	</insert>
+
+	<insert id="addScheduleLike" parameterType="com.liveamonth.liveamonth.entity.vo.ScheduleLikeVO">
+		insert into scheduleLike values (#{scheduleNO}, #{scheduleLikeUserNO})
 	</insert>
 
 	<!-- update -->
