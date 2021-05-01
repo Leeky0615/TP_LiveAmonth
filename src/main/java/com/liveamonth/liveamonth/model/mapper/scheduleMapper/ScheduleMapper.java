@@ -39,11 +39,15 @@ public interface ScheduleMapper {
 
 	public boolean deleteSchedule(int scheduleNO) throws Exception;
 
-	public ArrayList<HashMap<String, Object>> getScheduleReplyList(int scheduleNO) throws Exception;
+    public ArrayList<HashMap<String, Object>> getScheduleReplyList(HashMap<String, Integer> scheduleNOAndPage) throws Exception;
 
     public Object getMaxScheduleReplyNO() throws Exception;
 
     public boolean addScheduleReplyVO(ScheduleReplyVO scheduleReplyVO) throws Exception;
 
     public boolean deleteScheduleReply(int scheduleReplyNO) throws Exception;
+
+    public boolean modifyScheduleReply(ScheduleReplyVO scheduleReplyVO) throws Exception;
+
+    public int getScheduleReplyCount(int scheduleNO) throws Exception;
 }

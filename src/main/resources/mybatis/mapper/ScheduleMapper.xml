@@ -69,7 +69,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<resultMap type = "java.util.HashMap" id="scheduleReplyAndNickname">
-		<id column="scheduleReplyNO" property="scheduleReplyNO"/>
+		<id column="NO" property="NO"/>
 		<result column="userNickname" property="userNickname"/>
 		<association property="scheduleReply" javaType="com.liveamonth.liveamonth.entity.vo.ScheduleReplyVO">
 			<id column="scheduleReplyNO" property="scheduleReplyNO"/>
@@ -81,12 +81,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</association>
 	</resultMap>
 
-	<select id="getScheduleReplyList" parameterType="int" resultMap="scheduleReplyAndNickname">
-		select scheduleReplyNO, scheduleReplyDesc, scheduleReplyDate, scheduleReplyRefNO, scheduleReply.userNO, scheduleNO, userNickname  from user, scheduleReply where scheduleReply.userNO = user.userNO AND scheduleReply.scheduleNO = #{scheduleNO};
+<!--	<select id="getScheduleReplyList" parameterType="java.util.HashMap" resultMap="scheduleReplyAndNickname">-->
+<!--		select scheduleReplyNO, scheduleReplyDesc, scheduleReplyDate, scheduleReplyRefNO, scheduleReply.userNO, scheduleNO, userNickname-->
+<!--		from user, scheduleReply where scheduleReply.userNO = user.userNO AND scheduleReply.scheduleNO = #{scheduleNO};-->
+<!--	</select>-->
+
+	<select id="getScheduleReplyList" parameterType="java.util.HashMap" resultMap="scheduleReplyAndNickname">
+		select @rownum:=@rownum+1 as NO, sortScheduleReply.* from
+			(select IF(scheduleReplyRefNO >= 0, scheduleReplyRefNO, scheduleReplyNO) as sortScheduleReplyNO, scheduleReply.*, userNickName
+				from scheduleReply, user where scheduleReply.userNO = user.userNO AND scheduleNO= #{scheduleNO} order by sortScheduleReplyNO, scheduleReplyNO) sortScheduleReply,
+		   	(select @rownum:=#{startNO})TMP
+		limit #{startNO}, 15;
 	</select>
 
 	<select id="getMaxScheduleReplyNO" resultType="int">
 		select max(scheduleReplyNO) from scheduleReply;
+	</select>
+
+	<select id="getScheduleReplyCount" resultType="int">
+		select count(scheduleReplyNO) as count from scheduleReply;
 	</select>
 
 	<!-- delete -->
@@ -136,5 +149,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<update id="modifySchedule" parameterType="com.liveamonth.liveamonth.entity.vo.ScheduleVO">
 		update schedule set scheduleSubject = #{scheduleSubject}, scheduleStatus = #{scheduleStatus}, schedulePlace = #{schedulePlace} where scheduleNO = #{scheduleNO}
+	</update>
+
+	<update id="modifyScheduleReply" parameterType="com.liveamonth.liveamonth.entity.vo.ScheduleReplyVO">
+		update scheduleReply set scheduleReplyDesc = #{scheduleReplyDesc} where scheduleReplyNO = #{scheduleReplyNO}
 	</update>
 </mapper>

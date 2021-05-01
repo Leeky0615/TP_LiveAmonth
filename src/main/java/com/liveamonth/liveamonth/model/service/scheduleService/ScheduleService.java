@@ -33,9 +33,13 @@ public interface ScheduleService {
 	
 	public  List<ScheduleVO> getOtherScheduleList(int sex, int age, String place, String orderBy) throws Exception;
 
-    public List<HashMap<String, Object>> getScheduleReplyList(int scheduleNO) throws Exception;
+    public ArrayList<HashMap<String, Object>> getScheduleReplyList(int scheduleNO, int page) throws Exception;
 
     public boolean addScheduleReplyVO(ScheduleReplyVO scheduleReplyVO, int userNO) throws Exception;
 
     public boolean deleteScheduleReply(int scheduleReplyNO) throws Exception;
+
+    public boolean modifyScheduleReply(ScheduleReplyVO scheduleReplyVO)throws Exception;
+
+    public int getScheduleReplyCount(int scheduleNO) throws Exception;
 }

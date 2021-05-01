@@ -22,6 +22,16 @@
         addScheduleReplyForm.submit();
     }
 
+    function modifyScheduleReply(scheduleReplyNO){
+        var modifyScheduleReplyForm = document.getElementById("modifyScheduleReply"+scheduleReplyNO);
+        if (modifyScheduleReplyForm.scheduleReplyDesc.value == "" || modifyScheduleReplyForm.scheduleReplyDesc.value == null) {
+            alert("내용을 입력하여 주세요.");
+            modifyScheduleReplyForm.scheduleReplyDesc.focus();
+            return false;
+        }
+        modifyScheduleReplyForm.submit();
+    }
+
     function showModifyScheduleReplyDesc(scheduleReplyNO){
         var modifyScheduleForm = document.getElementById("modifyScheduleReplyDesc"+scheduleReplyNO);
         var scheduleP = document.getElementById("scheduleReplyDesc"+scheduleReplyNO);

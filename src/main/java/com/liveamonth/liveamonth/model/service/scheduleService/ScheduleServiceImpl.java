@@ -251,8 +251,12 @@ public class ScheduleServiceImpl implements ScheduleService {
 	}
 
     @Override
-	public ArrayList<HashMap<String, Object>> getScheduleReplyList(int scheduleNO) throws Exception {
-        return scheduleMapper.getScheduleReplyList(scheduleNO);
+	public ArrayList<HashMap<String, Object>> getScheduleReplyList(int scheduleNO, int page) throws Exception {
+        int startNum = (page-1)*15;
+        HashMap<String, Integer> scheduleNOAndPage = new HashMap<String, Integer>();
+        scheduleNOAndPage.put("scheduleNO", scheduleNO);
+        scheduleNOAndPage.put("startNO", startNum);
+        return scheduleMapper.getScheduleReplyList(scheduleNOAndPage);
     }
 
     @Override
@@ -274,5 +278,18 @@ public class ScheduleServiceImpl implements ScheduleService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public boolean modifyScheduleReply(ScheduleReplyVO scheduleReplyVO) throws Exception {
+        if(scheduleMapper.modifyScheduleReply(scheduleReplyVO)){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public int getScheduleReplyCount(int scheduleNO) throws Exception {
+        return scheduleMapper.getScheduleReplyCount(scheduleNO);
     }
 }

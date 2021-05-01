@@ -3,6 +3,7 @@ package com.liveamonth.liveamonth.controller.scheduleController;
 import com.liveamonth.liveamonth.constants.EntityConstants;
 import com.liveamonth.liveamonth.constants.LogicConstants;
 import com.liveamonth.liveamonth.entity.dto.CalendarDTO;
+import com.liveamonth.liveamonth.entity.dto.Paging;
 import com.liveamonth.liveamonth.entity.vo.ScheduleReplyVO;
 import com.liveamonth.liveamonth.entity.vo.ScheduleVO;
 import com.liveamonth.liveamonth.entity.vo.UserVO;
@@ -16,6 +17,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static com.liveamonth.liveamonth.constants.ControllerPathConstants.ESchedulePath.*;
@@ -69,8 +72,19 @@ public class OtherScheduleController {
         int scheduleNO = Integer.parseInt((String) request.getParameter(SCHEDULE_NO.getText()));
 
         CalendarDTO calendarDto = scheduleService.showCalendar(calendarDTO, scheduleNO);
+        int count = scheduleService.getScheduleReplyCount(scheduleNO);
 
-        model.addAttribute(SCHEDULEREPLY_VO_LIST.getText(), scheduleService.getScheduleReplyList(scheduleNO));
+        int page = 1;
+        if(request.getParameter("page") != null){
+            page = Integer.parseInt(request.getParameter("page"));
+        }
+        Paging paging = new Paging();
+        paging.setPage(page);
+        paging.setTotalCount(count);
+
+
+        model.addAttribute(SCHEDULEREPLY_VO_LIST.getText(), scheduleService.getScheduleReplyList(scheduleNO, page));
+        model.addAttribute("paging", paging);
         model.addAttribute(SCHEDULE_NO.getText(), scheduleNO);
         model.addAttribute(DATE_LIST.getText(), calendarDto.getDateList()); //날짜 데이터 배열
         model.addAttribute(TODAY_INFORMATION.getText(), calendarDto.getTodayInformation());
@@ -111,6 +125,22 @@ public class OtherScheduleController {
 
         rttr.addFlashAttribute(MESSAGE.getText(), message);
         rttr.addAttribute(SCHEDULE_NO.getText(), scheduleNO);
+
+        return REDIRECT_OTHER_SCHEDULE.getRedirectPath();
+    }
+
+    @RequestMapping("modifyScheduleReply")
+    public String modifyScheduleReply(RedirectAttributes rttr, ScheduleReplyVO scheduleReplyVO) throws Exception{
+
+        String message = "";
+        if(scheduleService.modifyScheduleReply(scheduleReplyVO)) {
+            message = COMPLETE_SCHEDULEREPLY_MODIFICATION.getText();
+        } else {
+            message = FAIL_TO_MODIFY_SCHEDULEREPLY.getText();
+        }
+
+        rttr.addFlashAttribute(MESSAGE.getText(), message);
+        rttr.addAttribute(SCHEDULE_NO.getText(), scheduleReplyVO.getScheduleNO());
 
         return REDIRECT_OTHER_SCHEDULE.getRedirectPath();
     }

@@ -208,89 +208,133 @@
                   </div>
                </form>
             </div>
+
             <div class="panel">
                <div class="panel-body">
                   <c:forEach var="scheduleVOReply" items="${scheduleVOReplyList}">
-                     <c:if test = "${scheduleVOReply.scheduleReply.scheduleReplyRefNO == 0}">
+                     <c:if test = "${scheduleVOReply.scheduleReply.scheduleReplyRefNO == 0 || (scheduleVOReply.NO == scheduleVOReplyList[0].NO && scheduleVOReply.scheduleReply.scheduleReplyRefNO != 0)}">
                         <div class="media-block">
-                           <!-- 프로필 링크, 닉네임 링크 -->
                            <a class="media-left" href="#"><img class="img-circle img-sm" alt="Profile Picture" src="https://blog.kakaocdn.net/dn/c3vWTf/btqUuNfnDsf/VQMbJlQW4ywjeI8cUE91OK/img.jpg"></a>
                            <div class="media-body">
-                              <div class="mar-btm">
-                                 <a href="#" class="btn-link text-semibold media-heading box-inline"> ${scheduleVOReply.userNickname} </a>
-                                 <c:if test = "${userVO.userNO == scheduleVOReply.scheduleReply.userNO}">
-                                    <button id = "deleteReply" class="btn btn-sm btn-default btn-hover-primary" style="float: right;"
-                                            onclick="deleteScheduleReplyButton(${scheduleVOReply.scheduleReplyNO});" > 삭제 </button>
-                                    <button id = "modifyReply" class="btn btn-sm btn-default btn-hover-primary" style="float: right;"
-                                            onclick="showModifyScheduleReplyDesc(${scheduleVOReply.scheduleReplyNO});" > 수정 </button>
-                                 </c:if>
-                                 <p class="text-muted text-sm"> ${scheduleVOReply.scheduleReply.scheduleReplyDate} </p>
-                              </div>
-
-                              <p id = "scheduleReplyDesc${scheduleVOReply.scheduleReplyNO}" class = "scheduleReplyDesc">
-                                    ${scheduleVOReply.scheduleReply.scheduleReplyDesc}
-                              </p>
-
-                              <div id = "modifyScheduleReplyDesc${scheduleVOReply.scheduleReplyNO}" class = "modifyScheduleReplyDesc">
-                                 <form action="modifyScheduleReply">
-                                    <textarea name="scheduleReplyDesc" id="modifyScheduleReplyDescText" class="form-control" rows="2"
-                                              placeholder="의견을 남겨주세요.">${scheduleVOReply.scheduleReply.scheduleReplyDesc}</textarea>
-                                    <div class="mar-top clearfix">
-                                       <button type="button" class="btn btn-sm btn-primary pull-right" onclick="showModifyScheduleReplyDesc(${scheduleVOReply.scheduleReplyNO})" ><i class="fa fa-pencil fa-fw"></i> 취소 </button>
-                                       <button type="button" class="btn btn-sm btn-primary pull-right" style="margin-right: 5px;" onclick="" ><i class="fa fa-pencil fa-fw"></i> 수정 </button>
+                           <c:choose>
+                              <c:when test="${scheduleVOReply.scheduleReply.scheduleReplyRefNO == 0}">
+                                    <div class="mar-btm">
+                                       <a href="#" class="btn-link text-semibold media-heading box-inline"> ${scheduleVOReply.userNickname} </a>
+                                       <c:if test = "${userVO.userNO == scheduleVOReply.scheduleReply.userNO}">
+                                          <button id = "deleteReply" class="btn btn-sm btn-default btn-hover-primary" style="float: right;"
+                                                  onclick="deleteScheduleReplyButton(${scheduleVOReply.scheduleReply.scheduleReplyNO});" > 삭제 </button>
+                                          <button id = "modifyReply" class="btn btn-sm btn-default btn-hover-primary" style="float: right;"
+                                                  onclick="showModifyScheduleReplyDesc(${scheduleVOReply.scheduleReply.scheduleReplyNO});" > 수정 </button>
+                                       </c:if>
+                                       <p class="text-muted text-sm"> ${scheduleVOReply.scheduleReply.scheduleReplyDate} </p>
                                     </div>
-                                 </form>
-                              </div>
 
-                              <div class="pad-ver">
-                                 <button id = "replyButton" class="btn btn-sm btn-default btn-hover-primary"
-                                         onclick="showReplyDiv(${scheduleVOReply.scheduleReply.scheduleReplyNO});">Comment</button>
-                              </div>
-                              <hr>
+                                    <p id = "scheduleReplyDesc${scheduleVOReply.scheduleReply.scheduleReplyNO}" class = "scheduleReplyDesc">
+                                          ${scheduleVOReply.scheduleReply.scheduleReplyDesc}
+                                    </p>
 
-                              <div id = "replyDiv${scheduleVOReply.scheduleReply.scheduleReplyNO}" class="panel replyDiv">
-                                 <form id = "addScheduleReply${scheduleVOReply.scheduleReply.scheduleReplyNO}" action="addScheduleReply">
-                                    <div class="panel-body">
-                                       <textarea name="scheduleReplyDesc" id="scheduleReplyDesc" class="form-control" rows="4" placeholder="의견을 남겨주세요."></textarea>
-                                       <c:set var="today" value="<%=new java.util.Date()%>" />
-                                       <c:set var="date"><fmt:formatDate value="${today}" pattern="yyyy-MM-dd hh:mm:ss" /></c:set>
-                                       <input type="hidden" name="scheduleReplyDate" id="scheduleReplyDate" value="<c:out value="${date}" />" />
-                                       <input type="hidden" name="scheduleReplyRefNO" id="scheduleReplyRefNO" value="${scheduleVOReply.scheduleReply.scheduleReplyNO}" />
-                                       <input type="hidden" name="scheduleNO" id="scheduleNO" value="${scheduleNO}" />
-                                       <div class="mar-top clearfix">
-                                          <button type="button" class="btn btn-sm btn-primary pull-right" onclick="addScheduleReply(${scheduleVOReply.scheduleReply.scheduleReplyNO});" ><i class="fa fa-pencil fa-fw"></i> 등록 </button>
-                                       </div>
+                                    <div id = "modifyScheduleReplyDesc${scheduleVOReply.scheduleReply.scheduleReplyNO}" class = "modifyScheduleReplyDesc">
+                                       <form id = "modifyScheduleReply${scheduleVOReply.scheduleReply.scheduleReplyNO}" action="modifyScheduleReply">
+                                          <input type = "hidden" name = "scheduleReplyNO" id = "modifyScheduleReplyNO"  value="${scheduleVOReply.scheduleReply.scheduleReplyNO}"/>
+                                          <input type = "hidden" name = "scheduleNO" id = "modifyScheduleNO"  value="${scheduleNO}"/>
+                                          <textarea name="scheduleReplyDesc" id="modifyScheduleReplyDescText" class="form-control" rows="2"
+                                                    placeholder="의견을 남겨주세요.">${scheduleVOReply.scheduleReply.scheduleReplyDesc}</textarea>
+                                          <div class="mar-top clearfix">
+                                             <button type="button" class="btn btn-sm btn-primary pull-right" onclick="showModifyScheduleReplyDesc(${scheduleVOReply.scheduleReply.scheduleReplyNO})" ><i class="fa fa-pencil fa-fw"></i> 취소 </button>
+                                             <button type="button" class="btn btn-sm btn-primary pull-right" style="margin-right: 8px;" onclick="modifyScheduleReply(${scheduleVOReply.scheduleReply.scheduleReplyNO})" ><i class="fa fa-pencil fa-fw"></i> 수정 </button>
+                                          </div>
+                                       </form>
                                     </div>
-                                 </form>
-                              </div>
 
-                              <c:forEach var="scheduleVOReplyRef" items="${scheduleVOReplyList}">
-                                    <c:if test = "${scheduleVOReply.scheduleReply.scheduleReplyNO == scheduleVOReplyRef.scheduleReply.scheduleReplyRefNO}">
-                                       <div>
-                                          <div class="media-block">
-                                             <a class="media-left" href="#"><img class="img-circle img-sm" alt="Profile Picture" src="https://blog.kakaocdn.net/dn/c3vWTf/btqUuNfnDsf/VQMbJlQW4ywjeI8cUE91OK/img.jpg"></a>
-                                             <div class="media-body">
-                                                <div class="mar-btm">
-                                                   <a href="#" class="btn-link text-semibold media-heading box-inline"> ${scheduleVOReplyRef.userNickname} </a>
-                                                   <c:if test = "${userVO.userNO == scheduleVOReplyRef.scheduleReply.userNO}">
-                                                      <button id = "deleteReply" class="btn btn-sm btn-default btn-hover-primary" style="float: right;"
-                                                              onclick="deleteScheduleReplyButton(${scheduleVOReplyRef.scheduleReplyNO});" > 삭제 </button>
-                                                   </c:if>
-                                                   <p class="text-muted text-sm"> ${scheduleVOReplyRef.scheduleReply.scheduleReplyDate} </p>
-                                                </div>
-                                                <p>
-                                                   ${scheduleVOReplyRef.scheduleReply.scheduleReplyDesc}
-                                                </p>
-                                                <hr>
+                                    <div class="pad-ver">
+                                       <button id = "replyButton" class="btn btn-sm btn-default btn-hover-primary"
+                                               onclick="showReplyDiv(${scheduleVOReply.scheduleReply.scheduleReplyNO});">Comment</button>
+                                    </div>
+                                    <hr>
+
+                                    <div id = "replyDiv${scheduleVOReply.scheduleReply.scheduleReplyNO}" class="panel replyDiv">
+                                       <form id = "addScheduleReply${scheduleVOReply.scheduleReply.scheduleReplyNO}" action="addScheduleReply">
+                                          <div class="panel-body">
+                                             <textarea name="scheduleReplyDesc" id="scheduleReplyDesc" class="form-control" rows="4" placeholder="의견을 남겨주세요."></textarea>
+                                             <c:set var="today" value="<%=new java.util.Date()%>" />
+                                             <c:set var="date"><fmt:formatDate value="${today}" pattern="yyyy-MM-dd hh:mm:ss" /></c:set>
+                                             <input type="hidden" name="scheduleReplyDate" id="scheduleReplyDate" value="<c:out value="${date}" />" />
+                                             <input type="hidden" name="scheduleReplyRefNO" id="scheduleReplyRefNO" value="${scheduleVOReply.scheduleReply.scheduleReplyNO}" />
+                                             <input type="hidden" name="scheduleNO" id="scheduleNO" value="${scheduleNO}" />
+                                             <div class="mar-top clearfix">
+                                                <button type="button" class="btn btn-sm btn-primary pull-right" onclick="addScheduleReply(${scheduleVOReply.scheduleReply.scheduleReplyNO});" ><i class="fa fa-pencil fa-fw"></i> 등록 </button>
                                              </div>
                                           </div>
+                                       </form>
+                                    </div>
+                              </c:when>
+                              <c:otherwise>
+                                 <c:set var="beforePageScheduleReplyNO" value="${scheduleVOReply.scheduleReply.scheduleReplyRefNO}"></c:set>
+                                 <div class="media-body">
+                                    <p>
+                                       <br>
+                                       &nbsp;&nbsp;이전 페이지의 대댓글입니다.
+                                    </p>
+                                 </div>
+                                 <hr>
+                              </c:otherwise>
+                           </c:choose>
+
+
+
+                           <c:forEach var="scheduleVOReplyRef" items="${scheduleVOReplyList}">
+                                 <c:if test = "${scheduleVOReply.scheduleReply.scheduleReplyNO == scheduleVOReplyRef.scheduleReply.scheduleReplyRefNO || beforePageScheduleReplyNO == scheduleVOReplyRef.scheduleReply.scheduleReplyRefNO}">
+                                    <div>
+                                       <div class="media-block">
+                                          <a class="media-left" href="#"><img class="img-circle img-sm" alt="Profile Picture" src="https://blog.kakaocdn.net/dn/c3vWTf/btqUuNfnDsf/VQMbJlQW4ywjeI8cUE91OK/img.jpg"></a>
+                                          <div class="media-body">
+                                             <div class="mar-btm">
+                                                <a href="#" class="btn-link text-semibold media-heading box-inline"> ${scheduleVOReplyRef.userNickname} </a>
+                                                <c:if test = "${userVO.userNO == scheduleVOReplyRef.scheduleReply.userNO}">
+                                                   <button id = "deleteReply" class="btn btn-sm btn-default btn-hover-primary" style="float: right;"
+                                                           onclick="deleteScheduleReplyButton(${scheduleVOReplyRef.scheduleReply.scheduleReplyNO});" > 삭제 </button>
+                                                   <button id = "modifyReply" class="btn btn-sm btn-default btn-hover-primary" style="float: right;"
+                                                           onclick="showModifyScheduleReplyDesc(${scheduleVOReplyRef.scheduleReply.scheduleReplyNO});" > 수정 </button>
+                                                </c:if>
+                                                <p class="text-muted text-sm"> ${scheduleVOReplyRef.scheduleReply.scheduleReplyDate} </p>
+                                             </div>
+
+                                             <p id = "scheduleReplyDesc${scheduleVOReplyRef.scheduleReply.scheduleReplyNO}" class = "scheduleReplyDesc">
+                                                   ${scheduleVOReplyRef.scheduleReply.scheduleReplyDesc}
+                                             </p>
+
+                                             <div id = "modifyScheduleReplyDesc${scheduleVOReplyRef.scheduleReply.scheduleReplyNO}" class = "modifyScheduleReplyDesc">
+                                                <form id = "modifyScheduleReply${scheduleVOReplyRef.scheduleReply.scheduleReplyNO}" action="modifyScheduleReply">
+                                                   <input type = "hidden" name = "scheduleReplyNO" id = "modifyScheduleReplyRefNO"  value="${scheduleVOReplyRef.scheduleReply.scheduleReplyNO}"/>
+                                                   <input type = "hidden" name = "scheduleNO" id = "modifyScheduleRefNO"  value="${scheduleNO}"/>
+                                                   <textarea name="scheduleReplyDesc" id="modifyScheduleReplyRefDescText" class="form-control" rows="2"
+                                                             placeholder="의견을 남겨주세요.">${scheduleVOReplyRef.scheduleReply.scheduleReplyDesc}</textarea>
+                                                   <div class="mar-top clearfix">
+                                                      <button type="button" class="btn btn-sm btn-primary pull-right" onclick="showModifyScheduleReplyDesc(${scheduleVOReplyRef.scheduleReply.scheduleReplyNO})" ><i class="fa fa-pencil fa-fw"></i> 취소 </button>
+                                                      <button type="button" class="btn btn-sm btn-primary pull-right" style="margin-right: 8px;" onclick="modifyScheduleReply(${scheduleVOReplyRef.scheduleReply.scheduleReplyNO})" ><i class="fa fa-pencil fa-fw"></i> 수정 </button>
+                                                   </div>
+                                                </form>
+                                             </div>
+                                             <hr>
+                                          </div>
                                        </div>
-                                    </c:if>
+                                    </div>
+                                 </c:if>
                               </c:forEach>
                            </div>
                         </div>
                      </c:if>
                   </c:forEach>
+
+                  <jsp:include page="paging.jsp">
+                     <jsp:param value="${scheduleNO}" name="scheduleNO"/>
+                     <jsp:param value="${paging.page}" name="page"/>
+                     <jsp:param value="${paging.beginPage}" name="beginPage"/>
+                     <jsp:param value="${paging.endPage}" name="endPage"/>
+                     <jsp:param value="${paging.prev}" name="prev"/>
+                     <jsp:param value="${paging.next}" name="next"/>
+                  </jsp:include>
+
                </div>
             </div>
          </div>
