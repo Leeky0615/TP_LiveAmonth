@@ -5,8 +5,6 @@ import javax.servlet.http.HttpSession;
 
 import com.liveamonth.liveamonth.entity.vo.ScheduleReplyVO;
 import com.liveamonth.liveamonth.entity.vo.UserVO;
-import com.liveamonth.liveamonth.model.service.cityInfoService.CityService;
-import com.liveamonth.liveamonth.model.service.myPageService.MyPageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -173,17 +171,54 @@ public class ScheduleController{
     public void showScheduleContentList(Model model, HttpServletRequest request, CalendarDTO calendarDTO) throws Exception{
         this.scheduleContentNO = Integer.parseInt(request.getParameter(SCHEDULE_CONTENT_NO.getText()));
     }
+
+//    private int checkOption(String option){
+//        if(!option.equals("null")) return Integer.parseInt(option);
+//        else return -1;
+//    }
+
+//    private int checkOption(Object option){
+//        if(option!=null) {
+//            if (!"null".equals(option)) {
+//                return (Integer)option;
+//            }
+//        }
+//        return -1;
+//    }
+
     private int checkOption(String option){
-        if(!option.equals("null")) return Integer.parseInt(option);
-        else return -1;
+        if(option!=null) {
+            if (!"null".equals(option)) {
+                return Integer.parseInt(option);
+            }
+        }
+        return -1;
     }
+
+    private HashMap<String, Object> makeRequestList(HttpServletRequest request){
+        HashMap<String, Object> requestList = new HashMap<>();
+
+        for(EScheduleFilterAndOrders eFO : EScheduleFilterAndOrders.values()){
+            if(eFO == SCHEDULE_FO_ORDER) {
+                requestList.put(eFO.getText(), request.getParameter(eFO.getText()));
+            }
+            else {
+                int option = this.checkOption(request.getParameter(eFO.getText()));
+                System.out.println("makeRequestList = " + request.getParameter(eFO.getText()));
+                System.out.println("makeRequestList = " + option);
+                requestList.put(eFO.getText(), option);
+            }
+        }
+        return requestList;
+    }
+
     private List<HashMap<String, Object>> makeOtherScheduleList(HttpServletRequest request, String action) throws Exception {
         HashMap<String, Object> filtersAndOrder = new HashMap<>();
         // action = list : 초기 헤더메뉴 클릭시
         System.out.println("action = " + action);
-        if(action.equals(SCHEDULE_LIST.getText())){
+        if(action.equals(SCHEDULE_LIST.getText())){ // 기본값
             for(EScheduleFilterAndOrders eFO : EScheduleFilterAndOrders.values()){
-                if(eFO == SCHEDULE_FO_ORDER) filtersAndOrder.put(eFO.getText(),"orderByNew");
+                if(eFO == SCHEDULE_FO_ORDER) filtersAndOrder.put(eFO.getText(),"orderByNew");//("orderBy","orderVubByNexw)
                 else filtersAndOrder.put(eFO.getText()+"Filter",false);
             }
             for (Map.Entry<String, Object> entry : filtersAndOrder.entrySet()) {
@@ -191,13 +226,15 @@ public class ScheduleController{
             }
         } else if(action.equals(SCHEDULE_FILTER.getText())) {// action = filter : OtherSchedule 페이지에서 필터 및 정렬 수행시
             // Hashmap에 필터/정렬 Object를 담는다.
-            for(EScheduleFilterAndOrders eFO : EScheduleFilterAndOrders.values()){ // {userSex, userAge, schedulePlace, orderBy}
+            for(EScheduleFilterAndOrders eFO : EScheduleFilterAndOrders.values()){ // {userSex, userAge, schedulePlace, orderBy, userSexFilter}
                 if(eFO == SCHEDULE_FO_ORDER) {
                     // orderBy인 경우 View에서 OrderBy의 value를 가져옴. {"orderByLiked" | "orderByNew" | "orderByView"}
                     filtersAndOrder.put(eFO.getText(), request.getParameter(SCHEDULE_FO_ORDER.getText()));
                 }else{
                     // 나머지 경우는 받아온 parameter에 대해 int로 변환(CheckOption() -> null(기본값)인 경우 -1 return)
+                    //null
                     int option = this.checkOption(request.getParameter(eFO.getText()));
+                    //int option = this.checkOption(String.valueOf(request.getParameter(eFO.getText())));
                     // filter 설정 유무 -> 기본 : default
                     boolean optionStatus = false;
                     if (option != -1) {
@@ -213,6 +250,7 @@ public class ScheduleController{
 
                     // optionStatus를 HashMap에 저장 (attribute 값 : userSexFilter, userAgeFilter, schedulePlaceFilter)
                     filtersAndOrder.put(eFO.getText()+"Filter",optionStatus);
+
                 }
             }
         }
@@ -221,9 +259,26 @@ public class ScheduleController{
     @RequestMapping("/otherScheduleList")
     public String otherScheduleList(Model model, HttpServletRequest request, CalendarDTO calendarDTO) throws Exception {
         List<HashMap<String, Object>> otherScheduleList = this.makeOtherScheduleList(request,request.getParameter(SCHEDULE_ACTION.getText()));
+        HashMap<String, Object> requestList = makeRequestList(request);
+
+        System.out.println("place:" + request.getParameter("schedulePlace"));
+        System.out.println("age:" + request.getParameter("userAge"));
+        System.out.println("sex:" + request.getParameter("userSex"));
+        System.out.println("orderBy:" + request.getParameter("orderBy"));
+
+        model.addAttribute("userSex", request.getParameter("userSex"));
+        model.addAttribute("index", request.getParameter("schedulePlace"));
+        model.addAttribute("userAge", request.getParameter("userAge"));
+        model.addAttribute("userAge", request.getParameter("userAge"));
+        model.addAttribute("orderBy", request.getParameter("orderBy"));
+
+        for (Map.Entry<String, Object> entry : requestList.entrySet()) {
+            System.out.println("[Key]:" + entry.getKey() + " [Value]:" + entry.getValue());
+        }
 
         model.addAttribute(FITERED_OTHER_SCHEDULE_LIST.getText(), otherScheduleList);
         model.addAttribute(SCHEDULE_PLACE_LIST.getText(), CityName.values());
+        //model.addAttribute(REQUEST_LIST.getText(), requestList);
         return OTHER_SCHEDULE_LIST.getPath();
     }
     @RequestMapping("/otherSchedule")

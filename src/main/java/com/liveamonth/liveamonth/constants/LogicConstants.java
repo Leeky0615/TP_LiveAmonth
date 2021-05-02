@@ -51,7 +51,8 @@ public class LogicConstants {
         TODAY_INFORMATION("todayInformation"),
         SCHEDULEREPLY_VO_LIST("scheduleVOReplyList"),
         SELECT_SCHEDULE("selectSchedule"),
-        FITERED_OTHER_SCHEDULE_LIST("otherScheduleList");
+        FITERED_OTHER_SCHEDULE_LIST("otherScheduleList"),
+        REQUEST_LIST("requestList");
         private String text;
         private EScheduleAttributes(String text) {this.text = text;}
         public String getText() {return this.text;}
