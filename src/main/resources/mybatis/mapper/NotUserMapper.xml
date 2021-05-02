@@ -6,16 +6,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.liveamonth.liveamonth.model.mapper.notUserMapper.NotUserMapper">
 
 
-	<select id="getOneToOneAskReplyVOList" resultType="com.liveamonth.liveamonth.entity.vo.OneToOneAskVO">
+	<select id="getOneToOneAskReplyVOList" resultType="OneToOneAskVO">
 		select * from oneToOneAsk where oneToOneAskReply is null;
 	</select>
 	
-	<select id="findOneToOneAskVO" parameterType = "int" resultType="com.liveamonth.liveamonth.entity.vo.OneToOneAskVO">
+	<select id="findOneToOneAskVO" parameterType = "int" resultType="OneToOneAskVO">
       select * from oneToOneAsk where oneToOneAskNO = #{oneToOneAskNO};
     </select>
     
     
-    <update id="addOneToOneAskReply" parameterType="com.liveamonth.liveamonth.entity.vo.OneToOneAskVO">
+    <update id="addOneToOneAskReply" parameterType="OneToOneAskVO">
 		update oneToOneAsk
 		set oneToOneAskReply = #{oneToOneAskReply}
 		where oneToOneAskNO = #{oneToOneAskNO}

@@ -4,8 +4,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.liveamonth.liveamonth.constants.EntityConstants;
+import com.liveamonth.liveamonth.constants.LogicConstants;
 import com.liveamonth.liveamonth.entity.vo.ScheduleReplyVO;
 import com.liveamonth.liveamonth.entity.vo.UserVO;
+import com.liveamonth.liveamonth.model.service.cityInfoService.CityService;
 import com.liveamonth.liveamonth.model.service.myPageService.MyPageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,23 +24,27 @@ import com.liveamonth.liveamonth.entity.vo.ScheduleVO;
 import com.liveamonth.liveamonth.model.service.scheduleService.ScheduleService;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static com.liveamonth.liveamonth.constants.ControllerPathConstants.ESchedulePath.*;
 import static com.liveamonth.liveamonth.constants.EntityConstants.*;
 import static com.liveamonth.liveamonth.constants.EntityConstants.ESchedule.*;
+import static com.liveamonth.liveamonth.constants.EntityConstants.ESchedule.SCHEDULE_PLACE;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EScheduleContent.*;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EScheduleReply.*;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.*;
+import static com.liveamonth.liveamonth.constants.LogicConstants.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EAlertMessage.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleAttributes.*;
-import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleAttributes.SCHEDULE_PLACE;
-import static com.liveamonth.liveamonth.entity.vo.ScheduleVO.*;
+import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleFilterAndOrders.*;
 
 @Controller
 public class ScheduleController{
     @Autowired
     private ScheduleService scheduleService;
+    @Autowired
+    private CityService cityService;
     @Autowired
     private MyPageService myPageService;
 
@@ -174,32 +180,38 @@ public class ScheduleController{
     public void showScheduleContentList(Model model, HttpServletRequest request, CalendarDTO calendarDTO) throws Exception{
         this.scheduleContentNO = Integer.parseInt(request.getParameter(SCHEDULE_CONTENT_NO.getText()));
     }
-
+    private int checkOption(String option){
+        if(!option.equals("null")) return Integer.parseInt(option);
+        else return -1;
+    }
     @RequestMapping("/otherScheduleList")
     public String otherScheduleList(Model model, HttpServletRequest request, CalendarDTO calendarDTO) throws Exception {
     	String action = request.getParameter(SCHEDULE_ACTION.getText());
 
-    	List<ScheduleVO> scheduleVOList = null;
-
-    	if(action.contains(SCHEDULE_LIST.getText())) {
-    		scheduleVOList = scheduleService.getOtherScheduleList(0, 0, null, null);
-
+        ArrayList<HashMap<String, Object>> otherScheduleList = new ArrayList<>();
+        if(action.contains(SCHEDULE_LIST.getText())) {
+    		otherScheduleList = scheduleService.getOtherScheduleList(null);
     	}else if(action.contains(SCHEDULE_FILTER.getText())) {
-    		int sex = Integer.parseInt((String) request.getParameter(SCHEDULE_SEX.getText()));
-            int age = Integer.parseInt((String) request.getParameter(SCHEDULE_AGE.getText()));
-            String place = request.getParameter(EScheduleAttributes.SCHEDULE_PLACE.getText());
-            String orderBy = request.getParameter(SCHEDULE_ORDERBY.getText());
+            HashMap<String, Object> filtersAndOrder = new HashMap<>();
+            for(EScheduleFilterAndOrders eFO : EScheduleFilterAndOrders.values()){
+                if(eFO == SCHEDULE_FO_ORDER){
+                    filtersAndOrder.put(eFO.getText(), request.getParameter(SCHEDULE_FO_ORDER.getText()));
+                }else{
+                    int option = checkOption(request.getParameter(eFO.getText()));
+                    boolean optionStatus = false;
+                    if (option != -1) optionStatus = true;
 
-            scheduleVOList = scheduleService.getOtherScheduleList(sex, age, place, orderBy);
+                    if(eFO == SCHEDULE_FO_PLACE) filtersAndOrder.put(eFO.getText(), cityService.getCityNameList().get(option));
+                    else filtersAndOrder.put(eFO.getText(), option);
+                    filtersAndOrder.put(eFO.getText()+"Filter",optionStatus);
+                }
+            }
+            otherScheduleList = scheduleService.getOtherScheduleList(filtersAndOrder);
     	}
-
-        List<UserVO> userVOList = myPageService.getOtherScheduleUserInfo(scheduleVOList);
-        CityName[] placeList = CityName.values();
-
-        model.addAttribute(SCHEDULE_VO_LIST.getText(), scheduleVOList);
-        model.addAttribute(USER_VO_LIST.getText(), userVOList);
-        model.addAttribute(PLACE_LIST.getText(), placeList);
-
+        for (HashMap<String,Object> contents : otherScheduleList){
+//            if (contents.get("userVO").get)
+        }
+        model.addAttribute(FITERED_OTHER_SCHEDULE_LIST.getText(), otherScheduleList);
         return OTHER_SCHEDULE_LIST.getPath();
     }
     @RequestMapping("/otherSchedule")

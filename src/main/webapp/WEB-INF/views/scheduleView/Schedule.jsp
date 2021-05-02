@@ -5,12 +5,14 @@
 <%@ page import="com.liveamonth.liveamonth.entity.dto.CalendarDTO" %>
 <%@ page import="com.liveamonth.liveamonth.entity.vo.ScheduleVO" %>
 <%@page import="java.util.*" %>
+
+<body style="background:#ffffff">
 <script
         src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <!-- jquery datepicker -->
 <link rel="stylesheet"
       href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css"
-      type="text/css" />
+      type="text/css"/>
 <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
 <!-- jquery datepicker 끝 -->
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
@@ -27,7 +29,6 @@
 <script src="resources/js/board.js"></script>
 
 <script type="text/javaScript" language="javascript"></script>
-<body style="background:#ffffff">
 <div class="search-form-content">
     <form action="swapSchedule" class="filter-form">
         <select class="sm-width" name="selectSchedule" id="selectSchedule">
@@ -48,8 +49,6 @@
 
     </form>
 </div>
-
-
 <div class="modal fade" id="addScheduleModal" role="dialog" aria-labelledby="addScheduleLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -70,9 +69,9 @@
 
                         <div class="text_subject">지역</div>
                         <div class="text_desc">
-                            <select class="sm-width" name="place" id="schedulePlace">
-                                <c:forEach var="place" items="${placeList}">
-                                    <option value="${place}">${placeList.nameKR}</option>
+                            <select class="sm-width" name="schedulePlace" id="schedulePlace">
+                                <c:forEach var="schedulePlace" items="${schedulePlaceList}">
+                                    <option value="${schedulePlace}">${schedulePlace.nameKR}</option>
                                 </c:forEach>
                             </select>
                         </div>
@@ -120,9 +119,9 @@
                                 </div>
                                 <div>
                                     <div class="text_subject">지역</div>
-                                    <select class="sm-width" name="place" id="modifyPlace">
-                                        <c:forEach var="place" items="${placeList}">
-                                            <option value="${place}">${placeList.nameKR}</option>
+                                    <select class="sm-width" name="schedulePlace" id="modifyPlace">
+                                        <c:forEach var="schedulePlace" items="${schedulePlaceList}">
+                                            <option value="${schedulePlace.status()}">${schedulePlace.nameKR}</option>
                                         </c:forEach>
                                     </select>
                                     <script> $("#modifyPlace").val("${scheduleVO.schedulePlace}").prop("selected", true); </script>
@@ -136,8 +135,8 @@
                                     <span class="slider round"></span>
                                 </label>
                                 <script>
-                                    if (${scheduleVO.scheduleStatus}){
-                                    $("input:checkbox[id='modiftScheduleStatus']").prop("checked", true);
+                                    if (${scheduleVO.scheduleStatus}) {
+                                        $("input:checkbox[id='modiftScheduleStatus']").prop("checked", true);
                                     }
                                 </script>
                                 <div>
@@ -414,7 +413,7 @@
                         <div class="text_desc">
                             <input type="date" id="modifyScheduleContentDate" name="modifyScheduleContentDate"
                                    class="text_type1"
-                                   id="testDatepicker" readonly/>
+                                   readonly/>
                         </div>
 
                         <div class="text_subject">내용 :</div>

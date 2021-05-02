@@ -39,10 +39,7 @@ public class LogicConstants {
         SELECTED_SCHEDULE_NO("selectedScheduleNO"),
         MESSAGE("message"),
         USER_VO_LIST("userVOList"),
-        PLACE_LIST("placeList"),
-        SCHEDULE_SEX("sex"),
-        SCHEDULE_AGE("age"),
-        SCHEDULE_PLACE("place"),
+        PLACE_LIST("schedulePlaceList"),
         SCHEDULE_ACTION("action"),
         SCHEDULE_LIST("list"),
         SCHEDULE_FILTER("filter"),
@@ -53,12 +50,21 @@ public class LogicConstants {
         DATE_LIST("dateList"),
         TODAY_INFORMATION("todayInformation"),
         SCHEDULEREPLY_VO_LIST("scheduleVOReplyList"),
-        SELECT_SCHEDULE("selectSchedule");
+        SELECT_SCHEDULE("selectSchedule"),
+        FITERED_OTHER_SCHEDULE_LIST("otherScheduleList");
         private String text;
         private EScheduleAttributes(String text) {this.text = text;}
         public String getText() {return this.text;}
     }
-
+    public enum EScheduleFilterAndOrders{
+        SCHEDULE_FO_SEX("userSex"),
+        SCHEDULE_FO_AGE("userAge"),
+        SCHEDULE_FO_PLACE("schedulePlace"),
+        SCHEDULE_FO_ORDER("orderBy");
+        private String text;
+        private EScheduleFilterAndOrders(String text) {this.text = text;}
+        public String getText() {return this.text;}
+    }
     public enum EMyPageAttributes {
         CHECK_USER("checkUser");
 

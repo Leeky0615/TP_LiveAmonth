@@ -6,7 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.liveamonth.liveamonth.model.mapper.signMapper.SignMapper">
 
 	<!-- insert-->
-	<insert id="insertUser" parameterType="com.liveamonth.liveamonth.entity.vo.UserVO">
+	<insert id="insertUser" parameterType="UserVO">
 		<selectKey resultType = "int" keyProperty="userNO" order = "BEFORE">
 			select MAX(userNO)+1 from user
 		</selectKey>
@@ -15,7 +15,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 
 	<!-- select -->
-	<select id="checkSign" parameterType="HashMap" resultType="com.liveamonth.liveamonth.entity.vo.UserVO">
+	<select id="checkSign" parameterType="HashMap" resultType="UserVO">
 		select * from user where userID = #{userID} and userPassword =
 		#{userPassword}
 	</select>

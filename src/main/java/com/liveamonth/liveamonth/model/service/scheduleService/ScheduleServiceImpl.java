@@ -113,81 +113,10 @@ public class ScheduleServiceImpl implements ScheduleService {
         return scheduleMapper.getLastScheduleContentNO();
     }
 
-    //otherList
     @Override
-	public List<ScheduleVO> getOtherScheduleList(int sex, int age, String place, String orderBy) {
+	public ArrayList<HashMap<String, Object>> getOtherScheduleList(HashMap<String, Object> filtersAndOrder) {
 		HashMap<String, String> sqlParameter = new HashMap<String, String>();
-		String sqlQuery = "";
-		String sqlSubQuery = "";
-		String sexStatement = "";
-		String ageStatement = "";
-		String placeStatement = "";
-		String andStatement = " AND userNO IN (SELECT userNO FROM user WHERE ";
-
-		// sex
-		if (sex == 1) {
-			sexStatement += "userSex = 0 ";
-		} else if (sex == 2) {
-			sexStatement += "userSex = 1 ";
-		}
-
-		// age
-		int startYear = 0;
-		int endYear = 0;
-		Calendar cal = Calendar.getInstance();
-		int year = cal.get(Calendar.YEAR);
-
-		if (age != 0) {
-			if (age == 20) {
-				startYear = year - 30;
-				endYear = year - 20;
-
-			} else if (age == 30) {
-				startYear = year - 40;
-				endYear = year - 30;
-
-			} else if (age == 40) {
-				startYear = year - 50;
-				endYear = year - 40;
-
-			} else if (age == 50) {
-				startYear = year - 60;
-				endYear = year - 50;
-
-			} else if (age == 60) {
-				startYear = year - 70;
-				endYear = year - 60;
-			}
-			ageStatement = "userAge > " + startYear + " AND userAge <= " + endYear;
-		}
-
-		if (sex != 0 && age == 0) {
-			sqlSubQuery = andStatement + sexStatement + ")";
-		} else if (sex == 0 && age != 0) {
-			sqlSubQuery = andStatement + ageStatement + ")";
-		} else if (sex != 0 && age != 0) {
-			sqlSubQuery = andStatement + sexStatement + " AND " + ageStatement + ")";
-		}
-
-		// place
-		if(place!=null) {
-			if (!place.equals("null")) {
-				placeStatement += " AND place = '" + place + "' ";
-			}
-		}
-
-		if(orderBy == null || orderBy.contentEquals("orderByLiked")) {
-			orderBy = "scheduleLikeCount";
-		}else if(orderBy.contentEquals("orderByNew")) {
-			orderBy = "scheduleNO";
-		}
-		sqlSubQuery = sqlSubQuery + placeStatement;
-		System.out.println("int shceduleServiceImpl sql" + sqlSubQuery);
-
-		sqlParameter.put("filter", sqlSubQuery);
-		sqlParameter.put("orderBy", orderBy);
-
-		return scheduleMapper.getOtherScheduleList(sqlParameter);
+		return null;
 	}
 
     @Override

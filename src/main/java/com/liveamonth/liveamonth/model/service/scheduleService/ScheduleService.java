@@ -33,7 +33,7 @@ public interface ScheduleService {
 
 	boolean deleteSchedule(int scheduleNO) throws Exception;
 	
-	public  List<ScheduleVO> getOtherScheduleList(int sex, int age, String place, String orderBy) throws Exception;
+	public ArrayList<HashMap<String, Object>> getOtherScheduleList(HashMap<String, Object> filtersAndOrder) throws Exception;
 
     public List<HashMap<String, Object>> getScheduleReplyList(int scheduleNO) throws Exception;
 
