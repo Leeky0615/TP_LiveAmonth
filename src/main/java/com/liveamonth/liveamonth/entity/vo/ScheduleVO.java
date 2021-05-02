@@ -1,10 +1,7 @@
 package com.liveamonth.liveamonth.entity.vo;
 
-import com.liveamonth.liveamonth.constants.EntityConstants;
 import com.liveamonth.liveamonth.constants.EntityConstants.CityName;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 @Data
 public class ScheduleVO {

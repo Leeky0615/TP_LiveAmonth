@@ -1097,6 +1097,11 @@ ol {
     color: #ffffff;
 }
 
+.property-pagination #selectPage {
+    background: #00C89E;
+    color: #ffffff;
+}
+
 .property-pagination a.icon span {
     position: relative;
     top: 5px;

@@ -129,32 +129,24 @@
 
                                 <br><br>
 
-                                <div class="text_subject">공개여부</div>
-                                <label class="switch">
-                                    <input type="checkbox" name="scheduleStatus" id="modiftScheduleStatus">
-                                    <span class="slider round"></span>
-                                </label>
-                                <script>
-                                    if (${scheduleVO.scheduleStatus}) {
-                                        $("input:checkbox[id='modiftScheduleStatus']").prop("checked", true);
-                                    }
-                                </script>
-                                <div>
-                                    <button type="button" class="board_move_go pointer"
-                                            onclick="modifyScheduleButton();">수정
-                                    </button>
-                                    <button type="button" class="board_move_go pointer" data-dismiss="modal">취소</button>
-                                    <button type="button" class="board_move_go pointer" style="float: right;"
-                                            onclick="deleteScheduleButton();">삭제
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </c:if>
-    </c:forEach>
+								<div class="text_subject">공개여부</div>
+								<label class="switch">
+									<input type="checkbox" name="scheduleStatus" id="modiftScheduleStatus">
+									<span class="slider round"></span>
+								</label>
+								<script> if(${scheduleVO.scheduleStatus}==true) {$("input:checkbox[id='modiftScheduleStatus']").prop("checked", true);} </script>
+								<div>
+									<button type="button" class="board_move_go pointer" onclick="modifyScheduleButton();">수정</button>
+									<button type="button" class="board_move_go pointer" data-dismiss="modal">취소</button>
+									<button type="button" class="board_move_go pointer" style="float: right;" onclick="deleteScheduleButton();">삭제</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</c:if>
+	</c:forEach>
 </div>
 
 

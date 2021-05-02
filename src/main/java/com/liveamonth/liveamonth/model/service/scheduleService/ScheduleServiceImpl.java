@@ -1,22 +1,25 @@
 package com.liveamonth.liveamonth.model.service.scheduleService;
 
+
+import com.liveamonth.liveamonth.entity.dto.CalendarDTO;
+import com.liveamonth.liveamonth.entity.dto.Paging;
+import com.liveamonth.liveamonth.entity.vo.ScheduleContentVO;
+import com.liveamonth.liveamonth.entity.vo.ScheduleLikeVO;
+import com.liveamonth.liveamonth.entity.vo.ScheduleReplyVO;
+import com.liveamonth.liveamonth.entity.vo.ScheduleVO;
+import com.liveamonth.liveamonth.model.mapper.scheduleMapper.ScheduleMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-
-import com.liveamonth.liveamonth.entity.vo.ScheduleReplyVO;
-import com.liveamonth.liveamonth.entity.vo.ScheduleVO;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.liveamonth.liveamonth.entity.dto.CalendarDTO;
-import com.liveamonth.liveamonth.entity.vo.ScheduleContentVO;
-import com.liveamonth.liveamonth.model.mapper.scheduleMapper.ScheduleMapper;
+import static com.liveamonth.liveamonth.constants.EntityConstants.EPage.DISPLAY_PAGE;
+import static com.liveamonth.liveamonth.constants.EntityConstants.ESchedule.SCHEDULE_NO;
+import static com.liveamonth.liveamonth.constants.LogicConstants.EPaging.*;
+import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleStaticInt.*;
 
 
 @Service
@@ -104,13 +107,13 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     public void addScheduleContent(ScheduleContentVO scheduleContentVO) throws Exception {
+        Object LastNO = scheduleMapper.getLastScheduleContentNO();
+        if(LastNO != null){
+            scheduleContentVO.setScheduleContentNO(Integer.parseInt(String.valueOf(LastNO))+1);
+        } else {
+            scheduleContentVO.setScheduleContentNO(FIRST_SCHEDULECONTENT_NO.getText());
+        }
         scheduleMapper.addScheduleContent(scheduleContentVO);
-
-    }
-
-    @Override
-    public int getLastScheduleContentNO() throws Exception {
-        return scheduleMapper.getLastScheduleContentNO();
     }
 
     //otherList
@@ -120,10 +123,8 @@ public class ScheduleServiceImpl implements ScheduleService {
 	}
 
     @Override
-    public boolean addSchedule(ScheduleVO scheduleVO, int userNO) throws Exception {
-        scheduleVO.setScheduleNO(scheduleMapper.getMaxScheduleNO() + 1);
-       // scheduleVO.setScheduleLikeCount(0);
-        scheduleVO.setUserNO(userNO);
+    public boolean addSchedule(ScheduleVO scheduleVO) throws Exception {
+        scheduleVO.setScheduleNO(getMaxScheduleNO() + 1);
 
         if (scheduleMapper.addSchedule(scheduleVO)) {
             return true;
@@ -156,8 +157,11 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
 	public int getMaxScheduleNO() throws Exception {
-		// TODO Auto-generated method stub
-		return scheduleMapper.getMaxScheduleNO();
+        Object MaxNO = scheduleMapper.getMaxScheduleNO();
+        if(MaxNO != null) {
+            return Integer.parseInt(String.valueOf(MaxNO));
+        }
+		return FIRST_SCHEDULE_NO.getText();
 	}
 	
 	public boolean modifySchedule(ScheduleVO scheduleVO) throws Exception {
@@ -176,15 +180,21 @@ public class ScheduleServiceImpl implements ScheduleService {
 	}
 
     @Override
-	public ArrayList<HashMap<String, Object>> getScheduleReplyList(int scheduleNO) throws Exception {
-        return scheduleMapper.getScheduleReplyList(scheduleNO);
+	public ArrayList<HashMap<String, Object>> getScheduleReplyList(int scheduleNO, int page) throws Exception {
+        int startNum = (page-1)*15;
+        HashMap<String, Integer> scheduleNOAndPage = new HashMap<String, Integer>();
+        scheduleNOAndPage.put(SCHEDULE_NO.getText(), scheduleNO);
+        scheduleNOAndPage.put(START_NO.getText(), startNum);
+        scheduleNOAndPage.put(DISPLAY_PAGE.getText(), STATIC_DISPLAY_PAGE_NUM.getText());
+
+        return scheduleMapper.getScheduleReplyList(scheduleNOAndPage);
     }
 
     @Override
     public boolean addScheduleReplyVO(ScheduleReplyVO scheduleReplyVO, int userNO) throws Exception {
         String MaxNO = String.valueOf(scheduleMapper.getMaxScheduleReplyNO());
         if(MaxNO == "null") {
-            scheduleReplyVO.setScheduleReplyNO(4001);
+            scheduleReplyVO.setScheduleReplyNO(FIRST_SCHEDULEREPLY_NO.getText());
         } else {
             scheduleReplyVO.setScheduleReplyNO(Integer.parseInt(MaxNO) + 1);
         }
@@ -199,5 +209,53 @@ public class ScheduleServiceImpl implements ScheduleService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public boolean modifyScheduleReply(ScheduleReplyVO scheduleReplyVO) throws Exception {
+        if(scheduleMapper.modifyScheduleReply(scheduleReplyVO)){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public int getScheduleLikeStatus(ScheduleLikeVO scheduleLikeVO) throws Exception {
+        return scheduleMapper.getScheduleLikeStatus(scheduleLikeVO);
+    }
+
+    @Override
+    public HashMap<String, String> getScheduleAndLikeCount(int scheduleNO) throws Exception {
+        return scheduleMapper.getScheduleAndLikeCount(scheduleNO);
+    }
+
+    @Override
+    public HashMap<String, Integer> getScheduleLikeAndCount(ScheduleLikeVO scheduleLikeVO) throws Exception {
+        HashMap<String, Integer> like = new HashMap<>();
+        int likeStatus = scheduleMapper.getScheduleLikeStatus(scheduleLikeVO);
+        if(likeStatus == 0){
+           if(scheduleMapper.addScheduleLike(scheduleLikeVO)){
+               like.put(LIKE_STATUS.getText(), 1);
+           }
+        } else if(likeStatus == 1){
+            if(scheduleMapper.deleteScheduleLike(scheduleLikeVO)){
+                like.put(LIKE_STATUS.getText(), 0);
+            }
+        }
+        like.put(LIKE_COUNT.getText(), scheduleMapper.getScheduleLikeCount(scheduleLikeVO.getScheduleNO()));
+        return like;
+    }
+
+    @Override
+    public Paging showPaging(int selectPage, int scheduleNO) throws Exception {
+        Paging paging = new Paging();
+        paging.setPage(selectPage);
+        paging.setTotalCount(scheduleMapper.getScheduleReplyCount(scheduleNO));
+        return paging;
+    }
+
+    @Override
+    public void increaseScheduleViewCount(int scheduleNO) {
+        scheduleMapper.increaseScheduleViewCount(scheduleNO);
     }
 }

@@ -52,10 +52,23 @@ public class LogicConstants {
         SCHEDULEREPLY_VO_LIST("scheduleVOReplyList"),
         SELECT_SCHEDULE("selectSchedule"),
         FITERED_OTHER_SCHEDULE_LIST("otherScheduleList");
+        OTHER_SCHEDULE_AND_LIKE_COUNT("otherScheduleAndLikeCount"),
         private String text;
         private EScheduleAttributes(String text) {this.text = text;}
         public String getText() {return this.text;}
     }
+
+    public enum EScheduleStaticInt {
+        FIRST_SCHEDULEREPLY_NO(501),
+        FIRST_SCHEDULE_NO(200),
+        STATIC_DISPLAY_PAGE_NUM(15),
+        FIRST_SCHEDULECONTENT_NO(301);
+        private int text;
+        private EScheduleStaticInt(int text) {this.text = text;}
+        public int getText(){return this.text;}
+    }
+
+
     public enum EScheduleFilterAndOrders{
         SCHEDULE_FO_SEX("userSex"),
         SCHEDULE_FO_AGE("userAge"),
@@ -90,6 +103,18 @@ public class LogicConstants {
         FIRST_IN("firstIn");
         private String text;
         private ESignAttributes(String text){this.text = text;}
+        public String getText() {return this.text;}
+    }
+
+    public enum EPaging{
+        SELECTED_PAGE("selectedPage"),
+        LIKE_STATUS("likeStatus"),
+        LIKE_COUNT("likeCount"),
+        START_NO("startNO"),
+        PAIGING("paging");
+
+        private String text;
+        private EPaging(String text){this.text = text;}
         public String getText() {return this.text;}
     }
 

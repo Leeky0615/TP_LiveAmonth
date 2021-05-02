@@ -102,3 +102,11 @@
 .replyDiv{
     display: none;
 }
+
+.scheduleReplyDesc{
+    display: block;
+}
+
+.modifyScheduleReplyDesc{
+    display: none;
+}

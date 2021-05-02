@@ -31,6 +31,9 @@
    <script src="resources/js/reply.js"></script>
    <script src="resources/js/board.js"></script>
 
+   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet"> <!--CDN 링크 -->
+
    <script type="text/javaScript" language="javascript"></script>
 
 </head>
@@ -48,77 +51,77 @@
    </script>
    <div class="calendar">
 
-      <!--날짜 네비게이션  -->
-      <div class="navigation">
+         <!--날짜 네비게이션  -->
+         <div class="navigation">
 
-         <a class="before_after_year"
-            href="./schedule?year=${todayInformation.searchYear-1}&month=${todayInformation.searchMonth-1}">
-            &lt;&lt; <!-- 이전해 -->
-         </a>
-         <a class="before_after_month"
-            href="./schedule?year=${todayInformation.beforeYear}&month=${todayInformation.beforeMonth}">
-            &lt; <!-- 이전달 -->
-         </a>
-         <span class="this_month"> &nbsp;${todayInformation.searchYear}. <c:if
-                 test="${todayInformation.searchMonth<10}">0</c:if>${todayInformation.searchMonth}
+            <a class="before_after_year"
+               href="./schedule?year=${todayInformation.searchYear-1}&month=${todayInformation.searchMonth-1}">
+               &lt;&lt; <!-- 이전해 -->
+            </a>
+            <a class="before_after_month"
+               href="./schedule?year=${todayInformation.beforeYear}&month=${todayInformation.beforeMonth}">
+               &lt; <!-- 이전달 -->
+            </a>
+            <span class="this_month"> &nbsp;${todayInformation.searchYear}. <c:if
+                    test="${todayInformation.searchMonth<10}">0</c:if>${todayInformation.searchMonth}
+               </span>
+            <a class="before_after_month"
+               href="/schedule?year=${todayInformation.afterYear}&month=${todayInformation.afterMonth}">
+               <!-- 다음달 --> &gt;
+            </a>
+            <a class="before_after_year"
+               href="/schedule?year=${todayInformation.searchYear+1}&month=${todayInformation.searchMonth-1}">
+               <!-- 다음해 --> &gt;&gt;
+            </a>
+            <span>
+               <div>
+            </div>
             </span>
-         <a class="before_after_month"
-            href="/schedule?year=${todayInformation.afterYear}&month=${todayInformation.afterMonth}">
-            <!-- 다음달 --> &gt;
-         </a>
-         <a class="before_after_year"
-            href="/schedule?year=${todayInformation.searchYear+1}&month=${todayInformation.searchMonth-1}">
-            <!-- 다음해 --> &gt;&gt;
-         </a>
-         <span>
-            <div>
          </div>
-         </span>
-      </div>
 
-      <table class="calendar_body">
+         <table class="calendar_body">
 
-         <thead>
-         <tr bgcolor="#CECECE">
-            <td class="day sun">일</td>
-            <td class="day">월</td>
-            <td class="day">화</td>
-            <td class="day">수</td>
-            <td class="day">목</td>
-            <td class="day">금</td>
-            <td class="day sat">토</td>
-         </tr>
-         </thead>
-         <tbody>
-         <tr>
-            <c:forEach var="dateList" items="${dateList}"
-                       varStatus="dateStatus">
-            <c:choose>
-            <c:when test="${dateList.value=='today'}">
-            <c:if test="${dateStatus.index%7==0}">
-         <tr>
-            </c:if>
-            <td class="today">
-               <div class="date"></div>
-               </c:when>
-               <c:when test="${dateStatus.index%7==6}">
-            <td class="sat_day">
-               <div class="sat"></div>
-               </c:when>
-               <c:when test="${dateStatus.index%7==0}">
-         </tr>
-         <tr>
-            <td class="sun_day">
-               <div class="sun">
+            <thead>
+            <tr bgcolor="#CECECE">
+               <td class="day sun">일</td>
+               <td class="day">월</td>
+               <td class="day">화</td>
+               <td class="day">수</td>
+               <td class="day">목</td>
+               <td class="day">금</td>
+               <td class="day sat">토</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+               <c:forEach var="dateList" items="${dateList}"
+                          varStatus="dateStatus">
+               <c:choose>
+               <c:when test="${dateList.value=='today'}">
+               <c:if test="${dateStatus.index%7==0}">
+            <tr>
+               </c:if>
+               <td class="today">
+                  <div class="date"></div>
                   </c:when>
-                  <c:otherwise>
-            <td class="normal_day">
-               <div class="date"></div>
-               </c:otherwise>
-               </c:choose>
-                  ${dateList.date}
-   </div>
-   <div>
+                  <c:when test="${dateStatus.index%7==6}">
+               <td class="sat_day">
+                  <div class="sat"></div>
+                  </c:when>
+                  <c:when test="${dateStatus.index%7==0}">
+            </tr>
+            <tr>
+               <td class="sun_day">
+                  <div class="sun">
+                     </c:when>
+                     <c:otherwise>
+               <td class="normal_day">
+                  <div class="date"></div>
+                  </c:otherwise>
+                  </c:choose>
+                     ${dateList.date}
+      </div>
+      <div>
 
       <c:forEach var="scheduleList"
                  items="${dateList.scheduleDataArray}"
@@ -280,6 +283,7 @@
 
 
    <div width="100%">
+      <jsp:include page="/incl/Footer.jsp" />
    </div>
 </body>
 </html>
