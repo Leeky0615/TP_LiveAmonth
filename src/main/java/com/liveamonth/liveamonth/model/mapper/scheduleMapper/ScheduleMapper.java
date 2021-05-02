@@ -23,7 +23,7 @@ public interface ScheduleMapper {
 
     public int beforeScheduleAddSearch(ScheduleContentVO scheduleContentVO)  throws Exception;
 
-    public List<ScheduleVO> getOtherScheduleList(HashMap<String, String> sqlParameter);
+    public ArrayList<HashMap<String, Object>> getOtherScheduleList(HashMap<String, Object> filtersAndOrder) throws Exception;
     
     public void deleteScheduleContent(int scheduleContentNO)  throws Exception;
 
