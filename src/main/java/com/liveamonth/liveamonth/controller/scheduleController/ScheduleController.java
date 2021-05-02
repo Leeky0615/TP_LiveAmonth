@@ -34,73 +34,72 @@ import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EAlertMessage.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleAttributes.*;
-import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleAttributes.SCHEDULE_PLACE;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleFilterAndOrders.*;
 
 @Controller
-public class ScheduleController{
+public class ScheduleController {
     @Autowired
     private ScheduleService scheduleService;
 
     private int scheduleContentNO;
 
-    @RequestMapping(value="addScheduleContent")
-    public String addScheduleContent(HttpServletRequest request, ScheduleContentVO scheduleContentVO, RedirectAttributes rttr) throws Exception{
+    @RequestMapping(value = "addScheduleContent")
+    public String addScheduleContent(HttpServletRequest request, ScheduleContentVO scheduleContentVO, RedirectAttributes rttr) throws Exception {
         HttpSession session = request.getSession();
         scheduleContentVO.setScheduleNO(Integer.parseInt(String.valueOf(session.getAttribute(SELECTED_SCHEDULE_NO.getText()))));
         int count = scheduleService.beforeScheduleAddSearch(scheduleContentVO);
 
         String message = "";
-        if(count>=4){
+        if (count >= 4) {
             message = MAXIMUM_SCHEDULE_CONTENT.getText();
-        }else{
+        } else {
             scheduleService.addScheduleContent(scheduleContentVO);
             message = ADD_SCHEDULE_CONTENT.getText();
         }
 
-        rttr.addFlashAttribute(MESSAGE.getText(),message);
+        rttr.addFlashAttribute(MESSAGE.getText(), message);
         return REDIRECT_SCHEDULE.getRedirectPath();
     }
 
-    @RequestMapping(value="deleteScheduleContent")
-    public String deleteScheduleContent(RedirectAttributes rttr) throws Exception{
+    @RequestMapping(value = "deleteScheduleContent")
+    public String deleteScheduleContent(RedirectAttributes rttr) throws Exception {
         scheduleService.deleteScheduleContent(scheduleContentNO);
 
         rttr.addFlashAttribute(MESSAGE.getText(), COMPLETE_SCHEDULE_DELETION.getText());
         return REDIRECT_SCHEDULE.getRedirectPath();
     }
 
-    @RequestMapping(value="modifyScheduleContent")
-    public String modifyScheduleContent(HttpServletRequest request, RedirectAttributes rttr) throws Exception{
+    @RequestMapping(value = "modifyScheduleContent")
+    public String modifyScheduleContent(HttpServletRequest request, RedirectAttributes rttr) throws Exception {
         String scheduleContentSubject = request.getParameter(MODIFY_SCHEDULE_CONTENT_SUBJECT.getText());
         String scheduleContentDesc = request.getParameter(MODIFY_SCHEDULE_CONTENT_DESC.getText());
         int scheduleContentCost = Integer.parseInt(request.getParameter(MODIFY_SCHEDULE_CONTENT_COST.getText()));
-        scheduleService.modifyScheduleContent(scheduleContentNO,scheduleContentSubject,scheduleContentDesc,scheduleContentCost);
+        scheduleService.modifyScheduleContent(scheduleContentNO, scheduleContentSubject, scheduleContentDesc, scheduleContentCost);
 
         rttr.addFlashAttribute(MESSAGE.getText(), COMPLETE_SCHEDULE_MODIFICATION.getText());
         return REDIRECT_SCHEDULE.getRedirectPath();
     }
 
     @RequestMapping("/schedule")
-    public String schedule(Model model, HttpServletRequest request, CalendarDTO calendarDTO) throws Exception{
-    	HttpSession session = request.getSession();
-        UserVO session_UserVO = (UserVO)session.getAttribute(USER_VO.getText());
+    public String schedule(Model model, HttpServletRequest request, CalendarDTO calendarDTO) throws Exception {
+        HttpSession session = request.getSession();
+        UserVO session_UserVO = (UserVO) session.getAttribute(USER_VO.getText());
         int userNO = session_UserVO.getUserNO();
 
         ArrayList<ScheduleVO> scheduleVOList = scheduleService.getScheduleList(userNO);
 
         int scheduleNO;
 
-		if(scheduleVOList.isEmpty()) {
-			scheduleNO = scheduleService.getMaxScheduleNO() +1;
-		} else {
-			scheduleNO = scheduleVOList.get(0).getScheduleNO();
-		}
-
-        if(session.getAttribute(SELECTED_SCHEDULE_NO.getText()) != null) {
-        	scheduleNO = Integer.parseInt(String.valueOf(session.getAttribute(SELECTED_SCHEDULE_NO.getText())));
+        if (scheduleVOList.isEmpty()) {
+            scheduleNO = scheduleService.getMaxScheduleNO() + 1;
         } else {
-        	session.setAttribute(SELECTED_SCHEDULE_NO.getText(), scheduleNO);
+            scheduleNO = scheduleVOList.get(0).getScheduleNO();
+        }
+
+        if (session.getAttribute(SELECTED_SCHEDULE_NO.getText()) != null) {
+            scheduleNO = Integer.parseInt(String.valueOf(session.getAttribute(SELECTED_SCHEDULE_NO.getText())));
+        } else {
+            session.setAttribute(SELECTED_SCHEDULE_NO.getText(), scheduleNO);
         }
 
         CalendarDTO calendarDto = scheduleService.showCalendar(calendarDTO, scheduleNO);
@@ -114,21 +113,21 @@ public class ScheduleController{
 
 
     @RequestMapping("/swapSchedule")
-    public String swapSchedule(HttpServletRequest request) throws Exception{
+    public String swapSchedule(HttpServletRequest request) throws Exception {
         HttpSession session = request.getSession();
         session.setAttribute(SELECTED_SCHEDULE_NO.getText(), request.getParameter(SELECT_SCHEDULE.getText()));
         return REDIRECT_SCHEDULE.getRedirectPath();
     }
 
-    @RequestMapping(value="addSchedule")
-    public String addSchedule(HttpServletRequest request, ScheduleVO scheduleVO, RedirectAttributes rttr) throws Exception{
+    @RequestMapping(value = "addSchedule")
+    public String addSchedule(HttpServletRequest request, ScheduleVO scheduleVO, RedirectAttributes rttr) throws Exception {
         HttpSession session = request.getSession();
-        UserVO session_UserVO = (UserVO)session.getAttribute(USER_VO.getText());
+        UserVO session_UserVO = (UserVO) session.getAttribute(USER_VO.getText());
         scheduleVO.setUserNO(session_UserVO.getUserNO());
         scheduleVO.setScheduleViewCount(0);
 
         String message = "";
-        if(scheduleService.addSchedule(scheduleVO)) {
+        if (scheduleService.addSchedule(scheduleVO)) {
             message = ADD_SCHEDULE.getText();
         } else {
             message = FAIL_TO_ADD_SCHEDULE.getText();
@@ -138,13 +137,13 @@ public class ScheduleController{
     }
 
 
-    @RequestMapping(value="modifySchedule")
-    public String modifySchedule(HttpServletRequest request, ScheduleVO scheduleVO, RedirectAttributes rttr) throws Exception{
-    	HttpSession session = request.getSession();
-    	scheduleVO.setScheduleNO(Integer.parseInt(String.valueOf(session.getAttribute(SELECTED_SCHEDULE_NO.getText()))));
+    @RequestMapping(value = "modifySchedule")
+    public String modifySchedule(HttpServletRequest request, ScheduleVO scheduleVO, RedirectAttributes rttr) throws Exception {
+        HttpSession session = request.getSession();
+        scheduleVO.setScheduleNO(Integer.parseInt(String.valueOf(session.getAttribute(SELECTED_SCHEDULE_NO.getText()))));
 
         String message = "";
-        if(scheduleService.modifySchedule(scheduleVO)) {
+        if (scheduleService.modifySchedule(scheduleVO)) {
             message = COMPLETE_SCHEDULE_MODIFICATION.getText();
         } else {
             message = FAIL_TO_MODIFY_SCHEDULE.getText();
@@ -154,12 +153,12 @@ public class ScheduleController{
         return REDIRECT_SCHEDULE.getRedirectPath();
     }
 
-    @RequestMapping(value="deleteSchedule")
-    public String deleteSchedule(HttpServletRequest request, RedirectAttributes rttr) throws Exception{
+    @RequestMapping(value = "deleteSchedule")
+    public String deleteSchedule(HttpServletRequest request, RedirectAttributes rttr) throws Exception {
         HttpSession session = request.getSession();
 
         String message = "";
-        if(scheduleService.deleteSchedule(Integer.parseInt(String.valueOf(session.getAttribute(SELECTED_SCHEDULE_NO.getText()))))) {
+        if (scheduleService.deleteSchedule(Integer.parseInt(String.valueOf(session.getAttribute(SELECTED_SCHEDULE_NO.getText()))))) {
             session.setAttribute(SELECTED_SCHEDULE_NO.getText(), null);
             message = COMPLETE_SCHEDULE_DELETION.getText();
         } else {
@@ -172,6 +171,7 @@ public class ScheduleController{
 
     @ResponseBody
     @RequestMapping(value = "/showScheduleContentList", method = RequestMethod.POST)
-    public void showScheduleContentList(Model model, HttpServletRequest request, CalendarDTO calendarDTO) throws Exception{
+    public void showScheduleContentList(Model model, HttpServletRequest request, CalendarDTO calendarDTO) throws Exception {
         this.scheduleContentNO = Integer.parseInt(request.getParameter(SCHEDULE_CONTENT_NO.getText()));
     }
+}

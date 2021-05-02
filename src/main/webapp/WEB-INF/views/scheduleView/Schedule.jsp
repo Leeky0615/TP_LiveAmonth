@@ -27,7 +27,6 @@
       type="text/css">
 <script src="resources/js/schedule.js"></script>
 <script src="resources/js/board.js"></script>
-
 <script type="text/javaScript" language="javascript"></script>
 <div class="search-form-content">
     <form action="swapSchedule" class="filter-form">
@@ -121,7 +120,7 @@
                                     <div class="text_subject">지역</div>
                                     <select class="sm-width" name="schedulePlace" id="modifyPlace">
                                         <c:forEach var="schedulePlace" items="${schedulePlaceList}">
-                                            <option value="${schedulePlace.status()}">${schedulePlace.nameKR}</option>
+                                            <option value="${schedulePlace}">${schedulePlace.nameKR}</option>
                                         </c:forEach>
                                     </select>
                                     <script> $("#modifyPlace").val("${scheduleVO.schedulePlace}").prop("selected", true); </script>

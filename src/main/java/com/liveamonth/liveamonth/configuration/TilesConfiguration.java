@@ -12,10 +12,10 @@ public class TilesConfiguration implements WebMvcConfigurer {
 
     @Bean
     public TilesConfigurer tilesConfigurer(){
-        TilesConfigurer configurer = new TilesConfigurer();
-        configurer.setDefinitions(new String[]{"/WEB-INF/tiles/tiles.xml"});
-        configurer.setCheckRefresh(true);
-        return configurer;
+        TilesConfigurer tilesConfigurer = new TilesConfigurer();
+        tilesConfigurer.setDefinitions(new String[]{"/WEB-INF/tiles/tiles.xml"});
+        tilesConfigurer.setCheckRefresh(true);
+        return tilesConfigurer;
     }
 
     @Override

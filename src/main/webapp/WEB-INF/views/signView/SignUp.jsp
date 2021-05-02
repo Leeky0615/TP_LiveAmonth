@@ -108,17 +108,17 @@
                                     name="userAge" oninput="maxLengthCheck(this)">
                             </div>
 
-								<div class="form-group mb-3">
-									<label class="label" for="userEmail">이메일</label> <input
-										type="text" id="userEmail" class="form-control result-email"
-										placeholder="johndoe@gmail.com" name="userEmail">
-									<button type="button" class="checkEmail">중복확인</button>
-									<p class="emailResult">
-										<span class="emailMsg">중복확인을 해주세요.</span>
-									</p>
-								</div>
+                            <div class="form-group mb-3">
+                                <label class="label" for="userEmail">이메일</label> <input
+                                    type="text" id="userEmail" class="form-control result-email"
+                                    placeholder="johndoe@gmail.com" name="userEmail">
+                                <button type="button" class="checkEmail">중복확인</button>
+                                <p class="emailResult">
+                                    <span class="emailMsg">중복확인을 해주세요.</span>
+                                </p>
+                            </div>
 
-								<div class="form-group d-md-flex">
+                            <div class="form-group d-md-flex">
                                 <div class="w-100 text-left">
                                     <label class="checkbox-wrap checkbox-primary">I agree
                                         all statements in terms of service <input type="checkbox"
@@ -214,7 +214,7 @@
 
     });
     /////////////////////////////////////////////////////////////////
-        $(".checkEmail").click(function () {
+    $(".checkEmail").click(function () {
         var query = {userEmail: $("#userEmail").val()};
 
         $.ajax({

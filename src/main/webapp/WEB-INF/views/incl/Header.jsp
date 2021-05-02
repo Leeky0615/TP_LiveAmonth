@@ -37,6 +37,9 @@
     <link rel="stylesheet" href="resources/css/loginstyle.css" type="text/css">
     <link rel="stylesheet" href="resources/css/signUpStyle.css" type="text/css">
     <link rel="stylesheet" href="resources/css/ihover.min.css" type="text/css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
+    <script src="resources/js/cityInfo.js"></script>
 </head>
 <body>
 <!-- Page Preloder -->
@@ -103,10 +106,12 @@
                 <div class="col-lg-9">
                     <nav class="nav-menu">
                         <ul>
-                            <li class="active"><a href="cityInfo">CITY</a>
+                            <li class="active"><a href="selectCityInfo?page=all" >CITY</a>
                                 <ul class="dropdown">
-                                    <c:forEach var="name" items="${cityNameList}" varStatus="status">
-                                        <li><a href="selectCityInfo?page=${name}">${name}</a></li>
+                                    <c:forEach var="cityIntro" items="${cityIntroList}">
+                                    <li>
+                                        <a href="selectCityInfo?page=${cityIntro.cityVO.cityName}">${cityIntro.cityVO.cityName}</a>
+                                    </li>
                                     </c:forEach>
                                 </ul>
                             </li>

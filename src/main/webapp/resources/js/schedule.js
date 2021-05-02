@@ -1,5 +1,3 @@
-
-
 		function addScheduleContentButton() {
 			var addScheduleForm = document.addScheduleContent;
 			if (addScheduleForm.scheduleContentDate.value == ""

@@ -4,8 +4,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 <mapper namespace="com.liveamonth.liveamonth.model.mapper.cityInfoMapper.CityInfoMapper">
-        <select id="getCityInfoList" parameterType = "String" resultType="CityInfoVO">
-            select cityInfoCategory, cityInfoDesc, cityInfoImage
+        <select id="getCityInfoList" parameterType = "String" resultMap="cityInfoList">
+            select city.cityNo, cityName,cityInfoCategory, cityInfoDesc, cityInfoImage
             from city, cityInfo
             where city.cityNO = cityInfo.cityNO
               and cityInfoCategory=#{cityInfoCategory}
@@ -13,7 +13,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </select>
 
     <resultMap type= "CityInfoVO" id="cityInfoList">
-        <id column="cityInfoNO" property="cityInfoNO"/>
         <result column="cityInfoCategory" property="cityInfoCategory"/>
         <result column="cityInfoDesc" property="cityInfoDesc"/>
         <result column="cityInfoImage" property="cityInfoImage"/>
