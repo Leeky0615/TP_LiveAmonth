@@ -64,7 +64,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 
  	<select id="getOtherScheduleList" parameterType="HashMap" resultMap="scheduleFilterAndOrder">
-		select userNickname, scheduleSubject,(Year(curdate())-user.userAge) as userAge,userSex,schedulePlace,scheduleViewCount,COUNT(scheduleLike.scheduleNO) as scheduleLikeCount
+		select schedule.scheduleNO, user.userNO, userNickname, scheduleSubject,(Year(curdate())-user.userAge) as userAge,userSex,schedulePlace,scheduleViewCount,COUNT(scheduleLike.scheduleNO) as scheduleLikeCount
 		from user, schedule, scheduleLike
 		where user.userNO = schedule.userNO
 		and schedule.scheduleNO = scheduleLike.scheduleNO
