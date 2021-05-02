@@ -1,16 +1,15 @@
 package com.liveamonth.liveamonth.model.mapper.scheduleMapper;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
+import com.liveamonth.liveamonth.entity.vo.ScheduleContentVO;
 import com.liveamonth.liveamonth.entity.vo.ScheduleLikeVO;
 import com.liveamonth.liveamonth.entity.vo.ScheduleReplyVO;
 import com.liveamonth.liveamonth.entity.vo.ScheduleVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
-import com.liveamonth.liveamonth.entity.vo.ScheduleContentVO;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 @Repository
 @Mapper
@@ -59,4 +58,8 @@ public interface ScheduleMapper {
     public boolean addScheduleLike(ScheduleLikeVO scheduleLikeVO)throws Exception;
 
     public boolean deleteScheduleLike(ScheduleLikeVO scheduleLikeVO)throws Exception;
+
+    public HashMap<String, String> getScheduleAndLikeCount(int scheduleNO) throws Exception;
+
+    public void increaseScheduleViewCount(int scheduleNO);
 }

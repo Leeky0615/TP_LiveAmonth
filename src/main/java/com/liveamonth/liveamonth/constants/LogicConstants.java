@@ -53,6 +53,7 @@ public class LogicConstants {
         DATE_LIST("dateList"),
         TODAY_INFORMATION("todayInformation"),
         SCHEDULEREPLY_VO_LIST("scheduleVOReplyList"),
+        OTHER_SCHEDULE_AND_LIKE_COUNT("otherScheduleAndLikeCount"),
         SELECT_SCHEDULE("selectSchedule");
         private String text;
         private EScheduleAttributes(String text) {this.text = text;}

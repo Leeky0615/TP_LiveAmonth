@@ -2,6 +2,7 @@ package com.liveamonth.liveamonth.model.service.scheduleService;
 
 
 import com.liveamonth.liveamonth.entity.dto.CalendarDTO;
+import com.liveamonth.liveamonth.entity.dto.Paging;
 import com.liveamonth.liveamonth.entity.vo.ScheduleContentVO;
 import com.liveamonth.liveamonth.entity.vo.ScheduleLikeVO;
 import com.liveamonth.liveamonth.entity.vo.ScheduleReplyVO;
@@ -290,37 +291,42 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public int getScheduleReplyCount(int scheduleNO) throws Exception {
-        return scheduleMapper.getScheduleReplyCount(scheduleNO);
-    }
-
-    @Override
     public int getScheduleLikeStatus(ScheduleLikeVO scheduleLikeVO) throws Exception {
         return scheduleMapper.getScheduleLikeStatus(scheduleLikeVO);
     }
 
     @Override
-    public int getScheduleLikeCount(int scheduleNO) throws Exception {
-        return scheduleMapper.getScheduleLikeCount(scheduleNO);
+    public HashMap<String, String> getScheduleAndLikeCount(int scheduleNO) throws Exception {
+        return scheduleMapper.getScheduleAndLikeCount(scheduleNO);
     }
 
     @Override
     public HashMap<String, Integer> getScheduleLikeAndCount(ScheduleLikeVO scheduleLikeVO) throws Exception {
         HashMap<String, Integer> like = new HashMap<>();
-        int likeStatus = getScheduleLikeStatus(scheduleLikeVO);
+        int likeStatus = scheduleMapper.getScheduleLikeStatus(scheduleLikeVO);
         if(likeStatus == 0){
            if(scheduleMapper.addScheduleLike(scheduleLikeVO)){
                like.put(LIKE_STATUS.getText(), 1);
-               like.put(LIKE_COUNT.getText(), getScheduleLikeCount(scheduleLikeVO.getScheduleNO()));
-               return like;
            }
         } else if(likeStatus == 1){
             if(scheduleMapper.deleteScheduleLike(scheduleLikeVO)){
                 like.put(LIKE_STATUS.getText(), 0);
-                like.put(LIKE_COUNT.getText(), getScheduleLikeCount(scheduleLikeVO.getScheduleNO()));
-                return like;
             }
         }
+        like.put(LIKE_COUNT.getText(), scheduleMapper.getScheduleLikeCount(scheduleLikeVO.getScheduleNO()));
         return like;
+    }
+
+    @Override
+    public Paging showPaging(int selectPage, int scheduleNO) throws Exception {
+        Paging paging = new Paging();
+        paging.setPage(selectPage);
+        paging.setTotalCount(scheduleMapper.getScheduleReplyCount(scheduleNO));
+        return paging;
+    }
+
+    @Override
+    public void increaseScheduleViewCount(int scheduleNO) {
+        scheduleMapper.increaseScheduleViewCount(scheduleNO);
     }
 }

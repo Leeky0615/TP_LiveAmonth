@@ -32,61 +32,18 @@
    <script src="resources/js/board.js"></script>
 
    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet"> <!--CDN 링크 -->
 
    <script type="text/javaScript" language="javascript"></script>
 
-   <script>
-      $(function(){
-         // 추천버튼 클릭시(추천 추가 또는 추천 제거)
-         $("#rec_update").click(function(){
-            $.ajax({
-               url: "/expro/RecUpdate.do",
-               type: "POST",
-               data: {
-                  no: ${content.board_no},
-                  id: '${id}'
-               },
-               success: function () {
-                  recCount();
-               },
-            })
-         })
 
-         // 게시글 추천수
-         function recCount() {
-            $.ajax({
-               url: "/expro/RecCount.do",
-               type: "POST",
-               data: {
-                  no: ${content.board_no}
-               },
-               success: function (count) {
-                  $(".rec_count").html(count);
-               },
-            })
-         };
-         recCount(); // 처음 시작했을 때 실행되도록 해당 함수 호출
-
-         // 로그인 클릭
-         $("#newLogin").click(function(){
-            var ww=400;    //띄울 창의 넓이
-            var wh=250;    //띄울 창의 높이
-
-            // 중앙 좌표
-            var top=(screen.availHeight-wh)/2;
-            var left=(screen.availWidth-ww)/2;
-            // 새창 띄움
-            window.open("/expro/NewLoginForm.do", "window", "width="+ww+", height="+wh+", top="+top+", left="+left+", toolbar=no, menubar=no, scrollbars=no, resizable=no");
-         });
-      })
-   </script>
 
 </head>
 <body style="background:#ffffff">
 <jsp:include page="/incl/Header.jsp" />
 
 <input type = "hidden" id = "userNO" name = "userNO" value="${userVO.userNO}"/>
-<input type = "hidden" id = "selectedScheduleNO" name = "selectedScheduleNO" value="${scheduleNO}"/>
+<input type = "hidden" id = "selectedScheduleNO" name = "selectedScheduleNO" value="${otherScheduleAndLikeCount.scheduleNO}"/>
 
    <form name="calendarFrm" id="calendarFrm" action="schedule"
          method="GET">
@@ -236,8 +193,8 @@
       </div>
 
    <div class="container bootdey likeDiv">
+      <span class = "likeSpan"> 좋아요&nbsp;&nbsp; </span>
       <a href="#" class="heart-icon" onclick="updateScheduleLike(); return false; ">
-         <span class = "likeSpan"> 좋아요&nbsp;&nbsp; </span>
          <c:choose>
             <c:when test="${likeStatus == 1}">
                <span id = "like" class="icon_heart dis-none"></span>
@@ -247,7 +204,9 @@
             </c:otherwise>
          </c:choose>
       </a>
-      <span id = "likeCount" class = "likeSpan"> &nbsp;${likeCount} </span>
+      <span id = "likeCount" class = "likeSpan" style="margin-right: 20px;"> &nbsp;${otherScheduleAndLikeCount.likeCount} </span>
+      <span class = "likeSpan"> 조회수&nbsp;&nbsp; </span>
+      <span id = "scheduleViewCount" class = "likeSpan"><i class="far fa-eye viewCountSpan"></i>  &nbsp;${otherScheduleAndLikeCount.scheduleViewCount} </span>
    </div>
 
       <div class="container bootdey">
@@ -259,7 +218,7 @@
          <div class="col-md-12 bootstrap snippets">
             <div class="panel">
                <jsp:include page="scheduleReplyDesc.jsp">
-                  <jsp:param value="${param.scheduleNO}" name="scheduleNO"/>
+                  <jsp:param value="${otherScheduleAndLikeCount.scheduleNO}" name="scheduleNO"/>
                   <jsp:param value="0" name="scheduleReplyNO"/>
                </jsp:include>
             </div>
@@ -274,7 +233,7 @@
                            <c:choose>
                               <c:when test="${scheduleVOReply.scheduleReply.scheduleReplyRefNO == 0}">
                                  <jsp:include page="scheduleReply.jsp">
-                                    <jsp:param value="${scheduleNO}" name="scheduleNO"/>
+                                    <jsp:param value="${otherScheduleAndLikeCount.scheduleNO}" name="scheduleNO"/>
                                     <jsp:param value="${scheduleVOReply.userNickname}" name="userNickname"/>
                                     <jsp:param value="${scheduleVOReply.scheduleReply.scheduleReplyNO}" name="scheduleReplyNO"/>
                                     <jsp:param value="${scheduleVOReply.scheduleReply.scheduleReplyDate}" name="scheduleReplyDate"/>
@@ -301,7 +260,7 @@
                                           <a class="media-left" href="#"><img class="img-circle img-sm" alt="Profile Picture" src="https://blog.kakaocdn.net/dn/c3vWTf/btqUuNfnDsf/VQMbJlQW4ywjeI8cUE91OK/img.jpg"></a>
                                           <div class="media-body">
                                              <jsp:include page="scheduleReply.jsp">
-                                                <jsp:param value="${scheduleNO}" name="scheduleNO"/>
+                                                <jsp:param value="${otherScheduleAndLikeCount.scheduleNO}" name="scheduleNO"/>
                                                 <jsp:param value="${scheduleVOReplyRef.userNickname}" name="userNickname"/>
                                                 <jsp:param value="${scheduleVOReplyRef.scheduleReply.scheduleReplyNO}" name="scheduleReplyNO"/>
                                                 <jsp:param value="${scheduleVOReplyRef.scheduleReply.scheduleReplyDate}" name="scheduleReplyDate"/>
@@ -322,7 +281,7 @@
                   </c:forEach>
 
                   <jsp:include page="paging.jsp">
-                     <jsp:param value="${scheduleNO}" name="scheduleNO"/>
+                     <jsp:param value="${otherScheduleAndLikeCount.scheduleNO}" name="scheduleNO"/>
                      <jsp:param value="${paging.page}" name="page"/>
                      <jsp:param value="${paging.beginPage}" name="beginPage"/>
                      <jsp:param value="${paging.endPage}" name="endPage"/>

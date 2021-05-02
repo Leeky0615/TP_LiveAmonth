@@ -165,7 +165,7 @@ public class EntityConstants {
         SCHEDULE_VO_LIST("scheduleVOList"),
         SCHEDULE_NO("scheduleNO"),
         SCHEDULE_SUBJECT("scheduleSubject"),
-        SCHEDULE_LIKE_COUNT("scheduleLikeCount"),
+        SCHEDULE_VIEW_COUNT("scheduleViewCount"),
         SCHEDULE_STATUS("scheduleStatus"),
         SCHEDULE_PLACE("schedulePlace");
         private String text;

@@ -13,6 +13,7 @@ import com.liveamonth.liveamonth.model.service.scheduleService.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -24,17 +25,13 @@ import java.util.HashMap;
 import java.util.List;
 
 import static com.liveamonth.liveamonth.constants.ControllerPathConstants.ESchedulePath.*;
-import static com.liveamonth.liveamonth.constants.ControllerPathConstants.ESchedulePath.REDIRECT_OTHER_SCHEDULE;
 import static com.liveamonth.liveamonth.constants.EntityConstants.ESchedule.SCHEDULE_NO;
 import static com.liveamonth.liveamonth.constants.EntityConstants.ESchedule.SCHEDULE_VO_LIST;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EScheduleReply.SCHEDULE_REPLY_NO;
-import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.USER_NO;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.USER_VO;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EAlertMessage.*;
-import static com.liveamonth.liveamonth.constants.LogicConstants.EAlertMessage.FAIL_TO_DELETE_SCHEDULEREPLY;
-import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleAttributes.*;
-import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleAttributes.MESSAGE;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EPaging.*;
+import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleAttributes.*;
 
 @Controller
 public class OtherScheduleController {
@@ -75,31 +72,30 @@ public class OtherScheduleController {
     public String otherSchedule(Model model, HttpServletRequest request, CalendarDTO calendarDTO) throws Exception{
         HttpSession session = request.getSession();
         UserVO session_UserVO = (UserVO)session.getAttribute(USER_VO.getText());
+
         int scheduleNO = Integer.parseInt((String) request.getParameter(SCHEDULE_NO.getText()));
+        int selectPage = 1;
+        if(request.getParameter(SELECTED_PAGE.getText()) != null) {
+            selectPage = Integer.parseInt(request.getParameter(SELECTED_PAGE.getText()));
+        }
+
+        scheduleService.increaseScheduleViewCount(scheduleNO);
 
         CalendarDTO calendarDto = scheduleService.showCalendar(calendarDTO, scheduleNO);
+        Paging paging = scheduleService.showPaging(selectPage, scheduleNO);
 
-        int page = 1;
-        if(request.getParameter(SELECTED_PAGE.getText()) != null){
-            page = Integer.parseInt(request.getParameter(SELECTED_PAGE.getText()));
-        }
-        Paging paging = new Paging();
-        paging.setPage(page);
-        paging.setTotalCount(scheduleService.getScheduleReplyCount(scheduleNO));
-
+        //아직은 scheduleNO와 VIEW밖에 이용을 안해 VO째로 꺼내오지 않음. 만약 VO째로 꺼내오게 된다면 mapper의 resultMap을 수정.
+        model.addAttribute(OTHER_SCHEDULE_AND_LIKE_COUNT.getText(), scheduleService.getScheduleAndLikeCount(scheduleNO));
+        model.addAttribute(SCHEDULEREPLY_VO_LIST.getText(), scheduleService.getScheduleReplyList(scheduleNO, selectPage));
+        model.addAttribute(PAIGING.getText(), paging);
+        model.addAttribute(DATE_LIST.getText(), calendarDto.getDateList()); //날짜 데이터 배열
+        model.addAttribute(TODAY_INFORMATION.getText(), calendarDto.getTodayInformation());
         if(session_UserVO != null){
             ScheduleLikeVO scheduleLikeVO = new ScheduleLikeVO();
             scheduleLikeVO.setScheduleNO(scheduleNO);
             scheduleLikeVO.setScheduleLikeUserNO(session_UserVO.getUserNO());
             model.addAttribute(LIKE_STATUS.getText(), scheduleService.getScheduleLikeStatus(scheduleLikeVO));
         }
-
-        model.addAttribute(LIKE_COUNT.getText(), scheduleService.getScheduleLikeCount(scheduleNO));
-        model.addAttribute(SCHEDULEREPLY_VO_LIST.getText(), scheduleService.getScheduleReplyList(scheduleNO, page));
-        model.addAttribute(PAIGING.getText(), paging);
-        model.addAttribute(SCHEDULE_NO.getText(), scheduleNO);
-        model.addAttribute(DATE_LIST.getText(), calendarDto.getDateList()); //날짜 데이터 배열
-        model.addAttribute(TODAY_INFORMATION.getText(), calendarDto.getTodayInformation());
 
         return OTHER_SCHEDULE.getPath();
     }
@@ -160,13 +156,7 @@ public class OtherScheduleController {
     }
     @ResponseBody
     @RequestMapping(value = "/updateScheduleLike", method = RequestMethod.GET)
-    public HashMap<String, Integer> getScheduleLikeAndCount(HttpServletRequest request) throws Exception{
-        int scheduleNO = Integer.parseInt(String.valueOf(request.getParameter(SCHEDULE_NO.getText())));
-        int userNO = Integer.parseInt(String.valueOf(request.getParameter(USER_NO.getText())));
-        ScheduleLikeVO scheduleLikeVO = new ScheduleLikeVO();
-        scheduleLikeVO.setScheduleNO(scheduleNO);
-        scheduleLikeVO.setScheduleLikeUserNO(userNO);
-
+    public HashMap<String, Integer> getScheduleLikeAndCount(HttpServletRequest request, @ModelAttribute ScheduleLikeVO scheduleLikeVO) throws Exception{
         return scheduleService.getScheduleLikeAndCount(scheduleLikeVO);
     }
 }

@@ -110,6 +110,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select count(scheduleNO) as count from scheduleLike where scheduleNO = #{scheduleNO};
 	</select>
 
+	<resultMap type = "java.util.HashMap" id="scheduleAndLikeCount">
+		<id column="scheduleNO" property="scheduleNO"/>
+		<result column="scheduleViewCount" property="scheduleViewCount"/>
+		<result column="likeCount" property="likeCount"/>
+	</resultMap>
+	<select id ="getScheduleAndLikeCount" parameterType="int" resultMap="scheduleAndLikeCount">
+		select schedule.scheduleNO, scheduleViewCount, count(scheduleLikeUserNO) as likeCount from schedule, scheduleLike where schedule.scheduleNO = scheduleLike.scheduleNO and schedule.scheduleNO = #{scheduleNO} group by schedule.scheduleNO;
+	</select>
+
 	<!-- delete -->
 	<delete id="deleteScheduleContent" parameterType="int">
 		delete from scheduleContent where scheduleContentNO = #{scheduleContentNO}
@@ -169,5 +178,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<update id="modifyScheduleReply" parameterType="com.liveamonth.liveamonth.entity.vo.ScheduleReplyVO">
 		update scheduleReply set scheduleReplyDesc = #{scheduleReplyDesc} where scheduleReplyNO = #{scheduleReplyNO}
+	</update>
+
+	<update id="increaseScheduleViewCount" parameterType="int">
+		update schedule set scheduleViewCount = scheduleViewCount + 1 where scheduleNO = #{scheduleNO};
 	</update>
 </mapper>

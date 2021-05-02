@@ -63,7 +63,7 @@
         $.ajax({
             url: "updateScheduleLike",
             type: "get",
-            data: {scheduleNO: scheduleNO, userNO: userNO},
+            data: {scheduleNO: scheduleNO, scheduleLikeUserNO: userNO},
             success:
                 function (data) {
                     if(data.likeStatus == 1){

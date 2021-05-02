@@ -1,14 +1,15 @@
 package com.liveamonth.liveamonth.model.service.scheduleService;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 import com.liveamonth.liveamonth.entity.dto.CalendarDTO;
+import com.liveamonth.liveamonth.entity.dto.Paging;
 import com.liveamonth.liveamonth.entity.vo.ScheduleContentVO;
 import com.liveamonth.liveamonth.entity.vo.ScheduleLikeVO;
 import com.liveamonth.liveamonth.entity.vo.ScheduleReplyVO;
 import com.liveamonth.liveamonth.entity.vo.ScheduleVO;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 
 public interface ScheduleService {
@@ -32,7 +33,7 @@ public interface ScheduleService {
 
 	boolean deleteSchedule(int scheduleNO) throws Exception;
 	
-	public  List<ScheduleVO> getOtherScheduleList(int sex, int age, String place, String orderBy) throws Exception;
+	public List<ScheduleVO> getOtherScheduleList(int sex, int age, String place, String orderBy) throws Exception;
 
     public ArrayList<HashMap<String, Object>> getScheduleReplyList(int scheduleNO, int page) throws Exception;
 
@@ -42,11 +43,13 @@ public interface ScheduleService {
 
     public boolean modifyScheduleReply(ScheduleReplyVO scheduleReplyVO)throws Exception;
 
-    public int getScheduleReplyCount(int scheduleNO) throws Exception;
-
     public int getScheduleLikeStatus(ScheduleLikeVO scheduleLikeVO) throws Exception;
 
-    public int getScheduleLikeCount(int scheduleNO) throws Exception;
+    public HashMap<String, String> getScheduleAndLikeCount(int scheduleNO) throws Exception;
 
     public HashMap<String, Integer> getScheduleLikeAndCount(ScheduleLikeVO scheduleLikeVO) throws Exception;
+
+    public Paging showPaging(int selectPage, int scheduleNO) throws Exception;
+
+    public void increaseScheduleViewCount(int scheduleNO);
 }
