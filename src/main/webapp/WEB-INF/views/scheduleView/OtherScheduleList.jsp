@@ -113,7 +113,32 @@
                <img src="resources/img/scheduleImg.png" alt="">
             </a>
             </td>
-            <td><c:out value="${scheduleVOList[i].getPlace()}" /></td>
+
+            <td><c:set var="place" value="${scheduleVOList[i].getPlace()}"/>
+               <c:choose>
+                  <c:when test="${place eq 'SEOUL'}">
+                     <c:out value= '서울'/>
+                  </c:when>
+                  <c:when test="${place eq 'JEJU'}">
+                     <c:out value= '제주'/>
+                  </c:when>
+                  <c:when test="${place eq 'BUSAN'}">
+                     <c:out value= '부산'/>
+                  </c:when>
+                  <c:when test="${place eq 'GANGNEUNG'}">
+                     <c:out value= '강릉'/>
+                  </c:when>
+                  <c:when test="${place eq 'YEOSU'}">
+                     <c:out value= '여수'/>
+                  </c:when>
+                  <c:when test="${place eq 'GYEONGJU'}">
+                     <c:out value= '경주'/>
+                  </c:when>
+                  <c:otherwise>
+                     <c:out value= '??'/>
+                  </c:otherwise>
+               </c:choose>
+            </td>
             <td><c:out value="${userVOList[i].getUserNickname()}" /></td>
             <td><c:out value="${sex}" /></td>
             <td><c:out value="${sysYear-userVOList[i].getUserAge()}세" /></td>
@@ -121,6 +146,9 @@
                     value="${scheduleVOList[i].getScheduleLikeCount()}" /></td>
          </tr>
       </c:forEach>
+      </c:if>
+      <c:if test="${userVOList.size()==0}">
+         <c:out value= '조건에 해당하는 결과가 없습니다'/>
       </c:if>
       </tbody>
    </table>
