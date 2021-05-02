@@ -24,7 +24,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <select id="getCityInfoListByCategory" parameterType = "String" resultMap="cityInfoList">
-        SELECT * FROM cityInfo WHERE cityInfoCategory=#{cityInfoCategory};
+        SELECT * FROM cityInfo, city
+        WHERE city.cityNO = cityInfo.cityNO
+        and cityInfoCategory=#{cityInfoCategory};
     </select>
 
 

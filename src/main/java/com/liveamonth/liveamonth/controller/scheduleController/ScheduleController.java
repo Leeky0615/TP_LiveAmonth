@@ -186,9 +186,6 @@ public class ScheduleController{
                 if(eFO == SCHEDULE_FO_ORDER) filtersAndOrder.put(eFO.getText(),"orderByNew");
                 else filtersAndOrder.put(eFO.getText()+"Filter",false);
             }
-            for (Map.Entry<String, Object> entry : filtersAndOrder.entrySet()) {
-                System.out.println("[Key]:" + entry.getKey() + " [Value]:" + entry.getValue());
-            }
         } else if(action.equals(SCHEDULE_FILTER.getText())) {// action = filter : OtherSchedule 페이지에서 필터 및 정렬 수행시
             // Hashmap에 필터/정렬 Object를 담는다.
             for(EScheduleFilterAndOrders eFO : EScheduleFilterAndOrders.values()){ // {userSex, userAge, schedulePlace, orderBy}

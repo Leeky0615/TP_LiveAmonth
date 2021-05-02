@@ -28,33 +28,34 @@ public class CityController {
         List<CityInfoVO> cityIntroList = cityService.getCityInfoListByCategory(INTRO.name());
 
         model.addAttribute(CITY_NAME_LIST.getText(), cityNameList);
-        model.addAttribute(CITY_INTRO_LIST.getText(), cityIntroList);
-        return CITY_INFO_GRID.getPath();
+        model.addAttribute(INTRO.getText(), cityIntroList);
+        return CITY_INFO.getPath();
     }
     @GetMapping(value = "selectCityInfo")
-    public String selectCityInfo(Model rttr, HttpServletRequest request) throws Exception{
+    public String selectCityInfo(Model model, HttpServletRequest request) throws Exception{
         /*
          * request에서 클릭한 메뉴의 페이지 정보를 가져옴(getParameter())
          * 받아온 파라미터를 사용해 해당 도시의 정보를 보냄
          */
-        this.setModel(rttr, request.getParameter(PAGE.getText()));
+
+        this.setModel(model, request.getParameter(PAGE.getText()));
         return CITY_INFO.getPath();
     }
 
     /*
     * Controller 내부에서 사용되는 Method
     */
-    private void setModel(Model rttr, String cityName)  throws Exception{
+    private void setModel(Model model, String cityName)  throws Exception{
         // cityName과 cityCategory를 파라미터로 받아서 리스트에 담음
         List<String> cityNameList = cityService.getCityNameList();
-        List<CityInfoVO> cityIntro = cityService.getCityInfoList(cityName,INTRO.name());
-        List<CityInfoVO> foodList = cityService.getCityInfoList(cityName,FOOD.name());
-        List<CityInfoVO> viewList = cityService.getCityInfoList(cityName,VIEW.name());
+        List<CityInfoVO> cityIntro = cityService.getCityInfoListByCategory(INTRO.name());
+        List<CityInfoVO> foodList = cityService.getCityInfoListByCategory(FOOD.name());
+        List<CityInfoVO> viewList = cityService.getCityInfoListByCategory(VIEW.name());
 
-        rttr.addAttribute(CITY_NAME.getText(), cityName);
-        rttr.addAttribute(CITY_NAME_LIST.getText(), cityNameList);
-        rttr.addAttribute(INTRO.getText(), cityIntro.get(0));
-        rttr.addAttribute(FOOD.getText(), foodList);
-        rttr.addAttribute(VIEW.getText(), viewList);
+        model.addAttribute(CITY_NAME.getText(), cityName);
+        model.addAttribute(CITY_NAME_LIST.getText(), cityNameList);
+        model.addAttribute(INTRO.getText(), cityIntro);
+        model.addAttribute(FOOD.getText(), foodList);
+        model.addAttribute(VIEW.getText(), viewList);
     }
 }
