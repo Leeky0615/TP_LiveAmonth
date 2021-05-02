@@ -4,6 +4,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <body>
+
+<!--  <div class="container">
+   <div class="row">
+      <div class="col-lg-12 p-0">  -->
+
 <form action="/otherScheduleList" class="filter-form">
    <h4>필터 검색</h4>
    <table>
@@ -17,24 +22,24 @@
       </thead>
       <tbody>
       <tr>
-         <td><select name="sex" id="sex" class="sm-width">
-            <option value="0">기본</option>
-            <option value="1">남성</option>
-            <option value="2">여성</option>
+         <td><select name="userSex" id="userSex" class="sm-width">
+            <option value="null">기본</option>
+            <option value="0">남성</option>
+            <option value="1">여성</option>
          </select>
          </td>       
-         <td><select name="age" id="age" class="sm-width">
-            <option value="0">기본</option>
+         <td><select name="userAge" id="userAge" class="sm-width">
+            <option value="null">기본</option>
             <option value="20">20대</option>
             <option value="30">30대</option>
             <option value="40">40대</option>
             <option value="50">50대</option>
             <option value="60">60대</option>
          </select></td>
-         <td><select name="place" id="place" class="sm-width">
+         <td><select name="schedulePlace" id="schedulePlace" class="sm-width">
             <option value= "null">기본</option>
-            <c:forEach var="place" items="${placeList}">
-               <option value="${place}">${place.nameKR}</option>
+            <c:forEach var="schedulePlace" items="${schedulePlaceList}" varStatus="status">
+               <option value="${status.index}">${schedulePlace.nameKR}</option>
             </c:forEach>
          </select></td>
 	<!-- 	<td><input type="submit" name="filter" value="조회"></td> -->
@@ -54,6 +59,7 @@
       <tr>
          <td>
         	 <input type="radio" name="orderBy" value="orderByLiked" checked = "checked" class="sm-width">좋아요 순
+        	 <input type="radio" name="orderBy" value="orderByView" checked = "checked" class="sm-width">조회 순
         	 <input type="radio" name="orderBy" value="orderByNew" class="sm-width">최신 순
 		 </td>
          <td><input type="submit" name="order" value="적용"></td>
@@ -82,7 +88,7 @@
          <fmt:formatDate value="${now}" pattern="yyyy" />
       </c:set>
 		
-	  <c:if test="${userVOList.size()>0}">
+	  <c:if test="${otherScheduleList[i].userVO.size()>0}">
       <c:set var="size" value="${fn:length(userVOList)}" />
       <c:forEach var="i" begin="0" end="${size-1}">
          <c:choose>
@@ -102,8 +108,8 @@
                <img src="resources/img/scheduleImg.png" alt="">
             </a>
             </td>
-            <td><c:out value="${scheduleVOList[i].getPlace()}" /></td>
-            <td><c:out value="${userVOList[i].getUserNickname()}" /></td>
+            <td>${otherScheduleList[i].schedulePlace}</td>
+            <td>${otherScheduleList[i].userVO.userNickname}</td>
             <td><c:out value="${sex}" /></td>
             <td><c:out value="${sysYear-userVOList[i].getUserAge()}세" /></td>
             <td><c:out

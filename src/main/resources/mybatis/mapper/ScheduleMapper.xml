@@ -49,23 +49,52 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</where>
 
 	</select>  -->
-	
- 	<select id="getOtherScheduleList" parameterType="HashMap" resultType="ScheduleVO">
-		select * from schedule	
-		<where> 
+	<resultMap type = "java.util.HashMap" id="scheduleFilterAndOrder">
+		<id column="scheduleNO" property="scheduleNO"/>
+		<result column="scheduleSubject" property="scheduleSubject"/>
+		<result column="schedulePlace" property="schedulePlace"/>
+		<result column="scheduleViewCount" property="scheduleViewCount"/>
+		<association property="userVO" javaType="userVO">
+			<id column="userNO" property="userNO"/>
+			<result column="userNickname" property="userNickname"/>
+			<result column="userAge" property="userAge"/>
+			<result column="userSex" property="userSex"/>
+		</association>
+		<association property="scheduleLikeVO" javaType="scheduleLikeVO">
+			<id column="scheduleNO" property="scheduleNO"/>
+			<result column="scheduleLikeUserNO" property="scheduleLikeUserNO"/>
+		</association>
+	</resultMap>
+
+ 	<select id="getOtherScheduleList" parameterType="HashMap" resultType="scheduleFilterAndOrder">
+		select userNickname, scheduleSubject,(Year(curdate())-user.userAge) as userAge,userSex,schedulePlace,scheduleViewCount,COUNT(scheduleLike.scheduleNO) as scheduleLikeCount
+		from user, schedule, scheduleLike
+		where user.userNO = schedule.userNO
+		and schedule.scheduleNO = scheduleLike.scheduleNO
+		<if test="!userAgeFilter">
+			and Year(curdate())-user.userAge between #{userAge} and #{userAge}+9
+		</if>
+		<if test="!userSexFilter">
+			and userSex = #{userSex}
+		</if>
+		<if test="!schedulePlaceFilter">
+			and schedulePlace = #{schedulePlace}
+		</if>
+		GROUP BY schedule.scheduleNO
 		<choose>
-			<when test="filter!=null">
-				AND schedule.scheduleStatus = true ${filter}
+			<when test="orderBy == 'orderByView'">
+				ORDER BY schedule.scheduleViewCount desc;
+			</when>
+			<when test="orderBy == 'orderByLiked'">
+				ORDER BY COUNT(scheduleLike.scheduleNO) desc;
+			</when>
+			<when test="orderBy == 'orderByNew'">
+				ORDER BY schedule.scheduleNO desc;
 			</when>
 			<otherwise>
-				AND schedule.scheduleStatus = true
+				ORDER BY schedule.scheduleNO desc;
 			</otherwise>
 		</choose>
-		</where>
-		<trim prefix="ORDER BY"> 
-			<if test="orderBy =='scheduleNO'">${orderBy} ASC</if>
-			<if test="orderBy =='scheduleLikeCount'">${orderBy} DESC</if>	 
-		</trim> 	
 	</select>
 
 	<resultMap type = "java.util.HashMap" id="scheduleReplyAndNickname">
@@ -104,7 +133,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<!-- insert -->
 	<insert id="addSchedule" parameterType="ScheduleVO">
-		insert into schedule values(#{scheduleNO}, #{scheduleSubject}, #{scheduleLikeCount}, #{scheduleStatus},#{place},#{userNO})
+		insert into schedule values(#{scheduleNO}, #{scheduleSubject},#{scheduleStatus},#{schedulePlace},#{scheduleViewCount},#{userNO})
 	</insert>
 
 	<insert id="addScheduleContent" parameterType="ScheduleContentVO">
@@ -134,6 +163,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 	
 	<update id="modifySchedule" parameterType="ScheduleVO">
-		update schedule set scheduleSubject = #{scheduleSubject}, scheduleStatus = #{scheduleStatus}, schedulePlace = #{place} where scheduleNO = #{scheduleNO}
+		update schedule set scheduleSubject = #{scheduleSubject}, scheduleStatus = #{scheduleStatus}, schedulePlace = #{schedulePlace} where scheduleNO = #{scheduleNO}
 	</update>
 </mapper>
