@@ -39,7 +39,7 @@ public class LogicConstants {
         SELECTED_SCHEDULE_NO("selectedScheduleNO"),
         MESSAGE("message"),
         USER_VO_LIST("userVOList"),
-        PLACE_LIST("schedulePlaceList"),
+        SCHEDULE_PLACE_LIST("schedulePlaceList"),
         SCHEDULE_ACTION("action"),
         SCHEDULE_LIST("list"),
         SCHEDULE_FILTER("filter"),

@@ -115,9 +115,8 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     //otherList
     @Override
-	public ArrayList<HashMap<String, Object>> getOtherScheduleList(HashMap<String, Object> filtersAndOrder) {
-		HashMap<String, String> sqlParameter = new HashMap<String, String>();
-		return null;
+	public ArrayList<HashMap<String, Object>> getOtherScheduleList(HashMap<String, Object> filtersAndOrder) throws Exception{
+		return scheduleMapper.getOtherScheduleList(filtersAndOrder);
 	}
 
     @Override

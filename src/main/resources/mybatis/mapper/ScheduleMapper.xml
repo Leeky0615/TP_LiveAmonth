@@ -54,30 +54,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="scheduleSubject" property="scheduleSubject"/>
 		<result column="schedulePlace" property="schedulePlace"/>
 		<result column="scheduleViewCount" property="scheduleViewCount"/>
+		<result column="scheduleLikeCount" property="scheduleLikeCount"/>
 		<association property="userVO" javaType="userVO">
 			<id column="userNO" property="userNO"/>
 			<result column="userNickname" property="userNickname"/>
 			<result column="userAge" property="userAge"/>
 			<result column="userSex" property="userSex"/>
 		</association>
-		<association property="scheduleLikeVO" javaType="scheduleLikeVO">
-			<id column="scheduleNO" property="scheduleNO"/>
-			<result column="scheduleLikeUserNO" property="scheduleLikeUserNO"/>
-		</association>
 	</resultMap>
 
- 	<select id="getOtherScheduleList" parameterType="HashMap" resultType="scheduleFilterAndOrder">
+ 	<select id="getOtherScheduleList" parameterType="HashMap" resultMap="scheduleFilterAndOrder">
 		select userNickname, scheduleSubject,(Year(curdate())-user.userAge) as userAge,userSex,schedulePlace,scheduleViewCount,COUNT(scheduleLike.scheduleNO) as scheduleLikeCount
 		from user, schedule, scheduleLike
 		where user.userNO = schedule.userNO
 		and schedule.scheduleNO = scheduleLike.scheduleNO
-		<if test="!userAgeFilter">
+		<if test="userAgeFilter">
 			and Year(curdate())-user.userAge between #{userAge} and #{userAge}+9
 		</if>
-		<if test="!userSexFilter">
+		<if test="userSexFilter">
 			and userSex = #{userSex}
 		</if>
-		<if test="!schedulePlaceFilter">
+		<if test="schedulePlaceFilter">
 			and schedulePlace = #{schedulePlace}
 		</if>
 		GROUP BY schedule.scheduleNO
