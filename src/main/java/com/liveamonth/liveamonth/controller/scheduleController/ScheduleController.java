@@ -172,20 +172,6 @@ public class ScheduleController{
         this.scheduleContentNO = Integer.parseInt(request.getParameter(SCHEDULE_CONTENT_NO.getText()));
     }
 
-//    private int checkOption(String option){
-//        if(!option.equals("null")) return Integer.parseInt(option);
-//        else return -1;
-//    }
-
-//    private int checkOption(Object option){
-//        if(option!=null) {
-//            if (!"null".equals(option)) {
-//                return (Integer)option;
-//            }
-//        }
-//        return -1;
-//    }
-
     private int checkOption(String option){
         if(option!=null) {
             if (!"null".equals(option)) {
@@ -204,8 +190,7 @@ public class ScheduleController{
             }
             else {
                 int option = this.checkOption(request.getParameter(eFO.getText()));
-                System.out.println("makeRequestList = " + request.getParameter(eFO.getText()));
-                System.out.println("makeRequestList = " + option);
+
                 requestList.put(eFO.getText(), option);
             }
         }
@@ -261,24 +246,9 @@ public class ScheduleController{
         List<HashMap<String, Object>> otherScheduleList = this.makeOtherScheduleList(request,request.getParameter(SCHEDULE_ACTION.getText()));
         HashMap<String, Object> requestList = makeRequestList(request);
 
-        System.out.println("place:" + request.getParameter("schedulePlace"));
-        System.out.println("age:" + request.getParameter("userAge"));
-        System.out.println("sex:" + request.getParameter("userSex"));
-        System.out.println("orderBy:" + request.getParameter("orderBy"));
-
-        model.addAttribute("userSex", request.getParameter("userSex"));
-        model.addAttribute("index", request.getParameter("schedulePlace"));
-        model.addAttribute("userAge", request.getParameter("userAge"));
-        model.addAttribute("userAge", request.getParameter("userAge"));
-        model.addAttribute("orderBy", request.getParameter("orderBy"));
-
-        for (Map.Entry<String, Object> entry : requestList.entrySet()) {
-            System.out.println("[Key]:" + entry.getKey() + " [Value]:" + entry.getValue());
-        }
-
         model.addAttribute(FITERED_OTHER_SCHEDULE_LIST.getText(), otherScheduleList);
         model.addAttribute(SCHEDULE_PLACE_LIST.getText(), CityName.values());
-        //model.addAttribute(REQUEST_LIST.getText(), requestList);
+        model.addAttribute(REQUEST_LIST.getText(), requestList);
         return OTHER_SCHEDULE_LIST.getPath();
     }
     @RequestMapping("/otherSchedule")
