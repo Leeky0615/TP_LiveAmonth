@@ -5,8 +5,6 @@ import javax.servlet.http.HttpSession;
 
 import com.liveamonth.liveamonth.entity.vo.ScheduleReplyVO;
 import com.liveamonth.liveamonth.entity.vo.UserVO;
-import com.liveamonth.liveamonth.model.service.cityInfoService.CityService;
-import com.liveamonth.liveamonth.model.service.myPageService.MyPageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

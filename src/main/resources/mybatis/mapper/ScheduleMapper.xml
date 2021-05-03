@@ -103,7 +103,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<select id="getScheduleReplyCount" resultType="int">
-		select count(scheduleReplyNO) as count from scheduleReply;
+		select count(scheduleReplyNO) as count from scheduleReply where scheduleNO = #{scheduleNO};
 	</select>
 
 	<select id="getScheduleLikeStatus" parameterType="com.liveamonth.liveamonth.entity.vo.ScheduleLikeVO" resultType="int">

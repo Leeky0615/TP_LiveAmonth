@@ -45,6 +45,7 @@ public class LogicConstants {
         SCHEDULEREPLY_VO_LIST("scheduleVOReplyList"),
         SELECT_SCHEDULE("selectSchedule"),
         FITERED_OTHER_SCHEDULE_LIST("otherScheduleList"),
+        REQUEST_LIST("requestList"),
         OTHER_SCHEDULE_AND_LIKE_COUNT("otherScheduleAndLikeCount");
         private String text;
         private EScheduleAttributes(String text) {this.text = text;}

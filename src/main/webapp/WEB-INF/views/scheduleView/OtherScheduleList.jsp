@@ -9,9 +9,190 @@
 <%@page import="java.util.HashMap" %>
 <%@page import="java.util.List" %>
 <%@page import="com.liveamonth.liveamonth.constants.EntityConstants.*" %>
+
 <body>
 <form action="/otherScheduleList" class="filter-form">
-    <h4>필터 검색</h4>
+    <section class="property-section ">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10">
+                <div class="section-title">
+                    <h4>조건 검색</h4>
+                </div>
+                </div>
+
+            <div class="col-lg-10">
+                <div class="pd-text">
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <div class="pd-title">
+                                <p>나이</p>
+                                <select name="userAge" id="userAge" class="sm-width">
+                                    <option value="null" <c:if test="${userAge == -1}"> selected </c:if>>기본</option>
+                                    <option value="20" <c:if test="${userAge == 20}"> selected </c:if>>20대</option>
+                                    <option value="30" <c:if test="${userAge == 30}"> selected </c:if>>30대</option>
+                                    <option value="40" <c:if test="${userAge == 40}"> selected </c:if>>40대</option>
+                                    <option value="50" <c:if test="${userAge == 50}"> selected </c:if>>50대</option>
+                                    <option value="60" <c:if test="${userAge == 60}"> selected </c:if>>60대</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="pd-title">
+                                <p>성별</p>
+                                <select name="userSex" id="userSex" class="sm-width">
+                                    <option value="null" <c:if test="${userSex == -1}"> selected </c:if>>기본</option>
+                                    <option value="0" <c:if test="${userSex == 0}"> selected </c:if>>남성</option>
+                                    <option value="1" <c:if test="${userSex == 1}"> selected </c:if>>여성</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="pd-title">
+                                <p>장소</p>
+                                <select name="schedulePlace" id="schedulePlace" class="sm-width">
+                                    <option value="null" <c:if test="${index == -1}"> selected </c:if>>기본</option>
+                                    <c:forEach var="schedulePlace" items="${schedulePlaceList}" varStatus="status">
+                                        <option value="${status.index}" <c:if test="${status.index == index}"> selected </c:if>>${schedulePlace.nameKR}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="pd-title">
+                                <p>정렬</p>
+                                <input type="radio" name="orderBy" id = "orderByLiked" value="orderByLiked" <c:if test="${orderBy== orderByLiked}"> checked </c:if>>좋아요 순
+                                <input type="radio" name="orderBy" id = "orderByView" value="orderByView" <c:if test="${orderBy== orderByView}"> checked </c:if>>조회 순
+                                <input type="radio" name="orderBy" id = "orderByNew" value="orderByNew" <c:if test="${orderBy== orderByNew}"> checked </c:if>>최신 순
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="pd-title">
+                                <input type="submit" name="order" value="적용" class="search-btn sm-width">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                    </div>
+                </div>
+
+        </div>
+    </div>
+    </section>
+    <input type="hidden" name="action" value="filter">
+</form>
+
+<%--class = contact-section--%>
+<section class="property-section latest-property-section spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10">
+
+               <%-- <div class="section-title">
+                    <h4>검색 결과</h4>
+                </div>--%>
+<%--                   <div class="row property-filter">--%>
+
+                <div class="pc-table">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th class="type">스케줄(이미지, 제목)</th>
+                            <th class="type">장소</th>
+                            <th class="type">닉네임</th>
+                            <th class="type">성별</th>
+                            <th class="type">나이</th>
+                            <th class="type">조회 수</th>
+                            <th class="type">좋아요 수</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <c:if test="${otherScheduleList != null}">
+                            <c:forEach var="scheduleContent" items="${otherScheduleList}" varStatus="status">
+                                <c:forEach var="cityName" items="${schedulePlaceList}">
+                                    <c:if test="${scheduleContent.schedulePlace eq cityName}">
+                                        <c:set var="place" value="${cityName.nameKR}"/>
+                                    </c:if>
+                                </c:forEach>
+                                <c:choose>
+                                    <c:when test="${scheduleContent.userVO.userSex eq 'false'}">
+                                        <c:set var="sex" value="남자"/>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <c:set var="sex" value="여자"/>
+                                    </c:otherwise>
+                                </c:choose>
+                                <tr>
+                                    <td>
+                                        <div class="title">스케줄 제목</div>
+                                        <a
+                                                href="/otherSchedule?userNO=${scheduleContent.userVO.userNO}&scheduleNO=${scheduleContent.scheduleNO}">
+                                            <img src="resources/img/scheduleImg.png" alt="">
+                                        </a>
+                                    </td>
+                                    <td>${place}</td>
+                                    <td>${scheduleContent.userVO.userNickname}</td>
+                                    <td>${sex}</td>
+                                    <td>${scheduleContent.userVO.userAge}세</td>
+                                    <td>${scheduleContent.scheduleViewCount}</td>
+                                    <td>${scheduleContent.scheduleLikeCount}</td>
+                                </tr>
+                            </c:forEach>
+                        </c:if>
+                        </tbody>
+                    </table>
+                    <c:if test="${otherScheduleList.size() == 0}">
+                            <div class="centered">
+                                <h5>해당 하는 결과가 존재하지 않습니다.</h5>
+                            </div>
+                    </c:if>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+
+<%--    <c:forEach items ="${requestList}" var = "request">
+        <c:choose>
+            <c:when test ="${reqeust.key eq 'userSex'}">
+                ture1
+                <c:set var="userSex" value="${reqeust.value}"/>
+            </c:when>
+            <c:when test ="${reqeust.key eq 'userAge'}">
+                ture2
+                <c:set var="userAge" value="${reqeust.value}"/>
+            </c:when>
+            <c:when test ="${reqeust.key eq 'schedulePlace'}">
+                <c:set var="index" value="${reqeust.value}"/>
+            </c:when>
+            <c:when test ="${reqeust.key eq 'orderBy'}">
+                <c:set var="orderBy" value="${reqeust.value}"/>
+            </c:when>
+        </c:choose>
+    </c:forEach>--%>
+
+<%--    <c:forEach var = "request" items ="${requestList}">
+       <p> <c:out value="${reqeust.key}"/> </p>
+        <p> <c:out value="${reqeust.value}"/> </p>
+    </c:forEach>--%>
+
+<%-- age : ${userAge}
+ 장소 번호 : ${index}
+ sex : ${userSex}
+ order : ${orderBy}--%>
+
+<%--   <script>
+           /*$('#orderByLiked').val().prop("checked", true);*/
+           document.getElementById("orderByLiked").prop("checked", true);
+       </script>--%>
+<%-- <script> $("#orderByLiked").prop("checked", true); </script>--%>
+<%--<script> $("#orderByLiked").attr('checked', 'checked'); </script>--%>
+<%-- <script> $("input:radio[name='orderBy']:radio[value=${orderBy}]").prop('checked', true); </script>--%>
+<%-- <script> $('input:radio[name=orderBy]').eq(0).attr("checked", true);</script>--%>
+
+<%--    <h4>필터 검색</h4>
     <table>
         <thead>
         <tr>
@@ -24,29 +205,32 @@
         <tbody>
         <tr>
             <td><select name="userSex" id="userSex" class="sm-width">
-                <option value="null">기본</option>
-                <option value="0">남성</option>
-                <option value="1">여성</option>
+                <option value="null" <c:if test="${userSex == -1}"> selected </c:if>>기본</option>
+                <option value="0" <c:if test="${userSex == 0}"> selected </c:if>>남성</option>
+                <option value="1" <c:if test="${userSex == 1}"> selected </c:if>>여성</option>
             </select>
             </td>
+
             <td><select name="userAge" id="userAge" class="sm-width">
-                <option value="null">기본</option>
-                <option value="20">20대</option>
-                <option value="30">30대</option>
-                <option value="40">40대</option>
-                <option value="50">50대</option>
-                <option value="60">60대</option>
+                <option value="null" <c:if test="${userAge == -1}"> selected </c:if>>기본</option>
+                <option value="20" <c:if test="${userAge == 20}"> selected </c:if>>20대</option>
+                <option value="30" <c:if test="${userAge == 30}"> selected </c:if>>30대</option>
+                <option value="40" <c:if test="${userAge == 40}"> selected </c:if>>40대</option>
+                <option value="50" <c:if test="${userAge == 50}"> selected </c:if>>50대</option>
+                <option value="60" <c:if test="${userAge == 60}"> selected </c:if>>60대</option>
             </select></td>
+
             <td><select name="schedulePlace" id="schedulePlace" class="sm-width">
-                <option value="null">기본</option>
+                <option value="null" <c:if test="${index == -1}"> selected </c:if>>기본</option>
                 <c:forEach var="schedulePlace" items="${schedulePlaceList}" varStatus="status">
-                    <option value="${status.index}">${schedulePlace.nameKR}</option>
+                    <option value="${status.index}" <c:if test="${status.index == index}"> selected </c:if>>${schedulePlace.nameKR}</option>
                 </c:forEach>
             </select></td>
-            <!-- 	<td><input type="submit" name="filter" value="조회"></td> -->
         </tr>
         </tbody>
     </table>
+
+
 
     <h4>정렬</h4>
     <table>
@@ -59,64 +243,16 @@
         <tbody>
         <tr>
             <td>
-                <input type="radio" name="orderBy" value="orderByLiked" checked="checked" class="sm-width">좋아요 순
-                <input type="radio" name="orderBy" value="orderByView" class="sm-width">조회 순
-                <input type="radio" name="orderBy" value="orderByNew" class="sm-width">최신 순
+                <input type="radio" name="orderBy" id = "orderByLiked" value="orderByLiked" <c:if test="${orderBy== orderByLiked}"> checked </c:if>>좋아요 순
+                <input type="radio" name="orderBy" id = "orderByView" value="orderByView" <c:if test="${orderBy== orderByView}"> checked </c:if>>조회 순
+                <input type="radio" name="orderBy" id = "orderByNew" value="orderByNew" <c:if test="${orderBy== orderByNew}"> checked </c:if>>최신 순
             </td>
-            <td><input type="submit" name="order" value="적용"></td>
+
+            <td><input type="submit" name="order" value="적용" class="search-btn sm-width"></td>
         </tr>
         </tbody>
     </table>
     <input type="hidden" name="action" value="filter">
-</form>
+</form>--%>
 
-<div class="pc-table">
-    <table>
-        <thead>
-        <tr>
-            <th class="type">스케줄(이미지, 제목)</th>
-            <th class="type">장소</th>
-            <th class="type">닉네임</th>
-            <th class="type">성별</th>
-            <th class="type">나이</th>
-            <th class="type">조회 수</th>
-            <th class="type">좋아요 수</th>
-        </tr>
-        </thead>
-        <tbody>
-        <c:if test="${otherScheduleList != null}">
-            <c:forEach var="scheduleContent" items="${otherScheduleList}" varStatus="status">
-                <c:forEach var="cityName" items="${schedulePlaceList}">
-                    <c:if test="${scheduleContent.schedulePlace eq cityName}">
-                        <c:set var="place" value="${cityName.nameKR}"/>
-                    </c:if>
-                </c:forEach>
-                <c:choose>
-                    <c:when test="${scheduleContent.userVO.userSex eq 'false'}">
-                        <c:set var="sex" value="남자"/>
-                    </c:when>
-                    <c:otherwise>
-                        <c:set var="sex" value="여자"/>
-                    </c:otherwise>
-                </c:choose>
-                <tr>
-                    <td>
-                        <div class="title">스케줄 제목</div>
-                        <a
-                                href="/otherSchedule?userNO=${scheduleContent.userVO.userNO}&scheduleNO=${scheduleContent.scheduleNO}">
-                            <img src="resources/img/scheduleImg.png" alt="">
-                        </a>
-                    </td>
-                    <td>${place}</td>
-                    <td>${scheduleContent.userVO.userNickname}</td>
-                    <td>${sex}</td>
-                    <td>${scheduleContent.userVO.userAge}세</td>
-                    <td>${scheduleContent.scheduleViewCount}</td>
-                    <td>${scheduleContent.scheduleLikeCount}</td>
-                </tr>
-            </c:forEach>
-        </c:if>
-        </tbody>
-    </table>
-</div>
-</body>
+<%--ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ--%>

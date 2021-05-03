@@ -5050,5 +5050,10 @@ li .richText-btn[data-command=toggleCode] {
     z-index: -1;
 }
 
+.centered {
+    margin-left: auto; margin-right: auto;
+    text-align: center;
+}
+
 /*# sourceMappingURL=style.css.map */
 
