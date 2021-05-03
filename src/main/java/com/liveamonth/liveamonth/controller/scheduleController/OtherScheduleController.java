@@ -1,15 +1,13 @@
 package com.liveamonth.liveamonth.controller.scheduleController;
 
-import com.liveamonth.liveamonth.constants.EntityConstants;
-import com.liveamonth.liveamonth.constants.LogicConstants;
-import com.liveamonth.liveamonth.entity.dto.CalendarDTO;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import com.liveamonth.liveamonth.entity.dto.Paging;
 import com.liveamonth.liveamonth.entity.vo.ScheduleLikeVO;
 import com.liveamonth.liveamonth.entity.vo.ScheduleReplyVO;
-import com.liveamonth.liveamonth.entity.vo.ScheduleVO;
 import com.liveamonth.liveamonth.entity.vo.UserVO;
-import com.liveamonth.liveamonth.model.service.myPageService.MyPageService;
-import com.liveamonth.liveamonth.model.service.scheduleService.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,21 +17,24 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import com.liveamonth.liveamonth.entity.dto.CalendarDTO;
+import com.liveamonth.liveamonth.model.service.scheduleService.ScheduleService;
+
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.liveamonth.liveamonth.constants.ControllerPathConstants.ESchedulePath.*;
-import static com.liveamonth.liveamonth.constants.EntityConstants.ESchedule.SCHEDULE_NO;
-import static com.liveamonth.liveamonth.constants.EntityConstants.ESchedule.SCHEDULE_VO_LIST;
-import static com.liveamonth.liveamonth.constants.EntityConstants.EScheduleReply.SCHEDULE_REPLY_NO;
-import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.USER_VO;
+import static com.liveamonth.liveamonth.constants.EntityConstants.*;
+import static com.liveamonth.liveamonth.constants.EntityConstants.ESchedule.*;
+import static com.liveamonth.liveamonth.constants.EntityConstants.EScheduleContent.*;
+import static com.liveamonth.liveamonth.constants.EntityConstants.EScheduleReply.*;
+import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.*;
+import static com.liveamonth.liveamonth.constants.LogicConstants.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EAlertMessage.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EPaging.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleAttributes.*;
-import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleFilterAndOrders.SCHEDULE_FO_ORDER;
-import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleFilterAndOrders.SCHEDULE_FO_PLACE;
+import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleFilterAndOrders.*;
 
 @Controller
 public class OtherScheduleController {
@@ -41,34 +42,60 @@ public class OtherScheduleController {
     private ScheduleService scheduleService;
 
     private int checkOption(String option) {
-        if (!option.equals("null")) return Integer.parseInt(option);
-        else return -1;
+        if (option != null) {
+            if (!"null".equals(option)) {
+                return Integer.parseInt(option);
+            }
+        }
+        return -1;
     }
+
+    private HashMap<String, Object> makeRequestList(HttpServletRequest request) {
+        HashMap<String, Object> requestList = new HashMap<>();
+
+        for (EScheduleFilterAndOrders eFO : EScheduleFilterAndOrders.values()) {
+            if (eFO == SCHEDULE_FO_ORDER) {
+                requestList.put(eFO.getText(), request.getParameter(eFO.getText()));
+            } else {
+                int option = this.checkOption(request.getParameter(eFO.getText()));
+
+                requestList.put(eFO.getText(), option);
+            }
+        }
+        return requestList;
+    }
+
     private List<HashMap<String, Object>> makeOtherScheduleList(HttpServletRequest request, String action) throws Exception {
         HashMap<String, Object> filtersAndOrder = new HashMap<>();
         // action = list : 초기 헤더메뉴 클릭시
         System.out.println("action = " + action);
-        if (action.equals(SCHEDULE_LIST.getText())) {
-            for (LogicConstants.EScheduleFilterAndOrders eFO : LogicConstants.EScheduleFilterAndOrders.values()) {
-                if (eFO == SCHEDULE_FO_ORDER) filtersAndOrder.put(eFO.getText(), "orderByNew");
+        if (action.equals(SCHEDULE_LIST.getText())) { // 기본값
+            for (EScheduleFilterAndOrders eFO : EScheduleFilterAndOrders.values()) {
+                if (eFO == SCHEDULE_FO_ORDER)
+                    filtersAndOrder.put(eFO.getText(), "orderByNew");//("orderBy","orderVubByNexw)
                 else filtersAndOrder.put(eFO.getText() + "Filter", false);
+            }
+            for (Map.Entry<String, Object> entry : filtersAndOrder.entrySet()) {
+                System.out.println("[Key]:" + entry.getKey() + " [Value]:" + entry.getValue());
             }
         } else if (action.equals(SCHEDULE_FILTER.getText())) {// action = filter : OtherSchedule 페이지에서 필터 및 정렬 수행시
             // Hashmap에 필터/정렬 Object를 담는다.
-            for (LogicConstants.EScheduleFilterAndOrders eFO : LogicConstants.EScheduleFilterAndOrders.values()) { // {userSex, userAge, schedulePlace, orderBy}
+            for (EScheduleFilterAndOrders eFO : EScheduleFilterAndOrders.values()) { // {userSex, userAge, schedulePlace, orderBy, userSexFilter}
                 if (eFO == SCHEDULE_FO_ORDER) {
                     // orderBy인 경우 View에서 OrderBy의 value를 가져옴. {"orderByLiked" | "orderByNew" | "orderByView"}
                     filtersAndOrder.put(eFO.getText(), request.getParameter(SCHEDULE_FO_ORDER.getText()));
                 } else {
                     // 나머지 경우는 받아온 parameter에 대해 int로 변환(CheckOption() -> null(기본값)인 경우 -1 return)
+                    //null
                     int option = this.checkOption(request.getParameter(eFO.getText()));
+                    //int option = this.checkOption(String.valueOf(request.getParameter(eFO.getText())));
                     // filter 설정 유무 -> 기본 : default
                     boolean optionStatus = false;
                     if (option != -1) {
                         optionStatus = true; // option이 null(-1)이 아니면 true
                         if (eFO == SCHEDULE_FO_PLACE) {
                             //schedulePlace는 HashMap에 값을 String으로 넣어 줘야하므로 CityNameList에서 option(int)에 해당하는 인덱스 값을 넣어줌.
-                            filtersAndOrder.put(eFO.getText(), EntityConstants.CityName.values()[option]);
+                            filtersAndOrder.put(eFO.getText(), CityName.values()[option]);
                         } else {
                             // 나머지 경우는 그냥 option(int)를 넣어줌
                             filtersAndOrder.put(eFO.getText(), option);
@@ -77,6 +104,7 @@ public class OtherScheduleController {
 
                     // optionStatus를 HashMap에 저장 (attribute 값 : userSexFilter, userAgeFilter, schedulePlaceFilter)
                     filtersAndOrder.put(eFO.getText() + "Filter", optionStatus);
+
                 }
             }
         }
@@ -86,9 +114,11 @@ public class OtherScheduleController {
     @RequestMapping("/otherScheduleList")
     public String otherScheduleList(Model model, HttpServletRequest request, CalendarDTO calendarDTO) throws Exception {
         List<HashMap<String, Object>> otherScheduleList = this.makeOtherScheduleList(request, request.getParameter(SCHEDULE_ACTION.getText()));
+        HashMap<String, Object> requestList = makeRequestList(request);
 
         model.addAttribute(FITERED_OTHER_SCHEDULE_LIST.getText(), otherScheduleList);
-        model.addAttribute(SCHEDULE_PLACE_LIST.getText(), EntityConstants.CityName.values());
+        model.addAttribute(SCHEDULE_PLACE_LIST.getText(), CityName.values());
+        model.addAttribute(REQUEST_LIST.getText(), requestList);
         return OTHER_SCHEDULE_LIST.getPath();
     }
 

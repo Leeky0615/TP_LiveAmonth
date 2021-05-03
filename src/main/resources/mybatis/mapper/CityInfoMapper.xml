@@ -12,7 +12,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
               and cityName = #{cityName};
         </select>
 
-    <resultMap type= "CityInfoVO" id="cityInfoList">
+    <resultMap type="CityInfoVO" id="cityInfoList">
         <result column="cityInfoCategory" property="cityInfoCategory"/>
         <result column="cityInfoDesc" property="cityInfoDesc"/>
         <result column="cityInfoImage" property="cityInfoImage"/>

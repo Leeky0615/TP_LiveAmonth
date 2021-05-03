@@ -121,9 +121,10 @@ public class SignController {
     }
 
     @RequestMapping(value = "/resultMentFindID", method = RequestMethod.POST)
-    public String findID(HttpServletResponse response, @RequestParam("userEmail")
-            String userEmail, Model model) throws Exception {
-        model.addAttribute(USER_ID.getText(), signService.findID(response, userEmail));
+    public String findID(@RequestParam("userName")
+                                 String userName,@RequestParam("userEmail")
+                                 String userEmail, Model model) throws Exception {
+        model.addAttribute(USER_ID.getText(), signService.findID(userName, userEmail));
         return RESULT_MENT_FIND_ID.getPath();
     }
 
@@ -139,8 +140,8 @@ public class SignController {
 
 
     @RequestMapping(value = "/ResultMentFindPW", method = RequestMethod.POST)
-    public String findPW(HttpServletResponse response, @RequestParam("userID") String userID, @RequestParam("userEmail") String userEmail, Model model) throws Exception {
-        model.addAttribute(USER_PASSWORD.getText(), signService.findPW(response, userID, userEmail));
+    public String findPW( @RequestParam("userID") String userID, @RequestParam("userEmail") String userEmail, Model model) throws Exception {
+        model.addAttribute(USER_PASSWORD.getText(), signService.findPW(userID, userEmail));
         return RESULT_MENT_FIND_PW.getPath();
     }
 }

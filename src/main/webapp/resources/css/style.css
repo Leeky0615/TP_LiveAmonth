@@ -3030,11 +3030,28 @@ li .richText-btn[data-command=toggleCode] {
 }
 
 .as-item .as-pic {
-    width: 151px;
-    height: 151px;
+    /*width: 151px;*/
+    /*height: 151px;*/
+    /*position: relative;*/
+    /*margin: 0 auto;*/
+    /*margin-bottom: 25px;*/
+    height: 180px;
     position: relative;
-    margin: 0 auto;
-    margin-bottom: 25px;
+    margin-bottom: 0px;
+}
+.as-item .as-pic .label {
+    font-family: 'Jua', sans-serif;
+    text-shadow: 2px 2px 4px gray;
+    font-size: 30px;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 3px 10px 2px;
+    display: inline-block;
+    background: rgba(0, 0, 0, 0);
+    color: #ffffff;
+    position: absolute;
+    left: 10px;
+    top: 10px;
 }
 
 .as-item .as-pic img {

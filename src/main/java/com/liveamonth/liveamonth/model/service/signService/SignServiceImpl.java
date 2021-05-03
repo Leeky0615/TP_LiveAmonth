@@ -54,13 +54,16 @@ public class SignServiceImpl implements SignService {
 //    }
 
     @Override
-    public String findID(HttpServletResponse response, String userEmail) throws Exception {
-        return signMapper.findID(userEmail);
+    public String findID( String userName, String userEmail) throws Exception {
+        HashMap<String, Object> hash = new HashMap<String, Object>();
+        hash.put("userName", userName);
+        hash.put("userEmail", userEmail);
+        return signMapper.findID(hash);
     }
 
-    // 비밀번호 찾기
+
     @Override
-    public String findPW(HttpServletResponse response, String userID, String userEmail) throws Exception {
+    public String findPW(String userID, String userEmail) throws Exception {
         HashMap<String, Object> hash = new HashMap<String, Object>();
         hash.put("userID", userID);
         hash.put("userEmail", userEmail);

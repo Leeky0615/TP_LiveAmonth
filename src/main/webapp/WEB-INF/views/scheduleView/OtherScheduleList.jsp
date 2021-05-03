@@ -90,7 +90,10 @@
 
                             <div class="col-lg-2">
                                 <div class="pd-title">
-                                    <input type="submit" name="order" value="적용" class="search-btn sm-width">
+                                    <button type="submit" name="order">
+                                    <i class = "fa fa-search"></i>
+                                    </button>
+                                    <input type="submit" name="order" value="적용" class="fa fa-search">
                                 </div>
                             </div>
                         </div>

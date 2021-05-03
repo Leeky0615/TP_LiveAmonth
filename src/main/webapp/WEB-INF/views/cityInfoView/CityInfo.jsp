@@ -26,7 +26,24 @@
         </div>
         <div class="row property-filter">
             <c:forEach var="cityIntro" items="${cityIntroList}">
-                <c:if test="${cityIntro.cityVO.cityName == selectedCityName}">
+                <c:if test="${selectedCityName == 'all'}">
+                    <div class="col-lg-4 col-md-6 mix">
+                        <div class="ih-item square effect13 left_to_right property-item">
+                            <a href="selectCityInfo?page=${cityIntro.cityVO.cityName}">
+                                <div class="pi-pic set-bg" data-setbg="${cityIntro.getCityInfoImageURL()}">
+                                    <div class="label">${cityIntro.cityVO.cityName}</div>
+                                </div>
+                                <div class="info">
+                                    <h3>${cityIntro.cityVO.cityName}</h3>
+<%--                                    날씨 교통 정보 등 들어가야할 부분--%>
+                                    <p>${cityIntro.cityVO.cityName}입니다.</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </c:if>
+                <c:if test="${selectedCityName == cityIntro.cityVO.cityName}">
+<%--                    도시 사진--%>
                     <div class="col-lg-4 col-md-6 mix">
                         <div class="property-item">
                             <div class="pi-pic set-bg" data-setbg="${cityIntro.getCityInfoImageURL()}">
@@ -34,12 +51,14 @@
                             </div>
                         </div>
                     </div>
+<%--                    도시 소개--%>
                     <div class="col-lg-7 col-md-6">
                             ${cityIntro.cityInfoDesc}
                     </div>
+<%-- 도시 FOOD 정보 --%>
                     <div class="col-lg-12">
                         <div class="section-title">
-                            <h4>VIEW</h4>
+                            <h4>FOOD</h4>
                         </div>
                     </div>
                     <c:forEach var="cityFood" items="${cityFoodList}">
@@ -51,9 +70,11 @@
                             </div>
                         </div>
                     </c:forEach>
+
+<%-- 도시 VIEW 정보--%>
                     <div class="col-lg-12">
                         <div class="section-title">
-                            <h4>FOOD</h4>
+                            <h4>VIEW</h4>
                         </div>
                     </div>
                     <c:forEach var="cityView" items="${cityViewList}">
@@ -65,21 +86,6 @@
                             </div>
                         </div>
                     </c:forEach>
-                </c:if>
-                <c:if test="${selectedCityName == 'all'}">
-                    <div class="col-lg-4 col-md-6 mix">
-                        <div class="ih-item square effect13 left_to_right property-item">
-                            <a href="selectCityInfo?page=${cityIntro.cityVO.cityName}">
-                                <div class="pi-pic set-bg" data-setbg="${cityIntro.getCityInfoImageURL()}">
-                                    <div class="label">${cityIntro.cityVO.cityName}</div>
-                                </div>
-                                <div class="info">
-                                    <h3>${cityIntro.cityVO.cityName}</h3>
-                                    <p>${cityIntro.cityVO.cityName}입니다.</p>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
                 </c:if>
             </c:forEach>
         </div>

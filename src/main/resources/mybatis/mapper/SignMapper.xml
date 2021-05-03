@@ -33,7 +33,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select userNickName from user where userNickName =
 		#{userNickName}
 	</select>
-	
+
 	<select id="checkEmail" parameterType="String" resultType="String">
 		select userEmail from user where userEmail = #{userEmail}
 	</select>
@@ -41,13 +41,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- IDFind -->
 	<select id="findID" parameterType="String" resultType="String">
 		select CONCAT(SUBSTR(userID, 1, 3), REPEAT('*', CHAR_LENGTH(userID) - 3))
-		AS userID from user where userEmail = #{userEmail}
+				   AS userID from user where userName = #{userName} and userEmail = #{userEmail}
 	</select>
 
 	<!-- PWFind -->
 	<select id="findPW" parameterType="HashMap" resultType="String">
 		select userPassword from user where userID = #{userID} and userEmail = #{userEmail}
 	</select>
-	
 
 </mapper>

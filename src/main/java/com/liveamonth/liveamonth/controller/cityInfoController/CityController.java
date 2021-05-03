@@ -45,9 +45,9 @@ public class CityController {
             model.addAttribute(CITY_INTRO.getText(), cityIntro.get(0));
             model.addAttribute(CITY_VIEW_LIST.getText(), viewList);
         }
-        model.addAttribute(SELECTED_CITY_NAME.getText(), cityName);
+
         List<CityInfoVO> cityIntroList = cityService.getCityInfoListByCategory(INTRO.name());
+        model.addAttribute(SELECTED_CITY_NAME.getText(), cityName);
         model.addAttribute(CITY_INTRO_LIST.getText(), cityIntroList);
-        // cityName과 cityCategory를 파라미터로 받아서 리스트에 담음
     }
 }

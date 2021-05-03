@@ -108,11 +108,13 @@
                         <ul>
                             <li class="active"><a href="selectCityInfo?page=all" >CITY</a>
                                 <ul class="dropdown">
-                                    <c:forEach var="cityIntro" items="${cityIntroList}">
-                                    <li>
-                                        <a href="selectCityInfo?page=${cityIntro.cityVO.cityName}">${cityIntro.cityVO.cityName}</a>
-                                    </li>
-                                    </c:forEach>
+                                    <li><a href="selectCityInfo?page=서울">서울</a></li>
+                                    <li><a href="selectCityInfo?page=강릉">강릉</a></li>
+                                    <li><a href="selectCityInfo?page=경주">경주</a></li>
+                                    <li><a href="selectCityInfo?page=부산">부산</a></li>
+                                    <li><a href="selectCityInfo?page=여수">여수</a></li>
+                                    <li><a href="selectCityInfo?page=제주">제주</a></li>
+
                                 </ul>
                             </li>
                             <li class="active"><a href="schedule">Schedule</a>
@@ -136,16 +138,8 @@
                 <div class="col-lg-3">
                     <div class="hn-social">
                         <c:if test="${userVO.userName != null}">
-
                             <p>환영합니다 ${userVO.userName}님.</p>
-
                         </c:if>
-                        <!--         <a href="#"><i class="fa fa-facebook"></i></a>
-                        <a href="#"><i class="fa fa-twitter"></i></a>
-                        <a href="#"><i class="fa fa-youtube-play"></i></a>
-                        <a href="#"><i class="fa fa-instagram"></i></a>
-                        <a href="#"><i class="fa fa-pinterest-p"></i></a>
-                        -->
                     </div>
                 </div>
             </div>
