@@ -20,7 +20,6 @@
                         <h4>조건 검색</h4>
                     </div>
                 </div>
-
                 <c:forEach items="${requestList}" var="requestData">
                     <c:choose>
                         <c:when test="${requestData.key eq 'userSex'}">
@@ -113,15 +112,15 @@
                 <div class="pc-table">
                     <table>
                         <thead>
-                        <tr>
-                            <th class="type">스케줄(이미지, 제목)</th>
-                            <th class="type">장소</th>
-                            <th class="type">닉네임</th>
-                            <th class="type">성별</th>
-                            <th class="type">나이</th>
-                            <th class="type">조회 수</th>
-                            <th class="type">좋아요 수</th>
-                        </tr>
+                            <tr>
+                                <th class="type">스케줄(이미지, 제목)</th>
+                                <th class="type">장소</th>
+                                <th class="type">닉네임</th>
+                                <th class="type">성별</th>
+                                <th class="type">나이</th>
+                                <th class="type">조회 수</th>
+                                <th class="type">좋아요 수</th>
+                            </tr>
                         </thead>
                         <tbody>
                         <c:if test="${otherScheduleList != null}">
@@ -142,8 +141,7 @@
                                 <tr>
                                     <td>
                                         <div class="title">스케줄 제목</div>
-                                        <a
-                                                href="/otherSchedule?userNO=${scheduleContent.userVO.userNO}&scheduleNO=${scheduleContent.scheduleNO}">
+                                        <a href="/otherSchedule?userNO=${scheduleContent.userVO.userNO}&scheduleNO=${scheduleContent.scheduleNO}">
                                             <img src="resources/img/scheduleImg.png" alt="">
                                         </a>
                                     </td>
