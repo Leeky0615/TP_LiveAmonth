@@ -39,7 +39,6 @@ public class MyPageController {
  
         String userID = session_UserVO.getUserID();
         model.addAttribute(CHECK_USER.getText(), true);
-
         session.setAttribute(USER_VO.getText(), myPageService.getUserInfo(userID));
         return "MyPage";
     }
