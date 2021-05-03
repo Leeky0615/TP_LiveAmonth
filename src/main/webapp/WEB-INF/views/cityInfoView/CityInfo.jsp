@@ -35,7 +35,7 @@
                                 </div>
                                 <div class="info">
                                     <h3>${cityIntro.cityVO.cityName}</h3>
-<%--                                    날씨 교통 정보 등 들어가야할 부분--%>
+<%--                                    날씨 교통 정보 등 들어가야할 부분임--%>
                                     <p>${cityIntro.cityVO.cityName}입니다.</p>
                                 </div>
                             </a>
