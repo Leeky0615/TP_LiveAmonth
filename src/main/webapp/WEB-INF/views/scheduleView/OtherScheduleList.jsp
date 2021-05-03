@@ -98,9 +98,6 @@
                 </div>
             </div>
         </div>
-
-        </div>
-        </div>
     </section>
     <input type="hidden" name="action" value="filter">
 </form>
