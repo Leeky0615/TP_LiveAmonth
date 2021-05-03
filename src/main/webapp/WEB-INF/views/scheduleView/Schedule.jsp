@@ -27,7 +27,11 @@
       type="text/css">
 <script src="resources/js/schedule.js"></script>
 <script src="resources/js/board.js"></script>
+<link rel="stylesheet" href="resources/css/style.css" type="text/css">
+<link rel="stylesheet" href="resources/css/signUpStyle.css" type="text/css">
+<link rel="stylesheet" href="resources/css/font-awesome.min.css" type="text/css">
 <script type="text/javaScript" language="javascript"></script>
+
 <div class="search-form-content">
     <form action="swapSchedule" class="filter-form">
         <select class="sm-width" name="selectSchedule" id="selectSchedule">

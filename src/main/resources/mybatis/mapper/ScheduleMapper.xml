@@ -85,11 +85,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</association>
 	</resultMap>
 
-<!--	<select id="getScheduleReplyList" parameterType="java.util.HashMap" resultMap="scheduleReplyAndNickname">-->
-<!--		select scheduleReplyNO, scheduleReplyDesc, scheduleReplyDate, scheduleReplyRefNO, scheduleReply.userNO, scheduleNO, userNickname-->
-<!--		from user, scheduleReply where scheduleReply.userNO = user.userNO AND scheduleReply.scheduleNO = #{scheduleNO};-->
-<!--	</select>-->
-
 	<select id="getScheduleReplyList" parameterType="java.util.HashMap" resultMap="scheduleReplyAndNickname">
 		select @rownum:=@rownum+1 as NO, sortScheduleReply.* from
 			(select IF(scheduleReplyRefNO >= 0, scheduleReplyRefNO, scheduleReplyNO) as sortScheduleReplyNO, scheduleReply.*, userNickName
@@ -102,7 +97,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select max(scheduleReplyNO) from scheduleReply;
 	</select>
 
-	<select id="getScheduleReplyCount" resultType="int">
+	<select id="getScheduleReplyCount" parameterType="int" resultType="int">
 		select count(scheduleReplyNO) as count from scheduleReply where scheduleNO = #{scheduleNO};
 	</select>
 
