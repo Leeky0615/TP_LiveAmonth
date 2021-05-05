@@ -1,14 +1,6 @@
 function checkValue() {
-	if (!document.SignInfo.classification.value) {
-		alert("회원 구분을 선택하세요.");
-		return false;
-	}
 	if (!document.SignInfo.userSex.value) {
 		alert("성별을 선택하세요.");
-		return false;
-	}
-	if (!document.SignInfo.businessLicense.value) {
-		alert("사업자 등록번호를 입력하세요.");
 		return false;
 	}
 	if (!document.SignInfo.userName.value) {
@@ -41,17 +33,6 @@ function checkValue() {
 	}
 };
 
-
-function hideBusinessNumber() {
-	$('#businessBlock').hide();
-	document.SignInfo.businessLicense.value = "0";
-};
-
-function showNumber() {
-	document.SignInfo.businessLicense.value = "";
-	$('#businessBlock').show();
-};
-
 function maxLengthCheck(object) {
 	if (object.value.length > object.maxLength) {
 		object.value = object.value.slice(0, object.maxLength);
@@ -78,3 +59,57 @@ $('#userEmail').blur(function() {
 	}
 });
 
+$(".checkID").click(function () {
+	var query = {userID: $("#userID").val()};
+	$.ajax({
+		url: "checkID",
+		type: "post",
+		data: query,
+		success: function (data) {
+			if (data == 1) {
+				$(".result .msg").text("사용불가");
+				$(".result .msg").attr("style", "color:#f00");
+				$("#submit").attr("disabled", "disabled");
+			} else {
+				$(".result .msg").text("사용가능");
+				$(".result .msg").attr("style", "color:#00f");
+				$("#submit").removeAttr("disabled");
+			}
+		}
+	});  // ajax ��
+});
+
+$("#userID").keyup(function () {
+	$(".result .msg").text("중복확인을 해주세요");
+	$(".result .msg").attr("style", "color:#000");
+
+	$("#submit").attr("disabled", "disabled");
+
+});
+///////////////////////////////////////////////////////////
+$(".checkNickName").click(function () {
+	var query = {userNickname: $("#userNickname").val()};
+	$.ajax({
+		url: "checkNickName",
+		type: "post",
+		data: query,
+		success: function (data) {
+			if (data == 1) {
+				$(".nickNameResult .nickNameMsg").text("사용불가");
+				$(".nickNameResult .nickNameMsg").attr("style", "color:#f00");
+				$("#submit").attr("disabled", "disabled");
+			} else {
+				$(".nickNameResult .nickNameMsg").text("사용가능");
+				$(".nickNameResult .nickNameMsg").attr("style", "color:#00f");
+
+				$("#submit").removeAttr("disabled");
+			}
+		}
+	});  // ajax ��
+});
+
+$("#userNickname").keyup(function () {
+	$(".nickNameResult .nickNameMsg").text("중복확인을 해주세요");
+	$(".nickNameResult .nickNameMsg").attr("style", "color:#000");
+	$("#submit").attr("disabled", "disabled");
+});

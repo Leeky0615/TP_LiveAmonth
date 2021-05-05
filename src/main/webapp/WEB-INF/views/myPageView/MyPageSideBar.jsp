@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
 <div class="col-lg-2">
     <div class="blog-sidebar">
         <div class="feature-post">
@@ -13,7 +14,7 @@
             <div class="recent-post">
                 <div class="rp-item">
                     <div class="rp-text">
-                        <a href="reCheckUserPW">회원정보 수정</a>
+                        <a href="#" id="modifyUserInfo" onclick=acyncMovePage("reCheckUserPW");>회원정보 수정</a>
                     </div>
                 </div>
             </div>
@@ -76,7 +77,7 @@
             <div class="recent-post">
                 <div class="rp-item">
                     <div class="rp-text">
-                        <a href="dropUser">회원 탈퇴</a>
+                        <a href="#" id="dropUser" onclick=acyncMovePage("dropUser");>회원 탈퇴</a>
                     </div>
                 </div>
             </div>

@@ -23,19 +23,7 @@ public class CityController {
     private CityService cityService;
 
     @GetMapping(value = "/selectCityInfo")
-    public String selectCityInfo(Model model, HttpServletRequest request) throws Exception{
-        /*
-         * request에서 클릭한 메뉴의 페이지 정보를 가져옴(getParameter())
-         * 받아온 파라미터를 사용해 해당 도시의 정보를 보냄
-         */
-        this.setModel(model, request.getParameter(PAGE.getText()));
-        return CITY_INFO.getPath();
-    }
-
-    /*
-    * Controller 내부에서 사용되는 Method
-    */
-    private void setModel(Model model, String cityName)  throws Exception{
+    public String selectCityInfo(Model model, @RequestParam("page") String cityName) throws Exception{
         if(!cityName.equals("all")){
             List<CityInfoVO> cityIntro = cityService.getCityInfoList(cityName,INTRO.name());
             List<CityInfoVO> foodList = cityService.getCityInfoList(cityName,FOOD.name());
@@ -49,5 +37,6 @@ public class CityController {
         List<CityInfoVO> cityIntroList = cityService.getCityInfoListByCategory(INTRO.name());
         model.addAttribute(SELECTED_CITY_NAME.getText(), cityName);
         model.addAttribute(CITY_INTRO_LIST.getText(), cityIntroList);
+        return CITY_INFO.getPath();
     }
 }

@@ -4,22 +4,18 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %><!DOCTYPE html>
-<html>
-<head>
-    <title>한달 살기</title>
-</head>
+<%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 <body>
-<%
-    UserVO userVO = (UserVO) request.getAttribute("userVO");
-%>
+<%--<%--%>
+<%--    UserVO userVO = (UserVO) request.getAttribute("userVO");--%>
+<%--%>--%>
 <tiles:insertAttribute name="header"/>
 <tiles:insertAttribute name="profile"/>
 <section class="blog-section spad">
     <div class="container">
         <div class="row">
             <tiles:insertAttribute name="sideBar"/>
-            <div class="col-lg-10">
+            <div class="col-lg-10" id="body">
                 <tiles:insertAttribute name="body"/>
             </div>
         </div>
@@ -27,4 +23,24 @@
 </section>
 <tiles:insertAttribute name="footer"/>
 </body>
+<script>
+    var pageName = $(this).attr('id');
+    function acyncMovePage(url){
+        // ajax option
+        var ajaxOption = {
+            url : url,
+            data: { pageName: pageName },
+            async : true,
+            type : "POST",
+            dataType : "html",
+            cache : false
+        };
+        $.ajax(ajaxOption).done(function(data){
+            // Contents 영역 삭제
+            $('#body').children().remove();
+            // Contents 영역 교체
+            $('#body').html(data);
+        });
+    }
+</script>
 </html>

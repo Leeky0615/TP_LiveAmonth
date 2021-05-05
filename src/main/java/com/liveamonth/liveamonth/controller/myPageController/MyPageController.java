@@ -25,6 +25,7 @@ import static com.liveamonth.liveamonth.constants.LogicConstants.ESignAttributes
 
 import java.util.ArrayList;
 
+
 @Controller
 public class MyPageController {
     @Autowired
@@ -44,27 +45,27 @@ public class MyPageController {
         return "MyPage";
     }
 
-    @GetMapping("/reCheckUserPW")
+    @RequestMapping("/reCheckUserPW")
     public String reCheckUserPW(Model model, HttpServletRequest request) throws Exception {
         model.addAttribute(USER_VO.getText(), request.getAttribute(USER_VO.getText()));
         model.addAttribute(CHECK_USER.getText(), true);
+        System.out.println("request = " + request.getParameter("pageName"));
         return RE_CHECK_USER_PW.getPath();
     }
 
-    @GetMapping("/goToModifyUserInfo")
+    @RequestMapping("/goToModifyUserInfo")
     public String goToModifyUserInfo(Model model, HttpServletRequest request, HttpSession session) throws Exception {
-        model.addAttribute(USER_VO.getText(), request.getAttribute(USER_VO.getText()));
 
         String userID = request.getParameter(USER_ID.getText());
         String userPassword = request.getParameter(USER_PASSWORD.getText());
-  
+
         UserVO userVO = signService.checkSign(userID, userPassword);
 
+        model.addAttribute(USER_VO.getText(), request.getAttribute(USER_VO.getText()));
         if (userVO == null) {
             model.addAttribute(CHECK_USER.getText(), false);
             return RE_CHECK_USER_PW.getPath();
         } else {
-            model.addAttribute(USER_VO.getText(), request.getAttribute(USER_VO.getText()));
             return MODIFY_USER_INFO.getPath();
         }
     }
@@ -94,7 +95,7 @@ public class MyPageController {
     @RequestMapping(value="dropUser")
 	public String dropUser(Model model) throws Exception{
     	 // this.firstIn = true; -> 바로 true로 넣어줌
-         model.addAttribute(FIRST_IN.getText(), true);
+        model.addAttribute(FIRST_IN.getText(), true);
     	return DROP_USER.getPath();
 	}
 

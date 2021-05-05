@@ -1,14 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
          pageEncoding="utf-8" %>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
-
-<!DOCTYPE html>
-<html>
 <head>
-    <meta charset="EUC-KR">
     <meta charset="UTF-8">
     <meta name="description" content="Aler Template">
     <meta name="keywords" content="Aler, unica, creative, html">
@@ -16,9 +10,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <!-- Google Font -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800,900&display=swap"
           rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -39,6 +36,7 @@
     <link rel="stylesheet" href="resources/css/ihover.min.css" type="text/css">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="resources/js/cityInfo.js"></script>
 </head>
 <body>
@@ -147,10 +145,4 @@
     </div>
 </header>
 <!-- Header End -->
-<script>
-
-</script>
-
 </body>
-
-</html>
