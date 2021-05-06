@@ -25,8 +25,8 @@ public class ControllerPathConstants {
     public enum EMyPagePath {
         MY_PAGE("MyPage"),
         MODIFY_USER_INFO("ModifyUserInfo"),
-        RE_CHECK_USER_PW("ReCheckUserPW"),
-        DROP_USER("DropUser"),
+        RE_CHECK_MODIFY_USER("ReCheckForModifyUserInfo"),
+        RE_CHECK_DROP_USER("ReCheckForDropUser"),
         RESULT_MENT_DROP_USER("ResultMentDropUser"),
         RESULT_MENT_MODIFY_USER_INFO("ResultMentModifyUserInfo"),
     	FINALLY_ASK_DROP_USER("FinallyAskDropUser"),

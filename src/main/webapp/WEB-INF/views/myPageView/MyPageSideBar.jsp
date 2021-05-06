@@ -10,11 +10,10 @@
             <div class="section-title sidebar-title-b">
                 <h6>계정</h6>
             </div>
-
             <div class="recent-post">
                 <div class="rp-item">
                     <div class="rp-text">
-                        <a href="#" id="modifyUserInfo" onclick=acyncMovePage("reCheckUserPW");>회원정보 수정</a>
+                        <a href="#"  onclick=acyncMovePage("reCheckForModifyUserInfo");>회원정보 수정</a>
                     </div>
                 </div>
             </div>
@@ -77,7 +76,7 @@
             <div class="recent-post">
                 <div class="rp-item">
                     <div class="rp-text">
-                        <a href="#" id="dropUser" onclick=acyncMovePage("dropUser");>회원 탈퇴</a>
+                        <a href="#" onclick=acyncMovePage("reCheckForDropUser");>회원 탈퇴</a>
                     </div>
                 </div>
             </div>

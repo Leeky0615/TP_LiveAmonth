@@ -6,9 +6,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 <body>
-<%--<%--%>
-<%--    UserVO userVO = (UserVO) request.getAttribute("userVO");--%>
-<%--%>--%>
 <tiles:insertAttribute name="header"/>
 <tiles:insertAttribute name="profile"/>
 <section class="blog-section spad">
@@ -23,13 +20,12 @@
 </section>
 <tiles:insertAttribute name="footer"/>
 </body>
+</html>
 <script>
-    var pageName = $(this).attr('id');
     function acyncMovePage(url){
         // ajax option
         var ajaxOption = {
             url : url,
-            data: { pageName: pageName },
             async : true,
             type : "POST",
             dataType : "html",
@@ -43,4 +39,3 @@
         });
     }
 </script>
-</html>

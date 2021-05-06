@@ -13,8 +13,7 @@
                     <div>
                         <form action="resultMentDropUser" method=post class="cc-form" id="resultMentDropUser">
                             <button type="submit" class="site-btn">확인</button>
-
-                            <input type="button" class="site-btn" value="취소" onclick="cancelDropUser();">
+                            <button type="button" class="site-btn" onclick=acyncMovePage("reCheckForModifyUserInfo");>취소</button>
                         </form>
                     </div>
                 </div>

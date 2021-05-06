@@ -1,11 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
-    
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="utf-8">
-</head>
 <body>
         <!-- Footer Section Begin -->
     <footer class="footer-section">

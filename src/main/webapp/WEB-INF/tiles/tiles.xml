@@ -36,7 +36,7 @@
         <put-attribute name="header" value="/WEB-INF/views/incl/Header.jsp"/>
         <put-attribute name="profile" value="/WEB-INF/views/myPageView/MyPageProfile.jsp"/>
         <put-attribute name="sideBar" value="/WEB-INF/views/myPageView/MyPageSideBar.jsp"/>
-        <put-attribute name="body" value="/WEB-INF/views/myPageView/ReCheckUserPW.jsp"/>
+        <put-attribute name="body" value="/WEB-INF/views/myPageView/ReCheckForModifyUserInfo.jsp"/>
         <put-attribute name="footer" value="/WEB-INF/views/incl/Footer.jsp"/>
     </definition>
 <!--    <definition name="myPageView/*" extends="MyPage">-->

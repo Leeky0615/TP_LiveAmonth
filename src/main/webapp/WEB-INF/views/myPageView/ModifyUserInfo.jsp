@@ -1,15 +1,16 @@
 <%@ page import="com.liveamonth.liveamonth.entity.vo.UserVO" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="com.liveamonth.liveamonth.entity.vo.UserVO" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <body>
-<%
-    UserVO userVO = (UserVO) request.getAttribute("userVO");
-%>
+<script src="resources/js/MyPage.js"></script>
 <section class="ftco-section">
     <div class="section-title">
         <h4>회원정보 수정</h4>
     </div>
     <div class="container">
-        <form action=resultMentModifyUserInfo method="post" class="signup-form" name="SignInfo">
+        <form action="#" method="post" class="signup-form" name="SignInfo">
             <div class="row justify-content-center">
                 <div class="col-md-10 col-lg-10 col-xl-10">
                     <div class="login-wrap p-4 p-md-5">
@@ -68,7 +69,8 @@
                             </div>
                             <div class="form-group">
                                 <button type="submit" id="submit"
-                                        class="form-control btn btn-primary rounded submit px-3">
+                                        class="form-control btn btn-primary rounded submit px-3"
+                                        onclick=acyncMovePage("resultMentModifyUserInfo");>
                                     회원정보 변경
                                 </button>
                             </div>
@@ -80,32 +82,6 @@
     </div>
 </section>
 <script>
-    $(".checkNickName").click(function () {
-        var query = {userNickname: $("#userNickname").val()};
-        $.ajax({
-            url: "checkNickName",
-            type: "post",
-            data: query,
-            success: function (data) {
 
-                if (data == 1) {
-                    $(".nickNameResult .nickNameMsg").text("사용불가");
-                    $(".nickNameResult .nickNameMsg").attr("style", "color:#f00");
-                    $("#submit").attr("disabled", "disabled");
-                } else {
-                    $(".nickNameResult .nickNameMsg").text("사용가능");
-                    $(".nickNameResult .nickNameMsg").attr("style", "color:#00f");
-
-                    $("#submit").removeAttr("disabled");
-                }
-            }
-        });
-    });
-    $("#userNickname").keyup(function () {
-        $(".nickNameResult .nickNameMsg").text("중복확인을 해주세요");
-        $(".nickNameResult .nickNameMsg").attr("style", "color:#000");
-
-        $("#submit").attr("disabled", "disabled");
-    });
 </script>
 </body>
