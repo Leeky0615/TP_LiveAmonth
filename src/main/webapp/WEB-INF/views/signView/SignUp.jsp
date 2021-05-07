@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
          pageEncoding="utf-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -46,20 +47,6 @@
                         <form action="#" class="signup-form">
 
                             <div class="form-group mb-3">
-                                <label class="label" for="classification">회원구분</label><br>
-                                <input type="radio" id="classification" name="classification"
-                                       value="noramal" onclick="hideBusinessNumber()">일반회원 &nbsp;
-                                <input type="radio" id="classification" name="classification"
-                                       value="business" onclick="showNumber()">사업자
-                            </div>
-
-                            <div class="form-group mb-3" id="businessBlock">
-                                <label class="label" for="businessLicense">사업자정보</label>
-                                <input type="text" id="businessLicense" class="form-control"
-                                       placeholder="businessLicense" name="businessLicense">
-                            </div>
-
-                            <div class="form-group mb-3">
                                 <label class="label" for="userID">ID</label>
                                 <input type="text" id="userID" class="form-control" placeholder="ID" name="userID"
                                        engAndNumOnly>
@@ -71,20 +58,30 @@
 
                             <div class="form-group mb-3">
                                 <label class="label" for="userPassword">password</label> <input
-                                    id="password-field" type="password" id="userPassword"
+                                    type="password" id="userPassword"
                                     class="form-control" placeholder="Password" onpaste="return false;"
-                                    oncopy="return false;"
+                                    oncopy="return false;" onchange = "checkPassword()"
                                     name="userPassword"> <span toggle="#password-field"
                                                                class="fa fa-fw fa-eye field-icon toggle-password"></span>
                             </div>
+
+                            <div class="form-group mb-3">
+                                <label class="label" for="checkUserPassword">Check password</label>
+                                <input type="password" id="checkUserPassword"
+                                    class="form-control" placeholder="checkPassword" onpaste="return false;"
+                                    oncopy="return false;" onchange = "checkPassword()" name="checkUserPassword">
+                                <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                                <span class="checkPassword" id="checkPassword">비밀번호 확인</span>
+                            </div>
+
                             <div class="form-group mb-3">
                                 <label class="label" for="userName">이름</label> <input
-                                    type="text" id="userName" class="form-control"
+                                    type="text" id="userName" class="form-control" onpaste="return false;"
                                     placeholder="이름(한글만 입력가능)" name="userName" onkeypress="koreanCheck()">
                             </div>
                             <div class="form-group mb-3">
                                 <label class="label" for="userNickname">닉네임</label>
-                                <input type="text" id="userNickname" class="form-control" placeholder="닉네임"
+                                <input type="text" id="userNickname" class="form-control" placeholder="닉네임" onpaste="return false;"
                                        name="userNickname">
                                 <button type="button" class="checkNickName">중복확인</button>
                                 <p class="nickNameResult">
@@ -94,28 +91,36 @@
 
                             <div class="form-group mb-3" id="userSexBlock">
                                 <label class="label" for="userSex">성별</label><br> <select
-                                    name="userSex" id="userSex" class="form-control">
+                                    name="userSex" id="userSex" class="form-control" onpaste="return false;">
                                 <option value=0>남성</option>
                                 <option value=1>여성</option>
                             </select>
                             </div>
                             <br>
 
+
+                            <div class="form-group mb-3" >
+                                <label class="label" for="userEmail">이메일</label>
+                                <input type="text" id="userEmail" class="form-control result-email" onpaste="return false;" name="userEmail" onfocus="this.value='';">
+                                @
+                                <input type="text" id="email" name="email" class="form-control" readOnly="true">
+
+                            </div>
+
+                            <div class="form-group mb-3" id="emailBlock">
+                                <select name="emailSelected" id="emailSelected" class="form-control" onchange="email_change()">
+                                    <c:forEach var="email" items="${email}">
+                                        <option value="${email.label}">${email.label}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+
+
                             <div class="form-group mb-3">
                                 <label class="label" for="userAge">출생년도</label><br> <input
                                     type="number" class="int form-control" id="userAge"
-                                    min="1900" max="2021" maxlength="4" placeholder="생년(4자)"
+                                    min="1900" max="2021" maxlength="4" placeholder="생년(4자)" onpaste="return false;"
                                     name="userAge" oninput="maxLengthCheck(this)">
-                            </div>
-
-                            <div class="form-group mb-3">
-                                <label class="label" for="userEmail">이메일</label> <input
-                                    type="text" id="userEmail" class="form-control result-email"
-                                    placeholder="johndoe@gmail.com" name="userEmail">
-                                <button type="button" class="checkEmail">중복확인</button>
-                                <p class="emailResult">
-                                    <span class="emailMsg">중복확인을 해주세요.</span>
-                                </p>
                             </div>
 
                             <div class="form-group d-md-flex">
@@ -127,6 +132,7 @@
                                     </label>
                                 </div>
                             </div>
+
                             <div class="form-group">
                                 <button type="submit" id="submit" disabled="disabled"
                                         class="form-control btn btn-primary rounded submit px-3">Sign
@@ -213,37 +219,7 @@
         $("#submit").attr("disabled", "disabled");
 
     });
-    /////////////////////////////////////////////////////////////////
-    $(".checkEmail").click(function () {
-        var query = {userEmail: $("#userEmail").val()};
 
-        $.ajax({
-            url: "checkEmail",
-            type: "post",
-            data: query,
-            success: function (data) {
-
-                if (data == 1) {
-                    $(".emailResult .emailMsg").text("사용불가");
-                    $(".emailResult .emailMsg").attr("style", "color:#f00");
-                    $("#submit").attr("disabled", "disabled");
-                } else {
-                    $(".emailResult .emailMsg").text("사용가능");
-                    $(".emailResult .emailMsg").attr("style", "color:#00f");
-
-                    $("#submit").removeAttr("disabled");
-                }
-            }
-        });  // ajax ��
-    });
-
-    $("#userEmail").keyup(function () {
-        $(".emailResult .emailMsg").text("중복확인을 해주세요");
-        $(".emailResult .emailMsg").attr("style", "color:#000");
-
-        $("#submit").attr("disabled", "disabled");
-
-    });
 </script>
 </body>
 </html>

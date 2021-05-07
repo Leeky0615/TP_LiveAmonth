@@ -48,6 +48,21 @@
 
     </form>
 </div>
+
+<div class="search-form-content">
+    <form action="knowScheduleDurationPay" class="filter-form">
+        <div class="text_desc">
+            <input type="date" id="schedulePayStartDay" name="schedulePayStartDay" class="sm-width"/> ~
+            <input type="date" id="schedulePayFinishDay" name="schedulePayFinishDay" class="sm-width"/>
+            <button type="submit" class="search-btn sm-width" style="float: right;" >금액확인하기</button>
+        </div>
+
+</div>
+
+
+</form>
+</div>
+
 <div class="modal fade" id="addScheduleModal" role="dialog" aria-labelledby="addScheduleLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">

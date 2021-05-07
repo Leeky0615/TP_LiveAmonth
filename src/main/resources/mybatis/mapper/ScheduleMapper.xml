@@ -123,6 +123,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select schedule.scheduleNO, scheduleViewCount, count(scheduleLikeUserNO) as likeCount from schedule, scheduleLike where schedule.scheduleNO = scheduleLike.scheduleNO and schedule.scheduleNO = #{scheduleNO} group by schedule.scheduleNO;
 	</select>
 
+	<select id="getScheduleDurationPay" parameterType="HashMap" resultType="int">
+		select IFNULL(sum(scheduleContentCost),0) from scheduleContent where scheduleNO = #{scheduleNO} and scheduleContentDate between #{schedulePayStartDay} and #{schedulePayFinishDay};
+	</select>
+
 	<!-- delete -->
 	<delete id="deleteScheduleContent" parameterType="int">
 		delete from scheduleContent where scheduleContentNO = #{scheduleContentNO}

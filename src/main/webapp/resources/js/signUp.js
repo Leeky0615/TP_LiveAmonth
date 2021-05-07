@@ -1,14 +1,7 @@
 function checkValue() {
-	if (!document.SignInfo.classification.value) {
-		alert("회원 구분을 선택하세요.");
-		return false;
-	}
+
 	if (!document.SignInfo.userSex.value) {
 		alert("성별을 선택하세요.");
-		return false;
-	}
-	if (!document.SignInfo.businessLicense.value) {
-		alert("사업자 등록번호를 입력하세요.");
 		return false;
 	}
 	if (!document.SignInfo.userName.value) {
@@ -77,4 +70,52 @@ $('#userEmail').blur(function() {
 		 $("#submit").removeAttr("disabled");
 	}
 });
+
+function checkPassword(){
+	var userPassword = document.getElementById("userPassword").value;
+	if(userPassword.length<6 || userPassword.length>16){
+		document.getElementById("checkPassword").innerHTML = "6글자 이상, 16글자 이하만 사용가능.";
+		document.getElementById("checkPassword").style.color='red';
+		document.getElementById("userPassword").value = "";
+
+	}else{
+		if(document.getElementById("checkPassword").style.color=='red'){
+			document.getElementById("checkPassword").style.color='blue';
+		}
+
+	}
+	$("#submit").attr("disabled", "disabled");
+
+	if(document.getElementById('userPassword').value !='' && document.getElementById('checkUserPassword').value!=''){
+		if(document.getElementById('userPassword').value==document.getElementById('checkUserPassword').value){
+			document.getElementById('checkPassword').innerHTML='비밀번호가 일치합니다.'
+			document.getElementById('checkPassword').style.color='blue';
+			$("#submit").removeAttr("disabled");
+		}
+		else{
+			document.getElementById('checkPassword').innerHTML='비밀번호가 일치하지 않습니다.';
+			document.getElementById('checkPassword').style.color='red';
+			document.getElementById('checkUserPassword').value = "";
+			$("#submit").attr("disabled", "disabled");
+		}
+	}
+}
+function email_change(){
+	var emailSelected = $("#emailSelected option:selected").val();
+
+
+	if(emailSelected == "직접입력"){
+		$('#email').attr("readonly",false);
+		$('#email').val('');
+		$('#email').focus();
+	} else{
+		$('#email').attr("readonly",true);
+		$("#email").val(emailSelected);
+	}
+	if(emailSelected == "선택하세요"){
+		$('#email').attr("readonly",true);
+		$('#email').val('');
+	}
+}
+
 

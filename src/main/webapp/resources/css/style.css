@@ -5067,6 +5067,13 @@ li .richText-btn[data-command=toggleCode] {
     z-index: -1;
 }
 
+#emailBlock {
+    z-index: 1;
+}
+
+#emailBlock label {
+    z-index: -1;
+}
 .centered {
     margin-left: auto; margin-right: auto;
     text-align: center;

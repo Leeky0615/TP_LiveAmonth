@@ -1,9 +1,9 @@
 package com.liveamonth.liveamonth.controller.signController;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.liveamonth.liveamonth.constants.EntityConstants;
 import com.liveamonth.liveamonth.entity.vo.CityInfoVO;
 import com.liveamonth.liveamonth.entity.vo.UserVO;
 import com.liveamonth.liveamonth.model.service.cityInfoService.CityService;
@@ -19,10 +19,13 @@ import java.util.List;
 import static com.liveamonth.liveamonth.constants.ControllerPathConstants.EMainPath.MAIN;
 import static com.liveamonth.liveamonth.constants.ControllerPathConstants.ESignPath.*;
 import static com.liveamonth.liveamonth.constants.EntityConstants.CityInfoCategory.INTRO;
+import static com.liveamonth.liveamonth.constants.EntityConstants.ESignUp.EMAIL;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.ECityInfoAttributes.CITY_INTRO_LIST;
 import static com.liveamonth.liveamonth.constants.LogicConstants.ECityInfoAttributes.CITY_NAME_LIST;
+import static com.liveamonth.liveamonth.constants.LogicConstants.ESignAttributes.AT;
 import static com.liveamonth.liveamonth.constants.LogicConstants.ESignAttributes.FIRST_IN;
+import static com.liveamonth.liveamonth.constants.EntityConstants.*;
 
 @Controller
 public class SignController {
@@ -77,6 +80,7 @@ public class SignController {
 
     @RequestMapping("/signUp")
     public String SignUpPage(Model model) throws Exception {
+        model.addAttribute(EMAIL.getText(), EEmail.values());
         return SIGN_UP.getPath();
     }
 
@@ -102,20 +106,14 @@ public class SignController {
         return nickNameExist;
     }
 
-    @ResponseBody
-    @RequestMapping(value = "/checkEmail", method = RequestMethod.POST)
-    public int postCheckEmailCheck(HttpServletRequest request) throws Exception {
-        String userEmail = request.getParameter(USER_EMAIL.getText());
-        String emailCheck = signService.checkEmail(userEmail);
 
-        int emailExist = 0;
-        if (emailCheck != null) emailExist = 1;
-        System.out.println(emailCheck);
-        return emailExist;
-    }
 
     @RequestMapping("/resultMentSignUp")
-    private String resultMentSignUp(@ModelAttribute UserVO userVO) throws Exception {
+    private String resultMentSignUp(@ModelAttribute UserVO userVO,HttpServletRequest request) throws Exception {
+        String userEmail = request.getParameter(USER_EMAIL.getText());
+        String email = request.getParameter(EMAIL.getText());
+
+        userVO.setUserEmail(userEmail + AT.getText() + email);
         signService.insertUser(userVO);
         return RESULT_MENT_SIGN_UP.getPath();
     }
@@ -137,6 +135,8 @@ public class SignController {
     private String findPW(Model model) throws Exception {
         return FIND_PW.getPath();
     }
+
+
 
 
     @RequestMapping(value = "/ResultMentFindPW", method = RequestMethod.POST)

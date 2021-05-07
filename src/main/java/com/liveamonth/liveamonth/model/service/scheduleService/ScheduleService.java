@@ -52,4 +52,6 @@ public interface ScheduleService {
     Paging showPaging(int selectPage, int scheduleNO) throws Exception;
 
     void increaseScheduleViewCount(int scheduleNO);
+
+    int getScheduleDurationPay(String schedulePayStartDay, String schedulePayFinishDay, int scheduleNO) throws Exception;
 }

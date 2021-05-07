@@ -23,7 +23,10 @@ public class LogicConstants {
         COMPLETE_SCHEDULEREPLY_MODIFICATION("댓글이 수정되었습니다."),
         FAIL_TO_MODIFY_SCHEDULEREPLY("댓글 수정에 실패하였습니다."),
         COMPLETE_SCHEDULEREPLY_DELETION("댓글이 삭제되었습니다.."),
-        FAIL_TO_DELETE_SCHEDULEREPLY("댓글 삭제에 실패하였습니다.");
+        FAIL_TO_DELETE_SCHEDULEREPLY("댓글 삭제에 실패하였습니다."),
+
+        PLEASE_ADD_DURATION("기간을 설정해 주십시오."),
+        WON("원");
 
         private String text;
         private EAlertMessage(String text) {this.text = text;}
@@ -95,11 +98,14 @@ public class LogicConstants {
     }
 
     public enum ESignAttributes{
-        FIRST_IN("firstIn");
+        FIRST_IN("firstIn"),
+        AT("@");
         private String text;
         private ESignAttributes(String text){this.text = text;}
         public String getText() {return this.text;}
     }
+
+
 
     public enum EPaging{
         SELECTED_PAGE("selectedPage"),

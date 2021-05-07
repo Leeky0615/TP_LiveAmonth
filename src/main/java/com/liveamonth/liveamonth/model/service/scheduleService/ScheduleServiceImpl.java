@@ -258,4 +258,14 @@ public class ScheduleServiceImpl implements ScheduleService {
     public void increaseScheduleViewCount(int scheduleNO) {
         scheduleMapper.increaseScheduleViewCount(scheduleNO);
     }
+
+    @Override
+    public int getScheduleDurationPay(String schedulePayStartDay, String schedulePayFinishDay, int scheduleNO) throws Exception {
+        HashMap<String, Object> hash = new HashMap<String, Object>();
+        hash.put("schedulePayStartDay", schedulePayStartDay);
+        hash.put("schedulePayFinishDay", schedulePayFinishDay);
+        hash.put("scheduleNO", scheduleNO);
+
+        return scheduleMapper.getScheduleDurationPay(hash);
+    }
 }

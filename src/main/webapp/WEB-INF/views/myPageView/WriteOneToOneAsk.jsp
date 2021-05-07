@@ -15,6 +15,8 @@
 								<span class="fa fa-edit"></span>
 							</div>
 							<h3 class="text-center mb-4">문의 작성</h3>
+
+
 								<div class="form-group mb-3" id="oneToOneAskCategoryBlock">
 									<label class="label" for="oneToOneAskCategory">목록</label><br>
 									<select name="oneToOneAskCategory" id="oneToOneAskCategory" class="form-control">
@@ -32,7 +34,7 @@
 								</div>
 
 								<div class="form-group mb-3">
-									<label class="label" for="oneToOneAskDesc">내용</label> <input type="text"
+									<label class="label" for="oneToOneAskDesc">내용</label> <input type="textarea"
 										id="oneToOneAskDesc" class="form-control" placeholder="내용"
 										name="oneToOneAskDesc">
 								</div>

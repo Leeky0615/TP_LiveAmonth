@@ -132,6 +132,7 @@
                                 </ul>
                             </li>
                             <li class="active"><a href="myPage">MyPage</a></li>
+
                         </ul>
                     </nav>
                 </div>
