@@ -13,3 +13,13 @@ addReviewButton = function(){
     }
     addReviewForm.submit();
 }
+
+ function changeReviewCategory() {
+    alter("DSA");
+    var reviewType = document.reviewType;
+    if (reviewType = "FREE_BOARD") {
+        alter(reviewType);
+    } else if (reviewType = "REVIEW_BOARD") {
+        alter(reviewType);
+    }
+}

@@ -16,9 +16,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import static com.liveamonth.liveamonth.constants.ControllerPathConstants.EReviewPath.*;
 import static com.liveamonth.liveamonth.constants.EntityConstants.*;
-import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.USER_VO;
+import static com.liveamonth.liveamonth.constants.EntityConstants.EReview.*;
+import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EReviewAttribute.*;
+import static com.liveamonth.liveamonth.constants.LogicConstants.EReviewImage.ALL_REVIEW_LIST;
 
 @Controller
 public class ReviewController {
@@ -32,19 +35,18 @@ public class ReviewController {
 	@GetMapping("/review")
 	public String showFristReviewList(Model model) throws Exception{
 		ArrayList<ReviewVO> reviewList = reviewService.getAllReviewList();
-
-		model.addAttribute("AllReviewList", reviewList);
-		return "reviewView/FirstReviewList";
+		model.addAttribute(ALL_REVIEW_LIST.getText(), reviewList);
+		return FIRST_REVIEW_PAGE.getPath();
 	}
 
 	@GetMapping("/getReview")
 	public String getReview(Model model, HttpServletRequest request) throws Exception{
-		int reviewNO = Integer.parseInt(String.valueOf(request.getParameter("reviewNO")));
+		int reviewNO = Integer.parseInt(String.valueOf(request.getParameter(REVIEW_NO.getText())));
 
 		ReviewVO reviewVO = reviewService.getReviewVO(reviewNO);
 
-		model.addAttribute("reviewVO", reviewVO);
-		return "reviewView/ReviewContent";
+		model.addAttribute(REVIEW_VO.getText(), reviewVO);
+		return REVIEW_CONTENT.getPath();
 	}
 
 	@GetMapping("/reviewWrite")
@@ -52,7 +54,7 @@ public class ReviewController {
 		model.addAttribute(REVIEW_TYPE_LIST.getText(), EReviewTypeName.values());
 		model.addAttribute(REVIEW_CATEGORY_LIST.getText(), EReviewCategoryName.values());
 		model.addAttribute(REVIEW_PLACE_LIST.getText(), CityName.values());
-		return "reviewView/ReviewWriter";
+		return REVIEW_WRITER.getPath();
 	}
 
 	@RequestMapping(value = "addReview")
@@ -67,7 +69,7 @@ public class ReviewController {
 		reviewVO.setUserNO(session_UserVO.getUserNO());
 
 		int reviewNO = reviewService.addReview(reviewVO);
-		rttr.addAttribute("reviewNO", reviewNO);
-		return "redirect:getReview";
+		rttr.addAttribute(REVIEW_NO.getText(), reviewNO);
+		return REDIRECT_REVIEW_CONTENT.getRedirectPath();
 	}
 }

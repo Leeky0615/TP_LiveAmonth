@@ -120,7 +120,6 @@ public class EntityConstants {
         REVIEW_CATEGORY("reviewCategory"),
         REVIEW_SUBJECT("reviewSubject"),
         REVIEW_DESC("reviewDesc"),
-        REVIEW_LIKE_COUNT("reviewLikeCount"),
         REVIEW_DATE("reviewDate"),
         REVIEW_PLACE("reviewPlace"),
         REVIEW_VIEW_COUNT("reviewViewCount");

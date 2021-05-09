@@ -33,7 +33,7 @@
                                 <div class="filter-form">
                                     <select class="sm-width" id = "reviewType" name = "reviewType">
                                         <c:forEach var="reviewType" items="${reviewTypeList}">
-                                        <option value="${reviewType}">${reviewType.nameKR}</option>
+                                            <option value="${reviewType}">${reviewType.nameKR}</option>
                                         </c:forEach>
                                     </select>
                                     <select class="sm-width"  id = "reviewCategory" name = "reviewCategory">
@@ -110,7 +110,7 @@
 
                         </script>
 
-                        <input type="submit" class="search-btn sm-width" style="float: right; margin-bottom: 20px;" value="확인" onclick="addReviewButton();">
+                        <input type="submit" class="search-btn sm-width" style="float: right; margin-bottom: 20px;" value="등록" onclick="addReviewButton();">
                         <input type="button" onClick="history.go(-1)" value="취소">
                     </form>
                 </div>

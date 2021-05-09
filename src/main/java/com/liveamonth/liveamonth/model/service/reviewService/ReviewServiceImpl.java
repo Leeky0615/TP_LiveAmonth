@@ -10,7 +10,6 @@ import java.util.ArrayList;
 @Service
 public class ReviewServiceImpl implements ReviewService {
 
-    @SuppressWarnings("unused")
 	@Autowired
     private ReviewMapper reviewMapper;
 

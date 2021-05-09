@@ -1,45 +1,36 @@
 package com.liveamonth.liveamonth.controller.reviewController;
 
 import com.google.gson.JsonObject;
-import org.apache.commons.io.FileUtils;
-import org.springframework.stereotype.Controller;
+import com.liveamonth.liveamonth.entity.dto.S3UploaderDTO;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.UUID;
+
+import static com.liveamonth.liveamonth.constants.LogicConstants.EReviewImage.*;
 
 
-@Controller
+@RequiredArgsConstructor
+@RestController
 public class ImageController {
+
+    private final S3UploaderDTO s3Uploader;
 
     @PostMapping(value="/uploadSummernoteImageFile", produces = "application/json")
     @ResponseBody
     public JsonObject uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile) {
 
         JsonObject jsonObject = new JsonObject();
-
-        String fileRoot = "C:\\Users\\hjww1\\OneDrive - 명지대학교\\바탕 화면\\STS Workspace\\LiveAmonth\\src\\main\\webapp\\reviewImageTest\\";	//저장될 파일 경로
-        String originalFileName = multipartFile.getOriginalFilename();	//오리지날 파일명
-        String extension = originalFileName.substring(originalFileName.lastIndexOf("."));	//파일 확장자
-
-        // 랜덤 UUID+확장자로 저장될 savedFileName
-        String savedFileName = UUID.randomUUID() + extension;
-
-        File targetFile = new File(fileRoot + savedFileName);
-
         try {
-            InputStream fileStream = multipartFile.getInputStream();
-            FileUtils.copyInputStreamToFile(fileStream, targetFile);	//파일 저장
-            jsonObject.addProperty("url", "/summernoteImage/"+savedFileName);
-            jsonObject.addProperty("responseCode", "success");
+            String savedFileName = s3Uploader.upload(multipartFile, S3_UPLOAD_FOLDER.getText());
+            jsonObject.addProperty(TEMP_IMAGE_URL.getText(), TEMP_IMAGE_PATH.getText()+savedFileName);
+            jsonObject.addProperty(RESPONSECODE.getText(), "success");
         } catch (IOException e) {
-            FileUtils.deleteQuietly(targetFile);	// 실패시 저장된 파일 삭제
-            jsonObject.addProperty("responseCode", "error");
+            jsonObject.addProperty(RESPONSECODE.getText(), "error");
             e.printStackTrace();
         }
         return jsonObject;

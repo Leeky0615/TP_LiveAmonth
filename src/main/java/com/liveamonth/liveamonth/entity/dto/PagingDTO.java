@@ -1,6 +1,6 @@
 package com.liveamonth.liveamonth.entity.dto;
 
-public class Paging {
+public class PagingDTO {
     private int page = 1; //현재 페이지 (get)
     private int totalCount; //row 전체의 수 (get)
     private int beginPage;  //출력 시작
