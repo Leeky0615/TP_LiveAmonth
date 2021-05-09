@@ -42,7 +42,7 @@
 		            	<button type="submit" class="form-control btn btn-primary rounded submit px-3">Sign In</button>
 		            </div>
 		            <%if(firstIn == false){%>
-		             <p class="text-center" style="color:#ff0000">가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.</p>
+		             <p class="text-center" style="color:#ff0000">가입하지 않는 이메일이거나, 잘못된 이름입니다.</p>
 		            <% }%>	
 		            
 		            <div class="form-group d-md-flex">

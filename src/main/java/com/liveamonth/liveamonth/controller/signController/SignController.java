@@ -122,17 +122,27 @@ public class SignController {
 
     @RequestMapping(value = "/resultMentFindID", method = RequestMethod.POST)
     public String findID(@RequestParam("userName")
-                                 String userName,@RequestParam("userEmail")
-                                 String userEmail, Model model) throws Exception {
+       	String userName,@RequestParam("userEmail")String userEmail, Model model) throws Exception {
         model.addAttribute(USER_ID.getText(), signService.findID(userName, userEmail));
+        
+        if (signService.findID(userName, userEmail) == null) 
+        this.firstIn = false;
+        model.addAttribute(FIRST_IN.getText(), this.firstIn);
+       
         return RESULT_MENT_FIND_ID.getPath();
     }
+    
+    
 
     @RequestMapping("/findID")
     private String findID(Model model) throws Exception {
+    	
+        this.firstIn = true;
+        model.addAttribute(FIRST_IN.getText(), this.firstIn);
         return FIND_ID.getPath();
     }
 
+    
     @RequestMapping("/findPW")
     private String findPW(Model model) throws Exception {
         return FIND_PW.getPath();
@@ -140,8 +150,13 @@ public class SignController {
 
 
     @RequestMapping(value = "/ResultMentFindPW", method = RequestMethod.POST)
-    public String findPW( @RequestParam("userID") String userID, @RequestParam("userEmail") String userEmail, Model model) throws Exception {
+    public String findPW( @RequestParam("userID") 
+    	String userID, @RequestParam("userEmail") String userEmail, Model model) throws Exception {
         model.addAttribute(USER_PASSWORD.getText(), signService.findPW(userID, userEmail));
+        
+        if (signService.findPW(userID, userEmail) == null) 
+        this.firstIn = false;
+        model.addAttribute(FIRST_IN.getText(), this.firstIn);
         return RESULT_MENT_FIND_PW.getPath();
     }
 }

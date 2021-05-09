@@ -3,6 +3,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script>
+<%  boolean firstIn = (boolean)request.getAttribute("firstIn"); %>
     $(function () {
         $("#loginBtn").click(function () {
             location.href = 'signIn';
@@ -22,7 +23,8 @@
                 <div class="col-md-7 col-lg-5">
                     <div class="d-flex">
                         <div class="w-100">
-                            <h3 class="mb-4">${ userID }</h3>
+                            <h3 class="mb-4">${ userID }
+                            </h3>
 
                         </div>
                     </div>
@@ -31,6 +33,9 @@
                                 class="form-control btn btn-primary rounded submit px-3">Login
                         </button>
                     </div>
+                                        		            <%if(firstIn == false){%>
+		             <p class="text-center" style="color:#ff0000">가입하지 않은 아이디이거나, 잘못된 이름입니다.</p>
+		            <% }%>	
                 </div>
             </div>
         </form>
