@@ -4,4 +4,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
  
 <mapper namespace="com.liveamonth.liveamonth.model.mapper.reviewMapper.ReviewMapper">
+    <select id = "getAllReviewList" resultType="ReviewVO">
+        select reviewNO, reviewSubject, reviewCategory, reviewDate, reviewViewCount, userNO from review;
+    </select>
+
+    <select id = "getReviewVO" parameterType="int" resultType="ReviewVO">
+        select * from review where reviewNO = #{reviewNO};
+    </select>
+
 </mapper>
