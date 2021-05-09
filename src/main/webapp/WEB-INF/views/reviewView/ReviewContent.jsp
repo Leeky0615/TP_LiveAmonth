@@ -17,9 +17,6 @@
             <div class="col-lg-8">
                 <div class="blog-item-list">
                     <div class="blog-item large-blog">
-                        <div class="bi-pic">
-                            <img src="img/blog/blog-1.jpg" alt="">
-                        </div>
                         <div class="bi-text">
                             <h4><a href="#" return false;>${reviewVO.reviewSubject}</a></h4>
                             <ul style="float: right;">

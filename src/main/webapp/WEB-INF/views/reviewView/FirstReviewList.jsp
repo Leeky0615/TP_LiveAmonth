@@ -57,18 +57,20 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
                                 <c:forEach var="reviewVO" items="${AllReviewList}">
-                                    <td class="p-type"> <a href="getReview?reviewNO=${reviewVO.reviewNO}">${reviewVO.reviewSubject}</a></td>
-                                    <td>${reviewVO.reviewCategory}</td>
-                                    <td>${reviewVO.userNO}</td>
-                                    <td>${reviewVO.reviewDate}</td>
-                                    <td>${reviewVO.reviewViewCount}</td>
+                                    <tr>
+                                        <td class="p-type"> <a href="getReview?reviewNO=${reviewVO.reviewNO}">${reviewVO.reviewSubject}</a></td>
+                                        <td>${reviewVO.reviewCategory.nameKR}</td>
+                                        <td>${reviewVO.userNO}</td>
+                                        <td>${reviewVO.reviewDate}</td>
+                                        <td>${reviewVO.reviewViewCount}</td>
+                                    </tr>
                                 </c:forEach>
-                            </tr>
                             </tbody>
                         </table>
                     </div>
+                    <br>
+                    <br>
                     <button type="button" class="btn btn-sm btn-primary pull-right" onclick="addScheduleReply(${param.scheduleReplyNO});"> 글작성 </button>
                     <script>
                         function addScheduleReply(scheduleReplyNO) {

@@ -12,4 +12,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         select * from review where reviewNO = #{reviewNO};
     </select>
 
+    <insert id="addReview" parameterType="ReviewVO" useGeneratedKeys="true" keyProperty="reviewNO">
+        insert into review values(#{reviewNO}, #{reviewType}, #{reviewCategory}, #{reviewPlace}, #{reviewSubject},#{reviewDesc},#{reviewDate}, #{reviewViewCount}, #{userNO})
+    </insert>
+
 </mapper>

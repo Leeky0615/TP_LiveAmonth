@@ -25,7 +25,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
 
     <!-- Css Styles -->
-    <link rel="stylesheet" href="resources/css/bootstrap.min.css" type="text/css">
+<%--    <link rel="stylesheet" href="resources/css/bootstrap.min.css" type="text/css">--%>
     <link rel="stylesheet" href="resources/css/font-awesome.min.css" type="text/css">
     <link rel="stylesheet" href="resources/css/elegant-icons.css" type="text/css">
     <link rel="stylesheet" href="resources/css/jquery-ui.min.css" type="text/css">
@@ -37,7 +37,7 @@
     <link rel="stylesheet" href="resources/css/loginstyle.css" type="text/css">
     <link rel="stylesheet" href="resources/css/signUpStyle.css" type="text/css">
     <link rel="stylesheet" href="resources/css/ihover.min.css" type="text/css">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
     <script src="resources/js/cityInfo.js"></script>
 </head>

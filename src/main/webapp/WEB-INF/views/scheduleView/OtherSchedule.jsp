@@ -17,13 +17,11 @@
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
 
 
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-      integrity="sha384-ggOyROiXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
 <link href="resources/css/schedule.css" rel="stylesheet" type="text/css">
 <link href="resources/css/reply.css" rel="stylesheet" type="text/css">
 <script src="resources/js/schedule.js"></script>
 <script src="resources/js/reply.js"></script>
-<script src="resources/js/board.js"></script>
 
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">

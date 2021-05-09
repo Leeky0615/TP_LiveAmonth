@@ -29,7 +29,8 @@ public class EntityConstants {
         GYEONGJU("경주"),
         BUSAN("부산"),
         YEOSU("여수"),
-        JEJU("제주");
+        JEJU("제주"),
+        ALL_PLACE("전지역");
         private String nameKR;
         private CityName(String nameKR){this.nameKR = nameKR;}
         public String getNameKR() {return this.nameKR;}
@@ -115,15 +116,34 @@ public class EntityConstants {
     public enum EReview {
         REVIEW_VO("reviewVO"),
         REVIEW_NO("reviewNO"),
+        REVIEW_TPYE("reviewType"),
         REVIEW_CATEGORY("reviewCategory"),
         REVIEW_SUBJECT("reviewSubject"),
         REVIEW_DESC("reviewDesc"),
         REVIEW_LIKE_COUNT("reviewLikeCount"),
         REVIEW_DATE("reviewDate"),
+        REVIEW_PLACE("reviewPlace"),
         REVIEW_VIEW_COUNT("reviewViewCount");
         private String text;
         private EReview(String text) {this.text = text;}
         public String getText() {return this.text;}
+    }
+
+    public enum EReviewTypeName{
+        REVIEW_BOARD("후기글"),
+        FREE_BOARD("자유글");
+        private String nameKR;
+        private EReviewTypeName(String nameKR){this.nameKR = nameKR;}
+        public String getNameKR() {return this.nameKR;}
+    }
+
+    public enum EReviewCategoryName{
+        TOUR_CONTENT("즐길거리"),
+        TOUR_FOOD("먹거리"),
+        TOUR_REPORT("느낀점");
+        private String nameKR;
+        private EReviewCategoryName(String nameKR){this.nameKR = nameKR;}
+        public String getNameKR() {return this.nameKR;}
     }
 
 

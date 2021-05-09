@@ -23,4 +23,11 @@ public class ReviewServiceImpl implements ReviewService {
     public ReviewVO getReviewVO(int reviewNO) throws Exception {
         return reviewMapper.getReviewVO(reviewNO);
     }
+
+    @Override
+    public int addReview(ReviewVO reviewVO) throws Exception {
+        long rowCount = reviewMapper.addReview(reviewVO);
+        long reviewNO = reviewVO.getReviewNO();
+        return (int)reviewNO;
+    }
 }

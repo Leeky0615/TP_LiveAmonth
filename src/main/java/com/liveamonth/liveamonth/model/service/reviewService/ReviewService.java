@@ -9,4 +9,6 @@ public interface ReviewService {
     public ArrayList<ReviewVO> getAllReviewList() throws Exception;
 
     public ReviewVO getReviewVO(int reviewNO) throws Exception;
+
+    public int addReview(ReviewVO reviewVO) throws Exception;
 }

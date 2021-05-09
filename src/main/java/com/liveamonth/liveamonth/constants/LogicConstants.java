@@ -113,4 +113,13 @@ public class LogicConstants {
         public String getText() {return this.text;}
     }
 
+    public enum EReviewAttribute{
+        REVIEW_TYPE_LIST("reviewTypeList"),
+        REVIEW_PLACE_LIST("reviewPlaceList"),
+        REVIEW_CATEGORY_LIST("reviewCategoryList");
+
+        private String text;
+        private EReviewAttribute(String text){this.text = text;}
+        public String getText() {return this.text;}
+    }
 }
