@@ -7,30 +7,9 @@
 <%@page import="java.util.*" %>
 
 <body style="background:#ffffff">
-<script
-        src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-<!-- jquery datepicker -->
-<link rel="stylesheet"
-      href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css"
-      type="text/css"/>
-<script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
-<!-- jquery datepicker 끝 -->
-<meta http-equiv="content-type" content="text/html; charset=utf-8">
-<link rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-      integrity="sha384-
-	ggOyROiXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-      crossorigin="anonymous">
-<link href="resources/css/schedule.css" rel="stylesheet"
-      type="text/css">
-<link href="resources/css/onOff.css" rel="stylesheet"
-      type="text/css">
+<link href="resources/css/schedule.css" rel="stylesheet" type="text/css">
+<link href="resources/css/onOff.css" rel="stylesheet" type="text/css">
 <script src="resources/js/schedule.js"></script>
-<script src="resources/js/board.js"></script>
-<link rel="stylesheet" href="resources/css/style.css" type="text/css">
-<link rel="stylesheet" href="resources/css/signUpStyle.css" type="text/css">
-<link rel="stylesheet" href="resources/css/font-awesome.min.css" type="text/css">
-<script type="text/javaScript" language="javascript"></script>
 
 <div class="search-form-content">
     <form action="swapSchedule" class="filter-form">
@@ -261,7 +240,6 @@
     </td>
     </c:forEach>
     </tbody>
-
     </table>
     </div>
 

@@ -4,6 +4,8 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Calendar;
+
 import static com.liveamonth.liveamonth.constants.EntityConstants.ImageURL;
 
 @Data
@@ -29,7 +31,6 @@ public class UserVO {
 		this.userAge = 0;
 		this.userSex = false;
 		this.userEmail = null;
-		this.userEmail = null;
 	}
 
 	// Getter & Setter
@@ -49,9 +50,16 @@ public class UserVO {
 	public void setUserNickname(String userNickname) {this.userNickname = userNickname;}
 
 	public int getUserAge() {return userAge;}
+	public int getUserRealAge(){
+		return Calendar.getInstance().get(Calendar.YEAR) - this.userAge;
+	}
 	public void setUserAge(int userAge) {this.userAge = userAge;}
 
 	public boolean isUserSex() {return userSex;}
+	public String getUserSex() {
+		if (this.isUserSex()) return "여성";
+		else return "남성";
+	}
 	public void setUserSex(boolean userSex) {this.userSex = userSex;}
 
 	public String getUserEmail() {return userEmail;}
@@ -62,7 +70,7 @@ public class UserVO {
 
 	// Get URL
 	public String getUserImageURL(){
-		return ImageURL+"user/"+this.getUserImage();
+		return ImageURL+"user/"+this.getUserNickname()+".png";
 	}
 }
 

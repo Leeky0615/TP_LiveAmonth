@@ -5,6 +5,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
+<script src="resources/js/myPage.js"></script>
 <body>
 <tiles:insertAttribute name="header"/>
 <tiles:insertAttribute name="profile"/>
@@ -21,21 +22,3 @@
 <tiles:insertAttribute name="footer"/>
 </body>
 </html>
-<script>
-    function acyncMovePage(url){
-        // ajax option
-        var ajaxOption = {
-            url : url,
-            async : true,
-            type : "POST",
-            dataType : "html",
-            cache : false
-        };
-        $.ajax(ajaxOption).done(function(data){
-            // Contents 영역 삭제
-            $('#body').children().remove();
-            // Contents 영역 교체
-            $('#body').html(data);
-        });
-    }
-</script>

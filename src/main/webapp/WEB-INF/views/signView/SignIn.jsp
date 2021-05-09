@@ -23,7 +23,7 @@
                 <form action="checkSign" method="post" class="signin-form">
                     <div class="form-group mt-3">
                         <input type="text" class="form-control" id="userID" name="userID" required>
-                        <label class="form-control-placeholder" for="userID">dk</label>
+                        <label class="form-control-placeholder" for="userID">ID</label>
                     </div>
                     <div class="form-group">
                         <input id="password-field" type="password" id="userPassword" class="form-control"

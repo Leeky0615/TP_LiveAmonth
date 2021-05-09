@@ -4,13 +4,12 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <body>
-<script src="resources/js/MyPage.js"></script>
 <section class="ftco-section">
     <div class="section-title">
         <h4>회원정보 수정</h4>
     </div>
     <div class="container">
-        <form action="#" method="post" class="signup-form" name="SignInfo">
+        <form action="resultMent?page=modify" id="checkUserForm" class="signup-form" name="SignInfo">
             <div class="row justify-content-center">
                 <div class="col-md-10 col-lg-10 col-xl-10">
                     <div class="login-wrap p-4 p-md-5">
@@ -69,8 +68,7 @@
                             </div>
                             <div class="form-group">
                                 <button type="submit" id="submit"
-                                        class="form-control btn btn-primary rounded submit px-3"
-                                        onclick=acyncMovePage("resultMentModifyUserInfo");>
+                                        class="form-control btn btn-primary rounded submit px-3">
                                     회원정보 변경
                                 </button>
                             </div>
@@ -81,7 +79,4 @@
         </form>
     </div>
 </section>
-<script>
-
-</script>
 </body>

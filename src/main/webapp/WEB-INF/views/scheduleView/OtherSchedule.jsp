@@ -7,30 +7,12 @@
 <%@ page import="com.liveamonth.liveamonth.entity.dto.CalendarDTO" %>
 <%@ page import="com.liveamonth.liveamonth.entity.vo.ScheduleVO" %>
 <%@page import="java.util.*" %>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-<!-- jquery datepicker -->
-<link rel="stylesheet"
-      href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css"
-      type="text/css"/>
-<script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
-<!-- jquery datepicker 끝 -->
-<meta http-equiv="content-type" content="text/html; charset=utf-8">
 
-
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-      integrity="sha384-ggOyROiXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <link href="resources/css/schedule.css" rel="stylesheet" type="text/css">
 <link href="resources/css/reply.css" rel="stylesheet" type="text/css">
 <script src="resources/js/schedule.js"></script>
 <script src="resources/js/reply.js"></script>
-<script src="resources/js/board.js"></script>
 
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
-<!--CDN 링크 -->
-<link rel="stylesheet" href="resources/css/style.css" type="text/css">
-<link rel="stylesheet" href="resources/css/signUpStyle.css" type="text/css">
-<link rel="stylesheet" href="resources/css/font-awesome.min.css" type="text/css">
 
 <body style="background:#ffffff">
 <input type="hidden" id="userNO" name="userNO" value="${userVO.userNO}"/>
@@ -220,15 +202,16 @@
                 <c:forEach var="scheduleVOReply" items="${scheduleVOReplyList}">
                     <c:if test="${scheduleVOReply.scheduleReply.scheduleReplyRefNO == 0 || scheduleVOReply.NO == scheduleVOReplyList[0].NO}">
                         <div class="media-block">
-                            <a class="media-left" href="#"><img class="img-circle img-sm" alt="Profile Picture"
-                                                                src="https://blog.kakaocdn.net/dn/c3vWTf/btqUuNfnDsf/VQMbJlQW4ywjeI8cUE91OK/img.jpg"></a>
+                            <a class="media-left" href="#">
+                                <img class="img-circle img-sm" alt="Profile Picture"
+                                                                src="${scheduleVOReply.userVO.getUserImageURL()}"></a>
                             <div class="media-body">
                                 <c:choose>
                                     <c:when test="${scheduleVOReply.scheduleReply.scheduleReplyRefNO == 0}">
                                         <jsp:include page="scheduleReply.jsp">
                                             <jsp:param value="${otherScheduleAndLikeCount.scheduleNO}"
                                                        name="scheduleNO"/>
-                                            <jsp:param value="${scheduleVOReply.userNickname}" name="userNickname"/>
+                                            <jsp:param value="${scheduleVOReply.userVO.userNickname}" name="userNickname"/>
                                             <jsp:param value="${scheduleVOReply.scheduleReply.scheduleReplyNO}"
                                                        name="scheduleReplyNO"/>
                                             <jsp:param value="${scheduleVOReply.scheduleReply.scheduleReplyDate}"
@@ -255,14 +238,14 @@
                                     <c:if test="${scheduleVOReply.scheduleReply.scheduleReplyNO == scheduleVOReplyRef.scheduleReply.scheduleReplyRefNO || beforePageScheduleReplyNO == scheduleVOReplyRef.scheduleReply.scheduleReplyRefNO}">
                                         <div>
                                             <div class="media-block">
-                                                <a class="media-left" href="#"><img class="img-circle img-sm"
-                                                                                    alt="Profile Picture"
-                                                                                    src="https://blog.kakaocdn.net/dn/c3vWTf/btqUuNfnDsf/VQMbJlQW4ywjeI8cUE91OK/img.jpg"></a>
+                                                <a class="media-left" href="#">
+                                                    <img class="img-circle img-sm" alt="Profile Picture"
+                                                         src="${scheduleVOReplyRef.userVO.getUserImageURL()}"></a>
                                                 <div class="media-body">
                                                     <jsp:include page="scheduleReply.jsp">
                                                         <jsp:param value="${otherScheduleAndLikeCount.scheduleNO}"
                                                                    name="scheduleNO"/>
-                                                        <jsp:param value="${scheduleVOReplyRef.userNickname}"
+                                                        <jsp:param value="${scheduleVOReplyRef.userVO.userNickname}"
                                                                    name="userNickname"/>
                                                         <jsp:param
                                                                 value="${scheduleVOReplyRef.scheduleReply.scheduleReplyNO}"

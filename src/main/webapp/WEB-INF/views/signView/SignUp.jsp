@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
          pageEncoding="utf-8" %>
-<script src="/resources/js/signUp.js"></script>
 <body>
 <section class="ftco-section">
     <div class="container">
@@ -66,14 +65,15 @@
                             <div class="form-group mb-3">
                                 <label class="label" for="userAge">출생년도</label><br>
                                 <input
-                                    type="number" class="int form-control" id="userAge"
+                                    type="number" class="int form-control" id="userAge"a
                                     min="1900" max="2021" maxlength="4" placeholder="생년(4자)"
                                     name="userAge" oninput="maxLengthCheck(this)">
                             </div>
 
 <%--                            이메일--%>
                             <div class="form-group mb-3">
-                                <label class="label" for="userEmail">이메일</label> <input
+                                <label class="label" for="userEmail">이메일</label>
+                                <input
                                     type="text" id="userEmail" class="form-control result-email"
                                     placeholder="johndoe@gmail.com" name="userEmail">
                             </div>

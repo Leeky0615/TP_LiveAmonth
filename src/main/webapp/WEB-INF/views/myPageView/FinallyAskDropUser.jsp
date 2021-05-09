@@ -11,9 +11,11 @@
                         <p>확인을 누를 시 회원탈퇴가 진행됩니다.</p>
                     </div>
                     <div>
-                        <form action="resultMentDropUser" method=post class="cc-form" id="resultMentDropUser">
+                        <form action="resultMent?page=dropUser" class="cc-form" id="checkUserForm">
                             <button type="submit" class="site-btn">확인</button>
-                            <button type="button" class="site-btn" onclick=acyncMovePage("reCheckForModifyUserInfo");>취소</button>
+                            <button type="button" class="site-btn"
+                                    onclick=acyncMovePage("reCheckPassword?page=dropUser");>취소
+                            </button>
                         </form>
                     </div>
                 </div>
@@ -21,9 +23,4 @@
         </div>
     </div>
 </section>
-<script>
-    function cancelDropUser() {
-        $("#resultMentDropUser").attr("action", "/").submit();
-    }
-</script>
 </body>

@@ -137,14 +137,6 @@
                                         <c:set var="place" value="${cityName.nameKR}"/>
                                     </c:if>
                                 </c:forEach>
-                                <c:choose>
-                                    <c:when test="${scheduleContent.userVO.userSex eq 'false'}">
-                                        <c:set var="sex" value="남자"/>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <c:set var="sex" value="여자"/>
-                                    </c:otherwise>
-                                </c:choose>
                                 <tr>
                                     <td>
                                         <div class="title">스케줄 제목</div>
@@ -155,8 +147,8 @@
                                     </td>
                                     <td>${place}</td>
                                     <td>${scheduleContent.userVO.userNickname}</td>
-                                    <td>${sex}</td>
-                                    <td>${scheduleContent.userVO.userAge}세</td>
+                                    <td>${ScheduleContent.userVO.getUserSex()}</td>
+                                    <td>${scheduleContent.userVO.getUserRealAge()}세</td>
                                     <td>${scheduleContent.scheduleViewCount}</td>
                                     <td>${scheduleContent.scheduleLikeCount}</td>
                                 </tr>

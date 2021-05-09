@@ -42,12 +42,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 
  	<select id="getOtherScheduleList" parameterType="HashMap" resultMap="scheduleFilterAndOrder">
-		select schedule.scheduleNO, user.userNO, userNickname, scheduleSubject,(Year(curdate())-user.userAge) as userAge,userSex,schedulePlace,scheduleViewCount,COUNT(scheduleLike.scheduleNO) as scheduleLikeCount
+		select schedule.scheduleNO, user.userNO, userNickname, scheduleSubject, userAge,userSex,schedulePlace,scheduleViewCount,COUNT(scheduleLike.scheduleNO) as scheduleLikeCount
 		from user, schedule, scheduleLike
 		where user.userNO = schedule.userNO
 		and schedule.scheduleNO = scheduleLike.scheduleNO
 		<if test="userAgeFilter">
-			and Year(curdate())-user.userAge between #{userAge} and #{userAge}+9
+			and user.userAge between Year(curdate())-#{userAge}-9 and Year(curdate())-#{userAge}
 		</if>
 		<if test="userSexFilter">
 			and userSex = #{userSex}
@@ -74,7 +74,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<resultMap type = "java.util.HashMap" id="scheduleReplyAndNickname">
 		<id column="NO" property="NO"/>
-		<result column="userNickname" property="userNickname"/>
+		<association property="userVO" javaType="userVO">
+			<result column="userNickname" property="userNickname"/>
+		</association>
 		<association property="scheduleReply" javaType="ScheduleReplyVO">
 			<id column="scheduleReplyNO" property="scheduleReplyNO"/>
 			<result column="scheduleReplyDesc" property="scheduleReplyDesc"/>

@@ -6,7 +6,7 @@
 <!--    Main화면 Layout-->
     <definition name="Main" template="/WEB-INF/tiles/template/MainTemplate.jsp">
         <put-attribute name="header" value="/WEB-INF/views/incl/Header.jsp"/>
-        <put-attribute name="cityInfoSlide" value="/WEB-INF/views/mainView/CityInfoSlide.jsp" />
+        <put-attribute name="cityInfoSlide" value="/WEB-INF/views/mainView/MainCitySlide.jsp" />
         <put-attribute name="cityInfoGrid" value="/WEB-INF/views/cityInfoView/CityInfoGrid.jsp"/>
         <put-attribute name="footer" value="/WEB-INF/views/incl/Footer.jsp"/>
     </definition>
@@ -18,9 +18,7 @@
         <put-attribute name="footer" value="/WEB-INF/views/incl/Footer.jsp"/>
     </definition>
 
-    <definition name="cityInfoView/*" extends="base">
-        <put-attribute name="body" value="/WEB-INF/views/cityInfoView/{1}.jsp" />
-    </definition>
+
     <definition name="reviewView/*" extends="base">
         <put-attribute name="body" value="/WEB-INF/views/reviewView/{1}.jsp" />
     </definition>
@@ -31,12 +29,23 @@
         <put-attribute name="body" value="/WEB-INF/views/signView/{1}.jsp" />
     </definition>
 
+<!--    CityInfo 화면 Layout-->
+    <definition name="City" template="/WEB-INF/tiles/template/CityTemplate.jsp">
+        <put-attribute name="header" value="/WEB-INF/views/incl/Header.jsp"/>
+        <put-attribute name="cityInfo" value="/WEB-INF/views/cityInfoView/CityInfo.jsp"/>
+        <put-attribute name="citySlide" value="/WEB-INF/views/cityInfoView/CityInfoSlide.jsp"/>
+        <put-attribute name="footer" value="/WEB-INF/views/incl/Footer.jsp"/>
+    </definition>
+<!--        <definition name="cityInfoView/*" extends="City">-->
+<!--            <put-attribute name="body" value="/WEB-INF/views/cityInfoView/{1}.jsp" />-->
+<!--        </definition>-->
+
 <!--    MyPage 화면 Layout-->
     <definition name="MyPage" template="/WEB-INF/tiles/template/MyPageTemplate.jsp">
         <put-attribute name="header" value="/WEB-INF/views/incl/Header.jsp"/>
         <put-attribute name="profile" value="/WEB-INF/views/myPageView/MyPageProfile.jsp"/>
         <put-attribute name="sideBar" value="/WEB-INF/views/myPageView/MyPageSideBar.jsp"/>
-        <put-attribute name="body" value="/WEB-INF/views/myPageView/ReCheckForModifyUserInfo.jsp"/>
+        <put-attribute name="body" value="/WEB-INF/views/myPageView/ReCheckPassword.jsp"/>
         <put-attribute name="footer" value="/WEB-INF/views/incl/Footer.jsp"/>
     </definition>
 <!--    <definition name="myPageView/*" extends="MyPage">-->

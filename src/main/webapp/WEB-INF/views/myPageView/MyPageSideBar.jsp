@@ -3,7 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-
 <div class="col-lg-2">
     <div class="blog-sidebar">
         <div class="feature-post">
@@ -13,7 +12,7 @@
             <div class="recent-post">
                 <div class="rp-item">
                     <div class="rp-text">
-                        <a href="#"  onclick=acyncMovePage("reCheckForModifyUserInfo");>회원정보 수정</a>
+                        <a href="#" onclick=acyncMovePage("reCheckPassword?page=modify");>회원정보 수정</a>
                     </div>
                 </div>
             </div>
@@ -46,12 +45,12 @@
                     <div class="rp-text">
                         <div class="rp-item">
                             <div class="rp-text">
-                                <a href="oneToOneAsk">1:1 문의하기</a>
+                                <a href="#"  onclick=acyncMovePage("oneToOneAsk");>1:1 문의하기</a>
                             </div>
                         </div>
                         <div class="rp-item">
                             <div class="rp-text">
-                                <a href="oneToOneAskReply">1:1문의답변(직원용)</a>
+                                <a  href="#"  onclick=acyncMovePage("oneToOneAskReply");>1:1문의답변(직원용)</a>
                             </div>
                         </div>
                         <div class="rp-item">
@@ -76,7 +75,7 @@
             <div class="recent-post">
                 <div class="rp-item">
                     <div class="rp-text">
-                        <a href="#" onclick=acyncMovePage("reCheckForDropUser");>회원 탈퇴</a>
+                        <a href="#" onclick=acyncMovePage("reCheckPassword?page=dropUser");>회원 탈퇴</a>
                     </div>
                 </div>
             </div>
