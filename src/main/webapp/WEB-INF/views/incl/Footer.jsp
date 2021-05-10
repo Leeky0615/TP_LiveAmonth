@@ -11,7 +11,7 @@
                             <img src="resources/img/f-logo.png" alt="">
                         </a>
                     </div>
-                    <p> '한달 살기'를 위한 정보를 공유하는 사이트입니다.</p>
+                    <p> '한달 살기'를 위한 정보를 공유하는 사이트입니다</p>
                     <div class="fs-social">
                         <a href="#"><i class="fa fa-facebook"></i></a>
                         <a href="#"><i class="fa fa-twitter"></i></a>
