@@ -4,7 +4,7 @@ package com.liveamonth.liveamonth.controller.scheduleController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import com.liveamonth.liveamonth.entity.dto.Paging;
+import com.liveamonth.liveamonth.entity.dto.PagingDTO;
 import com.liveamonth.liveamonth.entity.vo.ScheduleLikeVO;
 import com.liveamonth.liveamonth.entity.vo.ScheduleReplyVO;
 import com.liveamonth.liveamonth.entity.vo.UserVO;
@@ -27,7 +27,6 @@ import java.util.Map;
 import static com.liveamonth.liveamonth.constants.ControllerPathConstants.ESchedulePath.*;
 import static com.liveamonth.liveamonth.constants.EntityConstants.*;
 import static com.liveamonth.liveamonth.constants.EntityConstants.ESchedule.*;
-import static com.liveamonth.liveamonth.constants.EntityConstants.EScheduleContent.*;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EScheduleReply.*;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.*;
@@ -138,7 +137,7 @@ public class OtherScheduleController {
         scheduleService.increaseScheduleViewCount(scheduleNO);
 
         CalendarDTO calendarDto = scheduleService.showCalendar(calendarDTO, scheduleNO);
-        Paging paging = scheduleService.showPaging(selectPage, scheduleNO);
+        PagingDTO paging = scheduleService.showPaging(selectPage, scheduleNO);
 
         //아직은 scheduleNO와 VIEW밖에 이용을 안해 VO째로 꺼내오지 않음. 만약 VO째로 꺼내오게 된다면 mapper의 resultMap을 수정.
         model.addAttribute(OTHER_SCHEDULE_AND_LIKE_COUNT.getText(), scheduleService.getScheduleAndLikeCount(scheduleNO));

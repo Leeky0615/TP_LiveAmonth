@@ -61,12 +61,13 @@ create table scheduleReply
 create table review
 (
     reviewNO        int not null auto_increment,
+    reviewType      varchar(10),
     reviewCategory  varchar(10),
+    reviewPlace     varchar(20),
     reviewSubject   varchar(100),
-    reviewDesc      varchar(900),
-    reviewDate      date,
+    reviewDesc      varchar(4000),
+    reviewDate      dateTime,
     reviewViewCount int,
-    reviewImage     varchar(100),
     userNo          int,
     primary key (reviewNO),
     foreign key (userNO) references user (userNO) on delete cascade
@@ -76,7 +77,7 @@ create table reviewLike
 (
     reviewNO         int not null,
     reviewLikeUserNO int,
-    primary key (reviewNO, reviewLikeUserNO),
+    primary key (reviewNO),
     foreign key (reviewNO) references review (reviewNO) on delete cascade
 );
 
@@ -84,7 +85,7 @@ create table reviewReply
 (
     reviewReplyNO    int not null auto_increment,
     reviewReplyDesc  varchar(200),
-    reviewReplyDate  date,
+    reviewReplyDate  dateTime,
     reviewReplyRefNO int,
     userNO           int,
     reviewNO         int,
@@ -93,6 +94,7 @@ create table reviewReply
     foreign key (userNO) references user (userNO) on delete cascade,
     foreign key (reviewNO) references review (reviewNO) on delete cascade
 );
+
 
 create table oneToOneAsk
 (

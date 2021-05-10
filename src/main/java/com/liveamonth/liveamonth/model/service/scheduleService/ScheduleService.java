@@ -1,7 +1,7 @@
 package com.liveamonth.liveamonth.model.service.scheduleService;
 
 import com.liveamonth.liveamonth.entity.dto.CalendarDTO;
-import com.liveamonth.liveamonth.entity.dto.Paging;
+import com.liveamonth.liveamonth.entity.dto.PagingDTO;
 import com.liveamonth.liveamonth.entity.vo.ScheduleContentVO;
 import com.liveamonth.liveamonth.entity.vo.ScheduleLikeVO;
 import com.liveamonth.liveamonth.entity.vo.ScheduleReplyVO;
@@ -49,7 +49,7 @@ public interface ScheduleService {
 
     HashMap<String, Integer> getScheduleLikeAndCount(ScheduleLikeVO scheduleLikeVO) throws Exception;
 
-    Paging showPaging(int selectPage, int scheduleNO) throws Exception;
+    PagingDTO showPaging(int selectPage, int scheduleNO) throws Exception;
 
     void increaseScheduleViewCount(int scheduleNO);
 }

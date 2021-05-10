@@ -45,7 +45,7 @@
     </div>
     <hr>
     <div id="replyDiv${param.scheduleReplyNO}" class="panel replyDiv">
-        <jsp:include page="scheduleReplyDesc.jsp">
+        <jsp:include page="ScheduleReplyDesc.jsp">
             <jsp:param value="${param.scheduleNO}" name="scheduleNO"/>
             <jsp:param value="${param.scheduleReplyNO}" name="scheduleReplyNO"/>
         </jsp:include>

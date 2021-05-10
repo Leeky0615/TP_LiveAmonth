@@ -2,7 +2,7 @@ package com.liveamonth.liveamonth.model.service.scheduleService;
 
 
 import com.liveamonth.liveamonth.entity.dto.CalendarDTO;
-import com.liveamonth.liveamonth.entity.dto.Paging;
+import com.liveamonth.liveamonth.entity.dto.PagingDTO;
 import com.liveamonth.liveamonth.entity.vo.ScheduleContentVO;
 import com.liveamonth.liveamonth.entity.vo.ScheduleLikeVO;
 import com.liveamonth.liveamonth.entity.vo.ScheduleReplyVO;
@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.List;
 
 import static com.liveamonth.liveamonth.constants.EntityConstants.EPage.DISPLAY_PAGE;
 import static com.liveamonth.liveamonth.constants.EntityConstants.ESchedule.SCHEDULE_NO;
@@ -247,8 +246,8 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public Paging showPaging(int selectPage, int scheduleNO) throws Exception {
-        Paging paging = new Paging();
+    public PagingDTO showPaging(int selectPage, int scheduleNO) throws Exception {
+        PagingDTO paging = new PagingDTO();
         paging.setPage(selectPage);
         paging.setTotalCount(scheduleMapper.getScheduleReplyCount(scheduleNO));
         return paging;

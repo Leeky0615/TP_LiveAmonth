@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
          pageEncoding="utf-8" %>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!-- Google Font -->
@@ -33,6 +34,7 @@
 <script src="resources/js/cityInfo.js"></script>
 <script src="resources/js/acyncMove.js"></script>
 <!-- Offcanvas Menu Wrapper Begin -->
+<div class="offcanvas-menu-overlay"></div>
 <div class="offcanvas-menu-wrapper">
     <div class="canvas-close">
         <span class="icon_close"></span>

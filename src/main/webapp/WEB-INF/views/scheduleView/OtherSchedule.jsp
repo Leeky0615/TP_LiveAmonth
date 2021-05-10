@@ -8,6 +8,8 @@
 <%@ page import="com.liveamonth.liveamonth.entity.vo.ScheduleVO" %>
 <%@page import="java.util.*" %>
 
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
 <link href="resources/css/schedule.css" rel="stylesheet" type="text/css">
 <link href="resources/css/reply.css" rel="stylesheet" type="text/css">
 <script src="resources/js/schedule.js"></script>
@@ -179,7 +181,7 @@
     </div>
     <div class="col-md-12 bootstrap snippets">
         <div class="panel">
-            <jsp:include page="scheduleReplyDesc.jsp">
+            <jsp:include page="ScheduleReplyDesc.jsp">
                 <jsp:param value="${otherScheduleAndLikeCount.scheduleNO}" name="scheduleNO"/>
                 <jsp:param value="0" name="scheduleReplyNO"/>
             </jsp:include>
@@ -195,7 +197,7 @@
                             <div class="media-body">
                                 <c:choose>
                                     <c:when test="${scheduleVOReply.scheduleReply.scheduleReplyRefNO == 0}">
-                                        <jsp:include page="scheduleReply.jsp">
+                                        <jsp:include page="ScheduleReply.jsp">
                                             <jsp:param value="${otherScheduleAndLikeCount.scheduleNO}"
                                                        name="scheduleNO"/>
                                             <jsp:param value="${scheduleVOReply.userVO.userNickname}" name="userNickname"/>
@@ -229,7 +231,7 @@
                                                     <img class="img-circle img-sm" alt="Profile Picture"
                                                          src="${scheduleVOReplyRef.userVO.getUserImageURL()}"></a>
                                                 <div class="media-body">
-                                                    <jsp:include page="scheduleReply.jsp">
+                                                    <jsp:include page="ScheduleReply.jsp">
                                                         <jsp:param value="${otherScheduleAndLikeCount.scheduleNO}"
                                                                    name="scheduleNO"/>
                                                         <jsp:param value="${scheduleVOReplyRef.userVO.userNickname}"
@@ -261,7 +263,7 @@
                     </c:if>
                 </c:forEach>
 
-                <jsp:include page="paging.jsp">
+                <jsp:include page="Paging.jsp">
                     <jsp:param value="${otherScheduleAndLikeCount.scheduleNO}" name="scheduleNO"/>
                     <jsp:param value="${paging.page}" name="page"/>
                     <jsp:param value="${paging.beginPage}" name="beginPage"/>

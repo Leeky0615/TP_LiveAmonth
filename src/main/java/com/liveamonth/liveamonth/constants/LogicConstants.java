@@ -113,4 +113,29 @@ public class LogicConstants {
         public String getText() {return this.text;}
     }
 
+    public enum EReviewAttribute{
+        REVIEW_TYPE_LIST("reviewTypeList"),
+        REVIEW_PLACE_LIST("reviewPlaceList"),
+        REVIEW_CATEGORY_LIST("reviewCategoryList");
+
+        private String text;
+        private EReviewAttribute(String text){this.text = text;}
+        public String getText() {return this.text;}
+    }
+
+    public enum EReviewImage{
+        FILE_CONVERT_ERROR_MESSAGE("error: MultipartFile -> File convert fail"),
+        FILE_DELETE_SUCCESS_MESSAGE("File delete success"),
+        FILE_DELETE_FAIL_MESSAGE("File delete fail"),
+        ALL_REVIEW_LIST("AllReviewList"),
+        RESPONSECODE("responseCode"),
+        TEMP_IMAGE_URL("url"),
+        S3_UPLOAD_FOLDER("img/reviewImg"),
+        TEMP_IMAGE_PATH("/summernoteImage/"),
+        REAL_IMAGE_PATH("https://liveamonth-resources.s3.ap-northeast-2.amazonaws.com/img/reviewImg/");
+
+        private String text;
+        private EReviewImage(String text){this.text = text;}
+        public String getText() {return this.text;}
+    }
 }
