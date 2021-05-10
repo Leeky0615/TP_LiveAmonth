@@ -8,7 +8,7 @@
 <%@ page import="com.liveamonth.liveamonth.entity.vo.ScheduleVO" %>
 <%@page import="java.util.*" %>
 
-
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
 <link href="resources/css/schedule.css" rel="stylesheet" type="text/css">
 <link href="resources/css/reply.css" rel="stylesheet" type="text/css">
@@ -130,9 +130,7 @@
 
                 <div class="info"></div>
                 <form name="deleteScheduleContent" action="deleteScheduleContent">
-                    <input type="hidden" name="year" value="${todayInformation.searchYear}"/> <input type="hidden"
-                                                                                                     name="month"
-                                                                                                     value="${todayInformation.searchMonth-1}"/>
+                    <input type="hidden" name="year" value="${todayInformation.searchYear}"/>
                     <div class="contents">
                         <p class="scheduleContentSubject">
                             <span class="scheduleContentSubjectMessage"></span>

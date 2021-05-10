@@ -126,8 +126,8 @@ public class OtherScheduleController {
         HttpSession session = request.getSession();
         UserVO session_UserVO = (UserVO) session.getAttribute(USER_VO.getText());
 
-        int scheduleNO = Integer.parseInt((String) request.getParameter(SCHEDULE_NO.getText()));
-        System.out.println("scheduleNO" + scheduleNO);
+        int scheduleNO = Integer.parseInt(request.getParameter(SCHEDULE_NO.getText()));
+        System.out.println("scheduleNO : " + scheduleNO);
 
         int selectPage = 1;
         if (request.getParameter(SELECTED_PAGE.getText()) != null) {

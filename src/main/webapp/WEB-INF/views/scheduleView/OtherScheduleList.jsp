@@ -141,7 +141,7 @@
                                     </td>
                                     <td>${place}</td>
                                     <td>${scheduleContent.userVO.userNickname}</td>
-                                    <td>${ScheduleContent.userVO.getUserSex()}</td>
+                                    <td>${scheduleContent.userVO.getUserSexToString()}</td>
                                     <td>${scheduleContent.userVO.getUserRealAge()}세</td>
                                     <td>${scheduleContent.scheduleViewCount}</td>
                                     <td>${scheduleContent.scheduleLikeCount}</td>
