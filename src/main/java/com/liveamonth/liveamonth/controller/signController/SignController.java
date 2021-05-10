@@ -32,6 +32,8 @@ import static com.liveamonth.liveamonth.constants.LogicConstants.ESignAttributes
 import static com.liveamonth.liveamonth.constants.LogicConstants.ESignAttributes.FIRST_IN;
 @Controller
 public class SignController {
+    private boolean firstIn;
+
     @Autowired
     private SignService signService;
 
@@ -119,34 +121,43 @@ public class SignController {
         return RESULT_MENT_SIGN_UP.getPath();
     }
 
-    // 아이디 찾기
-    @RequestMapping("/findID")
-    private String findID() throws Exception {
-        return FIND_ID.getPath();
-    }
-
-    @PostMapping(value = "/resultMentFindID")
-    public String findID(HttpServletRequest request, Model model) throws Exception {
-        String userName = request.getParameter(USER_NAME.getText());
-        String userEmail = request.getParameter(USER_EMAIL.getText());
-
+    @RequestMapping(value = "/resultMentFindID", method = RequestMethod.POST)
+    public String findID(@RequestParam("userName")
+       	String userName,@RequestParam("userEmail")String userEmail, Model model) throws Exception {
         model.addAttribute(USER_ID.getText(), signService.findID(userName, userEmail));
+
+        if (signService.findID(userName, userEmail) == null)
+        this.firstIn = false;
+        model.addAttribute(FIRST_IN.getText(), this.firstIn);
+
         return RESULT_MENT_FIND_ID.getPath();
     }
 
-    // 비밀번호 찾기
+
+
+    @RequestMapping("/findID")
+    private String findID(Model model) throws Exception {
+
+        this.firstIn = true;
+        model.addAttribute(FIRST_IN.getText(), this.firstIn);
+        return FIND_ID.getPath();
+    }
+
+
     @RequestMapping("/findPW")
     private String findPW() throws Exception {
         return FIND_PW.getPath();
     }
 
 
-    @PostMapping(value = "/ResultMentFindPW")
-    public String findPW(HttpServletRequest request, Model model) throws Exception {
-        String userID = request.getParameter(USER_ID.getText());
-        String userEmail = request.getParameter(USER_EMAIL.getText());
-
+    @RequestMapping(value = "/ResultMentFindPW", method = RequestMethod.POST)
+    public String findPW( @RequestParam("userID")
+    	String userID, @RequestParam("userEmail") String userEmail, Model model) throws Exception {
         model.addAttribute(USER_PASSWORD.getText(), signService.findPW(userID, userEmail));
+
+        if (signService.findPW(userID, userEmail) == null)
+        this.firstIn = false;
+        model.addAttribute(FIRST_IN.getText(), this.firstIn);
         return RESULT_MENT_FIND_PW.getPath();
     }
 

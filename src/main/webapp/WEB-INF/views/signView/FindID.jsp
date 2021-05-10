@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <body>
+      <%  boolean firstIn = (boolean)request.getAttribute("firstIn"); %>
 <section class="ftco-section">
     <div class="container">
         <div class="row justify-content-center">
@@ -25,11 +26,17 @@
                         <input type="text" class="form-control" id="userEmail" name="userEmail" required>
                         <label class="form-control-placeholder" for="userEmail">Email</label>
                     </div>
+
                     <div class="form-group">
                         <button type="submit" id=findBtn class="form-control btn btn-primary rounded submit px-3">find
                         </button>
                         <p></p>
                     </div>
+
+		            <%if(firstIn == false){%>
+		             <p class="text-center" style="color:#ff0000">가입하지 않는 이메일이거나, 잘못된 이름입니다.</p>
+		            <% }%>
+
                 </div>
             </div>
         </form>

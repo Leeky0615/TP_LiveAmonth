@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <body>
 <!-- login -->
+<%  boolean firstIn = (boolean)request.getAttribute("firstIn"); %>
 <section class="ftco-section">
     <div class="container">
         <div class="row justify-content-center">
