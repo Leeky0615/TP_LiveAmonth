@@ -1,5 +1,6 @@
 package com.liveamonth.liveamonth.controller.myPageController;
 
+import com.liveamonth.liveamonth.constants.EntityConstants;
 import com.liveamonth.liveamonth.entity.vo.OneToOneAskVO;
 import com.liveamonth.liveamonth.entity.vo.UserVO;
 import com.liveamonth.liveamonth.model.service.myPageService.MyPageService;

@@ -172,4 +172,22 @@ public class ScheduleController {
     public void showScheduleContentList(Model model, HttpServletRequest request, CalendarDTO calendarDTO) throws Exception {
         this.scheduleContentNO = Integer.parseInt(request.getParameter(SCHEDULE_CONTENT_NO.getText()));
     }
+
+    @RequestMapping(value = "knowScheduleDurationPay")
+    public String knowScheduleDurationPay(HttpSession session, HttpServletRequest request, ScheduleVO scheduleVO, RedirectAttributes rttr) throws Exception {
+        String schedulePayStartDay =  request.getParameter(SCHEDULE_PAY_START_DAY.getText());
+        String schedulePayFinishDay =  request.getParameter(SCHEDULE_PAY_FINISH_DAY.getText());
+        int scheduleNO = Integer.parseInt(String.valueOf(session.getAttribute(SELECTED_SCHEDULE_NO.getText())));
+
+        String message = "";
+        if(schedulePayStartDay == "" && schedulePayFinishDay ==""){
+            message = PLEASE_ADD_DURATION.getText();
+        }else{
+           int scheduleDurationPay = scheduleService.getScheduleDurationPay(schedulePayStartDay,schedulePayFinishDay,scheduleNO);
+            message = String.valueOf(scheduleDurationPay) + WON.getText();
+        }
+        rttr.addFlashAttribute(MESSAGE.getText(), message);
+
+        return REDIRECT_SCHEDULE.getRedirectPath();
+    }
 }

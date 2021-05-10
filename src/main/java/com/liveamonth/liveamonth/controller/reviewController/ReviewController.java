@@ -23,14 +23,18 @@ import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EReviewAttribute.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EReviewImage.ALL_REVIEW_LIST;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.USER_VO;
+import static com.liveamonth.liveamonth.constants.LogicConstants.EMyPageAttributes.CHECK_USER;
+
 @Controller
 public class ReviewController {
 	@Autowired
 	private  ReviewService reviewService;
 
-	public ReviewController(ReviewService reviewService) {
-		this.reviewService = reviewService;
-	}
+
 
 	@GetMapping("/review")
 	public String showFristReviewList(Model model) throws Exception{

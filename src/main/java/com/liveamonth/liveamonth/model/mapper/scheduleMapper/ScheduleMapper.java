@@ -62,4 +62,6 @@ public interface ScheduleMapper {
     public HashMap<String, String> getScheduleAndLikeCount(int scheduleNO) throws Exception;
 
     public void increaseScheduleViewCount(int scheduleNO);
+
+    public int getScheduleDurationPay(HashMap<String, Object> hash) throws Exception;
 }
