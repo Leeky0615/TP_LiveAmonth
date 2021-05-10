@@ -58,10 +58,15 @@
                                 <a href="#">공지사항</a>
                             </div>
                         </div>
+                        <div class="rp-item">
+                            <div class="rp-text">
+                                <a  href="#" onclick=acyncMovePage("faq");>FAQ</a>
+                            </div>
+                        </div>
 
                         <div class="rp-item">
                             <div class="rp-text">
-                                <a href="#">개인정보 처리방침</a>
+                                <a  href="#" onclick=acyncMovePage("personalTerms");>개인정보 처리방침</a>
                             </div>
                         </div>
                     </div>

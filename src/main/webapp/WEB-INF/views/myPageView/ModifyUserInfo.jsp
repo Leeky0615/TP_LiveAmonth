@@ -1,15 +1,15 @@
 <%@ page import="com.liveamonth.liveamonth.entity.vo.UserVO" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="com.liveamonth.liveamonth.entity.vo.UserVO" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <body>
+<script src="resources/js/myPage.js"></script>
 <section class="ftco-section">
     <div class="section-title">
         <h4>회원정보 수정</h4>
     </div>
     <div class="container">
-        <form action="resultMent?page=modify" id="checkUserForm" class="signup-form" name="SignInfo">
+        <form id="checkUserForm" action="resultMent" class="signup-form">
             <div class="row justify-content-center">
                 <div class="col-md-10 col-lg-10 col-xl-10">
                     <div class="login-wrap p-4 p-md-5">
@@ -18,7 +18,7 @@
                         </div>
                         <h3 class="text-center mb-4">정보 수정</h3>
 
-                        <form action="#" class="signup-form">
+                        <form action="checkUserForm" class="signup-form">
                             <div class="form-group mb-3">
                                 <label class="label" for="userID">ID</label>
                                 <input type="text" id="userID" class="form-control" placeholder="ID" name="userID"
@@ -66,9 +66,8 @@
                                     </label>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <button type="submit" id="submit"
-                                        class="form-control btn btn-primary rounded submit px-3">
+                            <input type="hidden" name="page" value="${page}">                            <div class="form-group">
+                                <button type="submit" class="form-control btn btn-primary rounded submit px-3">
                                     회원정보 변경
                                 </button>
                             </div>

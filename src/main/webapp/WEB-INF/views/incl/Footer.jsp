@@ -29,7 +29,7 @@
                         <li><a href="#">Contact Support</a></li>
                         <li><a href="#">Knowledgebase</a></li>
                         <li><a href="#">Careers</a></li>
-                        <li><a href="#">FAQs</a></li>
+                        <li><a href="faq">FAQs</a></li>
                     </ul>
                 </div>
             </div>

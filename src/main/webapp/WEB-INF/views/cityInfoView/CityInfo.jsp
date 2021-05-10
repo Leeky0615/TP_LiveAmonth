@@ -3,7 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <div class="property-section latest-property-section spad">
-    <div class="container" id="body">
+    <div class="container">
         <div class="row">
             <div class="col-lg-5">
                 <div class="section-title">
@@ -44,6 +44,7 @@
                     </div>
                 </c:if>
                 <c:if test="${cityName == cityIntro.cityVO.cityName}">
+                    <c:set var="select" value="true"/>
                     <%--도시 사진--%>
                     <div class="col-lg-4 col-md-6 mix">
                         <div class="property-item">
@@ -54,350 +55,44 @@
                         </div>
                     </div>
                     <%--도시 소개--%>
-                    <div class="col-lg-7 col-md-6">
-                            ${cityIntro.cityInfoDesc}
-                    </div>
-                    <div class="agent-section spad">
+                    <div class="col-lg-7 col-md-6">${cityIntro.cityInfoDesc}</div>
+                    <section class="agent-section spad">
                         <div class="container">
                             <div class="as-slider owl-carousel">
                                 <div class="row">
-                                    <div class="col-lg-4 col-md-6">
-                                        <div class="as-item">
-                                            <div class="as-pic">
-                                                <div class="rating-point">
-                                                    4.5
+                                    <c:forEach var="cityFood" begin="0" end="5" items="${cityFoodList}">
+                                        <div class="col-lg-4 col-md-6">
+                                            <div class="as-item">
+                                                <div class="as-pic">
+                                                    <img src="${cityIntro.getCityInfoImageURL()}">
+                                                    <div class="label">${cityFood.cityInfoDesc}</div>
                                                 </div>
-                                            </div>
-                                            <div class="as-text">
-                                                <div class="at-title">
-                                                    <h6>Ashton Kutcher</h6>
-                                                    <div class="rating-star">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star-half-o"></i>
-                                                    </div>
-                                                </div>
-                                                <ul>
-                                                    <li>Property <span>215</span></li>
-                                                    <li>Email <span>Kucher@gmail.com</span></li>
-                                                    <li>Phone <span>123-455-688</span></li>
-                                                </ul>
-                                                <a href="#" class="primary-btn">View profile</a>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-6">
-                                        <div class="as-item">
-                                            <div class="as-pic">
-                                                <div class="rating-point">
-                                                    4.5
-                                                </div>
-                                            </div>
-                                            <div class="as-text">
-                                                <div class="at-title">
-                                                    <h6>Ashton Kutcher</h6>
-                                                    <div class="rating-star">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star-half-o"></i>
-                                                    </div>
-                                                </div>
-                                                <ul>
-                                                    <li>Property <span>215</span></li>
-                                                    <li>Email <span>Kucher@gmail.com</span></li>
-                                                    <li>Phone <span>123-455-688</span></li>
-                                                </ul>
-                                                <a href="#" class="primary-btn">View profile</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-6">
-                                        <div class="as-item">
-                                            <div class="as-pic">
-                                                <div class="rating-point">
-                                                    4.5
-                                                </div>
-                                            </div>
-                                            <div class="as-text">
-                                                <div class="at-title">
-                                                    <h6>Ashton Kutcher</h6>
-                                                    <div class="rating-star">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star-half-o"></i>
-                                                    </div>
-                                                </div>
-                                                <ul>
-                                                    <li>Property <span>215</span></li>
-                                                    <li>Email <span>Kucher@gmail.com</span></li>
-                                                    <li>Phone <span>123-455-688</span></li>
-                                                </ul>
-                                                <a href="#" class="primary-btn">View profile</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-6">
-                                        <div class="as-item">
-                                            <div class="as-pic">
-                                                <div class="rating-point">
-                                                    4.5
-                                                </div>
-                                            </div>
-                                            <div class="as-text">
-                                                <div class="at-title">
-                                                    <h6>Ashton Kutcher</h6>
-                                                    <div class="rating-star">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star-half-o"></i>
-                                                    </div>
-                                                </div>
-                                                <ul>
-                                                    <li>Property <span>215</span></li>
-                                                    <li>Email <span>Kucher@gmail.com</span></li>
-                                                    <li>Phone <span>123-455-688</span></li>
-                                                </ul>
-                                                <a href="#" class="primary-btn">View profile</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-6">
-                                        <div class="as-item">
-                                            <div class="as-pic">
-                                                <div class="rating-point">
-                                                    4.5
-                                                </div>
-                                            </div>
-                                            <div class="as-text">
-                                                <div class="at-title">
-                                                    <h6>Ashton Kutcher</h6>
-                                                    <div class="rating-star">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star-half-o"></i>
-                                                    </div>
-                                                </div>
-                                                <ul>
-                                                    <li>Property <span>215</span></li>
-                                                    <li>Email <span>Kucher@gmail.com</span></li>
-                                                    <li>Phone <span>123-455-688</span></li>
-                                                </ul>
-                                                <a href="#" class="primary-btn">View profile</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-6">
-                                        <div class="as-item">
-                                            <div class="as-pic">
-                                                <div class="rating-point">
-                                                    4.5
-                                                </div>
-                                            </div>
-                                            <div class="as-text">
-                                                <div class="at-title">
-                                                    <h6>Ashton Kutcher</h6>
-                                                    <div class="rating-star">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star-half-o"></i>
-                                                    </div>
-                                                </div>
-                                                <ul>
-                                                    <li>Property <span>215</span></li>
-                                                    <li>Email <span>Kucher@gmail.com</span></li>
-                                                    <li>Phone <span>123-455-688</span></li>
-                                                </ul>
-                                                <a href="#" class="primary-btn">View profile</a>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    </c:forEach>
                                 </div>
                                 <div class="row">
-                                    <div class="col-lg-4 col-md-6">
-                                        <div class="as-item">
-                                            <div class="as-pic">
-                                                <div class="rating-point">
-                                                    4.5
+                                    <c:set var="size" value="${fn:length(cityFoodList)}"/>
+                                    <c:forEach var="cityFood" begin="6" end="${size-1}" items="${cityFoodList}">
+                                        <div class="col-lg-4 col-md-6">
+                                            <div class="as-item">
+                                                <div class="as-pic">
+                                                    <img src="${cityIntro.getCityInfoImageURL()}">
+                                                    <div class="label">${cityFood.cityInfoDesc}</div>
                                                 </div>
-                                            </div>
-                                            <div class="as-text">
-                                                <div class="at-title">
-                                                    <h6>Ashton Kutcher</h6>
-                                                    <div class="rating-star">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star-half-o"></i>
-                                                    </div>
-                                                </div>
-                                                <ul>
-                                                    <li>Property <span>215</span></li>
-                                                    <li>Email <span>Kucher@gmail.com</span></li>
-                                                    <li>Phone <span>123-455-688</span></li>
-                                                </ul>
-                                                <a href="#" class="primary-btn">View profile</a>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-6">
-                                        <div class="as-item">
-                                            <div class="as-pic">
-                                                <div class="rating-point">
-                                                    4.5
-                                                </div>
-                                            </div>
-                                            <div class="as-text">
-                                                <div class="at-title">
-                                                    <h6>Ashton Kutcher</h6>
-                                                    <div class="rating-star">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star-half-o"></i>
-                                                    </div>
-                                                </div>
-                                                <ul>
-                                                    <li>Property <span>215</span></li>
-                                                    <li>Email <span>Kucher@gmail.com</span></li>
-                                                    <li>Phone <span>123-455-688</span></li>
-                                                </ul>
-                                                <a href="#" class="primary-btn">View profile</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-6">
-                                        <div class="as-item">
-                                            <div class="as-pic">
-                                                <div class="rating-point">
-                                                    4.5
-                                                </div>
-                                            </div>
-                                            <div class="as-text">
-                                                <div class="at-title">
-                                                    <h6>Ashton Kutcher</h6>
-                                                    <div class="rating-star">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star-half-o"></i>
-                                                    </div>
-                                                </div>
-                                                <ul>
-                                                    <li>Property <span>215</span></li>
-                                                    <li>Email <span>Kucher@gmail.com</span></li>
-                                                    <li>Phone <span>123-455-688</span></li>
-                                                </ul>
-                                                <a href="#" class="primary-btn">View profile</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-6">
-                                        <div class="as-item">
-                                            <div class="as-pic">
-                                                <div class="rating-point">
-                                                    4.5
-                                                </div>
-                                            </div>
-                                            <div class="as-text">
-                                                <div class="at-title">
-                                                    <h6>Ashton Kutcher</h6>
-                                                    <div class="rating-star">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star-half-o"></i>
-                                                    </div>
-                                                </div>
-                                                <ul>
-                                                    <li>Property <span>215</span></li>
-                                                    <li>Email <span>Kucher@gmail.com</span></li>
-                                                    <li>Phone <span>123-455-688</span></li>
-                                                </ul>
-                                                <a href="#" class="primary-btn">View profile</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-6">
-                                        <div class="as-item">
-                                            <div class="as-pic">
-                                                <div class="rating-point">
-                                                    4.5
-                                                </div>
-                                            </div>
-                                            <div class="as-text">
-                                                <div class="at-title">
-                                                    <h6>Ashton Kutcher</h6>
-                                                    <div class="rating-star">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star-half-o"></i>
-                                                    </div>
-                                                </div>
-                                                <ul>
-                                                    <li>Property <span>215</span></li>
-                                                    <li>Email <span>Kucher@gmail.com</span></li>
-                                                    <li>Phone <span>123-455-688</span></li>
-                                                </ul>
-                                                <a href="#" class="primary-btn">View profile</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-6">
-                                        <div class="as-item">
-                                            <div class="as-pic">
-                                                <div class="rating-point">
-                                                    4.5
-                                                </div>
-                                            </div>
-                                            <div class="as-text">
-                                                <div class="at-title">
-                                                    <h6>Ashton Kutcher</h6>
-                                                    <div class="rating-star">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star-half-o"></i>
-                                                    </div>
-                                                </div>
-                                                <ul>
-                                                    <li>Property <span>215</span></li>
-                                                    <li>Email <span>Kucher@gmail.com</span></li>
-                                                    <li>Phone <span>123-455-688</span></li>
-                                                </ul>
-                                                <a href="#" class="primary-btn">View profile</a>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    </c:forEach>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </section>
                 </c:if>
             </c:forEach>
         </div>
     </div>
 </div>
 <%-- 도시 FOOD 정보 --%>
-
 
 
 <%--    <section class="agent-section spad">--%>

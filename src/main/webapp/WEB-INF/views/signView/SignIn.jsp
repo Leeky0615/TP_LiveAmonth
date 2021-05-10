@@ -20,7 +20,7 @@
                     </div>
                 </div>
 
-                <form action="checkSign" method="post" class="signin-form">
+                <form action="checkSign" class="signin-form">
                     <div class="form-group mt-3">
                         <input type="text" class="form-control" id="userID" name="userID" required>
                         <label class="form-control-placeholder" for="userID">ID</label>

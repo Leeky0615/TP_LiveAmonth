@@ -4,7 +4,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<body>
 <section class="contact-form-section spad">
     <div class="container">
         <div class="row">
@@ -22,7 +21,7 @@
                             <button class="site-btn" href="#" onclick=acyncMovePage("oneToOneAsk");>1:1문의 페이지로 돌아가기</button>
                         </c:when>
                         <c:otherwise>
-                            <button class="site-btn" href="/">메인으로 돌아가기</button>
+                            <button class="site-btn" href="logout">메인으로 돌아가기</button>
                         </c:otherwise>
                     </c:choose>
                 </div>
@@ -30,4 +29,3 @@
         </div>
     </div>
 </section>
-</body>

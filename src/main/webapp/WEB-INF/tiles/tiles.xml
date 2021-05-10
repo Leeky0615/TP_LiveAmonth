@@ -6,7 +6,7 @@
 <!--    Main화면 Layout-->
     <definition name="Main" template="/WEB-INF/tiles/template/MainTemplate.jsp">
         <put-attribute name="header" value="/WEB-INF/views/incl/Header.jsp"/>
-        <put-attribute name="cityInfoSlide" value="/WEB-INF/views/mainView/CityInfoSlide.jsp" />
+        <put-attribute name="cityInfoSlide" value="/WEB-INF/views/mainView/MainCitySlide.jsp" />
         <put-attribute name="cityInfoGrid" value="/WEB-INF/views/cityInfoView/CityInfoGrid.jsp"/>
         <put-attribute name="footer" value="/WEB-INF/views/incl/Footer.jsp"/>
     </definition>
@@ -33,7 +33,7 @@
     <definition name="City" template="/WEB-INF/tiles/template/CityTemplate.jsp">
         <put-attribute name="header" value="/WEB-INF/views/incl/Header.jsp"/>
         <put-attribute name="cityInfo" value="/WEB-INF/views/cityInfoView/CityInfo.jsp"/>
-        <put-attribute name="citySlide" value="/WEB-INF/views/cityInfoView/CityInfoSlide.jsp"/>
+<!--        <put-attribute name="citySlide" value="/WEB-INF/views/cityInfoView/CityInfoSlide.jsp"/>-->
         <put-attribute name="footer" value="/WEB-INF/views/incl/Footer.jsp"/>
     </definition>
 <!--        <definition name="cityInfoView/*" extends="City">-->

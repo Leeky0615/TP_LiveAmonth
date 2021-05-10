@@ -3,7 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<body>
 <section class="profile-section spad">
     <div class="container">
         <div class="section-title sidebar-title-b">
@@ -27,7 +26,7 @@
                         <ul>
 
                             <li>나이 <span>${userVO.getUserRealAge()}세</span></li>
-                            <li>성별 <span>${userVO.getUserSex()}</span></li>
+                            <li>성별 <span>${userVO.getUserSexToString()}</span></li>
                             <li>Email <span>${userVO.userEmail}</span></li>
                         </ul>
                     </div>
@@ -36,4 +35,3 @@
         </div>
     </div>
 </section>
-</body>

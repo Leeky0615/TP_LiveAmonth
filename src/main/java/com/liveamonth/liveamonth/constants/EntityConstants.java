@@ -18,11 +18,9 @@ public class EntityConstants {
     public enum ESignUp {
         EMAIL("email");
         private String text;
-
         private ESignUp(String text) {
             this.text = text;
         }
-
         public String getText() {
             return this.text;
         }

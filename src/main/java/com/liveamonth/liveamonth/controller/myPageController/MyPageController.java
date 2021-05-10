@@ -29,9 +29,12 @@ public class MyPageController {
     @Autowired
     private SignService signService;
 
+    private Boolean checkUser;
+
     @GetMapping("/myPage")
     public String myPage(Model model, HttpSession session) throws Exception {
-        model.addAttribute(CHECK_USER.getText(), true);
+        this.checkUser = true;
+        model.addAttribute(CHECK_USER.getText(),  this.checkUser);
         model.addAttribute(USER_VO.getText(), session.getAttribute(USER_VO.getText()));
         return "MyPage";
     }
@@ -52,7 +55,6 @@ public class MyPageController {
         }
         return RE_CHECK_PASSWORD.getPath();
     }
-
     // 비밀번호 확인 -> 확인 시 : 회원정보 수정페이지 | 틀릴 시 : 비밀번호 재확인
     @RequestMapping("/confirmPassword")
     public String confirmPassword(Model model, HttpServletRequest request) throws Exception {
@@ -78,12 +80,28 @@ public class MyPageController {
             }
         } else {
             if(page.equals("modify")){
+                model.addAttribute("page", "modify");
                 path = MODIFY_USER_INFO.getPath();
             }else if(page.equals("dropUser")){
+                model.addAttribute("page", "dropUser");
                 path = FINALLY_ASK_DROP_USER.getPath();
             }
         }
         return path;
+    }
+
+    private UserVO checkUserData(UserVO changeData, UserVO previousData) {
+        UserVO checkedUserData = changeData;
+        if (checkedUserData.getUserPassword().isEmpty()) {
+            checkedUserData.setUserPassword(previousData.getUserPassword());
+        }
+        if (checkedUserData.getUserNickname().isEmpty()) {
+            checkedUserData.setUserNickname(previousData.getUserNickname());
+        }
+        if (checkedUserData.getUserEmail().isEmpty()) {
+            checkedUserData.setUserEmail(previousData.getUserEmail());
+        }
+        return checkedUserData;
     }
 
     // 회원정보 수정 결과 페이지
@@ -119,19 +137,6 @@ public class MyPageController {
         return RESULT_MENT.getPath();
     }
 
-    private UserVO checkUserData(UserVO changeData, UserVO previousData) {
-        UserVO checkedUserData = changeData;
-        if (checkedUserData.getUserPassword().isEmpty()) {
-            checkedUserData.setUserPassword(previousData.getUserPassword());
-        }
-        if (checkedUserData.getUserNickname().isEmpty()) {
-            checkedUserData.setUserNickname(previousData.getUserNickname());
-        }
-        if (checkedUserData.getUserEmail().isEmpty()) {
-            checkedUserData.setUserEmail(previousData.getUserEmail());
-        }
-        return checkedUserData;
-    }
 
     @RequestMapping("/oneToOneAsk")
     private String oneToOneAsk(Model model, HttpSession session) throws Exception {
@@ -150,6 +155,7 @@ public class MyPageController {
         return SHOW_ONE_TO_ONE_ASK.getPath();
 
     }
+
     @RequestMapping("/writeOneToOneAsk")
     private String writeOneToOneAsk(Model model) throws Exception {
         model.addAttribute(ONE_TO_ONE_ASK_CATEGORY.getText(), OneToOneAskCategory.values());
@@ -161,6 +167,15 @@ public class MyPageController {
         int oneToOneAskNO = Integer.parseInt(request.getParameter(ONE_TO_ONE_ASK_NO.getText()));
         myPageService.deleteOneToOneAsk(oneToOneAskNO);
         return RESULT_MENT_DELETE_ONE_TO_ONE_ASK.getPath();
+    }
+
+    @RequestMapping("/personalTerms")
+    private String personalTerms(){
+        return PERSONAL_TERMS.getPath();
+    }
+    @RequestMapping("/faq")
+    private String faq(HttpServletRequest request) throws Exception {
+        return FAQ.getPath();
     }
 
 

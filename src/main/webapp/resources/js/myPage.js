@@ -14,7 +14,6 @@ $(document).ready(function () {
             data: formData,
             type: "POST",
             dataType: "html",
-            cache: false,
             success: function (data) {
                 $('#body').children().remove();
                 // Contents 영역 교체

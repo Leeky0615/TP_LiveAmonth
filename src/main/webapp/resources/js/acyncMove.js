@@ -1,4 +1,5 @@
 function acyncMovePage(url){
+    console.log(url);
     // var page = $(this).attr('id').val();
     // ajax option
     var ajaxOption = {
@@ -6,7 +7,6 @@ function acyncMovePage(url){
         async : true,
         type : "POST",
         dataType : "html",
-        cache : false
     };
     $.ajax(ajaxOption).done(function(data){
         // Contents 영역 삭제

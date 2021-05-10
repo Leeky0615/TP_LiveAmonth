@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.liveamonth.liveamonth.constants.EntityConstants;
+import com.liveamonth.liveamonth.constants.EntityConstants.EEmail;
 import com.liveamonth.liveamonth.entity.vo.CityInfoVO;
 import com.liveamonth.liveamonth.entity.vo.UserVO;
 import com.liveamonth.liveamonth.model.service.cityInfoService.CityService;
@@ -22,9 +23,12 @@ import java.util.List;
 import static com.liveamonth.liveamonth.constants.ControllerPathConstants.EMainPath.MAIN;
 import static com.liveamonth.liveamonth.constants.ControllerPathConstants.ESignPath.*;
 import static com.liveamonth.liveamonth.constants.EntityConstants.CityInfoCategory.INTRO;
+import static com.liveamonth.liveamonth.constants.EntityConstants.EEmail.*;
+import static com.liveamonth.liveamonth.constants.EntityConstants.ESignUp.EMAIL;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.ECityInfoAttributes.CITY_INTRO_LIST;
 import static com.liveamonth.liveamonth.constants.LogicConstants.ECityInfoAttributes.CITY_NAME_LIST;
+import static com.liveamonth.liveamonth.constants.LogicConstants.ESignAttributes.AT;
 import static com.liveamonth.liveamonth.constants.LogicConstants.ESignAttributes.FIRST_IN;
 @Controller
 public class SignController {
@@ -150,10 +154,5 @@ public class SignController {
     private String callback(Model model) throws Exception {
         System.out.println("controller callback");
         return "signView/callback";
-    }
-
-    @RequestMapping("/NaverTest")
-    private String NaverTest(Model model) throws Exception {
-        return "signView/NaverTest";
     }
 }

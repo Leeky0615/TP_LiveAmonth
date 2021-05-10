@@ -32,8 +32,10 @@ public class ControllerPathConstants {
     	SHOW_ONE_TO_ONE_ASK("ShowOneToOneAsk"),
     	Write_ONE_TO_ONE_ASK("WriteOneToOneAsk"),
     	RESULT_MENT_ONE_TO_ONE_ASK("ResultMentOneToOneAsk"),
-    	RESULT_MENT_DELETE_ONE_TO_ONE_ASK("ResultMentDeleteOneToOneAsk");
-    	private String path;
+    	RESULT_MENT_DELETE_ONE_TO_ONE_ASK("ResultMentDeleteOneToOneAsk"),
+        PERSONAL_TERMS("PersonalTerms"),
+        FAQ("Faq");
+        private String path;
         private EMyPagePath(String path) {this.path = path;}
         public String getPath() {return "myPageView/"+this.path;}
     }
