@@ -84,6 +84,8 @@
                                             test="${orderBy eq 'orderByView'}"> checked </c:if>>조회 순
                                     <input type="radio" name="orderBy" id="orderByNew" value="orderByNew" <c:if
                                             test="${orderBy eq 'orderByNew'}"> checked </c:if>>최신 순
+                                    <c:if test="${empty orderBy}"><script>  $("input:radio[name='orderBy']:radio[value='orderByNew']").prop("checked", true); </script></c:if>
+
                                 </div>
                             </div>
 
@@ -140,7 +142,7 @@
                                 </c:choose>
                                 <tr>
                                     <td>
-                                        <div class="title">스케줄 제목</div>
+                                        <div class="title"><c:out value="${scheduleContent.scheduleSubject}"/></div>
                                         <a href="/otherSchedule?userNO=${scheduleContent.userVO.userNO}&scheduleNO=${scheduleContent.scheduleNO}">
                                             <img src="resources/img/scheduleImg.png" alt="">
                                         </a>

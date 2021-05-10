@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 import com.liveamonth.liveamonth.entity.vo.CityInfoVO;
 import com.liveamonth.liveamonth.entity.vo.UserVO;
 import com.liveamonth.liveamonth.model.service.cityInfoService.CityService;
+import net.bytebuddy.implementation.bind.MethodDelegationBinder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -143,5 +144,16 @@ public class SignController {
     public String findPW( @RequestParam("userID") String userID, @RequestParam("userEmail") String userEmail, Model model) throws Exception {
         model.addAttribute(USER_PASSWORD.getText(), signService.findPW(userID, userEmail));
         return RESULT_MENT_FIND_PW.getPath();
+    }
+
+    @RequestMapping("/callback")
+    private String callback(Model model) throws Exception {
+        System.out.println("controller callback");
+        return "signView/callback";
+    }
+
+    @RequestMapping("/NaverTest")
+    private String NaverTest(Model model) throws Exception {
+        return "signView/NaverTest";
     }
 }

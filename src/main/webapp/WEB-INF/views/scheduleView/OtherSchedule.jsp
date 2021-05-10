@@ -31,7 +31,8 @@
 <body style="background:#ffffff">
 <input type="hidden" id="userNO" name="userNO" value="${userVO.userNO}"/>
 <input type="hidden" id="selectedScheduleNO" name="selectedScheduleNO" value="${otherScheduleAndLikeCount.scheduleNO}"/>
-<form name="calendarFrm" id="calendarFrm" action="schedule" method="GET">
+
+<form name="calendarFrm" id="calendarFrm" action="otherSchedule">
     <input type="hidden" name="year" value="${todayInformation.searchYear}"/>
     <input type="hidden" name="month" value="${todayInformation.searchMonth-1}"/>
     <script>
@@ -44,22 +45,22 @@
         <!--날짜 네비게이션  -->
         <div class="navigation">
             <a class="before_after_year"
-               href="./schedule?year=${todayInformation.searchYear-1}&month=${todayInformation.searchMonth-1}">
+               href="./otherSchedule?scheduleNO=${scheduleNO}&year=${todayInformation.searchYear-1}&month=${todayInformation.searchMonth-1}">
                 &lt;&lt; <!-- 이전해 -->
             </a>
             <a class="before_after_month"
-               href="./schedule?year=${todayInformation.beforeYear}&month=${todayInformation.beforeMonth}">
+               href="./otherSchedule?scheduleNO=${scheduleNO}&year=${todayInformation.beforeYear}&month=${todayInformation.beforeMonth}">
                 &lt; <!-- 이전달 -->
             </a>
             <span class="this_month"> &nbsp;${todayInformation.searchYear}. <c:if
                     test="${todayInformation.searchMonth<10}">0</c:if>${todayInformation.searchMonth}
                </span>
             <a class="before_after_month"
-               href="/schedule?year=${todayInformation.afterYear}&month=${todayInformation.afterMonth}">
+               href="/otherSchedule?scheduleNO=${scheduleNO}&year=${todayInformation.afterYear}&month=${todayInformation.afterMonth}">
                 <!-- 다음달 --> &gt;
             </a>
             <a class="before_after_year"
-               href="/schedule?year=${todayInformation.searchYear+1}&month=${todayInformation.searchMonth-1}">
+               href="/otherSchedule?scheduleNO=${scheduleNO}&year=${todayInformation.searchYear+1}&month=${todayInformation.searchMonth-1}">
                 <!-- 다음해 --> &gt;&gt;
             </a>
             <span> <div></div></span>
