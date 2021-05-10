@@ -20,7 +20,6 @@
                         <h4>조건 검색</h4>
                     </div>
                 </div>
-
                 <c:forEach items="${requestList}" var="requestData">
                     <c:choose>
                         <c:when test="${requestData.key eq 'userSex'}">
@@ -85,14 +84,13 @@
                                             test="${orderBy eq 'orderByView'}"> checked </c:if>>조회 순
                                     <input type="radio" name="orderBy" id="orderByNew" value="orderByNew" <c:if
                                             test="${orderBy eq 'orderByNew'}"> checked </c:if>>최신 순
+                                    <c:if test="${empty orderBy}"><script>  $("input:radio[name='orderBy']:radio[value='orderByNew']").prop("checked", true); </script></c:if>
+
                                 </div>
                             </div>
 
                             <div class="col-lg-2">
                                 <div class="pd-title">
-                                    <button type="submit" name="order">
-                                    <i class = "fa fa-search"></i>
-                                    </button>
                                     <input type="submit" name="order" value="적용" class="fa fa-search">
                                 </div>
                             </div>
@@ -100,9 +98,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-
-        </div>
         </div>
     </section>
     <input type="hidden" name="action" value="filter">
@@ -119,15 +114,15 @@
                 <div class="pc-table">
                     <table>
                         <thead>
-                        <tr>
-                            <th class="type">스케줄(이미지, 제목)</th>
-                            <th class="type">장소</th>
-                            <th class="type">닉네임</th>
-                            <th class="type">성별</th>
-                            <th class="type">나이</th>
-                            <th class="type">조회 수</th>
-                            <th class="type">좋아요 수</th>
-                        </tr>
+                            <tr>
+                                <th class="type">스케줄(이미지, 제목)</th>
+                                <th class="type">장소</th>
+                                <th class="type">닉네임</th>
+                                <th class="type">성별</th>
+                                <th class="type">나이</th>
+                                <th class="type">조회 수</th>
+                                <th class="type">좋아요 수</th>
+                            </tr>
                         </thead>
                         <tbody>
                         <c:if test="${otherScheduleList != null}">
@@ -139,9 +134,8 @@
                                 </c:forEach>
                                 <tr>
                                     <td>
-                                        <div class="title">스케줄 제목</div>
-                                        <a
-                                                href="/otherSchedule?userNO=${scheduleContent.userVO.userNO}&scheduleNO=${scheduleContent.scheduleNO}">
+                                        <div class="title"><c:out value="${scheduleContent.scheduleSubject}"/></div>
+                                        <a href="/otherSchedule?userNO=${scheduleContent.userVO.userNO}&scheduleNO=${scheduleContent.scheduleNO}">
                                             <img src="resources/img/scheduleImg.png" alt="">
                                         </a>
                                     </td>

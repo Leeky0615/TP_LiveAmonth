@@ -128,6 +128,8 @@ public class OtherScheduleController {
         UserVO session_UserVO = (UserVO) session.getAttribute(USER_VO.getText());
 
         int scheduleNO = Integer.parseInt((String) request.getParameter(SCHEDULE_NO.getText()));
+        System.out.println("scheduleNO" + scheduleNO);
+
         int selectPage = 1;
         if (request.getParameter(SELECTED_PAGE.getText()) != null) {
             selectPage = Integer.parseInt(request.getParameter(SELECTED_PAGE.getText()));
@@ -142,8 +144,11 @@ public class OtherScheduleController {
         model.addAttribute(OTHER_SCHEDULE_AND_LIKE_COUNT.getText(), scheduleService.getScheduleAndLikeCount(scheduleNO));
         model.addAttribute(SCHEDULEREPLY_VO_LIST.getText(), scheduleService.getScheduleReplyList(scheduleNO, selectPage));
         model.addAttribute(PAIGING.getText(), paging);
+
+        model.addAttribute(SCHEDULE_NO.getText(), scheduleNO);
         model.addAttribute(DATE_LIST.getText(), calendarDto.getDateList()); //날짜 데이터 배열
         model.addAttribute(TODAY_INFORMATION.getText(), calendarDto.getTodayInformation());
+
         if (session_UserVO != null) {
             ScheduleLikeVO scheduleLikeVO = new ScheduleLikeVO();
             scheduleLikeVO.setScheduleNO(scheduleNO);
