@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<%--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">--%>
+    <%--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">--%>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -16,9 +16,7 @@
     <script src="resources/summernote-0.8.18-dist/lang/summernote-ko-KR.js"></script>
     <link rel="stylesheet" href="resources/summernote-0.8.18-dist/summernote-bs4.css">
 
-    <script scr="resources/js/review.js"></script>
-
-
+    <script type="text/javascript" src="resources/js/review.js"></script>
 </head>
 <body>
 <section class="property-submit-section spad">
@@ -31,16 +29,19 @@
                             <h4>Category</h4>
                             <div class="search-form-content">
                                 <div class="filter-form">
-                                    <select class="sm-width" id = "reviewType" name = "reviewType">
+                                    <select class="sm-width" id = "reviewType" name = "reviewType" onchange="changeReviewCategory(this.value);">
                                         <c:forEach var="reviewType" items="${reviewTypeList}">
                                             <option value="${reviewType}">${reviewType.nameKR}</option>
                                         </c:forEach>
                                     </select>
-                                    <select class="sm-width"  id = "reviewCategory" name = "reviewCategory">
-                                        <c:forEach var="reviewCategory" items="${reviewCategoryList}">
-                                            <option value="${reviewCategory}">${reviewCategory.nameKR}</option>
-                                        </c:forEach>
-                                    </select>
+                                    <div id = "reviewCategoryDiv">
+                                        <select class="sm-width"  id = "reviewCategory" name = "reviewCategory">
+                                            <option id = "disabledOption" value="" selected disabled hidden>==선택==</option>
+                                            <c:forEach var="reviewCategory" items="${reviewCategoryList}">
+                                                <option value="${reviewCategory}">${reviewCategory.nameKR}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
                                     <select class="sm-width"  id = "reviewPlace" name = "reviewPlace">
                                         <c:forEach var="reviewPlace" items="${reviewPlaceList}">
                                             <option value="${reviewPlace}">${reviewPlace.nameKR}</option>
@@ -110,7 +111,7 @@
 
                         </script>
 
-                        <input type="submit" class="search-btn sm-width" style="float: right; margin-bottom: 20px;" value="등록" onclick="addReviewButton();">
+                        <input type="button" class="search-btn sm-width" style="float: right; margin-bottom: 20px;" value="등록" onclick="addReviewButton();">
                         <input type="button" onClick="history.go(-1)" value="취소">
                     </form>
                 </div>

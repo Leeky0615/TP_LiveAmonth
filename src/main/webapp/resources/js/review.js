@@ -1,6 +1,6 @@
 
-addReviewButton = function(){
-    var addReviewForm = document.reviewForm;
+function addReviewButton (){
+    var addReviewForm = document.getElementById("reviewForm");
     if (addReviewForm.reviewSubject.value == "" || addReviewForm.reviewSubject.value == null) {
         alert("제목을 입력해주세요.");
         addReviewForm.reviewSubject.focus();
@@ -14,12 +14,12 @@ addReviewButton = function(){
     addReviewForm.submit();
 }
 
- function changeReviewCategory() {
-    alter("DSA");
-    var reviewType = document.reviewType;
-    if (reviewType = "FREE_BOARD") {
-        alter(reviewType);
-    } else if (reviewType = "REVIEW_BOARD") {
-        alter(reviewType);
+function changeReviewCategory(sVal) {
+    var val = document.getElementById("reviewCategoryDiv");
+    if (sVal == "REVIEW_BOARD") {
+        val.style.display = "block";
+    } else if (sVal == "FREE_BOARD") {
+        $("#disabledOption").val("").prop("selected", true);
+        val.style.display = "none";
     }
 }
