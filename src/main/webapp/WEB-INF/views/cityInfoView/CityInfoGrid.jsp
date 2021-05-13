@@ -15,7 +15,7 @@
             <c:forEach var="cityIntro" items="${cityIntroList}">
                 <div class="col-lg-4 col-md-6 mix">
                     <div class="ih-item square effect13 left_to_right property-item">
-                        <a href="cityInfo?page=${cityIntro.cityVO.cityName}">
+                        <a href="cityInfo?cityName=${cityIntro.cityVO.cityName}">
                             <div class="pi-pic set-bg" data-setbg="${cityIntro.getCityInfoImageURL()}">
                                 <div class="label">${cityIntro.cityVO.cityName}</div>
                             </div>
