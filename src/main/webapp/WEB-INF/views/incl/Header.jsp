@@ -91,20 +91,14 @@
                 <div class="col-lg-9">
                     <nav class="nav-menu">
                         <ul>
-                            <li class="active"><a href="city">CITY</a>
+                            <li class="active"><a href="cityInfo?cityName=all" >CITY</a>
                                 <ul class="dropdown">
-                                    <li><a href="city">서울</a>
-                                    </li>
-                                    <li><a href="city">강릉</a>
-                                    </li>
-                                    <li><a href="city">경주</a>
-                                    </li>
-                                    <li><a href="city">부산</a>
-                                    </li>
-                                    <li><a href="city">여수</a>
-                                    </li>
-                                    <li><a href="city">제주</a>
-                                    </li>
+                                    <li><a href="cityInfo?cityName=서울">서울</a></li>
+                                    <li><a href="cityInfo?cityName=강릉">강릉</a></li>
+                                    <li><a href="cityInfo?cityName=경주">경주</a></li>
+                                    <li><a href="cityInfo?cityName=부산">부산</a></li>
+                                    <li><a href="cityInfo?cityName=여수">여수</a></li>
+                                    <li><a href="cityInfo?cityName=제주">제주</a></li>
 
                                 </ul>
                             </li>

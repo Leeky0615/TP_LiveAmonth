@@ -9,10 +9,7 @@
 <html>
 <body>
 <tiles:insertAttribute name="header"/>
-<div id="body">
-    <tiles:insertAttribute name="cityInfo"/>
-</div>
-<%--<tiles:insertAttribute name="citySlide"/>--%>
+<tiles:insertAttribute name="cityInfo"/>
 <tiles:insertAttribute name="footer"/>
 </body>
 </html>

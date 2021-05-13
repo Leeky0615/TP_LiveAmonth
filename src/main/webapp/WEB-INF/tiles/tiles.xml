@@ -33,12 +33,11 @@
     <definition name="City" template="/WEB-INF/tiles/template/CityTemplate.jsp">
         <put-attribute name="header" value="/WEB-INF/views/incl/Header.jsp"/>
         <put-attribute name="cityInfo" value="/WEB-INF/views/cityInfoView/CityInfo.jsp"/>
-<!--        <put-attribute name="citySlide" value="/WEB-INF/views/cityInfoView/CityInfoSlide.jsp"/>-->
         <put-attribute name="footer" value="/WEB-INF/views/incl/Footer.jsp"/>
     </definition>
-<!--        <definition name="cityInfoView/*" extends="City">-->
-<!--            <put-attribute name="body" value="/WEB-INF/views/cityInfoView/{1}.jsp" />-->
-<!--        </definition>-->
+        <definition name="cityInfoView/*" extends="City">
+            <put-attribute name="cityInfo" value="/WEB-INF/views/cityInfoView/{1}.jsp" />
+        </definition>
 
 <!--    MyPage 화면 Layout-->
     <definition name="MyPage" template="/WEB-INF/tiles/template/MyPageTemplate.jsp">

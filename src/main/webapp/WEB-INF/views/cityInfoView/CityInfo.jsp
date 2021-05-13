@@ -2,167 +2,215 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<div class="property-section latest-property-section spad">
+<section class="property-details-section">
     <div class="container">
         <div class="row">
-            <div class="col-lg-5">
-                <div class="section-title">
-                    <h4>INTRO</h4>
-                </div>
-            </div>
-            <div class="col-lg-7">
-                <div class="property-controls">
-                    <ul class="cityMenu">
-                        <li><a href="#" onclick=acyncMovePage("cityInfo?cityName=all");>전체</a></li>
+            <div class="col-lg-12">
+                <div class="pd-text">
+                    <div class="row">
+<%--City 제목 및 도시 이름 리스트--%>
+                        <div class="col-lg-6">
+                            <div class="pd-title">
+                                <h3>'한달살기' 추천 도시</h3>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="pd-social">
+                                <a href="cityInfo?cityName=all">전체</a>
+                                <c:forEach var="cityIntro" items="${cityIntroList}">
+                                    <a href="cityInfo?cityName=${cityIntro.cityVO.cityName}">${cityIntro.cityVO.cityName}</a>
+                                </c:forEach>
+                            </div>
+                        </div>
+                    </div>
+<%--선택 도시가 ALL인 경우 CityGrid 출력!!--%>
+<c:if test="${cityName == 'all'}">
+                    <div class="row property-filter">
                         <c:forEach var="cityIntro" items="${cityIntroList}">
-                            <li>
-                                <a href="#"
-                                   onclick=acyncMovePage("cityInfo?cityName=${cityIntro.cityVO.cityName}");>${cityIntro.cityVO.cityName}</a>
-                            </li>
+                            <div class="col-lg-4 col-md-6 mix">
+                                <div class="ih-item square effect13 left_to_right property-item">
+                                    <a href="cityInfo?cityName=${cityIntro.cityVO.cityName}">
+                                        <div class="pi-pic set-bg" data-setbg="${cityIntro.getCityInfoImageURL()}">
+                                            <div class="label">${cityIntro.cityVO.cityName}</div>
+                                        </div>
+                                        <div class="info">
+                                            <h3>${cityIntro.cityVO.cityName}</h3>
+                                            <p>${cityIntro.cityVO.cityName}입니다.</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
                         </c:forEach>
-                    </ul>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="row property-filter">
-            <c:forEach var="cityIntro" items="${cityIntroList}">
-                <c:if test="${cityName == 'all'}">
-                    <div class="col-lg-4 col-md-6 mix">
-                        <div class="ih-item square effect13 left_to_right property-item">
-                            <a href="#" onclick=acyncMovePage("cityInfo?cityName=${cityIntro.cityVO.cityName}");>
-                                <div class="pi-pic">
-                                    <img src="${cityIntro.getCityInfoImageURL()}">
-                                    <div class="label">${cityIntro.cityVO.cityName}</div>
-                                </div>
-                                <div class="info">
-                                    <h3>${cityIntro.cityVO.cityName}</h3>
-                                        <%--                                    날씨 교통 정보 등 들어가야할 부분--%>
-                                    <p>${cityIntro.cityVO.cityName}입니다.</p>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </c:if>
-                <c:if test="${cityName == cityIntro.cityVO.cityName}">
-                    <c:set var="select" value="true"/>
-                    <%--도시 사진--%>
-                    <div class="col-lg-4 col-md-6 mix">
-                        <div class="property-item">
-                            <div class="pi-pic">
-                                <img src="${cityIntro.getCityInfoImageURL()}">
-                                <div class="label">${cityIntro.cityVO.cityName}</div>
-                            </div>
-                        </div>
-                    </div>
-                    <%--도시 소개--%>
-                    <div class="col-lg-7 col-md-6">${cityIntro.cityInfoDesc}</div>
-                    <section class="agent-section spad">
-                        <div class="container">
-                            <div class="as-slider owl-carousel">
-                                <div class="row">
-                                    <c:forEach var="cityFood" begin="0" end="5" items="${cityFoodList}">
-                                        <div class="col-lg-4 col-md-6">
-                                            <div class="as-item">
-                                                <div class="as-pic">
-                                                    <img src="${cityIntro.getCityInfoImageURL()}">
-                                                    <div class="label">${cityFood.cityInfoDesc}</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </c:forEach>
-                                </div>
-                                <div class="row">
-                                    <c:set var="size" value="${fn:length(cityFoodList)}"/>
-                                    <c:forEach var="cityFood" begin="6" end="${size-1}" items="${cityFoodList}">
-                                        <div class="col-lg-4 col-md-6">
-                                            <div class="as-item">
-                                                <div class="as-pic">
-                                                    <img src="${cityIntro.getCityInfoImageURL()}">
-                                                    <div class="label">${cityFood.cityInfoDesc}</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </c:forEach>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                </c:if>
-            </c:forEach>
         </div>
     </div>
-</div>
-<%-- 도시 FOOD 정보 --%>
-
-
-<%--    <section class="agent-section spad">--%>
-<%--        <div class="container">--%>
-<%--                &lt;%&ndash;제목&ndash;%&gt;--%>
-<%--            <div class="row">--%>
-<%--                <div class="col-lg-6">--%>
-<%--                    <div class="section-title">--%>
-<%--                        <h4>FOOD</h4>--%>
-<%--                    </div>--%>
-<%--                </div>--%>
-<%--            </div>--%>
-<%--                &lt;%&ndash;슬라이드 시작&ndash;%&gt;--%>
-<%--            <div class="as-slider owl-carousel">--%>
-<%--                    &lt;%&ndash;슬라이드 1번째 줄&ndash;%&gt;--%>
-<%--                <div class="row">--%>
-<%--                    <c:forEach var="cityFood" begin="0" end="5" items="${cityFoodList}">--%>
-<%--                        <div class="col-lg-4 col-md-6">--%>
-<%--                            <div class="as-item">--%>
-<%--                                <div class="as-pic">--%>
-<%--                                    <img src="${cityFood.getCityInfoImageURL()}">--%>
-<%--                                    <div class="label">${cityFood.cityInfoDesc}</div>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-<%--                    </c:forEach>--%>
-<%--                </div>--%>
-<%--                    &lt;%&ndash;슬라이드 2번째 줄&ndash;%&gt;--%>
-<%--                <div class="row">--%>
-<%--                    <c:set var="size" value="${fn:length(cityFoodList)}"/>--%>
-<%--                    <c:forEach var="cityFood" begin="6" end="${size-1}" items="${cityFoodList}">--%>
-<%--                        <div class="col-lg-4 col-md-6">--%>
-<%--                            <div class="as-item">--%>
-<%--                                <div class="as-pic">--%>
-<%--                                    <img src="${cityFood.getCityInfoImageURL()}">--%>
-<%--                                    <div class="label">${cityFood.cityInfoDesc}</div>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-<%--                    </c:forEach>--%>
-<%--                </div>--%>
-<%--            </div>--%>
-<%--        </div>--%>
-<%--    </section>--%>
-
-<%--            <c:forEach var="cityFood" items="${cityFoodList}">--%>
-<%--                <div class="col-lg-3 col-md-4 mix">--%>
-<%--                    <div class="property-item">--%>
-<%--                        <div class="pi-pic">--%>
-<%--                            <img src="${cityFood.getCityInfoImageURL()}">--%>
-<%--                            <div class="label">${cityFood.cityInfoDesc}</div>--%>
-<%--                        </div>--%>
-<%--                    </div>--%>
-<%--                </div>--%>
-<%--            </c:forEach>--%>
-
-<%--            &lt;%&ndash; 도시 VIEW 정보&ndash;%&gt;--%>
-<%--            <div class="col-lg-12">--%>
-<%--                <div class="section-title">--%>
-<%--                    <h4>VIEW</h4>--%>
-<%--                </div>--%>
-<%--            </div>--%>
-<%--            <c:forEach var="cityView" items="${cityViewList}">--%>
-<%--                <div class="col-lg-3 col-md-4 mix">--%>
-<%--                    <div class="property-item">--%>
-<%--                        <div class="pi-pic">--%>
-<%--                            <img src="${cityView.getCityInfoImageURL()}">--%>
-<%--                            <div class="label">${cityView.cityInfoDesc}</div>--%>
-<%--                        </div>--%>
-<%--                    </div>--%>
-<%--                </div>--%>
-<%--            </c:forEach>--%>
-
+</section>
+</c:if>
+<%--선택한 도시가 있는 경우--%>
+<c:if test="${cityName != 'all'}">
+<%--INTRO 부분 Tab으로 출력!!!--%>
+                    <div class="pd-board">
+                        <div class="tab-board">
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab">도시 소개</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab">교통 정보</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab">전년도 기온 정보</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#tabs-4" role="tab">지역 날씨예보</a>
+                                </li>
+                            </ul><!-- Tab panes -->
+                            <div class="tab-content">
+                                <%--도시 소개--%>
+                                <div class="tab-pane active" id="tabs-1" role="tabpanel">
+                                    <div class="tab-desc">
+                                        <div class="row">
+                                            <div class="col-lg-4 col-md-6 mix">
+                                                <div class="cityImg set-bg" data-setbg="${selectedCityInfos.cityIntro[0].getCityInfoImageURL()}">
+                                                    <div class="label">${selectedCityInfos.cityIntro[0].cityVO.cityName}</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-8">
+                                                <p class="cityText">${selectedCityInfos.cityIntro[0].cityInfoDesc}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <%--교통 정보--%>
+                                <div class="tab-pane" id="tabs-2" role="tabpanel">
+                                        <div class="tab-details">
+                                            <ul class="left-table">
+                                                <li>
+                                                    <span class="type-title">정류장 및 노선 개수 :: ${selectedCityInfos.cityIntro[0].cityVO.cityName}</span>
+                                                </li>
+                                                <c:set var="cityTransport" value="${selectedCityInfos.cityTransportList}"/>
+                                                <c:forEach var="i" begin="0" end="2">
+                                                    <li>
+                                                        <span class="type-name">${cityTransport[i].cityTransportCategory}</span>
+                                                        <span class="type-value">${cityTransport[i].cityStationCount}</span>
+                                                    </li>
+                                                </c:forEach>
+                                                <li><span class="type-footer"> &nbsp;</span></li>
+                                            </ul>
+                                            <ul class="right-table">
+                                                <li><span class="type-title"> &nbsp;</span></li>
+                                                <c:forEach var="i" begin="3" end="5">
+                                                    <li>
+                                                        <span class="type-name">${cityTransport[i].cityTransportCategory}</span>
+                                                        <span class="type-value">${cityTransport[i].cityStationCount}</span>
+                                                    </li>
+                                                </c:forEach>
+                                                <li class="type-footer">출처 : 교통정보
+                                            </ul>
+                                        </div>
+                                </div>
+                                <%--전년도 기온 정보--%>
+                                <div class="tab-pane" id="tabs-3" role="tabpanel">
+                                    <div class="tab-details">
+                                        <ul class="left-table">
+                                            <li>
+                                                <span class="type-title">전년도 월 평균 기온 :: ${selectedCityInfos.cityIntro[0].cityVO.cityName}</span>
+                                            </li>
+                                            <c:set var="cityWeather" value="${selectedCityInfos.cityWeatherList}"/>
+                                            <c:forEach var="i" begin="0" end="5">
+                                            <li>
+                                                <span class="type-name">${cityWeather[i].cityWeatherMonth}월</span>
+                                                <span class="type-value">평균 : ${cityWeather[i].cityWeatherAVGTemp}&#8451; | 최저 : ${cityWeather[i].cityWeatherMinTemp}&#8451; | 최고 : ${cityWeather[i].cityWeatherMaxTemp}&#8451;</span>
+                                            </li>
+                                            </c:forEach>
+                                            <li><span class="type-footer"> &nbsp;</span></li>
+                                        </ul>
+                                        <ul class="right-table">
+                                            <li><span class="type-title"> &nbsp;</span></li>
+                                            <c:forEach var="i" begin="6" end="11">
+                                                <li>
+                                                    <span class="type-name">${cityWeather[i].cityWeatherMonth}월</span>
+                                                    <span class="type-value">평균 : ${cityWeather[i].cityWeatherAVGTemp}&#8451; | 최저 : ${cityWeather[i].cityWeatherMinTemp}&#8451; | 최고 : ${cityWeather[i].cityWeatherMaxTemp}&#8451;</span>
+                                                </li>
+                                            </c:forEach>
+                                            <li class="type-footer">출처 : 기상청 홈페이지
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <%--지역 날씨 예보--%>
+                                <div class="tab-pane" id="tabs-4" role="tabpanel">
+                                    <div class="tab-details">
+                                        <ul class="left-table">
+                                            <li>
+                                                <span class="type-title">[${selectedCityInfos.cityIntro[0].cityVO.cityName}] 날씨예보</span>
+                                            </li>
+                                            <c:set var="cityWeather" value="${selectedCityInfos.cityWeatherList}"/>
+                                            <c:forEach var="i" begin="0" end="5">
+                                            <li>
+                                                <span class="type-name">${cityWeather[i].cityWeatherMonth}월</span>
+                                                <span class="type-value">평균 : ${cityWeather[i].cityWeatherAVGTemp}&#8451; | 최저 : ${cityWeather[i].cityWeatherMinTemp}&#8451; | 최고 : ${cityWeather[i].cityWeatherMaxTemp}&#8451;</span>
+                                            </li>
+                                            </c:forEach>
+                                            <li><span class="type-footer"> &nbsp;</span></li>
+                                        </ul>
+                                        <ul class="right-table">
+                                            <li><span class="type-title"> &nbsp;</span></li>
+                                            <c:forEach var="i" begin="6" end="11">
+                                                <li>
+                                                    <span class="type-name">${cityWeather[i].cityWeatherMonth}월</span>
+                                                    <span class="type-value">평균 : ${cityWeather[i].cityWeatherAVGTemp}&#8451; | 최저 : ${cityWeather[i].cityWeatherMinTemp}&#8451; | 최고 : ${cityWeather[i].cityWeatherMaxTemp}&#8451;</span>
+                                                </li>
+                                            </c:forEach>
+                                            <li class="type-footer">출처 : 기상청 홈페이지
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<%--Food 및 View 부분 Slide로 출력!!!--%>
+<section class="agent-section spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9">
+                <div class="section-title">
+                    <h4>VIEW & FOOD</h4>
+                </div>
+            </div>
+        </div>
+        <div class="as-slider owl-carousel">
+            <div class="row">
+                <c:forEach var="cityView" items="${selectedCityInfos.cityViewList}">
+                    <div class="col-lg-4 col-md-6">
+                        <div class="as-item">
+                            <div class="as-pic set-bg" data-setbg="${cityView.getCityInfoImageURL()}">
+                                <div class="label">${cityView.cityInfoDesc}</div>
+                            </div>
+                        </div>
+                    </div>
+                </c:forEach>
+            </div>
+            <div class="row">
+                <c:forEach var="cityFood" items="${selectedCityInfos.cityFoodList}">
+                    <div class="col-lg-4 col-md-6">
+                        <div class="as-item">
+                            <div class="as-pic set-bg" data-setbg="${cityFood.getCityInfoImageURL()}">
+                                <div class="label">${cityFood.cityInfoDesc}</div>
+                            </div>
+                        </div>
+                    </div>
+                </c:forEach>
+            </div>
+        </div>
+    </div>
+</section>
+</c:if>

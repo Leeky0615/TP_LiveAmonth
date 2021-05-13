@@ -22,29 +22,13 @@ public class CityController {
     @Autowired
     private CityService cityService;
 
-    @RequestMapping(value = "/city")
-    public String city(Model model) throws Exception {
-        List<CityInfoVO> cityIntroList = cityService.getCityInfoListByCategory(INTRO.name());
-        model.addAttribute(CITY_INTRO_LIST.getText(), cityIntroList);
-        model.addAttribute("cityName", "all");
-        return "City";
-    }
-
     @RequestMapping(value = "/cityInfo")
     public String cityInfo(Model model, @RequestParam("cityName") String cityName) throws Exception {
         if (!cityName.equals("all")) {
-            List<CityInfoVO> cityIntro = cityService.getCityInfoList(cityName, INTRO.name());
-            List<CityInfoVO> foodList = cityService.getCityInfoList(cityName, FOOD.name());
-            List<CityInfoVO> viewList = cityService.getCityInfoList(cityName, VIEW.name());
-
-            model.addAttribute(CITY_FOOD_LIST.getText(), foodList);
-            model.addAttribute(CITY_INTRO.getText(), cityIntro.get(0));
-            model.addAttribute(CITY_VIEW_LIST.getText(), viewList);
+            model.addAttribute(SELECTED_CITY_INFOS.getText(), cityService.getSelectedCityList(cityName));
         }
-
-        List<CityInfoVO> cityIntroList = cityService.getCityInfoListByCategory(INTRO.name());
         model.addAttribute(CITY_NAME.getText(), cityName);
-        model.addAttribute(CITY_INTRO_LIST.getText(), cityIntroList);
+        model.addAttribute(CITY_INTRO_LIST.getText(), cityService.getCityInfoListByCategory(INTRO.name()));
         return CITY_INFO.getPath();
     }
 }

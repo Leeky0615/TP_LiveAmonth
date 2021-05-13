@@ -115,7 +115,7 @@ ol {
   Helper CSS
 -----------------------*/
 .section-title {
-    margin-bottom: 40px;
+    margin-bottom: 20px;
 }
 
 .section-title span {
@@ -162,9 +162,9 @@ ol {
 .section-title h6:after {
     position: absolute;
     left: 0;
-    top: -9px;
+    top: -4px;
     width: 5px;
-    height: 46px;
+    height: 38px;
     background: #00C89E;
     content: "";
 }
@@ -176,8 +176,8 @@ ol {
 }
 
 .spad {
-    padding-top: 50px;
-    padding-bottom: 100px;
+    padding-top: 30px;
+    padding-bottom: 50px;
 }
 
 .spad-2 {
@@ -876,7 +876,7 @@ ol {
   Property Section
 --------------------------*/
 .property-section.latest-property-section {
-    padding-bottom: 60px;
+    padding-bottom: 10px;
 }
 
 .property-section.profile-page {
@@ -1889,8 +1889,9 @@ ol {
 }
 
 .pd-text .pd-title {
+    padding-top: 40px;
+    margin-bottom: 30px;
     position: relative;
-    margin-bottom: 65px;
 }
 
 .pd-text .pd-title .heart-icon {
@@ -1956,11 +1957,11 @@ ol {
     font-size: 14px;
     color: #111111;
     height: 36px;
-    width: 36px;
+    width: 50px;
     background: #f2f2f2;
     line-height: 36px;
     text-align: center;
-    border-radius: 50%;
+    border-radius: 30%;
     margin-right: 10px;
     -webkit-transition: all 0.3s;
     transition: all 0.3s;
@@ -2015,6 +2016,12 @@ ol {
 .pd-text .pd-board .tab-board .tab-content .tab-details ul {
     width: 50%;
     float: left;
+    margin-bottom: 0;
+}
+.pd-text .pd-board .tab-board .tab-content .tab-details ul {
+    width: 50%;
+    float: left;
+    margin-bottom: 0;
 }
 
 .pd-text .pd-board .tab-board .tab-content .tab-details ul.left-table li:nth-child(even) {
@@ -2031,17 +2038,37 @@ ol {
     font-weight: 500;
     padding: 15px 0;
     padding-left: 30px;
+    border: none;
 }
 
 .pd-text .pd-board .tab-board .tab-content .tab-details ul li .type-name {
     color: #111111;
-    width: 148px;
+    width: 100px;
     display: inline-block;
+    font-weight: bold;
+    border: none;
+}
+.pd-text .pd-board .tab-board .tab-content .tab-details ul li .type-title {
+    color: #111111;
+    width: 200px;
+    display: inline-block;
+    font-size: 17px;
+    font-weight: bold;
+    border: none;
+}
+.pd-text .pd-board .tab-board .tab-content .tab-details ul .type-footer {
+    font-size: 14px;
+    list-style: none;
+    font-weight: 500;
+    border: none;
+    text-align: right;
+    padding-right: 10px;
 }
 
 .pd-text .pd-board .tab-board .tab-content .tab-details ul li .type-value {
-    color: #00C89E;
+    color: #111111;
     display: inline-block;
+    border: none;
 }
 
 .pd-text .pd-board .tab-board .tab-content .tab-desc {
@@ -2086,7 +2113,13 @@ ol {
     width: 300px;
     display: inline-block;
 }
-
+.cityText{
+    padding-top: 20px;
+    font-size: 16px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 500;
+    color: #111111;
+}
 .pd-text .pd-widget {
     margin-bottom: 65px;
 }
@@ -3167,7 +3200,24 @@ li .richText-btn[data-command=toggleCode] {
     float: left;
     margin-right: 30px;
 }
-
+.cityImg {
+    height: 240px;
+    position: relative;
+}
+.cityImg .label{
+    font-family: 'Jua', sans-serif;
+    text-shadow: 2px 2px 4px gray;
+    font-size: 30px;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 3px 10px 2px;
+    display: inline-block;
+    background: rgba(0, 0, 0, 0);
+    color: #ffffff;
+    position: absolute;
+    left: 10px;
+    top: 10px;
+}
 .profile-agent-content .profile-agent-info .pi-pic img {
     border-radius: 50%;
 }
@@ -4490,7 +4540,6 @@ li .richText-btn[data-command=toggleCode] {
     .search-form-content .filter-form .sm-width {
         width: calc(33.33% - 20px);
     }
-
     .change-btn {
         text-align: left;
         margin-bottom: 20px;
@@ -4959,7 +5008,7 @@ li .richText-btn[data-command=toggleCode] {
 
 
     .ih-item.square.effect13 .info {
-        background: #333333;
+        background: #717070;
         background: rgba(0, 0, 0, 0.6);
         visibility: hidden;
         opacity: 0;

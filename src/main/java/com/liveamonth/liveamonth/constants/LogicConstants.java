@@ -89,9 +89,14 @@ public class LogicConstants {
         SELECTED_CITY_NAME("selectedCityName"),
         CITY_INTRO("cityIntro"),
         CITY_INTRO_LIST("cityIntroList"),
+        RANDOM_CITY_INTRO_LIST("randomCityIntroList"),
+        SELECTED_CITY_INFOS("selectedCityInfos"),
         CITY_VIEW_LIST("cityViewList"),
+        CITY_WEATHER_LIST("cityWeatherList"),
+        CITY_TRANSPORT_LIST("cityTransportList"),
         CITY_FOOD_LIST("cityFoodList"),
         CITY_NAME_LIST("cityNameList");
+
         private String text;
         private ECityInfoAttributes(String text) {this.text = text;}
         public String getText() {return this.text;}

@@ -121,15 +121,16 @@ public class EntityConstants {
     }
 
     public enum CityTransportCategory {
-        SUBWAY("지하철"),
-        BUS("버스"),
-        TRAIN("기차");
+        SUBWAY("지하철역"),
+        BUS("버스 노선"),
+        BICYCLE("공공자전거"),
+        BUS_TERMINAL("버스 터미널"),
+        TRAIN("기차역"),
+        AIRPORT("공항");
         private String nameKR;
-
         private CityTransportCategory(String nameKR) {
             this.nameKR = nameKR;
         }
-
         public String getNameKR() {
             return this.nameKR;
         }
@@ -144,11 +145,9 @@ public class EntityConstants {
         CITY_WEATHER_MIN_TEMP("cityWeatherMinTemp"),
         CITY_WEATHER_AVG_TEMP("cityWeatherAVGTemp");
         private String text;
-
         private ECityWeather(String text) {
             this.text = text;
         }
-
         public String getText() {
             return this.text;
         }
