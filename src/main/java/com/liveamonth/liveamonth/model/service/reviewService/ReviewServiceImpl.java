@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 @Service
 public class ReviewServiceImpl implements ReviewService {
@@ -14,8 +15,24 @@ public class ReviewServiceImpl implements ReviewService {
     private ReviewMapper reviewMapper;
 
     @Override
-    public ArrayList<ReviewVO> getAllReviewList() throws Exception {
+    public ArrayList<HashMap<String, Object>> getAllReviewList() throws Exception {
+
         return reviewMapper.getAllReviewList();
+    }
+
+    @Override
+    public ArrayList<HashMap<String, Object>> getFreeReviewList() throws Exception {
+        return reviewMapper.getFreeReviewList();
+    }
+
+    @Override
+    public ArrayList<HashMap<String, Object>> getPopularReviewList() throws Exception {
+        return reviewMapper.getPopularReviewList();
+    }
+
+    @Override
+    public ArrayList<HashMap<String, Object>> getCategoryReviewList(String category) throws Exception {
+        return reviewMapper.getCategoryReviewList(category);
     }
 
     @Override

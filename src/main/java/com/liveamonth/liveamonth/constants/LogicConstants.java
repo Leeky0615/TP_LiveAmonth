@@ -133,7 +133,6 @@ public class LogicConstants {
         FILE_CONVERT_ERROR_MESSAGE("error: MultipartFile -> File convert fail"),
         FILE_DELETE_SUCCESS_MESSAGE("File delete success"),
         FILE_DELETE_FAIL_MESSAGE("File delete fail"),
-        ALL_REVIEW_LIST("AllReviewList"),
         RESPONSECODE("responseCode"),
         TEMP_IMAGE_URL("url"),
         S3_UPLOAD_FOLDER("img/reviewImg"),
@@ -142,6 +141,16 @@ public class LogicConstants {
 
         private String text;
         private EReviewImage(String text){this.text = text;}
+        public String getText() {return this.text;}
+    }
+
+    public enum EReview{
+        ALL_REVIEW_LIST("AllReviewList"),
+        POPULAR_REVIEW_LIST("popularReviewList"),
+        FREE_REVIEW_LIST("freeReviewList");
+
+        private String text;
+        private EReview(String text){this.text = text;}
         public String getText() {return this.text;}
     }
 }

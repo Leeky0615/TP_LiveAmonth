@@ -24,6 +24,7 @@
 <link rel="stylesheet" href="resources/css/magnific-popup.css" type="text/css">
 <link rel="stylesheet" href="resources/css/slicknav.min.css" type="text/css">
 <link rel="stylesheet" href="resources/css/style.css" type="text/css">
+<link rel="stylesheet" href="resources/css/review.css" type="text/css">
 <link rel="stylesheet" href="resources/css/loginstyle.css" type="text/css">
 <link rel="stylesheet" href="resources/css/signUpStyle.css" type="text/css">
 <link rel="stylesheet" href="resources/css/ihover.min.css" type="text/css">

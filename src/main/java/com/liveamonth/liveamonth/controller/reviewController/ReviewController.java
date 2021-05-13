@@ -14,20 +14,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Locale;
 
 import static com.liveamonth.liveamonth.constants.ControllerPathConstants.EReviewPath.*;
 import static com.liveamonth.liveamonth.constants.EntityConstants.*;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EReview.*;
-import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.*;
+import static com.liveamonth.liveamonth.constants.LogicConstants.EReview.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EReviewAttribute.*;
-import static com.liveamonth.liveamonth.constants.LogicConstants.EReviewImage.ALL_REVIEW_LIST;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.USER_VO;
-import static com.liveamonth.liveamonth.constants.LogicConstants.EMyPageAttributes.CHECK_USER;
 
 @Controller
 public class ReviewController {
@@ -35,12 +34,43 @@ public class ReviewController {
 	private  ReviewService reviewService;
 
 
-
 	@GetMapping("/review")
-	public String showFristReviewList(Model model) throws Exception{
-		ArrayList<ReviewVO> reviewList = reviewService.getAllReviewList();
-		model.addAttribute(ALL_REVIEW_LIST.getText(), reviewList);
-		return FIRST_REVIEW_PAGE.getPath();
+	public String showDefauleReviewPage(Model model) throws Exception{
+		ArrayList<HashMap<String, Object>> allReviewList = reviewService.getAllReviewList();
+		ArrayList<HashMap<String, Object>> freeReviewList = reviewService.getFreeReviewList();
+		ArrayList<HashMap<String, Object>> popularReviewList = reviewService.getPopularReviewList();
+		model.addAttribute(ALL_REVIEW_LIST.getText(), allReviewList);
+		model.addAttribute(FREE_REVIEW_LIST.getText(), freeReviewList);
+		model.addAttribute(POPULAR_REVIEW_LIST.getText(), popularReviewList);
+
+		model.addAttribute(REVIEW_CATEGORY_LIST.getText(), EReviewCategoryName.values());
+		return "Review";
+	}
+
+	@GetMapping("/categoryReviewPage")
+	public String showCategoryReviewPage(Model model, HttpServletRequest request) throws Exception {
+		String category = String.valueOf(request.getParameter("category"));
+		HashMap<String, Object> reviewCategory = new HashMap<>();
+		ArrayList<HashMap<String, Object>> reviewList = null;
+
+		switch (category) {
+			case "all":
+				reviewList = reviewService.getAllReviewList();
+				break;
+			case "popular":
+				reviewList = reviewService.getPopularReviewList();
+				break;
+			case "free":
+				reviewList = reviewService.getFreeReviewList();
+				break;
+			default:
+				reviewList = reviewService.getCategoryReviewList(category);
+				break;
+
+		}
+		model.addAttribute("reviewList", reviewList);
+		model.addAttribute(REVIEW_CATEGORY_LIST.getText(), EReviewCategoryName.values());
+		return CATEGORY_REVIEW_PAGE.getPath();
 	}
 
 	@GetMapping("/getReview")
@@ -49,20 +79,19 @@ public class ReviewController {
 
 		ReviewVO reviewVO = reviewService.getReviewVO(reviewNO);
 
+		model.addAttribute(REVIEW_CATEGORY_LIST.getText(), EReviewCategoryName.values());
 		model.addAttribute(REVIEW_VO.getText(), reviewVO);
 		return REVIEW_CONTENT.getPath();
 	}
 
 	@GetMapping("/reviewWrite")
 	public String reviewWrite(Model model) throws Exception {
-		model.addAttribute(REVIEW_TYPE_LIST.getText(), EReviewTypeName.values());
 		model.addAttribute(REVIEW_CATEGORY_LIST.getText(), EReviewCategoryName.values());
-		model.addAttribute(REVIEW_PLACE_LIST.getText(), CityName.values());
 		return REVIEW_WRITER.getPath();
 	}
 
 	@RequestMapping(value = "addReview")
-	public String addSchedule(HttpServletRequest request, ReviewVO reviewVO, RedirectAttributes rttr) throws Exception {
+	public String addReview(HttpServletRequest request, ReviewVO reviewVO, RedirectAttributes rttr) throws Exception {
 		long systemTime = System.currentTimeMillis();
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA);
 		String dTime = formatter.format(systemTime);
@@ -73,6 +102,7 @@ public class ReviewController {
 		reviewVO.setUserNO(session_UserVO.getUserNO());
 
 		int reviewNO = reviewService.addReview(reviewVO);
+		rttr.addAttribute(REVIEW_CATEGORY_LIST.getText(), EReviewCategoryName.values());
 		rttr.addAttribute(REVIEW_NO.getText(), reviewNO);
 		return REDIRECT_REVIEW_CONTENT.getRedirectPath();
 	}

@@ -71,9 +71,10 @@ public class ControllerPathConstants {
      * ReviewController Path Constants
      */
     public enum EReviewPath {
-        FIRST_REVIEW_PAGE("FirstReviewList"),
+        DEFUALT_REVIEW_PAGE("DefaultReviewPage"),
         REVIEW_CONTENT("ReviewContent"),
         REVIEW_WRITER("ReviewWriter"),
+        CATEGORY_REVIEW_PAGE("CategoryReviewPage"),
         REDIRECT_REVIEW_CONTENT("redirect:getReview");
         private String path;
         private EReviewPath(String path) {this.path = path;}

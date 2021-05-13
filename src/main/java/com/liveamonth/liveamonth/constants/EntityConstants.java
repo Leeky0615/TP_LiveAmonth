@@ -200,18 +200,38 @@ public class EntityConstants {
         }
     }
 
-    public enum EReviewTypeName{
-        REVIEW_BOARD("후기글"),
-        FREE_BOARD("자유글");
-        private String nameKR;
-        private EReviewTypeName(String nameKR){this.nameKR = nameKR;}
-        public String getNameKR() {return this.nameKR;}
-    }
+
 
     public enum EReviewCategoryName{
-        TOUR_CONTENT("즐길거리"),
-        TOUR_FOOD("먹거리"),
-        TOUR_REPORT("느낀점");
+        SEOUL_HOUSE_BOARD("서울ㅣ숙박시설"),
+        GANGNEUNG_HOUSE_BOARD("강릉ㅣ숙박시설"),
+        GYEONGJU_HOUSE_BOARD("경주ㅣ숙박시설"),
+        BUSAN_HOUSE_BOARD("부산ㅣ숙박시설"),
+        YEOSU_HOUSE_BOARD("여수ㅣ숙박시설"),
+        JEJU_HOUSE_BOARD("제주ㅣ숙박시설"),
+
+        SEOUL_GO_BOARD("서울ㅣ가볼만한곳"),
+        GANGNEUNG_GO_BOARD("강릉ㅣ가볼만한곳"),
+        GYEONGJU_GO_BOARD("경주ㅣ가볼만한곳"),
+        BUSAN_GO_BOARD("부산ㅣ가볼만한곳"),
+        YEOSU_GO_BOARD("여수ㅣ가볼만한곳"),
+        JEJU_GO_BOARD("제주ㅣ가볼만한곳"),
+
+        SEOUL_FOOD_BOARD("서울ㅣ먹을만한곳"),
+        GANGNEUNG_FOOD_BOARD("강릉ㅣ먹을만한곳"),
+        GYEONGJU_FOOD_BOARD("경주ㅣ먹을만한곳"),
+        BUSAN_FOOD_BOARD("부산ㅣ먹을만한곳"),
+        YEOSU_FOOD_BOARD("여수ㅣ먹을만한곳"),
+        JEJU_FOOD_BOARD("제주ㅣ먹을만한곳"),
+
+        SEOUL_REVIEW_BOARD("서울ㅣ솔직후기"),
+        GANGNEUNG_REVIEW_BOARD("강릉ㅣ솔직후기"),
+        GYEONGJU_REVIEW_BOARD("경주ㅣ솔직후기"),
+        BUSAN_REVIEW_BOARD("부산ㅣ솔직후기"),
+        YEOSU_REVIEW_BOARD("여수ㅣ솔직후기"),
+        JEJU_REVIEW_BOARD("제주ㅣ솔직후기"),
+
+        FREE_BOARD("자유게시판");
         private String nameKR;
         private EReviewCategoryName(String nameKR){this.nameKR = nameKR;}
         public String getNameKR() {return this.nameKR;}
