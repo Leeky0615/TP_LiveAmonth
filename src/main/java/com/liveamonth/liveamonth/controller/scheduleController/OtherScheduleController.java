@@ -8,6 +8,7 @@ import com.liveamonth.liveamonth.entity.dto.PagingDTO;
 import com.liveamonth.liveamonth.entity.vo.ScheduleLikeVO;
 import com.liveamonth.liveamonth.entity.vo.ScheduleReplyVO;
 import com.liveamonth.liveamonth.entity.vo.UserVO;
+import com.liveamonth.liveamonth.model.service.cityInfoService.CityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,6 +40,8 @@ import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleFilter
 public class OtherScheduleController {
     @Autowired
     private ScheduleService scheduleService;
+    @Autowired
+    private CityService cityService;
 
     private int checkOption(String option) {
         if (option != null) {
@@ -94,7 +97,7 @@ public class OtherScheduleController {
                         optionStatus = true; // option이 null(-1)이 아니면 true
                         if (eFO == SCHEDULE_FO_PLACE) {
                             //schedulePlace는 HashMap에 값을 String으로 넣어 줘야하므로 CityNameList에서 option(int)에 해당하는 인덱스 값을 넣어줌.
-                            filtersAndOrder.put(eFO.getText(), CityName.values()[option]);
+                            filtersAndOrder.put(eFO.getText(), cityService.getCityNameList().get(option));
                         } else {
                             // 나머지 경우는 그냥 option(int)를 넣어줌
                             filtersAndOrder.put(eFO.getText(), option);
@@ -116,7 +119,7 @@ public class OtherScheduleController {
         HashMap<String, Object> requestList = makeRequestList(request);
 
         model.addAttribute(FITERED_OTHER_SCHEDULE_LIST.getText(), otherScheduleList);
-        model.addAttribute(SCHEDULE_PLACE_LIST.getText(), CityName.values());
+        model.addAttribute(SCHEDULE_PLACE_LIST.getText(), cityService.getCityNameList());
         model.addAttribute(REQUEST_LIST.getText(), requestList);
         return OTHER_SCHEDULE_LIST.getPath();
     }

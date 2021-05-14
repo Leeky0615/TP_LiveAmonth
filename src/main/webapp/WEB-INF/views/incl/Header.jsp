@@ -99,7 +99,6 @@
                                     <li><a href="cityInfo?cityName=부산">부산</a></li>
                                     <li><a href="cityInfo?cityName=여수">여수</a></li>
                                     <li><a href="cityInfo?cityName=제주">제주</a></li>
-
                                 </ul>
                             </li>
                             <li class="active"><a href="schedule">Schedule</a>

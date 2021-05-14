@@ -2,6 +2,7 @@ package com.liveamonth.liveamonth.controller.reviewController;
 
 import com.liveamonth.liveamonth.entity.vo.ReviewVO;
 import com.liveamonth.liveamonth.entity.vo.UserVO;
+import com.liveamonth.liveamonth.model.service.cityInfoService.CityService;
 import com.liveamonth.liveamonth.model.service.reviewService.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,6 +34,8 @@ import static com.liveamonth.liveamonth.constants.LogicConstants.EMyPageAttribut
 public class ReviewController {
 	@Autowired
 	private  ReviewService reviewService;
+	@Autowired
+	private CityService cityService;
 
 
 
@@ -57,7 +60,7 @@ public class ReviewController {
 	public String reviewWrite(Model model) throws Exception {
 		model.addAttribute(REVIEW_TYPE_LIST.getText(), EReviewTypeName.values());
 		model.addAttribute(REVIEW_CATEGORY_LIST.getText(), EReviewCategoryName.values());
-		model.addAttribute(REVIEW_PLACE_LIST.getText(), CityName.values());
+		model.addAttribute(REVIEW_PLACE_LIST.getText(), cityService.getCityNameList());
 		return REVIEW_WRITER.getPath();
 	}
 

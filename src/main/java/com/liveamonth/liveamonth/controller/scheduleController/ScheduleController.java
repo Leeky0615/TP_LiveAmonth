@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 
 import com.liveamonth.liveamonth.entity.vo.ScheduleReplyVO;
 import com.liveamonth.liveamonth.entity.vo.UserVO;
+import com.liveamonth.liveamonth.model.service.cityInfoService.CityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,6 +39,8 @@ import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleFilter
 public class ScheduleController {
     @Autowired
     private ScheduleService scheduleService;
+    @Autowired
+    private CityService cityService;
 
     private int scheduleContentNO;
 
@@ -105,7 +108,7 @@ public class ScheduleController {
         model.addAttribute(SCHEDULE_VO_LIST.getText(), scheduleVOList);
         model.addAttribute(DATE_LIST.getText(), calendarDto.getDateList()); //날짜 데이터 배열
         model.addAttribute(TODAY_INFORMATION.getText(), calendarDto.getTodayInformation());
-        model.addAttribute(SCHEDULE_PLACE_LIST.getText(), CityName.values());
+        model.addAttribute(SCHEDULE_PLACE_LIST.getText(),cityService.getCityNameList());
         return SCHEDULE.getPath();
     }
 

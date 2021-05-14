@@ -26,8 +26,7 @@ import static com.liveamonth.liveamonth.constants.EntityConstants.CityInfoCatego
 import static com.liveamonth.liveamonth.constants.EntityConstants.EEmail.*;
 import static com.liveamonth.liveamonth.constants.EntityConstants.ESignUp.EMAIL;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.*;
-import static com.liveamonth.liveamonth.constants.LogicConstants.ECityInfoAttributes.CITY_INTRO_LIST;
-import static com.liveamonth.liveamonth.constants.LogicConstants.ECityInfoAttributes.CITY_NAME_LIST;
+import static com.liveamonth.liveamonth.constants.LogicConstants.ECityInfoAttributes.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.ESignAttributes.AT;
 import static com.liveamonth.liveamonth.constants.LogicConstants.ESignAttributes.FIRST_IN;
 @Controller
@@ -49,7 +48,9 @@ public class SignController {
     @RequestMapping("/logout")
     private String logout(HttpSession session, Model model) throws Exception {
         session.invalidate();
-        model.addAttribute(CITY_NAME_LIST.getText(), cityService.getCityNameList());
+        // MainCitySlide.jsp 사용
+        model.addAttribute(RANDOM_CITY_INTRO_LIST.getText(), cityService.getRandomCityInfoListByCategory(INTRO.name()));
+        // CityInfoGrid.jsp 사용
         model.addAttribute(CITY_INTRO_LIST.getText(), cityService.getCityInfoListByCategory(INTRO.name()));
         return MAIN.getPath();
     }
@@ -65,7 +66,9 @@ public class SignController {
             return SIGN_IN.getPath();
         } else {
             session.setAttribute(USER_VO.getText(), userVO);
-            model.addAttribute(CITY_NAME_LIST.getText(), cityService.getCityNameList());
+            // MainCitySlide.jsp 사용
+            model.addAttribute(RANDOM_CITY_INTRO_LIST.getText(), cityService.getRandomCityInfoListByCategory(INTRO.name()));
+            // CityInfoGrid.jsp 사용
             model.addAttribute(CITY_INTRO_LIST.getText(), cityService.getCityInfoListByCategory(INTRO.name()));
             return MAIN.getPath();
         }

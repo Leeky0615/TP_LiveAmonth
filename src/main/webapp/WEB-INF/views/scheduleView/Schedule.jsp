@@ -68,7 +68,7 @@
                         <div class="text_desc">
                             <select class="sm-width" name="schedulePlace" id="schedulePlace">
                                 <c:forEach var="schedulePlace" items="${schedulePlaceList}">
-                                    <option value="${schedulePlace}">${schedulePlace.nameKR}</option>
+                                    <option value="${schedulePlace}">${schedulePlace}</option>
                                 </c:forEach>
                             </select>
                         </div>
@@ -116,12 +116,12 @@
                                 </div>
                                 <div>
                                     <div class="text_subject">지역</div>
-                                    <select class="sm-width" name="schedulePlace" id="modifyPlace">
-                                        <c:forEach var="schedulePlace" items="${schedulePlaceList}">
-                                            <option value="${schedulePlace}">${schedulePlace.nameKR}</option>
+                                    <select class="sm-width" name="cityNO" id="modifyPlace">
+                                        <c:forEach var="cityName" items="${schedulePlaceList}" varStatus="status">
+                                            <option value="${status.index}">${cityName}</option>
                                         </c:forEach>
                                     </select>
-                                    <script> $("#modifyPlace").val("${scheduleVO.schedulePlace}").prop("selected", true); </script>
+                                    <script> $("#modifyPlace").val("${scheduleVO.cityVO.cityName}").prop("selected", true); </script>
                                 </div>
 
                                 <br><br>
@@ -131,7 +131,7 @@
 									<input type="checkbox" name="scheduleStatus" id="modiftScheduleStatus">
 									<span class="slider round"></span>
 								</label>
-								<script> if(${scheduleVO.scheduleStatus}==true) {$("input:checkbox[id='modiftScheduleStatus']").prop("checked", true);} </script>
+								<script> if(${scheduleVO.scheduleStatus==true}) {$("input:checkbox[id='modiftScheduleStatus']").prop("checked", true);} </script>
 								<div>
 									<button type="button" class="board_move_go pointer" onclick="modifyScheduleButton();">수정</button>
 									<button type="button" class="board_move_go pointer" data-dismiss="modal">취소</button>

@@ -45,24 +45,7 @@ public class EntityConstants {
         }
     }
 
-    public enum CityName {
-        SEOUL("서울"),
-        GANGNEUNG("강릉"),
-        GYEONGJU("경주"),
-        BUSAN("부산"),
-        YEOSU("여수"),
-        JEJU("제주"),
-        ALL_PLACE("전지역");
-        private String nameKR;
 
-        private CityName(String nameKR) {
-            this.nameKR = nameKR;
-        }
-
-        public String getNameKR() {
-            return this.nameKR;
-        }
-    }
 
     public enum ECityInfo {
         CITY_INFO_VO("cityInfoVO"),
@@ -208,9 +191,10 @@ public class EntityConstants {
     }
 
     public enum EReviewCategoryName{
-        TOUR_CONTENT("즐길거리"),
-        TOUR_FOOD("먹거리"),
-        TOUR_REPORT("느낀점");
+        FREE_BOARD("자유글"),
+        TOUR_CONTENT("서울 즐길거리"),
+        TOUR_FOOD("서울 먹거리"),
+        TOUR_REPORT("서울 느낀점");
         private String nameKR;
         private EReviewCategoryName(String nameKR){this.nameKR = nameKR;}
         public String getNameKR() {return this.nameKR;}
@@ -335,11 +319,9 @@ public class EntityConstants {
         CATEGORY3("카테고리3"),
         CATEGORY4("카테고리4");
         private String label;
-
         OneToOneAskCategory(String label) {
             this.label = label;
         }
-
         public String getLabel() {
             return label;
         }

@@ -70,7 +70,7 @@
                                         <option value="null" <c:if test="${index == -1}"> selected </c:if>>기본</option>
                                         <c:forEach var="schedulePlace" items="${schedulePlaceList}" varStatus="status">
                                             <option value="${status.index}" <c:if
-                                                    test="${status.index == index}"> selected </c:if>>${schedulePlace.nameKR}</option>
+                                                    test="${status.index == index}"> selected </c:if>>${schedulePlace.cityName}</option>
                                         </c:forEach>
                                     </select>
                                 </div>
@@ -127,11 +127,6 @@
                         <tbody>
                         <c:if test="${otherScheduleList != null}">
                             <c:forEach var="scheduleContent" items="${otherScheduleList}" varStatus="status">
-                                <c:forEach var="cityName" items="${schedulePlaceList}">
-                                    <c:if test="${scheduleContent.schedulePlace eq cityName}">
-                                        <c:set var="place" value="${cityName.nameKR}"/>
-                                    </c:if>
-                                </c:forEach>
                                 <tr>
                                     <td>
                                         <div class="title"><c:out value="${scheduleContent.scheduleSubject}"/></div>
@@ -139,7 +134,8 @@
                                             <img src="resources/img/scheduleImg.png" alt="">
                                         </a>
                                     </td>
-                                    <td>${place}</td>
+                                     <%--스케줄 테이블 변경시 수정--%>
+                                    <td>${otherScheduleList.cityVO.cityName}</td>
                                     <td>${scheduleContent.userVO.userNickname}</td>
                                     <td>${ScheduleContent.userVO.getUserSex()}</td>
                                     <td>${scheduleContent.userVO.getUserRealAge()}세</td>

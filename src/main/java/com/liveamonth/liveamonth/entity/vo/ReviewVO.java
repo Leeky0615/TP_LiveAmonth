@@ -15,7 +15,6 @@ public class ReviewVO {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:MM:SS")
     private String reviewDate;
     private int reviewViewCount;
-    private CityName reviewPlace;
 
     // Reference
     private int userNO;
@@ -29,7 +28,6 @@ public class ReviewVO {
         this.reviewDesc = null;
         this.reviewDate = null;
         this.reviewViewCount = 0;
-        this.reviewPlace = CityName.SEOUL;
 
         // Reference
         this.userNO = 0;

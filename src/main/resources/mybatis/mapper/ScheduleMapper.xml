@@ -23,29 +23,36 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<select id="getScheduleList" resultType="ScheduleVO" parameterType="int">
-		select * from schedule where userNO = #{userNO};
+		select * from schedule,city
+		where city.cityNO = schedule.cityNO
+		and userNO = #{userNO};
 	</select>
 
 
 	<resultMap type = "java.util.HashMap" id="scheduleFilterAndOrder">
 		<id column="scheduleNO" property="scheduleNO"/>
 		<result column="scheduleSubject" property="scheduleSubject"/>
-		<result column="schedulePlace" property="schedulePlace"/>
 		<result column="scheduleViewCount" property="scheduleViewCount"/>
 		<result column="scheduleLikeCount" property="scheduleLikeCount"/>
-		<association property="userVO" javaType="userVO">
+		<association property="userVO" javaType="UserVO">
 			<id column="userNO" property="userNO"/>
 			<result column="userNickname" property="userNickname"/>
 			<result column="userAge" property="userAge"/>
 			<result column="userSex" property="userSex"/>
 		</association>
+		<association property="cityVO" javaType="CityVO">
+			<id column="cityNO" property="cityNO"/>
+			<result column="cityName" property="cityName"/>
+		</association>
 	</resultMap>
 
  	<select id="getOtherScheduleList" parameterType="HashMap" resultMap="scheduleFilterAndOrder">
-		select schedule.scheduleNO, user.userNO, userNickname, scheduleSubject, userAge,userSex,schedulePlace,scheduleViewCount,COUNT(scheduleLike.scheduleNO) as scheduleLikeCount
-		from user, schedule, scheduleLike
+		select schedule.scheduleNO, user.userNO, userNickname, scheduleSubject, userAge,userSex,cityName,scheduleViewCount,COUNT(scheduleLike.scheduleNO) as scheduleLikeCount
+		from user, schedule, scheduleLike,city
 		where user.userNO = schedule.userNO
-		and schedule.scheduleNO = scheduleLike.scheduleNO and schedule.scheduleStatus = true
+		and schedule.scheduleNO = scheduleLike.scheduleNO
+		and city.cityNO = scheduleLike.cityNO
+		and schedule.scheduleStatus = true
 		<if test="userAgeFilter">
 			and user.userAge between Year(curdate())-#{userAge}-9 and Year(curdate())-#{userAge}
 		</if>
@@ -53,7 +60,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			and userSex = #{userSex}
 		</if>
 		<if test="schedulePlaceFilter">
-			and schedulePlace = #{schedulePlace}
+			and cityName = #{schedulePlace}
 		</if>
 		GROUP BY schedule.scheduleNO
 		<choose>
@@ -141,7 +148,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- insert -->
 
 	<insert id="addSchedule" parameterType="ScheduleVO">
-		insert into schedule values(#{scheduleNO}, #{scheduleSubject}, #{scheduleStatus}, #{schedulePlace},#{scheduleViewCount},#{userNO})
+		insert into schedule values(#{scheduleNO}, #{scheduleSubject}, #{scheduleStatus}, #{scheduleViewCount},#{userNO},#{cityNO})
 	</insert>
 
 	<insert id="addScheduleContent" parameterType="ScheduleContentVO">
@@ -161,27 +168,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		, #{userNO}, #{scheduleNO})
 	</insert>
 
-	<insert id="addScheduleLike" parameterType="com.liveamonth.liveamonth.entity.vo.ScheduleLikeVO">
+	<insert id="addScheduleLike" parameterType="ScheduleLikeVO">
 		insert into scheduleLike values (#{scheduleNO}, #{scheduleLikeUserNO})
 	</insert>
 
 	<!-- update -->
-
+	<!-- 스케줄 내용 수정 -->
 	<update id="modifyScheduleContent" parameterType="ScheduleContentVO">
 		update scheduleContent
 		set scheduleContentSubject = #{scheduleContentSubject}, scheduleContentDesc = #{scheduleContentDesc},
 		scheduleContentCost = #{scheduleContentCost}
 		where scheduleContentNO = #{scheduleContentNO}
 	</update>
-	
+	<!-- 스케줄 수정 -->
 	<update id="modifySchedule" parameterType="ScheduleVO">
-		update schedule set scheduleSubject = #{scheduleSubject}, scheduleStatus = #{scheduleStatus}, schedulePlace = #{schedulePlace} where scheduleNO = #{scheduleNO}
+		update schedule set scheduleSubject = #{scheduleSubject},
+		                    scheduleStatus = #{scheduleStatus},
+							schedule.cityNO = (select city.cityNO from city where cityName =#{schedulePlace})
+		where scheduleNO = #{scheduleNO}
 	</update>
 
+	<!-- 스케줄 댓글 수정 -->
 	<update id="modifyScheduleReply" parameterType="ScheduleReplyVO">
 		update scheduleReply set scheduleReplyDesc = #{scheduleReplyDesc} where scheduleReplyNO = #{scheduleReplyNO}
 	</update>
 
+	<!-- 스케줄 조회수 증가 -->
 	<update id="increaseScheduleViewCount" parameterType="int">
 		update schedule set scheduleViewCount = scheduleViewCount + 1 where scheduleNO = #{scheduleNO};
 	</update>
