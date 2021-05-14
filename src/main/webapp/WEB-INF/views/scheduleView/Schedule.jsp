@@ -1,25 +1,26 @@
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%@page import="java.text.SimpleDateFormat" %>
 <%@page import="java.util.Calendar" %>
-<%@ page contentType="text/html; charset=utf-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.liveamonth.liveamonth.entity.dto.CalendarDTO" %>
 <%@ page import="com.liveamonth.liveamonth.entity.vo.ScheduleVO" %>
 <%@page import="java.util.*" %>
 
-<body style="background:#ffffff">
-<link href="resources/css/schedule.css" rel="stylesheet" type="text/css">
-<link href="resources/css/onOff.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="resources/css/schedule.css" type="text/css">
+<link rel="stylesheet" href="resources/css/onOff.css" type="text/css">
+
 <script src="resources/js/schedule.js"></script>
+
+<body style="background:#ffffff">
 
 <div class="search-form-content">
     <form action="swapSchedule" class="filter-form">
         <select class="sm-width" name="selectSchedule" id="selectSchedule">
             <c:forEach var="scheduleVO" items="${scheduleVOList}">
-                <option id="${scheduleVO.scheduleNO}"
-                        value="${scheduleVO.scheduleNO}">${scheduleVO.scheduleSubject}</option>
+                <option id="${scheduleVO.scheduleNO}" value="${scheduleVO.scheduleNO}">${scheduleVO.scheduleSubject}</option>
             </c:forEach>
         </select>
-        <script> $("#" + ${selectedScheduleNO}).prop("selected", true); </script>
+        <script> $('#${selectedScheduleNO}').prop("selected",true); </script>
         <input type="submit" class="search-btn sm-width" style="width:5%;" value="확인">
 
         <button type="button" class="search-btn sm-width" style="float: right;" data-toggle="modal"
@@ -37,13 +38,9 @@
         <div class="text_desc">
             <input type="date" id="schedulePayStartDay" name="schedulePayStartDay" class="sm-width"/> ~
             <input type="date" id="schedulePayFinishDay" name="schedulePayFinishDay" class="sm-width"/>
-            <button type="submit" class="search-btn sm-width" style="float: right;" >금액확인하기</button>
+            <button type="submit" class="search-btn sm-width" style="float: right;">금액확인하기</button>
         </div>
-
-</div>
-
-
-</form>
+    </form>
 </div>
 
 <div class="modal fade" id="addScheduleModal" role="dialog" aria-labelledby="addScheduleLabel" aria-hidden="true">

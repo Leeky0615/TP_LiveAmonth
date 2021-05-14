@@ -59,16 +59,16 @@ create table scheduleReply
 );
 
 create table review(
-                       reviewNO int not null auto_increment,
-                       reviewCategory varchar(10),
-                       reviewSubject varchar(100),
-                       reviewDesc varchar(900),
-                       reviewDate date,
-                       reviewViewCount int,
-                       reviewImage varchar(100),
-                       userNo int,
-                       primary key (reviewNO),
-                       foreign key (userNO) references user (userNO) on delete cascade
+       reviewNO int not null auto_increment,
+       reviewCategory varchar(10),
+       reviewSubject varchar(100),
+       reviewDesc varchar(900),
+       reviewDate date,
+       reviewViewCount int,
+       reviewImage varchar(100),
+       userNo int,
+       primary key (reviewNO),
+       foreign key (userNO) references user (userNO) on delete cascade
 );
 
 

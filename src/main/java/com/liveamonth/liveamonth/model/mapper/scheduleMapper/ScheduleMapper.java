@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 @Repository
 @Mapper
@@ -29,19 +28,15 @@ public interface ScheduleMapper {
 
     public void modifyScheduleContent(ScheduleContentVO scheduleContentVO)  throws Exception;
 
-    public boolean addSchedule(ScheduleVO scheduleVO)throws Exception;
+    public boolean addSchedule(ScheduleVO scheduleVO) throws Exception;
 
     public ArrayList<ScheduleVO> getScheduleList(int userNO)throws Exception;
 
-	public Object getMaxScheduleNO() throws Exception;
-	
 	public boolean modifySchedule(ScheduleVO scheduleVO) throws Exception;
 
 	public boolean deleteSchedule(int scheduleNO) throws Exception;
 
     public ArrayList<HashMap<String, Object>> getScheduleReplyList(HashMap<String, Integer> scheduleNOAndPage) throws Exception;
-
-    public Object getMaxScheduleReplyNO() throws Exception;
 
     public boolean addScheduleReplyVO(ScheduleReplyVO scheduleReplyVO) throws Exception;
 

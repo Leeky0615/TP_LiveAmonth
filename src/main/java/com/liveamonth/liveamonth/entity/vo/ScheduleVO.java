@@ -24,23 +24,4 @@ public class ScheduleVO {
 
         this.userNO = 0;
     }
-
-    // Getter & setter
-    public int getScheduleNO() {return scheduleNO;}
-    public void setScheduleNO(int scheduleNO) {this.scheduleNO = scheduleNO;}
-
-    public String getScheduleSubject() {return scheduleSubject;}
-    public void setScheduleSubject(String scheduleSubject) {this.scheduleSubject = scheduleSubject;}
-
-    public int getScheduleViewCount() {return scheduleViewCount;}
-    public void setScheduleViewCount(int scheduleViewCount) {this.scheduleViewCount = scheduleViewCount;}
-
-    public boolean isScheduleStatus() {return scheduleStatus;}
-    public void setScheduleStatus(boolean scheduleStatus) {this.scheduleStatus = scheduleStatus;}
-
-    public CityName getSchedulePlace() {return schedulePlace;}
-    public void setSchedulePlace(CityName schedulePlace) {this.schedulePlace = schedulePlace;}
-
-    public int getUserNO() {return userNO;}
-    public void setUserNO(int userNO) {this.userNO = userNO;}
 }

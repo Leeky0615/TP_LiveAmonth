@@ -14,7 +14,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id = "getAllReviewList" resultMap="reviewVOAndReplyCount">
         select review.reviewNO, reviewCategory, reviewSubject, reviewDesc, reviewDate,
                reviewViewCount, userNickName, count(reviewReplyNO) as replyCount,
-               count(reviewLike.reviewNO) as reviewLikeCount, userNO
+               count(reviewLike.reviewNO) as reviewLikeCount, review.userNO
         from review LEFT JOIN reviewReply ON review.reviewNO = reviewReply.reviewNO LEFT JOIN user ON review.userNO = user.userNO LEFT JOIN reviewLike ON review.reviewNO = reviewLike.reviewNO
         group by review.reviewNO
         order by review.reviewNO desc;
@@ -23,7 +23,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id = "getFreeReviewList" resultMap="reviewVOAndReplyCount">
         select review.reviewNO, reviewCategory, reviewSubject,
                reviewDesc, reviewDate, reviewViewCount, userNickName,
-               count(reviewReplyNO) as replyCount, count(reviewLike.reviewNO) as reviewLikeCount, userNO
+               count(reviewReplyNO) as replyCount, count(reviewLike.reviewNO) as reviewLikeCount, review.userNO
         from review LEFT JOIN reviewReply ON review.reviewNO = reviewReply.reviewNO LEFT JOIN user ON review.userNO = user.userNO LEFT JOIN reviewLike ON review.reviewNO = reviewLike.reviewNO
         where reviewCategory = 'FREE_BOARD'
         group by review.reviewNO
@@ -33,7 +33,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id = "getPopularReviewList" resultMap="reviewVOAndReplyCount">
         select review.reviewNO,  reviewCategory, reviewSubject,
                reviewDesc, reviewDate, reviewViewCount, userNickName,
-               count(reviewReplyNO) as replyCount, count(reviewLike.reviewNO) as reviewLikeCount, userNO
+               count(reviewReplyNO) as replyCount, count(reviewLike.reviewNO) as reviewLikeCount, review.userNO
         from review LEFT JOIN reviewReply ON review.reviewNO = reviewReply.reviewNO LEFT JOIN user ON review.userNO = user.userNO LEFT JOIN reviewLike ON review.reviewNO = reviewLike.reviewNO
         group by review.reviewNO
         order by reviewLikeCount desc;
@@ -42,7 +42,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id = "getCategoryReviewList" parameterType = "String" resultMap="reviewVOAndReplyCount">
         select review.reviewNO, reviewCategory, reviewSubject, reviewDesc, reviewDate,
                reviewViewCount, userNickName, count(reviewReplyNO) as replyCount,
-               count(reviewLike.reviewNO) as reviewLikeCount, userNO
+               count(reviewLike.reviewNO) as reviewLikeCount, review.userNO
         from review LEFT JOIN reviewReply ON review.reviewNO = reviewReply.reviewNO LEFT JOIN user ON review.userNO = user.userNO LEFT JOIN reviewLike ON review.reviewNO = reviewLike.reviewNO
         where reviewCategory = #{category}
         group by review.reviewNO
@@ -54,7 +54,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
     <insert id="addReview" parameterType="ReviewVO" useGeneratedKeys="true" keyProperty="reviewNO">
-        insert into review values(#{reviewNO}, #{reviewCategory}, #{reviewSubject},#{reviewDesc},#{reviewDate}, #{reviewViewCount}, NULL,#{userNO})
+        insert into review values(#{reviewNO}, #{reviewCategory}, #{reviewSubject},#{reviewDesc},#{reviewDate}, #{reviewViewCount}, #{userNO})
     </insert>
 
 </mapper>

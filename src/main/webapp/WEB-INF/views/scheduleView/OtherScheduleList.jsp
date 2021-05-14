@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-         pageEncoding="utf-8" %>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
@@ -141,7 +140,7 @@
                                     </td>
                                     <td>${place}</td>
                                     <td>${scheduleContent.userVO.userNickname}</td>
-                                    <td>${scheduleContent.userVO.getUserSexToString()}</td>
+                                    <td>${ScheduleContent.userVO.getUserSex()}</td>
                                     <td>${scheduleContent.userVO.getUserRealAge()}세</td>
                                     <td>${scheduleContent.scheduleViewCount}</td>
                                     <td>${scheduleContent.scheduleLikeCount}</td>

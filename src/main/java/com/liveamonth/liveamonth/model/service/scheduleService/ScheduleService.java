@@ -27,8 +27,6 @@ public interface ScheduleService {
 
     ArrayList<ScheduleVO> getScheduleList(int userNO) throws Exception;
 
-    int getMaxScheduleNO() throws Exception;
-
     boolean modifySchedule(ScheduleVO scheduleVO) throws Exception;
 
     boolean deleteSchedule(int scheduleNO) throws Exception;

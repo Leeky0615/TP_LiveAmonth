@@ -182,12 +182,10 @@ public class EntityConstants {
     public enum EReview {
         REVIEW_VO("reviewVO"),
         REVIEW_NO("reviewNO"),
-        REVIEW_TPYE("reviewType"),
         REVIEW_CATEGORY("reviewCategory"),
         REVIEW_SUBJECT("reviewSubject"),
         REVIEW_DESC("reviewDesc"),
         REVIEW_DATE("reviewDate"),
-        REVIEW_PLACE("reviewPlace"),
         REVIEW_VIEW_COUNT("reviewViewCount");
         private String text;
 

@@ -7,8 +7,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <%--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">--%>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        var $j351 = jQuery.noConflict();
+    </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
@@ -17,6 +19,7 @@
     <link rel="stylesheet" href="resources/summernote-0.8.18-dist/summernote-bs4.css">
 
     <script type="text/javascript" src="resources/js/review.js"></script>
+
 </head>
 <body>
 <section class="property-submit-section spad">
@@ -59,7 +62,7 @@
                             <textarea class="summernote" id = "reviewDesc" name = "reviewDesc"></textarea>
                         </div>
                         <script type="text/javascript">
-                            $('.summernote').summernote({
+                            $j351('.summernote').summernote({
                                 toolbar: [
                                     ['fontname', ['fontname']],
                                     ['fontsize', ['fontsize']],
@@ -95,19 +98,19 @@
                             function uploadSummernoteImageFile(file, editor) {
                                 data = new FormData();
                                 data.append("file", file);
-                                $.ajax({
+                                $j351.ajax({
                                     data : data,
                                     type : "POST",
                                     url : "/uploadSummernoteImageFile",
                                     contentType : false,
                                     processData : false,
                                     success : function(data) {
-                                        $(editor).summernote('insertImage', data.url);
+                                        $j351(editor).summernote('insertImage', data.url);
                                     }
                                 });
                             }
 
-                            $('.dropdown-toggle').dropdown();
+                            $j351('.dropdown-toggle').dropdown();
 
                         </script>
 
@@ -120,4 +123,5 @@
     </div>
 </section>
 </body>
+
 </html>

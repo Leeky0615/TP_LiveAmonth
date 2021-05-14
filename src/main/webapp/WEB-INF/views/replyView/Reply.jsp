@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <body>
 <div class="mar-btm">
     <a href="#" class="btn-link text-semibold media-heading box-inline"> ${param.userNickname} </a>
@@ -46,7 +45,7 @@
     </div>
     <hr>
     <div id="replyDiv${param.scheduleReplyNO}" class="panel replyDiv">
-        <jsp:include page="ScheduleReplyDesc.jsp">
+        <jsp:include page="ReplyWriter.jsp">
             <jsp:param value="${param.scheduleNO}" name="scheduleNO"/>
             <jsp:param value="${param.scheduleReplyNO}" name="scheduleReplyNO"/>
         </jsp:include>
