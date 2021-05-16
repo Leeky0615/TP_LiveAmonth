@@ -162,19 +162,19 @@ public class OtherScheduleController {
         }
 
         try {
-            HashMap<String, String> scheduleAndLikeCount = scheduleService.getScheduleAndLikeCount(scheduleNO);
-            model.addAttribute(OTHER_SCHEDULE_AND_LIKE_COUNT.getText(), scheduleAndLikeCount);
+            ArrayList<HashMap<String, Object>> scheduleReplyList= scheduleService.getScheduleReplyList(scheduleNO, selectPage);
+            model.addAttribute(SCHEDULEREPLY_VO_LIST.getText(), scheduleReplyList);
         } catch (Exception e) {
-            rttr.addFlashAttribute(MESSAGE.getText(), "좋아요 수 조회에 실패했습니다.");
+            rttr.addFlashAttribute(MESSAGE.getText(), "댓글 리스트 조회에 실패했습니다.");
             e.printStackTrace();
             return "redirect:otherScheduleList";
         }
 
         try {
-            ArrayList<HashMap<String, Object>> scheduleReplyList= scheduleService.getScheduleReplyList(scheduleNO, selectPage);
-            model.addAttribute(SCHEDULEREPLY_VO_LIST.getText(), scheduleReplyList);
+            HashMap<String, String> scheduleAndLikeCount = scheduleService.getScheduleAndLikeCount(scheduleNO);
+            model.addAttribute(OTHER_SCHEDULE_AND_LIKE_COUNT.getText(), scheduleAndLikeCount);
         } catch (Exception e) {
-            rttr.addFlashAttribute(MESSAGE.getText(), "댓글 리스트 조회에 실패했습니다.");
+            rttr.addFlashAttribute(MESSAGE.getText(), "좋아요 수 조회에 실패했습니다.");
             e.printStackTrace();
             return "redirect:otherScheduleList";
         }

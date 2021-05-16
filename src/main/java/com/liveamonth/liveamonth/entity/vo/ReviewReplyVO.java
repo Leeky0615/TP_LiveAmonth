@@ -1,15 +1,13 @@
 package com.liveamonth.liveamonth.entity.vo;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 @Data
 public class ReviewReplyVO {
 	// Attributes
     private int reviewReplyNO;
     private String reviewReplyDesc;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private String reviewReplyDate;
 
     // References

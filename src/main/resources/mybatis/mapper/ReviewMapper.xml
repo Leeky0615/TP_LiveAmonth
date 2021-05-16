@@ -49,12 +49,111 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         order by review.reviewNO desc;
     </select>
 
-    <select id = "getReviewVO" parameterType="int" resultType="ReviewVO">
-        select * from review where reviewNO = #{reviewNO};
+    <resultMap type = "ReviewVO" id="Review">
+        <id column="reviewNO" property="reviewNO"/>
+        <result column="reviewCategory" property="reviewCategory"/>
+        <result column="reviewSubject" property="reviewSubject"/>
+        <result column="reviewDesc" property="reviewDesc"/>
+        <result column="reviewDate" property="reviewDate"/>
+        <result column="reviewViewCount" property="reviewViewCount"/>
+        <association property="userVO" javaType="UserVO">
+            <result column="userNO" property="userNO"/>
+            <result column="userNickname" property="userNickname"/>
+        </association>
+    </resultMap>
+
+    <select id = "getReviewVO" parameterType="int" resultMap="Review">
+        select review.*, userNickname from review,user where review.userNO = user.userNO and reviewNO = #{reviewNO};
+    </select>
+
+    <resultMap type = "java.util.HashMap" id="reviewReplyList">
+        <id column="NO" property="NO"/>
+        <association property="userVO" javaType="userVO">
+            <result column="userNO" property="userNO"/>
+            <result column="userNickname" property="userNickname"/>
+        </association>
+        <association property="reviewReplyVO" javaType="ReviewReplyVO">
+            <result column="reviewReplyNO" property="reviewReplyNO"/>
+            <result column="reviewReplyDesc" property="reviewReplyDesc"/>
+            <result column="reviewReplyDate" property="reviewReplyDate"/>
+            <result column="reviewReplyRefNO" property="reviewReplyRefNO"/>
+            <result column="reviewNO" property="reviewNO"/>
+        </association>
+    </resultMap>
+
+    <select id="getReviewReplyList" parameterType="java.util.HashMap" resultMap="reviewReplyList">
+        select @rownum:=@rownum+1 as NO, reviewReplyNO, reviewReplyDesc, reviewReplyDate,reviewReplyRefNO, userNO, reviewNO, userNickName from
+            (select IF(reviewReplyRefNO >= 0, reviewReplyRefNO, reviewReplyNO) as sortReviewReplyNO, reviewReply.*, userNickName
+            from reviewReply, user where reviewReply.userNO = user.userNO AND reviewNO= #{reviewNO} order by sortReviewReplyNO, reviewReplyNO) sortReviewReply,
+            (select @rownum:=#{startNO})TMP
+            limit #{startNO}, #{displayPage};
+    </select>
+
+    <select id = "getReviewLikeStatus" parameterType="int" resultType="int">
+        select EXISTS (select * from reviewLike where reviewNO = #{reviewNO} and reviewLikeUserNO =  #{reviewLikeUserNO}) as success;
+    </select>
+
+    <select id="getReviewLikeCount" parameterType="int" resultType="int">
+        select count(reviewNO) as count from reviewLike where reviewNO = #{reviewNO};
+    </select>
+
+    <select id="getReviewReplyCount" parameterType="int" resultType="int">
+        select count(reviewReplyNO) as count from reviewReply where reviewNO = #{reviewNO};
     </select>
 
     <insert id="addReview" parameterType="ReviewVO" useGeneratedKeys="true" keyProperty="reviewNO">
         insert into review values(#{reviewNO}, #{reviewCategory}, #{reviewSubject},#{reviewDesc},#{reviewDate}, #{reviewViewCount}, #{userNO})
     </insert>
+
+    <insert id="addReviewLike" parameterType="ReviewLikeVO">
+        insert into reviewLike values (#{reviewNO}, #{reviewLikeUserNO})
+    </insert>
+
+    <insert id="addReviewReply" parameterType="ReviewReplyVO">
+        insert into reviewReply values(#{reviewReplyNO}, #{reviewReplyDesc}, #{reviewReplyDate},
+        <choose>
+            <when test = "reviewReplyRefNO == 0">
+                null
+            </when>
+            <otherwise>
+                #{reviewReplyRefNO}
+            </otherwise>
+        </choose>
+        ,#{userNO}, #{reviewNO})
+    </insert>
+
+
+
+
+
+
+    <delete id="deleteReviewLike" parameterType="ReviewLikeVO">
+        delete from reviewLike where reviewNO = #{reviewNO} AND reviewLikeUserNO = #{reviewLikeUserNO};
+    </delete>
+
+    <delete id="deleteReviewReply" parameterType="int">
+        delete from reviewReply where reviewReplyNO = #{reviewReplyNO}
+    </delete>
+    <delete id="deleteReview" parameterType="int">
+        delete from review where reviewNO = #{reviewNO}
+    </delete>
+
+
+
+
+
+
+
+    <update id="increaseReviewViewCount" parameterType="int">
+        update review set reviewViewCount = reviewViewCount + 1 where reviewNO = #{reviewNO};
+    </update>
+
+    <update id="modifyReviewReply" parameterType="ReviewReplyVO">
+        update reviewReply set reviewReplyDesc = #{reviewReplyDesc} where reviewReplyNO = #{reviewReplyNO}
+    </update>
+
+    <update id="modifyReview" parameterType="ReviewVO">
+        update review set reviewCategory = #{reviewCategory}, reviewSubject = #{reviewSubject}, reviewDesc = #{reviewDesc} where reviewNO = #{reviewNO}
+    </update>
 
 </mapper>

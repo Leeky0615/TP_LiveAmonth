@@ -32,11 +32,6 @@
                             <h4>Category</h4>
                             <div class="search-form-content">
                                 <div class="filter-form">
-                                    <select class="sm-width" id = "reviewType" name = "reviewType" onchange="changeReviewCategory(this.value);">
-                                        <c:forEach var="reviewType" items="${reviewTypeList}">
-                                            <option value="${reviewType}">${reviewType.nameKR}</option>
-                                        </c:forEach>
-                                    </select>
                                     <div id = "reviewCategoryDiv">
                                         <select class="sm-width"  id = "reviewCategory" name = "reviewCategory">
                                             <option id = "disabledOption" value="" selected disabled hidden>==선택==</option>
@@ -44,22 +39,25 @@
                                                 <option value="${reviewCategory}">${reviewCategory.nameKR}</option>
                                             </c:forEach>
                                         </select>
+                                        <c:if test="${reviewVO != null}">
+                                            <script>$("#reviewCategory").val("${reviewVO.reviewCategory}").prop("selected", true);</script>
+                                        </c:if>
                                     </div>
-                                    <select class="sm-width"  id = "reviewPlace" name = "reviewPlace">
-                                        <c:forEach var="reviewPlace" items="${reviewPlaceList}">
-                                            <option value="${reviewPlace}">${reviewPlace.nameKR}</option>
-                                        </c:forEach>
-                                    </select>
                                 </div>
                             </div>
                         </div>
                         <div class="pf-title">
                             <h4>Title</h4>
-                            <input type="text" id = "reviewSubject" name = "reviewSubject" placeholder="제목을 입력해주세요">
+                            <input type="text" id = "reviewSubject" name = "reviewSubject" placeholder="제목을 입력해주세요"
+                            <c:if test="${reviewVO != null}"> value="${reviewVO.reviewSubject}" </c:if> >
                         </div>
                         <div class="pf-summernote">
                             <h4>Content</h4>
-                            <textarea class="summernote" id = "reviewDesc" name = "reviewDesc"></textarea>
+                            <textarea class="summernote" id = "reviewDesc" name = "reviewDesc">
+                                <c:if test="${reviewVO != null}">
+                                    ${reviewVO.reviewDesc}
+                                </c:if>
+                            </textarea>
                         </div>
                         <script type="text/javascript">
                             $j351('.summernote').summernote({
@@ -109,13 +107,19 @@
                                     }
                                 });
                             }
-
                             $j351('.dropdown-toggle').dropdown();
 
                         </script>
-
-                        <input type="button" class="search-btn sm-width" style="float: right; margin-bottom: 20px;" value="등록" onclick="addReviewButton();">
-                        <input type="button" onClick="history.go(-1)" value="취소">
+                        <c:choose>
+                            <c:when test="${reviewVO != null}">
+                                <input type="button" class="search-btn sm-width" style="float: right; margin-bottom: 20px;" value="수정" onclick="modifyReviewButton(${reviewVO.reviewNO});">
+                                <input type="button" onClick="history.go(-1)" value="취소">
+                            </c:when>
+                            <c:otherwise>
+                                <input type="button" class="search-btn sm-width" style="float: right; margin-bottom: 20px;" value="등록" onclick="addReviewButton();">
+                                <input type="button" onClick="history.go(-1)" value="취소">
+                            </c:otherwise>
+                        </c:choose>
                     </form>
                 </div>
             </div>

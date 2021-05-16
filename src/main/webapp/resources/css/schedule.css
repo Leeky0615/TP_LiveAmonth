@@ -135,19 +135,3 @@
   -webkit-transition: all 0.2s ease;
           transition: all 0.2s ease;
 }
-
-#like{
-	font-size:2em;
-	color:#f04040;
-}
-
-.likeSpan{
-	font-size:2em;
-}
-
-.likeDiv{
-	margin-bottom:100px;
-}
-.viewCountSpan{
-	color:#00C89E;
-}

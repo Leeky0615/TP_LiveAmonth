@@ -17,6 +17,7 @@ public class ReviewVO {
 
     // Reference
     private int userNO;
+    private UserVO userVO;
 
     // Constructor
     public ReviewVO() {
@@ -29,5 +30,6 @@ public class ReviewVO {
 
         // Reference
         this.userNO = 0;
+        this.userVO = null;
     }
 }

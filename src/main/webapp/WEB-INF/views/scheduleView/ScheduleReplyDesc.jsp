@@ -3,8 +3,7 @@
 <body>
 <form id="addScheduleReply${param.scheduleReplyNO}" action="addScheduleReply">
     <div class="panel-body">
-        <textarea name="scheduleReplyDesc" id="scheduleReplyDesc" class="form-control" rows="4"
-                  placeholder="의견을 남겨주세요."></textarea>
+        <textarea name="scheduleReplyDesc" id="scheduleReplyDesc" class="form-control" rows="4" placeholder="의견을 남겨주세요."></textarea>
         <input type="hidden" name="scheduleReplyRefNO" id="scheduleReplyRefNO" value="${param.scheduleReplyNO}"/>
         <input type="hidden" name="scheduleNO" id="scheduleNO" value="${param.scheduleNO}"/>
         <div class="mar-top clearfix">
