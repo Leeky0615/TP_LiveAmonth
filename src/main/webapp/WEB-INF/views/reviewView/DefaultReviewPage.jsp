@@ -46,7 +46,7 @@
         </div>
 
         <ul class="reviewMenu">
-            <c:forEach var="reviewVO" items="${AllReviewList}" end="20">
+            <c:forEach var="reviewVO" items="${AllReviewList}">
                 <li class="reviewCategorySubject">
                     <a href="getReview?reviewNO=${reviewVO.reviewNO}">${reviewVO.reviewSubject}</a>
                     <span class="reviewReplyCount">
