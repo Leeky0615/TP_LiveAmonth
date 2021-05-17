@@ -202,6 +202,8 @@ public class MyPageController {
         if(userVO.getUserImage() != null) s3Uploader.delete(IMAGE_DIR.getText()+userVO.getUserImage());
         String saveName = s3Uploader.uploadProfileImg(mFile, IMAGE_DIR_NAME.getText(),userVO.getUserID());
         myPageService.modifyUserImg(saveName,userVO.getUserID());
+        userVO.setUserImage(saveName);
+        model.addAttribute(USER_VO.getText(), userVO);
         return REDIRECT_MY_PAGE.getText();
     }
 }
