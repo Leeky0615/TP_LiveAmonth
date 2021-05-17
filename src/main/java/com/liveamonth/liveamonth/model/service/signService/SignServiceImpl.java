@@ -16,6 +16,8 @@ import com.liveamonth.liveamonth.model.mapper.signMapper.SignMapper;
 
 import javax.servlet.http.HttpServletResponse;
 
+import static com.liveamonth.liveamonth.constants.LogicConstants.EReviewImage.S3_UPLOAD_FOLDER;
+
 
 @Service
 public class SignServiceImpl implements SignService {

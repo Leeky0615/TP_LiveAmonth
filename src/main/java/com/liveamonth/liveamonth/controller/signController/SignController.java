@@ -1,10 +1,12 @@
 package com.liveamonth.liveamonth.controller.signController;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.liveamonth.liveamonth.constants.EntityConstants;
 import com.liveamonth.liveamonth.constants.EntityConstants.EEmail;
+import com.liveamonth.liveamonth.entity.dto.S3UploaderDTO;
 import com.liveamonth.liveamonth.entity.vo.CityInfoVO;
 import com.liveamonth.liveamonth.entity.vo.UserVO;
 import com.liveamonth.liveamonth.model.service.cityInfoService.CityService;
@@ -17,7 +19,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import com.liveamonth.liveamonth.model.service.signService.SignService;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.awt.*;
+import java.net.URL;
 import java.util.List;
 
 import static com.liveamonth.liveamonth.constants.ControllerPathConstants.EMainPath.MAIN;
@@ -27,11 +32,14 @@ import static com.liveamonth.liveamonth.constants.EntityConstants.EEmail.*;
 import static com.liveamonth.liveamonth.constants.EntityConstants.ESignUp.EMAIL;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.ECityInfoAttributes.*;
+import static com.liveamonth.liveamonth.constants.LogicConstants.EReviewImage.S3_UPLOAD_FOLDER;
 import static com.liveamonth.liveamonth.constants.LogicConstants.ESignAttributes.AT;
 import static com.liveamonth.liveamonth.constants.LogicConstants.ESignAttributes.FIRST_IN;
 @Controller
 public class SignController {
     private boolean firstIn;
+    @Autowired
+    private S3UploaderDTO s3Uploader;
 
     @Autowired
     private SignService signService;
@@ -120,6 +128,7 @@ public class SignController {
         String email = request.getParameter(EMAIL.getText());
 
         userVO.setUserEmail(userEmail + AT.getText() + email);
+
         signService.insertUser(userVO);
         return RESULT_MENT_SIGN_UP.getPath();
     }

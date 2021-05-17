@@ -24,6 +24,7 @@ public class ControllerPathConstants {
      */
     public enum EMyPagePath {
         MY_PAGE("MyPage"),
+        REDIRECT_MY_PAGE("redirect:myPage"),
         MODIFY_USER_INFO("ModifyUserInfo"),
         RE_CHECK_PASSWORD("ReCheckPassword"),
         RESULT_MENT("ResultMent"),
@@ -38,6 +39,7 @@ public class ControllerPathConstants {
         private String path;
         private EMyPagePath(String path) {this.path = path;}
         public String getPath() {return "myPageView/"+this.path;}
+        public String getText() {return this.path;}
     }
 
     /*

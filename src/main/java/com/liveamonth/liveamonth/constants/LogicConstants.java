@@ -76,13 +76,37 @@ public class LogicConstants {
         public String getText() {return this.text;}
     }
     public enum EMyPageAttributes {
-        CHECK_USER("checkUser");
-
+        IMAGE_DIR("img/user/"),
+        IMAGE_DIR_NAME("img/user"),
+        CHECK_USER("checkUser"),
+        PAGE("page"),
+        TITLE("title"),
+        TEXT("text"),
+        TITLE_RESULT_MODIFY("회원정보 수정완료"),
+        TITLE_RESULT_DROP_USER("회원탈퇴 완료"),
+        TITLE_CHECK_MODIFY("회원정보 수정 : 비밀번호 재확인"),
+        TITLE_CHECK_DROP_USER("회원 탈퇴 : 비밀번호 재확인"),
+        TITLE_RESULT_ONE_TO_ONE_ASK("1:1문의 완료"),
+        TITLE_RESULT_DELETE_ONE_TO_ONE_ASK("문의내용 삭제 완료"),
+        TEXT_RESULT_MODIFY("회원정보 수정이 완료되었습니다."),
+        TEXT_RESULT_DROP_USER("그동안 저희 서비스를 이용해 주셔서 진심으로 감사합니다."),
+        TEXT_CHECK_MODIFY("개인정보 변경에서는 비밀번호 변경, 이메일 변경 등의 정보를 확인, 수정하실 수 있습니다."),
+        TEXT_CHECK_DROP_USER("회원 해지시, 회원님의 정보는 삭제되며 복구 불가능합니다."),
+        TEXT_RESULT_ONE_TO_ONE_ASK("문의내용을 확인한 뒤 신속한 답변드리겠습니다. 감사합니다."),
+        TEXT_RESULT_DELETE_ONE_TO_ONE_ASK("고객님을 위해 항상 최선을 다하겠습니다. 감사합니다.");
         private String text;
         private EMyPageAttributes(String text) {this.text = text;}
         public String getText() {return this.text;}
     }
-
+    public enum EPageOptions{
+        PAGE_MODIFY("modify"),
+        PAGE_DROP_USER("dropUser"),
+        PAGE_ONE_TO_ONE_ASK("oneToOneAsk"),
+        PAGE_DELETE_ONE_TO_ONE_ASK("deleteOneToOneAsk");
+        private String text;
+        private EPageOptions(String text) {this.text = text;}
+        public String getText() {return this.text;}
+    }
     public enum ECityInfoAttributes {
         PAGE("page"),
         CITY_NAME("cityName"),
@@ -158,4 +182,5 @@ public class LogicConstants {
         private EReview(String text){this.text = text;}
         public String getText() {return this.text;}
     }
+
 }

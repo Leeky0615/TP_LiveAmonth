@@ -21,7 +21,6 @@
 <link rel="stylesheet" href="resources/css/slicknav.min.css" type="text/css">
 <link rel="stylesheet" href="resources/css/style.css" type="text/css">
 <link rel="stylesheet" href="resources/css/loginstyle.css" type="text/css">
-<%--<link rel="stylesheet" href="resources/css/signUpStyle.css" type="text/css">--%>
 <link rel="stylesheet" href="resources/css/ihover.min.css" type="text/css">
 
 <%--해당 js가 Footer에 있을 시 script에서 쿼리가 실행이 안됨. 그래서 위로 올림.--%>

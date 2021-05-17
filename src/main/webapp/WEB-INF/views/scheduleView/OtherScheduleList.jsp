@@ -69,7 +69,7 @@
                                         <option value="null" <c:if test="${index == -1}"> selected </c:if>>기본</option>
                                         <c:forEach var="schedulePlace" items="${schedulePlaceList}" varStatus="status">
                                             <option value="${status.index}" <c:if
-                                                    test="${status.index == index}"> selected </c:if>>${schedulePlace.cityName}</option>
+                                                    test="${status.index == index}"> selected </c:if>>${schedulePlace.nameKR}</option>
                                         </c:forEach>
                                     </select>
                                 </div>
@@ -113,19 +113,24 @@
                 <div class="pc-table">
                     <table>
                         <thead>
-                            <tr>
-                                <th class="type">스케줄(이미지, 제목)</th>
-                                <th class="type">장소</th>
-                                <th class="type">닉네임</th>
-                                <th class="type">성별</th>
-                                <th class="type">나이</th>
-                                <th class="type">조회 수</th>
-                                <th class="type">좋아요 수</th>
-                            </tr>
+                        <tr>
+                            <th class="type">스케줄(이미지, 제목)</th>
+                            <th class="type">장소</th>
+                            <th class="type">닉네임</th>
+                            <th class="type">성별</th>
+                            <th class="type">나이</th>
+                            <th class="type">조회 수</th>
+                            <th class="type">좋아요 수</th>
+                        </tr>
                         </thead>
                         <tbody>
                         <c:if test="${otherScheduleList != null}">
                             <c:forEach var="scheduleContent" items="${otherScheduleList}" varStatus="status">
+                                <c:forEach var="cityName" items="${schedulePlaceList}">
+                                    <c:if test="${scheduleContent.schedulePlace eq cityName}">
+                                        <c:set var="place" value="${cityName.nameKR}"/>
+                                    </c:if>
+                                </c:forEach>
                                 <tr>
                                     <td>
                                         <div class="title"><c:out value="${scheduleContent.scheduleSubject}"/></div>
@@ -133,8 +138,7 @@
                                             <img src="resources/img/scheduleImg.png" alt="">
                                         </a>
                                     </td>
-                                     <%--스케줄 테이블 변경시 수정--%>
-                                    <td>${otherScheduleList.cityVO.cityName}</td>
+                                    <td>${place}</td>
                                     <td>${scheduleContent.userVO.userNickname}</td>
                                     <td>${ScheduleContent.userVO.getUserSex()}</td>
                                     <td>${scheduleContent.userVO.getUserRealAge()}세</td>

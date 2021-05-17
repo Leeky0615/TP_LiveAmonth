@@ -43,4 +43,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="deleteOneToOneAsk" parameterType="int">
 		delete from oneToOneAsk where oneToOneAskNO = #{oneToOneAskNO}
 	</delete>
+
+    <update id="modifyUserImg" parameterType="String">
+        UPDATE user SET userImage=#{saveName} WHERE userID=#{userID}
+    </update>
 </mapper>

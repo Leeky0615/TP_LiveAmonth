@@ -84,6 +84,13 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
+    public PagingDTO showPaging(int selectPage, int reviewNO) throws Exception {
+        PagingDTO paging = new PagingDTO();
+        paging.setPage(selectPage);
+        paging.setTotalCount(reviewMapper.getReviewReplyCount(reviewNO));
+        return paging;
+    }
+    @Override
     public PagingDTO showPaging(int selectPage,String category) throws Exception {
         PagingDTO paging = new PagingDTO();
         paging.setPage(selectPage);
@@ -92,7 +99,6 @@ public class ReviewServiceImpl implements ReviewService {
         System.out.println(paging.getTotalCount());
         return paging;
     }
-
     @Override
     public ArrayList<HashMap<String, Object>> getReviewReplyList(int reviewNO, int selectPage) throws Exception {
         int startNum = (selectPage-1)*15;
@@ -128,14 +134,6 @@ public class ReviewServiceImpl implements ReviewService {
         countAndStatus.put(LIKE_COUNT.getText(), likeCount);
 
         return countAndStatus;
-    }
-
-    @Override
-    public PagingDTO showPaging(int selectPage, int reviewNO) throws Exception {
-        PagingDTO paging = new PagingDTO();
-        paging.setPage(selectPage);
-        paging.setTotalCount(reviewMapper.getReviewReplyCount(reviewNO));
-        return paging;
     }
 
     @Override

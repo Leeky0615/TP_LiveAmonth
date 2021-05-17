@@ -14,9 +14,9 @@ import java.util.HashMap;
 public interface ReviewMapper {
     public ArrayList<HashMap<String, Object>> getAllReviewList(HashMap<String, Integer> page) throws Exception;
 
-    public ArrayList<HashMap<String, Object>> getFreeReviewList(HashMap<String, Integer> page)throws Exception;
+    public ArrayList<HashMap<String, Object>> getFreeReviewList(HashMap<String, Integer> page) throws Exception;
 
-    public ArrayList<HashMap<String, Object>> getPopularReviewList(HashMap<String, Integer> page)throws Exception;
+    public ArrayList<HashMap<String, Object>> getPopularReviewList(HashMap<String, Integer> page) throws Exception;
 
     public ArrayList<HashMap<String, Object>> getCategoryReviewList(HashMap<String, Object> CategoryAndPage);
 
@@ -29,6 +29,8 @@ public interface ReviewMapper {
     public void increaseReviewViewCount(int reviewNO) throws Exception;
 
     public int getReviewLikeCount(int reviewNO) throws Exception;
+
+    public int getReviewListCount(String category) throws Exception;
 
     public int getReviewLikeStatus(ReviewLikeVO reviewLikeVO);
 

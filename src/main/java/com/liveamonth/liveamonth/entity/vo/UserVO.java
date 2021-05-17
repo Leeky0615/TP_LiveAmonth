@@ -70,7 +70,7 @@ public class UserVO {
 
 	// Get URL
 	public String getUserImageURL(){
-		return ImageURL+"user/"+this.getUserNickname()+".png";
+		return ImageURL+"user/"+this.getUserImage();
 	}
 }
 

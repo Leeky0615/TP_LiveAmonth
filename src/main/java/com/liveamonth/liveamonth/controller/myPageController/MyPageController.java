@@ -1,6 +1,7 @@
 package com.liveamonth.liveamonth.controller.myPageController;
 
-import com.liveamonth.liveamonth.constants.EntityConstants;
+import com.liveamonth.liveamonth.constants.LogicConstants.EPageOptions;
+import com.liveamonth.liveamonth.entity.dto.S3UploaderDTO;
 import com.liveamonth.liveamonth.entity.vo.OneToOneAskVO;
 import com.liveamonth.liveamonth.entity.vo.UserVO;
 import com.liveamonth.liveamonth.model.service.myPageService.MyPageService;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -17,7 +19,10 @@ import static com.liveamonth.liveamonth.constants.ControllerPathConstants.EMyPag
 import static com.liveamonth.liveamonth.constants.EntityConstants.*;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EOneToOneAsk.*;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.*;
+import static com.liveamonth.liveamonth.constants.LogicConstants.EMyPageAttributes.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EMyPageAttributes.CHECK_USER;
+import static com.liveamonth.liveamonth.constants.LogicConstants.EPageOptions.*;
+import static com.liveamonth.liveamonth.constants.LogicConstants.EPageOptions.PAGE_MODIFY;
 
 import java.util.ArrayList;
 
@@ -28,62 +33,81 @@ public class MyPageController {
     private MyPageService myPageService;
     @Autowired
     private SignService signService;
-
-    private Boolean checkUser;
+    @Autowired
+    private S3UploaderDTO s3Uploader;
 
     @GetMapping("/myPage")
-    public String myPage(Model model, HttpSession session) throws Exception {
-        this.checkUser = true;
-        model.addAttribute(CHECK_USER.getText(),  this.checkUser);
+    public String myPage(Model model, HttpSession session) {
+        model.addAttribute(CHECK_USER.getText(),  true);
         model.addAttribute(USER_VO.getText(), session.getAttribute(USER_VO.getText()));
-        return "MyPage";
+        return MY_PAGE.getText();
     }
-
+    private void setPageAttr(Model model, EPageOptions pageOption, Boolean stepStatus){
+        switch (pageOption){
+            case PAGE_MODIFY:
+                model.addAttribute(PAGE.getText(), PAGE_MODIFY.getText());
+                if(stepStatus){
+                    model.addAttribute(TITLE.getText(), TITLE_CHECK_MODIFY.getText());
+                    model.addAttribute(TEXT.getText(), TEXT_CHECK_MODIFY.getText());
+                }else{
+                    model.addAttribute(TITLE.getText(), TITLE_RESULT_MODIFY.getText());
+                    model.addAttribute(TEXT.getText(), TEXT_RESULT_MODIFY.getText());
+                }
+                break;
+            case PAGE_DROP_USER:
+                model.addAttribute(PAGE.getText(), PAGE_DROP_USER.getText());
+                if(stepStatus) {
+                    model.addAttribute(TITLE.getText(), TITLE_CHECK_DROP_USER.getText());
+                    model.addAttribute(TEXT.getText(), TEXT_CHECK_DROP_USER.getText());
+                }else{
+                    model.addAttribute(TITLE.getText(), TITLE_RESULT_DROP_USER.getText());
+                    model.addAttribute(TEXT.getText(), TEXT_RESULT_DROP_USER.getText());
+                }
+                break;
+            case PAGE_ONE_TO_ONE_ASK:
+                model.addAttribute(PAGE.getText(), PAGE_ONE_TO_ONE_ASK.getText());
+                model.addAttribute(TITLE.getText(), TITLE_RESULT_ONE_TO_ONE_ASK.getText());
+                model.addAttribute(TEXT.getText(), TEXT_RESULT_ONE_TO_ONE_ASK.getText());
+                break;
+            case PAGE_DELETE_ONE_TO_ONE_ASK:
+                model.addAttribute(PAGE.getText(), PAGE_DELETE_ONE_TO_ONE_ASK.getText());
+                model.addAttribute(TITLE.getText(), TITLE_RESULT_DELETE_ONE_TO_ONE_ASK.getText());
+                model.addAttribute(TEXT.getText(), TEXT_RESULT_DELETE_ONE_TO_ONE_ASK.getText());
+                break;
+            default:break;
+        }
+    }
     // 회원정보 수정 : 비밀번호 재확인
     @RequestMapping("/reCheckPassword")
     public String reCheckPassword(Model model, HttpSession session, @RequestParam("page") String page) throws Exception {
         model.addAttribute(USER_VO.getText(), session.getAttribute(USER_VO.getText()));
         model.addAttribute(CHECK_USER.getText(), true);
-        if(page.equals("modify")){
-            model.addAttribute("page", "modify");
-            model.addAttribute("title", "회원정보 수정 : 비밀번호 재확인");
-            model.addAttribute("text", "개인정보 변경에서는 비밀번호 변경, 이메일 변경 등의 정보를 확인, 수정하실 수 있습니다.");
-        }else if(page.equals("dropUser")){
-            model.addAttribute("page", "dropUser");
-            model.addAttribute("title", "회원 탈퇴 : 비밀번호 재확인");
-            model.addAttribute("text", "회원 해지시, 회원님의 정보는 삭제되며 복구 불가능합니다.");
-        }
+
+        if(page.equals(PAGE_MODIFY.getText())) this.setPageAttr(model,PAGE_MODIFY,true);
+        else if(page.equals(PAGE_DROP_USER.getText())) this.setPageAttr(model,PAGE_DROP_USER,true);
+
         return RE_CHECK_PASSWORD.getPath();
     }
     // 비밀번호 확인 -> 확인 시 : 회원정보 수정페이지 | 틀릴 시 : 비밀번호 재확인
     @RequestMapping("/confirmPassword")
     public String confirmPassword(Model model, HttpServletRequest request) throws Exception {
-        String page = request.getParameter("page");
+        String page = request.getParameter(PAGE.getText());
 
         String userID = request.getParameter(USER_ID.getText());
         String userPassword = request.getParameter(USER_PASSWORD.getText());
         UserVO userVO = signService.checkSign(userID, userPassword);
-        System.out.println("userID = " + userID);
-        System.out.println("userPassword = " + userPassword);
         model.addAttribute(USER_VO.getText(), request.getAttribute(USER_VO.getText()));
         String path = RE_CHECK_PASSWORD.getPath();
         if (userVO == null) {
             model.addAttribute(CHECK_USER.getText(), false);
-            if(page.equals("modify")){
-                model.addAttribute("page", "modify");
-                model.addAttribute("title", "회원정보 수정 : 비밀번호 재확인");
-                model.addAttribute("text", "개인정보 변경에서는 비밀번호 변경, 이메일 변경 등의 정보를 확인, 수정하실 수 있습니다.");
-            }else if(page.equals("dropUser")){
-                model.addAttribute("page", "dropUser");
-                model.addAttribute("title", "회원 탈퇴 : 비밀번호 재확인");
-                model.addAttribute("text", "회원 해지시, 회원님의 정보는 삭제되며 복구 불가능합니다.");
-            }
+            if(page.equals(PAGE_MODIFY.getText())) this.setPageAttr(model,PAGE_MODIFY,true);
+            else if(page.equals(PAGE_DROP_USER.getText())) this.setPageAttr(model,PAGE_DROP_USER,true);
         } else {
-            if(page.equals("modify")){
-                model.addAttribute("page", "modify");
+            if(page.equals(PAGE_MODIFY.getText())){
+                model.addAttribute(PAGE.getText(), PAGE_MODIFY.getText());
                 path = MODIFY_USER_INFO.getPath();
-            }else if(page.equals("dropUser")){
-                model.addAttribute("page", "dropUser");
+            }else if(page.equals(PAGE_DROP_USER.getText())){
+                model.addAttribute(PAGE.getText(), PAGE_DROP_USER.getText());
                 path = FINALLY_ASK_DROP_USER.getPath();
             }
         }
@@ -111,28 +135,22 @@ public class MyPageController {
                              @ModelAttribute OneToOneAskVO oneToOneAskVO,
                              Model model, HttpSession session) throws Exception {
         UserVO session_UserVO = (UserVO) session.getAttribute(USER_VO.getText());
-        if(page.equals("modify") && userVO != null){
+        if(page.equals(PAGE_MODIFY.getText()) && userVO != null){
             UserVO previousUser = myPageService.getUserInfo(userVO.getUserID());
             myPageService.modifyUserInfo(this.checkUserData(userVO, previousUser));
-            model.addAttribute("page", "modify");
-            model.addAttribute("title", "회원정보 수정완료");
-            model.addAttribute("text", "회원정보 수정이 완료되었습니다.");
-        }else if(page.equals("dropUser")){
-            model.addAttribute("title", "회원탈퇴 완료");
-            model.addAttribute("text", "그동안 저희 서비스를 이용해 주셔서 진심으로 감사합니다.");
+            this.setPageAttr(model,PAGE_MODIFY,false);
+        }else if(page.equals(PAGE_DROP_USER.getText())){
+            this.setPageAttr(model,PAGE_DROP_USER,false);
+            s3Uploader.delete(IMAGE_DIR.getText()+session_UserVO.getUserImage());
             myPageService.dropUser(session_UserVO.getUserID());
             session.invalidate();
-        }else if(page.equals("oneToOneAsk") && oneToOneAskVO != null){
+        }else if(page.equals(PAGE_ONE_TO_ONE_ASK) && oneToOneAskVO != null){
             myPageService.addOneToOneAsk(oneToOneAskVO, session_UserVO.getUserNO());
-            model.addAttribute("page", "oneToOneAsk");
-            model.addAttribute("title", "1:1문의 완료");
-            model.addAttribute("text", "문의내용을 확인한 뒤 신속한 답변드리겠습니다. 감사합니다.");
-        }else if(page.equals("deleteOneToOneAsk") && oneToOneAskVO != null){
+            this.setPageAttr(model,PAGE_ONE_TO_ONE_ASK,false);
+        }else if(page.equals(PAGE_DELETE_ONE_TO_ONE_ASK.getText()) && oneToOneAskVO != null){
             int oneToOneAskNO = oneToOneAskVO.getOneToOneAskNO();
             myPageService.deleteOneToOneAsk(oneToOneAskNO);
-            model.addAttribute("page", "deleteOneToOneAsk");
-            model.addAttribute("title", "문의내용 삭제 완료");
-            model.addAttribute("text", "고객님을 위해 항상 최선을 다하겠습니다. 감사합니다.");
+            this.setPageAttr(model,PAGE_DELETE_ONE_TO_ONE_ASK,false);
         }
         return RESULT_MENT.getPath();
     }
@@ -151,7 +169,7 @@ public class MyPageController {
     @RequestMapping("/showOneToOneAsk")
     private String showOneToOneAsk(Model model, HttpServletRequest request) throws Exception {
         OneToOneAskVO oneToOneAskVO = myPageService.findOneToOneAskVO(Integer.parseInt(request.getParameter(ONE_TO_ONE_ASK_NO.getText())));
-        model.addAttribute("oneToOneAskVO", oneToOneAskVO);
+        model.addAttribute(ONE_TO_ONE_ASK_VO.getText(), oneToOneAskVO);
         return SHOW_ONE_TO_ONE_ASK.getPath();
 
     }
@@ -178,5 +196,12 @@ public class MyPageController {
         return FAQ.getPath();
     }
 
-
+    @RequestMapping(value = "modifyUserImage")
+    public String modifyUserImage(HttpSession session, @RequestParam("fileName") MultipartFile mFile, Model model) throws Exception {
+        UserVO userVO = (UserVO) session.getAttribute(USER_VO.getText());
+        if(userVO.getUserImage() != null) s3Uploader.delete(IMAGE_DIR.getText()+userVO.getUserImage());
+        String saveName = s3Uploader.uploadProfileImg(mFile, IMAGE_DIR_NAME.getText(),userVO.getUserID());
+        myPageService.modifyUserImg(saveName,userVO.getUserID());
+        return REDIRECT_MY_PAGE.getText();
+    }
 }
