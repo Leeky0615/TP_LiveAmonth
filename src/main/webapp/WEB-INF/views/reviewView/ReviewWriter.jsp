@@ -7,8 +7,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<%--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">--%>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        var $j351 = jQuery.noConflict();
+    </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
@@ -16,8 +18,7 @@
     <script src="resources/summernote-0.8.18-dist/lang/summernote-ko-KR.js"></script>
     <link rel="stylesheet" href="resources/summernote-0.8.18-dist/summernote-bs4.css">
 
-    <script scr="resources/js/review.js"></script>
-
+    <script type="text/javascript" src="resources/js/review.js"></script>
 
 </head>
 <body>
@@ -31,34 +32,35 @@
                             <h4>Category</h4>
                             <div class="search-form-content">
                                 <div class="filter-form">
-                                    <select class="sm-width" id = "reviewType" name = "reviewType">
-                                        <c:forEach var="reviewType" items="${reviewTypeList}">
-                                            <option value="${reviewType}">${reviewType.nameKR}</option>
-                                        </c:forEach>
-                                    </select>
-                                    <select class="sm-width"  id = "reviewCategory" name = "reviewCategory">
-                                        <c:forEach var="reviewCategory" items="${reviewCategoryList}">
-                                            <option value="${reviewCategory}">${reviewCategory.nameKR}</option>
-                                        </c:forEach>
-                                    </select>
-                                    <select class="sm-width"  id = "reviewPlace" name = "reviewPlace">
-                                        <c:forEach var="reviewPlace" items="${reviewPlaceList}">
-                                            <option value="${reviewPlace}">${reviewPlace.nameKR}</option>
-                                        </c:forEach>
-                                    </select>
+                                    <div id = "reviewCategoryDiv">
+                                        <select class="sm-width"  id = "reviewCategory" name = "reviewCategory">
+                                            <option id = "disabledOption" value="" selected disabled hidden>==선택==</option>
+                                            <c:forEach var="reviewCategory" items="${reviewCategoryList}">
+                                                <option value="${reviewCategory}">${reviewCategory.nameKR}</option>
+                                            </c:forEach>
+                                        </select>
+                                        <c:if test="${reviewVO != null}">
+                                            <script>$("#reviewCategory").val("${reviewVO.reviewCategory}").prop("selected", true);</script>
+                                        </c:if>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="pf-title">
                             <h4>Title</h4>
-                            <input type="text" id = "reviewSubject" name = "reviewSubject" placeholder="제목을 입력해주세요">
+                            <input type="text" id = "reviewSubject" name = "reviewSubject" placeholder="제목을 입력해주세요"
+                            <c:if test="${reviewVO != null}"> value="${reviewVO.reviewSubject}" </c:if> >
                         </div>
                         <div class="pf-summernote">
                             <h4>Content</h4>
-                            <textarea class="summernote" id = "reviewDesc" name = "reviewDesc"></textarea>
+                            <textarea class="summernote" id = "reviewDesc" name = "reviewDesc">
+                                <c:if test="${reviewVO != null}">
+                                    ${reviewVO.reviewDesc}
+                                </c:if>
+                            </textarea>
                         </div>
                         <script type="text/javascript">
-                            $('.summernote').summernote({
+                            $j351('.summernote').summernote({
                                 toolbar: [
                                     ['fontname', ['fontname']],
                                     ['fontsize', ['fontsize']],
@@ -94,24 +96,30 @@
                             function uploadSummernoteImageFile(file, editor) {
                                 data = new FormData();
                                 data.append("file", file);
-                                $.ajax({
+                                $j351.ajax({
                                     data : data,
                                     type : "POST",
                                     url : "/uploadSummernoteImageFile",
                                     contentType : false,
                                     processData : false,
                                     success : function(data) {
-                                        $(editor).summernote('insertImage', data.url);
+                                        $j351(editor).summernote('insertImage', data.url);
                                     }
                                 });
                             }
-
-                            $('.dropdown-toggle').dropdown();
+                            $j351('.dropdown-toggle').dropdown();
 
                         </script>
-
-                        <input type="submit" class="search-btn sm-width" style="float: right; margin-bottom: 20px;" value="등록" onclick="addReviewButton();">
-                        <input type="button" onClick="history.go(-1)" value="취소">
+                        <c:choose>
+                            <c:when test="${reviewVO != null}">
+                                <input type="button" class="search-btn sm-width" style="float: right; margin-bottom: 20px;" value="수정" onclick="modifyReviewButton(${reviewVO.reviewNO});">
+                                <input type="button" onClick="history.go(-1)" value="취소">
+                            </c:when>
+                            <c:otherwise>
+                                <input type="button" class="search-btn sm-width" style="float: right; margin-bottom: 20px;" value="등록" onclick="addReviewButton();">
+                                <input type="button" onClick="history.go(-1)" value="취소">
+                            </c:otherwise>
+                        </c:choose>
                     </form>
                 </div>
             </div>
@@ -119,4 +127,5 @@
     </div>
 </section>
 </body>
+
 </html>

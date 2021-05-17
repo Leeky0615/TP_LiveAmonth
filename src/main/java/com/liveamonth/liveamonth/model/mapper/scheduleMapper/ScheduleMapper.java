@@ -29,19 +29,15 @@ public interface ScheduleMapper {
 
     void modifyScheduleContent(ScheduleContentVO scheduleContentVO)  throws Exception;
 
-    boolean addSchedule(ScheduleVO scheduleVO)throws Exception;
+    boolean addSchedule(ScheduleVO scheduleVO) throws Exception;
 
     ArrayList<ScheduleVO> getScheduleList(int userNO)throws Exception;
 
-	Object getMaxScheduleNO() throws Exception;
-	
 	boolean modifySchedule(ScheduleVO scheduleVO) throws Exception;
 
 	boolean deleteSchedule(int scheduleNO) throws Exception;
 
     ArrayList<HashMap<String, Object>> getScheduleReplyList(HashMap<String, Integer> scheduleNOAndPage) throws Exception;
-
-    Object getMaxScheduleReplyNO() throws Exception;
 
     boolean addScheduleReplyVO(ScheduleReplyVO scheduleReplyVO) throws Exception;
 

@@ -4,7 +4,14 @@
 <body>
 <div id="paging" class="col-lg-12">
     <div class="property-pagination">
-        <c:url var="action" value="otherSchedule?scheduleNO=${param.scheduleNO}"/>
+        <c:choose>
+            <c:when test="${param.replyPageType=='reviewReplyPage'}">
+                <c:url var="action" value="getReview?reviewNO=${param.reviewNO}"/>
+            </c:when>
+            <c:otherwise>
+                <c:url var="action" value="otherSchedule?scheduleNO=${param.scheduleNO}"/>
+            </c:otherwise>
+        </c:choose>
         <c:if test="${param.prev}">
             <a href="${action}&selectedPage=${param.beginPage-1}"><-</a>
         </c:if>

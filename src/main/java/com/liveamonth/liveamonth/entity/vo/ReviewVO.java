@@ -8,7 +8,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class ReviewVO {
     // Attributes
     private int reviewNO;
-    private EReviewTypeName reviewType;
     private EReviewCategoryName reviewCategory;
     private String reviewSubject;
     private String reviewDesc;
@@ -18,11 +17,11 @@ public class ReviewVO {
 
     // Reference
     private int userNO;
+    private UserVO userVO;
 
     // Constructor
     public ReviewVO() {
         this.reviewNO = 0;
-        this.reviewType = EReviewTypeName.FREE_BOARD;
         this.reviewCategory = null;
         this.reviewSubject = null;
         this.reviewDesc = null;
@@ -31,5 +30,6 @@ public class ReviewVO {
 
         // Reference
         this.userNO = 0;
+        this.userVO = null;
     }
 }

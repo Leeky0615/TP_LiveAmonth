@@ -2,19 +2,15 @@
          pageEncoding="utf-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<!-- Google Font -->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800,900&display=swap"
       rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Lato:400,700,900&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
-<link rel="preconnect" href="https://fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
-<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
+
+<%--메인 화면의 지역버튼 하얀색 글시체--%>
 <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
 
-<!-- Css Styles -->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="resources/css/bootstrap.min.css" type="text/css">
 <link rel="stylesheet" href="resources/css/font-awesome.min.css" type="text/css">
 <link rel="stylesheet" href="resources/css/elegant-icons.css" type="text/css">
@@ -25,14 +21,12 @@
 <link rel="stylesheet" href="resources/css/slicknav.min.css" type="text/css">
 <link rel="stylesheet" href="resources/css/style.css" type="text/css">
 <link rel="stylesheet" href="resources/css/loginstyle.css" type="text/css">
-<link rel="stylesheet" href="resources/css/signUpStyle.css" type="text/css">
+<%--<link rel="stylesheet" href="resources/css/signUpStyle.css" type="text/css">--%>
 <link rel="stylesheet" href="resources/css/ihover.min.css" type="text/css">
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-<script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
-<script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script src="resources/js/cityInfo.js"></script>
-<script src="resources/js/acyncMove.js"></script>
-<!-- Offcanvas Menu Wrapper Begin -->
+
+<%--해당 js가 Footer에 있을 시 script에서 쿼리가 실행이 안됨. 그래서 위로 올림.--%>
+<script src="resources/js/jquery-3.3.1.min.js"></script>
+
 <div class="offcanvas-menu-overlay"></div>
 <div class="offcanvas-menu-wrapper">
     <div class="canvas-close">
