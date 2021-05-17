@@ -1,7 +1,5 @@
 package com.liveamonth.liveamonth.controller.reviewController;
 
-import com.liveamonth.liveamonth.entity.dto.PagingDTO;
-import com.liveamonth.liveamonth.entity.vo.ReviewLikeVO;
 import com.liveamonth.liveamonth.entity.vo.ReviewVO;
 import com.liveamonth.liveamonth.entity.vo.UserVO;
 import com.liveamonth.liveamonth.model.service.reviewService.ReviewService;
@@ -20,11 +18,8 @@ import java.util.HashMap;
 import java.util.Locale;
 
 import static com.liveamonth.liveamonth.constants.ControllerPathConstants.EReviewPath.*;
-import static com.liveamonth.liveamonth.constants.EntityConstants.EReview.REVIEW_NO;
-import static com.liveamonth.liveamonth.constants.EntityConstants.EReview.REVIEW_VO;
-import static com.liveamonth.liveamonth.constants.EntityConstants.EReviewCategoryName;
-import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.USER_VO;
-import static com.liveamonth.liveamonth.constants.LogicConstants.EPaging.*;
+import static com.liveamonth.liveamonth.constants.EntityConstants.*;
+import static com.liveamonth.liveamonth.constants.EntityConstants.EReview.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EReview.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EReviewAttribute.REVIEW_CATEGORY_LIST;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleAttributes.MESSAGE;
@@ -37,9 +32,10 @@ public class ReviewController {
 
 	@GetMapping("/review")
 	public String showDefauleReviewPage(Model model) throws Exception{
-		ArrayList<HashMap<String, Object>> allReviewList = reviewService.getAllReviewList();
-		ArrayList<HashMap<String, Object>> freeReviewList = reviewService.getFreeReviewList();
-		ArrayList<HashMap<String, Object>> popularReviewList = reviewService.getPopularReviewList();
+		int selectPage = 1;
+		ArrayList<HashMap<String, Object>> allReviewList = reviewService.getAllReviewList(selectPage);
+		ArrayList<HashMap<String, Object>> freeReviewList = reviewService.getFreeReviewList(selectPage);
+		ArrayList<HashMap<String, Object>> popularReviewList = reviewService.getPopularReviewList(selectPage);
 		model.addAttribute(ALL_REVIEW_LIST.getText(), allReviewList);
 		model.addAttribute(FREE_REVIEW_LIST.getText(), freeReviewList);
 		model.addAttribute(POPULAR_REVIEW_LIST.getText(), popularReviewList);
@@ -51,29 +47,49 @@ public class ReviewController {
 	@GetMapping("/categoryReviewPage")
 	public String showCategoryReviewPage(Model model, HttpServletRequest request) throws Exception {
 		String category = String.valueOf(request.getParameter("category"));
-		HashMap<String, Object> reviewCategory = new HashMap<>();
 		ArrayList<HashMap<String, Object>> reviewList = null;
+
+		int selectPage = 1;
+		if (request.getParameter(SELECTED_PAGE.getText()) != null) {
+			selectPage = Integer.parseInt(request.getParameter(SELECTED_PAGE.getText()));
+		}
 
 		switch (category) {
 			case "all":
-				reviewList = reviewService.getAllReviewList();
+				reviewList = reviewService.getAllReviewList(selectPage);
 				break;
 			case "popular":
-				reviewList = reviewService.getPopularReviewList();
+				reviewList = reviewService.getPopularReviewList(selectPage);
 				break;
 			case "free":
-				reviewList = reviewService.getFreeReviewList();
+				reviewList = reviewService.getFreeReviewList(selectPage);
 				break;
 			default:
-				reviewList = reviewService.getCategoryReviewList(category);
+				reviewList = reviewService.getCategoryReviewList(category,selectPage);
 				break;
 
 		}
+
+
+		PagingDTO paging = reviewService.showPaging(selectPage,category);
+
+		model.addAttribute(PAIGING.getText(), paging);
 		model.addAttribute("reviewList", reviewList);
+		model.addAttribute("category",category);
 		model.addAttribute(REVIEW_CATEGORY_LIST.getText(), EReviewCategoryName.values());
 		return CATEGORY_REVIEW_PAGE.getPath();
 	}
 
+	@GetMapping("/getReview")
+	public String getReview(Model model, HttpServletRequest request) throws Exception{
+		int reviewNO = Integer.parseInt(String.valueOf(request.getParameter(REVIEW_NO.getText())));
+
+		ReviewVO reviewVO = reviewService.getReviewVO(reviewNO);
+
+		model.addAttribute(REVIEW_CATEGORY_LIST.getText(), EReviewCategoryName.values());
+		model.addAttribute(REVIEW_VO.getText(), reviewVO);
+		return REVIEW_CONTENT.getPath();
+	}
 
 	@GetMapping("/reviewWrite")
 	public String reviewWrite(Model model, HttpServletRequest request) {

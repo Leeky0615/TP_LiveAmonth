@@ -18,7 +18,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         from review LEFT JOIN reviewReply ON review.reviewNO = reviewReply.reviewNO LEFT JOIN user ON review.userNO = user.userNO LEFT JOIN reviewLike ON review.reviewNO = reviewLike.reviewNO
         group by review.reviewNO
         order by review.reviewNO desc;
+    <select id = "getAllReviewList" parameterType="java.util.HashMap" resultMap="reviewVOAndReplyCount">
+        select @rownum:=@rownum+1 as NO, reviewData.* from
+            (select review.reviewNO, reviewCategory, reviewSubject, reviewDesc, reviewDate,
+            reviewViewCount, userNickName, count(reviewReplyNO) as replyCount,
+            count(reviewLike.reviewNO) as reviewLikeCount, review.userNO
+            from review LEFT JOIN reviewReply ON review.reviewNO = reviewReply.reviewNO LEFT JOIN user ON review.userNO = user.userNO LEFT JOIN reviewLike ON review.reviewNO = reviewLike.reviewNO
+            group by review.reviewNO
+            order by review.reviewNO desc) as reviewData, (select @rownum:=#{startNO})TMP
+            limit #{startNO}, #{displayPage};
     </select>
+
+    <select id = "getFreeReviewList" parameterType="java.util.HashMap" resultMap="reviewVOAndReplyCount">
+        select @rownum:=@rownum+1 as NO, reviewData.* from
+            ( select review.reviewNO, reviewCategory, reviewSubject,
+            reviewDesc, reviewDate, reviewViewCount, userNickName,
+            count(reviewReplyNO) as replyCount, count(reviewLike.reviewNO) as reviewLikeCount, review.userNO
+            from review LEFT JOIN reviewReply ON review.reviewNO = reviewReply.reviewNO LEFT JOIN user ON review.userNO = user.userNO LEFT JOIN reviewLike ON review.reviewNO = reviewLike.reviewNO
+            where reviewCategory = 'FREE_BOARD'
+            group by review.reviewNO
+            order by review.reviewNO desc) as reviewData, (select @rownum:=#{startNO})TMP
+            limit #{startNO}, #{displayPage};
 
     <select id = "getFreeReviewList" resultMap="reviewVOAndReplyCount">
         select review.reviewNO, reviewCategory, reviewSubject,
@@ -30,6 +50,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         order by review.reviewNO desc;
     </select>
 
+    <select id = "getPopularReviewList" parameterType="java.util.HashMap" resultMap="reviewVOAndReplyCount">
+        select @rownum:=@rownum+1 as NO, reviewData.* from
+            (select review.reviewNO,  reviewCategory, reviewSubject,
+            reviewDesc, reviewDate, reviewViewCount, userNickName,
+            count(reviewReplyNO) as replyCount, count(reviewLike.reviewNO) as reviewLikeCount, review.userNO
+            from review LEFT JOIN reviewReply ON review.reviewNO = reviewReply.reviewNO LEFT JOIN user ON review.userNO = user.userNO LEFT JOIN reviewLike ON review.reviewNO = reviewLike.reviewNO
+            group by review.reviewNO
+            order by reviewLikeCount desc) as reviewData, (select @rownum:=#{startNO})TMP
+            limit #{startNO}, #{displayPage};
+
+
     <select id = "getPopularReviewList" resultMap="reviewVOAndReplyCount">
         select review.reviewNO,  reviewCategory, reviewSubject,
                reviewDesc, reviewDate, reviewViewCount, userNickName,
@@ -38,6 +69,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         group by review.reviewNO
         order by reviewLikeCount desc;
     </select>
+
+    <select id = "getCategoryReviewList" parameterType="java.util.HashMap" resultMap="reviewVOAndReplyCount">
+        select @rownum:=@rownum+1 as NO, reviewData.* from
+            (select review.reviewNO, reviewCategory, reviewSubject, reviewDesc, reviewDate,
+            reviewViewCount, userNickName, count(reviewReplyNO) as replyCount,
+            count(reviewLike.reviewNO) as reviewLikeCount, review.userNO
+            from review LEFT JOIN reviewReply ON review.reviewNO = reviewReply.reviewNO LEFT JOIN user ON review.userNO = user.userNO LEFT JOIN reviewLike ON review.reviewNO = reviewLike.reviewNO
+            where reviewCategory = #{category}
+            group by review.reviewNO
+            order by review.reviewNO desc) as reviewData, (select @rownum:=#{startNO})TMP
+            limit #{startNO}, #{displayPage};
+
 
     <select id = "getCategoryReviewList" parameterType = "String" resultMap="reviewVOAndReplyCount">
         select review.reviewNO, reviewCategory, reviewSubject, reviewDesc, reviewDate,
@@ -155,5 +198,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="modifyReview" parameterType="ReviewVO">
         update review set reviewCategory = #{reviewCategory}, reviewSubject = #{reviewSubject}, reviewDesc = #{reviewDesc} where reviewNO = #{reviewNO}
     </update>
+
+    <select id="getReviewListCount" parameterType="String" resultType="int">
+        select count(reviewNO) as count from review
+        <choose>
+            <when test = "category == 'all'">
+            </when>
+            <when test = "category == 'popular'">
+            </when>
+            <when test = "category == 'free'">
+                where reviewCategory = 'FREE_BOARD';
+            </when>
+            <otherwise>
+                where reviewCategory = #{category};
+            </otherwise>
+        </choose>
+        ;
+    </select>
 
 </mapper>

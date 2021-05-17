@@ -12,13 +12,13 @@ import java.util.HashMap;
 @Repository
 @Mapper
 public interface ReviewMapper {
-    public ArrayList<HashMap<String, Object>> getAllReviewList() throws Exception;
+    public ArrayList<HashMap<String, Object>> getAllReviewList(HashMap<String, Integer> page) throws Exception;
 
-    public ArrayList<HashMap<String, Object>> getFreeReviewList() throws Exception;
+    public ArrayList<HashMap<String, Object>> getFreeReviewList(HashMap<String, Integer> page)throws Exception;
 
-    public ArrayList<HashMap<String, Object>> getPopularReviewList() throws Exception;
+    public ArrayList<HashMap<String, Object>> getPopularReviewList(HashMap<String, Integer> page)throws Exception;
 
-    public ArrayList<HashMap<String, Object>> getCategoryReviewList(String category);
+    public ArrayList<HashMap<String, Object>> getCategoryReviewList(HashMap<String, Object> CategoryAndPage);
 
     public ReviewVO getReviewVO(int reviewNO) throws Exception;
 

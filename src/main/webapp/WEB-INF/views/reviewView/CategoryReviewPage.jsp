@@ -63,6 +63,17 @@
         </tbody>
     </table>
 </div>
+
+<jsp:include page="Paging.jsp">
+    <jsp:param value="${category}" name="category"/>
+    <jsp:param value="${paging.page}" name="page"/>
+    <jsp:param value="${paging.beginPage}" name="beginPage"/>
+    <jsp:param value="${paging.endPage}" name="endPage"/>
+    <jsp:param value="${paging.prev}" name="prev"/>
+    <jsp:param value="${paging.next}" name="next"/>
+</jsp:include>
+
+
 <button type="button" class="btn btn-sm btn-primary pull-right" onclick="addScheduleReply(${param.scheduleReplyNO});">
     글작성
 </button>
