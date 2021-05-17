@@ -77,7 +77,6 @@ public class LogicConstants {
     }
     public enum EMyPageAttributes {
         IMAGE_DIR("img/user/"),
-        IMAGE_DIR_NAME("img/user"),
         CHECK_USER("checkUser"),
         PAGE("page"),
         TITLE("title"),

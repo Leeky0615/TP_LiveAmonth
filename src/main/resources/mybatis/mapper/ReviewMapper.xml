@@ -67,11 +67,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <association property="userVO" javaType="UserVO">
             <result column="userNO" property="userNO"/>
             <result column="userNickname" property="userNickname"/>
+            <result column="userImage" property="userImage"/>
         </association>
     </resultMap>
 
     <select id = "getReviewVO" parameterType="int" resultMap="Review">
-        select review.*, userNickname from review,user where review.userNO = user.userNO and reviewNO = #{reviewNO};
+        select review.*, userNickname,userImage from review,user where review.userNO = user.userNO and reviewNO = #{reviewNO};
     </select>
 
     <resultMap type = "java.util.HashMap" id="reviewReplyList">
@@ -79,6 +80,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <association property="userVO" javaType="userVO">
             <result column="userNO" property="userNO"/>
             <result column="userNickname" property="userNickname"/>
+            <result column="userImage" property="userImage"/>
         </association>
         <association property="reviewReplyVO" javaType="ReviewReplyVO">
             <result column="reviewReplyNO" property="reviewReplyNO"/>
@@ -90,8 +92,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <select id="getReviewReplyList" parameterType="java.util.HashMap" resultMap="reviewReplyList">
-        select @rownum:=@rownum+1 as NO, reviewReplyNO, reviewReplyDesc, reviewReplyDate,reviewReplyRefNO, userNO, reviewNO, userNickName from
-            (select IF(reviewReplyRefNO >= 0, reviewReplyRefNO, reviewReplyNO) as sortReviewReplyNO, reviewReply.*, userNickName
+        select @rownum:=@rownum+1 as NO, reviewReplyNO, reviewReplyDesc, reviewReplyDate,reviewReplyRefNO, userNO, reviewNO, userNickname, userImage from
+            (select IF(reviewReplyRefNO >= 0, reviewReplyRefNO, reviewReplyNO) as sortReviewReplyNO, reviewReply.*, userNickName,userImage
             from reviewReply, user where reviewReply.userNO = user.userNO AND reviewNO= #{reviewNO} order by sortReviewReplyNO, reviewReplyNO) sortReviewReply,
             (select @rownum:=#{startNO})TMP
             limit #{startNO}, #{displayPage};
@@ -130,11 +132,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         ,#{userNO}, #{reviewNO})
     </insert>
 
-
-
-
-
-
     <delete id="deleteReviewLike" parameterType="ReviewLikeVO">
         delete from reviewLike where reviewNO = #{reviewNO} AND reviewLikeUserNO = #{reviewLikeUserNO};
     </delete>
@@ -145,12 +142,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <delete id="deleteReview" parameterType="int">
         delete from review where reviewNO = #{reviewNO}
     </delete>
-
-
-
-
-
-
 
     <update id="increaseReviewViewCount" parameterType="int">
         update review set reviewViewCount = reviewViewCount + 1 where reviewNO = #{reviewNO};
@@ -180,5 +171,4 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </choose>
         ;
     </select>
-
 </mapper>

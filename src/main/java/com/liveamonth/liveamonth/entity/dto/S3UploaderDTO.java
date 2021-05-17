@@ -42,33 +42,27 @@ public class S3UploaderDTO {
     // S3로 파일 업로드하기
     private String upload(File uploadFile, String dirName) {
         String fileName = UUID.randomUUID() + uploadFile.getName();
-        String saveFileName = dirName + "/" +  fileName; // S3에 저장된 파일 이름
+        String saveFileName = dirName + "/" + fileName; // S3에 저장된 파일 이름
         String uploadImageUrl = putS3(uploadFile, saveFileName); // s3로 업로드
         removeNewFile(uploadFile);
         return fileName;
     }
-    public String uploadProfileImg(MultipartFile multipartFile, String dirName,String userID) throws IOException {
+
+    public String uploadProfileImg(MultipartFile multipartFile, String dirName, String userID) throws IOException {
         File uploadFile = convert(multipartFile)  // 파일 변환할 수 없으면 에러
                 .orElseThrow(() -> new IllegalArgumentException(FILE_CONVERT_ERROR_MESSAGE.getText()));
 
-        return uploadProfileImg(uploadFile, dirName,userID);
+        return uploadProfileImg(uploadFile, dirName, userID);
     }
 
     // S3로 파일 업로드하기
-    private String uploadProfileImg(File uploadFile, String dirName,String userID) {
-        try {
-            String extension = FilenameUtils.getExtension(uploadFile.getName());
-            String fileName = userID +"."+extension;
-            String saveFileName = dirName + "/" +  fileName; // S3에 저장된 파일 이름
-            String uploadImageUrl = putS3(uploadFile, saveFileName); // s3로 업로드
-            removeNewFile(uploadFile);
-            return fileName;
-        } catch (AmazonServiceException e) {
-            e.printStackTrace();
-        } catch (SdkClientException e) {
-            e.printStackTrace();
-        }
-        return null;
+    private String uploadProfileImg(File uploadFile, String dirName, String userID) {
+        String extension = FilenameUtils.getExtension(uploadFile.getName());
+        String fileName = userID + "." + extension;
+        String saveFileName = dirName + fileName; // S3에 저장된 파일 이름
+        String uploadImageUrl = putS3(uploadFile, saveFileName); // s3로 업로드
+        removeNewFile(uploadFile);
+        return fileName;
     }
 
     // S3로 업로드
@@ -98,6 +92,7 @@ public class S3UploaderDTO {
 
         return Optional.empty();
     }
+
     public void delete(String key) {
         try {
             //Delete 객체 생성

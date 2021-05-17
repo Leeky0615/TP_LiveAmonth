@@ -66,6 +66,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<id column="NO" property="NO"/>
 		<association property="userVO" javaType="userVO">
 			<result column="userNickname" property="userNickname"/>
+			<result column="userImage" property="userImage"/>
 		</association>
 		<association property="scheduleReply" javaType="ScheduleReplyVO">
 			<id column="scheduleReplyNO" property="scheduleReplyNO"/>
@@ -79,7 +80,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select id="getScheduleReplyList" parameterType="java.util.HashMap" resultMap="scheduleReplyAndNickname">
 		select @rownum:=@rownum+1 as NO, sortScheduleReply.* from
-			(select IF(scheduleReplyRefNO >= 0, scheduleReplyRefNO, scheduleReplyNO) as sortScheduleReplyNO, scheduleReply.*, userNickName
+			(select IF(scheduleReplyRefNO >= 0, scheduleReplyRefNO, scheduleReplyNO) as sortScheduleReplyNO, scheduleReply.*, userNickName,userImage
 				from scheduleReply, user where scheduleReply.userNO = user.userNO AND scheduleNO= #{scheduleNO} order by sortScheduleReplyNO, scheduleReplyNO) sortScheduleReply,
 		   	(select @rownum:=#{startNO})TMP
 		limit #{startNO}, #{displayPage};
