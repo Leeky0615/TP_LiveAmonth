@@ -34,28 +34,30 @@
     <table>
         <thead>
         <tr>
-            <th style="width:10%"></th>
-            <th style="width:50%">제목</th>
-            <th style="width:10%">작성자</th>
-            <th style="width:15%">작성일</th>
-            <th style="width:15%">조회</th>
+            <th ></th>
+            <th >제목</th>
+            <th>작성자</th>
+            <th><a href="categoryReviewPage?category=${category}&selectedPage=${selectPage}&orderBy=dateOrderBy&dateDescAsc=${dateDescAsc}">작성일</a></th>
+            <th><a href="categoryReviewPage?category=${category}&selectedPage=${selectPage}&orderBy=likeOrderBy&likeDescAsc=${likeDescAsc}">좋아요</a></th>
+            <th><a href="categoryReviewPage?category=${category}&selectedPage=${selectPage}&orderBy=viewOrderBy&viewDescAsc=${viewDescAsc}">조회</a></th>
         </tr>
         </thead>
         <tbody>
         <c:forEach var="reviewList" items="${reviewList}">
             <tr>
                 <td style="width:10%">${reviewList.reviewNO}</td>
-                <td style="width:50%"><a
+                <td style="width:35%"><a
                         href="getReview?reviewNO=${reviewList.reviewNO}">${reviewList.reviewSubject}</a>
                     <span class="reviewReplyCount">
-                        <c:if test="${reviewList.replyCount ne 0}">
+                        <c:if test="${reviewList.replyCount ne null}">
                             [${reviewList.replyCount}]
                         </c:if>
                     </span>
                 </td>
                 <td style="width:10%">${reviewList.userNickName}</td>
-                <td style="width:20%">${reviewList.reviewDate}</td>
-                <td style="width:10%">${reviewList.reviewViewCount}</td>
+                <td style="width:15%">${reviewList.reviewDate}</td>
+                <td style="width:15%">${reviewList.reviewLikeCount}</td>
+                <td style="width:15%">${reviewList.reviewViewCount}</td>
             </tr>
         </c:forEach>
         </tbody>
@@ -69,6 +71,10 @@
     <jsp:param value="${paging.endPage}" name="endPage"/>
     <jsp:param value="${paging.prev}" name="prev"/>
     <jsp:param value="${paging.next}" name="next"/>
+    <jsp:param value="${orderBy}" name="orderBy"/>
+    <jsp:param value="${dateDescAsc}" name="dateDescAsc"/>
+    <jsp:param value="${likeDescAsc}" name="likeDescAsc"/>
+    <jsp:param value="${viewDescAsc}" name="viewDescAsc"/>
 </jsp:include>
 
 

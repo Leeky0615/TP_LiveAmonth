@@ -7,54 +7,118 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <resultMap type = "java.util.HashMap" id="reviewVOAndReplyCount">
         <id column="reviewVO" property="reviewVO"/>
         <result column="userNickName" property="userNickName"/>
-        <result column="replyCount" property="replyCount"/>
+        <result column="reviewReplyCount" property="replyCount"/>
         <result column="reviewLikeCount" property="reviewLikeCount"/>
     </resultMap>
 
     <select id = "getAllReviewList" parameterType="java.util.HashMap" resultMap="reviewVOAndReplyCount">
         select @rownum:=@rownum+1 as NO, reviewData.* from
-            (select review.reviewNO, reviewCategory, reviewSubject, reviewDesc, reviewDate,
-            reviewViewCount, userNickName, count(reviewReplyNO) as replyCount,
-            count(reviewLike.reviewNO) as reviewLikeCount, review.userNO
-            from review LEFT JOIN reviewReply ON review.reviewNO = reviewReply.reviewNO LEFT JOIN user ON review.userNO = user.userNO LEFT JOIN reviewLike ON review.reviewNO = reviewLike.reviewNO
-            group by review.reviewNO
-            order by review.reviewNO desc) as reviewData, (select @rownum:=#{startNO})TMP
-            limit #{startNO}, #{displayPage};
+        (select review.reviewNO, reviewCategory, reviewSubject,
+        reviewDesc, reviewDate, reviewViewCount, userNickName,
+        reviewReply.reviewReplyCount, reviewLike.reviewLikeCount, review.userNO
+        from review LEFT JOIN (select reviewNO, count(*)as reviewReplyCount from reviewReply group by reviewNO) as reviewReply ON review.reviewNO = reviewReply.reviewNO
+        LEFT JOIN user ON review.userNO = user.userNO
+        LEFT JOIN (select reviewNO ,count(*)as reviewLikeCount from reviewLike group by reviewNO) as reviewLike ON review.reviewNO = reviewLike.reviewNO
+        group by review.reviewNO
+        order by review.reviewNO desc) as reviewData, (select @rownum:=#{startNO})TMP
+        limit #{startNO}, #{displayPage};
     </select>
 
     <select id = "getFreeReviewList" parameterType="java.util.HashMap" resultMap="reviewVOAndReplyCount">
         select @rownum:=@rownum+1 as NO, reviewData.* from
-            ( select review.reviewNO, reviewCategory, reviewSubject,
-            reviewDesc, reviewDate, reviewViewCount, userNickName,
-            count(reviewReplyNO) as replyCount, count(reviewLike.reviewNO) as reviewLikeCount, review.userNO
-            from review LEFT JOIN reviewReply ON review.reviewNO = reviewReply.reviewNO LEFT JOIN user ON review.userNO = user.userNO LEFT JOIN reviewLike ON review.reviewNO = reviewLike.reviewNO
-            where reviewCategory = 'FREE_BOARD'
-            group by review.reviewNO
-            order by review.reviewNO desc) as reviewData, (select @rownum:=#{startNO})TMP
-            limit #{startNO}, #{displayPage};
+        (select review.reviewNO, reviewCategory, reviewSubject,
+        reviewDesc, reviewDate, reviewViewCount, userNickName,
+        reviewReply.reviewReplyCount, reviewLike.reviewLikeCount, review.userNO
+        from review LEFT JOIN (select reviewNO, count(*)as reviewReplyCount from reviewReply group by reviewNO) as reviewReply ON review.reviewNO = reviewReply.reviewNO
+        LEFT JOIN user ON review.userNO = user.userNO
+        LEFT JOIN (select reviewNO ,count(*)as reviewLikeCount from reviewLike group by reviewNO) as reviewLike ON review.reviewNO = reviewLike.reviewNO
+        where reviewCategory = 'FREE_BOARD'
+        group by review.reviewNO
+        order by review.reviewNO desc) as reviewData, (select @rownum:=#{startNO})TMP
+        limit #{startNO}, #{displayPage};
+
     </select>
 
     <select id = "getPopularReviewList" parameterType="java.util.HashMap" resultMap="reviewVOAndReplyCount">
         select @rownum:=@rownum+1 as NO, reviewData.* from
-            (select review.reviewNO,  reviewCategory, reviewSubject,
-            reviewDesc, reviewDate, reviewViewCount, userNickName,
-            count(reviewReplyNO) as replyCount, count(reviewLike.reviewNO) as reviewLikeCount, review.userNO
-            from review LEFT JOIN reviewReply ON review.reviewNO = reviewReply.reviewNO LEFT JOIN user ON review.userNO = user.userNO LEFT JOIN reviewLike ON review.reviewNO = reviewLike.reviewNO
-            group by review.reviewNO
-            order by reviewLikeCount desc) as reviewData, (select @rownum:=#{startNO})TMP
-            limit #{startNO}, #{displayPage};
+        (select review.reviewNO, reviewCategory, reviewSubject,
+        reviewDesc, reviewDate, reviewViewCount, userNickName,
+        reviewReply.reviewReplyCount, reviewLike.reviewLikeCount, review.userNO
+        from review LEFT JOIN (select reviewNO, count(*)as reviewReplyCount from reviewReply group by reviewNO) as reviewReply ON review.reviewNO = reviewReply.reviewNO
+        LEFT JOIN user ON review.userNO = user.userNO
+        LEFT JOIN (select reviewNO ,count(*)as reviewLikeCount from reviewLike group by reviewNO) as reviewLike ON review.reviewNO = reviewLike.reviewNO
+        group by review.reviewNO
+        order by reviewLike.reviewLikeCount desc) as reviewData, (select @rownum:=#{startNO})TMP
+        limit #{startNO}, #{displayPage};
     </select>
 
     <select id = "getCategoryReviewList" parameterType="java.util.HashMap" resultMap="reviewVOAndReplyCount">
         select @rownum:=@rownum+1 as NO, reviewData.* from
-            (select review.reviewNO, reviewCategory, reviewSubject, reviewDesc, reviewDate,
-            reviewViewCount, userNickName, count(reviewReplyNO) as replyCount,
-            count(reviewLike.reviewNO) as reviewLikeCount, review.userNO
-            from review LEFT JOIN reviewReply ON review.reviewNO = reviewReply.reviewNO LEFT JOIN user ON review.userNO = user.userNO LEFT JOIN reviewLike ON review.reviewNO = reviewLike.reviewNO
-            where reviewCategory = #{category}
-            group by review.reviewNO
-            order by review.reviewNO desc) as reviewData, (select @rownum:=#{startNO})TMP
-            limit #{startNO}, #{displayPage};
+        (select review.reviewNO, reviewCategory, reviewSubject,
+        reviewDesc, reviewDate, reviewViewCount, userNickName,
+        reviewReply.reviewReplyCount, reviewLike.reviewLikeCount, review.userNO
+        from review LEFT JOIN (select reviewNO, count(*)as reviewReplyCount from reviewReply group by reviewNO) as
+        reviewReply ON review.reviewNO = reviewReply.reviewNO
+        LEFT JOIN user ON review.userNO = user.userNO
+        LEFT JOIN (select reviewNO ,count(*)as reviewLikeCount from reviewLike group by reviewNO) as reviewLike ON
+        review.reviewNO = reviewLike.reviewNO
+
+        <choose>
+            <when test="category == 'all'">
+            </when>
+            <when test="category == 'popular'">
+            </when>
+            <when test="category == 'free'">
+                where reviewCategory = 'FREE_BOARD'
+            </when>
+            <otherwise>
+                where reviewCategory = #{category}
+            </otherwise>
+        </choose>
+        group by review.reviewNO
+        <choose>
+            <when test="category == 'popular'">
+                order by reviewLike.reviewLikeCount desc) as reviewData,
+            </when>
+            <when test="orderBy == 'dateOrderBy'">
+                <choose>
+                    <when test="descAesc == 'desc'">
+                        order by review.reviewDate desc) as reviewData,
+                    </when>
+                    <otherwise>
+                        order by review.reviewDate) as reviewData,
+                    </otherwise>
+                </choose>
+            </when>
+            <when test="orderBy == 'likeOrderBy'">
+                <choose>
+                    <when test="descAesc == 'desc'">
+                        order by reviewLike.reviewLikeCount desc) as reviewData,
+                    </when>
+                    <otherwise>
+                        order by reviewLike.reviewLikeCount) as reviewData,
+                    </otherwise>
+                </choose>
+
+            </when>
+            <when test="orderBy == 'viewOrderBy'">
+                <choose>
+                    <when test="descAesc == 'desc'">
+                        order by reviewViewCount desc) as reviewData,
+                    </when>
+                    <otherwise>
+                        order by reviewViewCount) as reviewData,
+                    </otherwise>
+                </choose>
+
+            </when>
+
+            <otherwise>
+                order by review.reviewNO desc) as reviewData,
+            </otherwise>
+        </choose>
+         (select @rownum:=#{startNO})TMP
+        limit #{startNO}, #{displayPage};
     </select>
 
     <resultMap type = "ReviewVO" id="Review">

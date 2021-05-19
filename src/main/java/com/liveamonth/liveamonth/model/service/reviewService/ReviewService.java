@@ -17,7 +17,7 @@ public interface ReviewService {
 
     public ArrayList<HashMap<String, Object>> getPopularReviewList(int selectPage) throws Exception;
 
-    ArrayList<HashMap<String, Object>> getCategoryReviewList(String category, int selectPage) throws Exception;
+    ArrayList<HashMap<String, Object>> getCategoryReviewList(String category, int selectPage, String orderBy, String descAesc) throws Exception;
 
     public ReviewVO getReviewVO(int reviewNO) throws Exception;
 

@@ -4,7 +4,7 @@
 <body>
 <div id="paging" class="col-lg-12">
     <div class="property-pagination">
-        <c:url var="action" value="categoryReviewPage?category=${param.category}"/>
+        <c:url var="action" value="categoryReviewPage?category=${param.category}&orderBy=${param.orderBy}&dateDescAsc=${param.dateDescAsc}&likeDescAsc=${param.likeDescAsc}&viewDescAsc=${param.viewDescAsc}&clickPage=clickPage"/>
         <c:if test="${param.prev}">
             <a href="${action}&selectedPage=${param.beginPage-1}"><-</a>
         </c:if>

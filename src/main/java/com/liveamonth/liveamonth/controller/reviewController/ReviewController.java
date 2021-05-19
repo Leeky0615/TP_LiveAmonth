@@ -51,34 +51,71 @@ public class ReviewController {
     @GetMapping("/categoryReviewPage")
     public String showCategoryReviewPage(Model model, HttpServletRequest request) throws Exception {
         String category = String.valueOf(request.getParameter("category"));
-        ArrayList<HashMap<String, Object>> reviewList = null;
+        String clickPage = String.valueOf(request.getParameter("clickPage"));
+        //정렬 기능
+        String orderBy = String.valueOf(request.getParameter("orderBy"));
+        String dateDescAsc =String.valueOf(request.getParameter("dateDescAsc"));
+        String likeDescAsc = String.valueOf(request.getParameter("likeDescAsc"));
+        String viewDescAsc = String.valueOf(request.getParameter("viewDescAsc"));
 
+        String descAesc = null;
+        switch (orderBy) {
+            case "dateOrderBy":
+                if(clickPage.equals("null")) {
+                    if (dateDescAsc == null) {
+                        System.out.println(clickPage);
+                        dateDescAsc = "desc";
+                    } else if (dateDescAsc.equals("desc")) {
+                        dateDescAsc = "asc";
+                    } else {
+                        dateDescAsc = "desc";
+                    }
+                }
+                descAesc = dateDescAsc;
+                break;
+            case "likeOrderBy":
+                if(clickPage.equals("null")) {
+                    if (likeDescAsc == null) {
+                        likeDescAsc = "desc";
+                    } else if (likeDescAsc.equals("desc")) {
+                        likeDescAsc = "asc";
+                    } else {
+                        likeDescAsc = "desc";
+                    }
+                }
+                descAesc = likeDescAsc;
+                break;
+            case "viewOrderBy":
+                if(clickPage.equals("null")) {
+                    if (viewDescAsc == null) {
+                        viewDescAsc = "desc";
+                    } else if (viewDescAsc.equals("desc")) {
+                        viewDescAsc = "asc";
+                    } else {
+                        viewDescAsc = "desc";
+                    }
+                }
+                descAesc = viewDescAsc;
+                break;
+            default:
+                break;
+        }
         int selectPage = 1;
         if (request.getParameter(SELECTED_PAGE.getText()) != null) {
             selectPage = Integer.parseInt(request.getParameter(SELECTED_PAGE.getText()));
         }
-
-        switch (category) {
-            case "all":
-                reviewList = reviewService.getAllReviewList(selectPage);
-                break;
-            case "popular":
-                reviewList = reviewService.getPopularReviewList(selectPage);
-                break;
-            case "free":
-                reviewList = reviewService.getFreeReviewList(selectPage);
-                break;
-            default:
-                reviewList = reviewService.getCategoryReviewList(category, selectPage);
-                break;
-
-        }
+        ArrayList<HashMap<String, Object>> reviewList = reviewService.getCategoryReviewList(category, selectPage,orderBy,descAesc);
         PagingDTO paging = reviewService.showPaging(selectPage, category);
-
+        model.addAttribute("selectPage",selectPage);
+        model.addAttribute("orderBy",orderBy);
+        model.addAttribute("dateDescAsc",dateDescAsc);
+        model.addAttribute("likeDescAsc",likeDescAsc);
+        model.addAttribute("viewDescAsc",viewDescAsc);
         model.addAttribute(PAIGING.getText(), paging);
         model.addAttribute("reviewList", reviewList);
         model.addAttribute("category", category);
         model.addAttribute(REVIEW_CATEGORY_LIST.getText(), EReviewCategoryName.values());
+        model.addAttribute("selectedPage",selectPage);
         return CATEGORY_REVIEW_PAGE.getPath();
     }
 

@@ -61,14 +61,16 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public ArrayList<HashMap<String, Object>> getCategoryReviewList(String category, int selectPage) throws Exception {
+    public ArrayList<HashMap<String, Object>> getCategoryReviewList(String category, int selectPage, String orderBy, String descAesc) throws Exception {
         int startNum = (selectPage-1)*15;
-        HashMap<String, Object> CategoryAndPage = new HashMap<String, Object>();
-        CategoryAndPage.put("category", category);
-        CategoryAndPage.put(START_NO.getText(), startNum);
-        CategoryAndPage.put(DISPLAY_PAGE.getText(), STATIC_DISPLAY_PAGE_NUM.getText());
+        HashMap<String, Object> categoryAndPage = new HashMap<String, Object>();
+        categoryAndPage.put("category", category);
+        categoryAndPage.put("orderBy", orderBy);
+        categoryAndPage.put("descAesc", descAesc);
+        categoryAndPage.put(START_NO.getText(), startNum);
+        categoryAndPage.put(DISPLAY_PAGE.getText(), STATIC_DISPLAY_PAGE_NUM.getText());
 
-        return reviewMapper.getCategoryReviewList(CategoryAndPage);
+        return reviewMapper.getCategoryReviewList(categoryAndPage);
     }
 
     @Override
@@ -95,8 +97,6 @@ public class ReviewServiceImpl implements ReviewService {
         PagingDTO paging = new PagingDTO();
         paging.setPage(selectPage);
         paging.setTotalCount(reviewMapper.getReviewListCount(category));
-        System.out.println(category);
-        System.out.println(paging.getTotalCount());
         return paging;
     }
     @Override
