@@ -1,20 +1,24 @@
 package com.liveamonth.liveamonth.controller.signController;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.liveamonth.liveamonth.entity.vo.CityInfoVO;
 import com.liveamonth.liveamonth.entity.vo.UserVO;
 import com.liveamonth.liveamonth.model.service.cityInfoService.CityService;
-import net.bytebuddy.implementation.bind.MethodDelegationBinder;
+import com.liveamonth.liveamonth.model.service.signService.SignService;
+import com.sun.deploy.net.URLEncoder;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import com.liveamonth.liveamonth.model.service.signService.SignService;
-
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
 
 import static com.liveamonth.liveamonth.constants.ControllerPathConstants.EMainPath.MAIN;
@@ -24,6 +28,9 @@ import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.ECityInfoAttributes.CITY_INTRO_LIST;
 import static com.liveamonth.liveamonth.constants.LogicConstants.ECityInfoAttributes.CITY_NAME_LIST;
 import static com.liveamonth.liveamonth.constants.LogicConstants.ESignAttributes.FIRST_IN;
+
+//naverlogin
+//
 
 @Controller
 public class SignController {
@@ -123,7 +130,7 @@ public class SignController {
 
     @RequestMapping(value = "/resultMentFindID", method = RequestMethod.POST)
     public String findID(@RequestParam("userName")
-                                 String userName,@RequestParam("userEmail")
+                                 String userName, @RequestParam("userEmail")
                                  String userEmail, Model model) throws Exception {
         model.addAttribute(USER_ID.getText(), signService.findID(userName, userEmail));
         return RESULT_MENT_FIND_ID.getPath();
@@ -141,19 +148,83 @@ public class SignController {
 
 
     @RequestMapping(value = "/ResultMentFindPW", method = RequestMethod.POST)
-    public String findPW( @RequestParam("userID") String userID, @RequestParam("userEmail") String userEmail, Model model) throws Exception {
+    public String findPW(@RequestParam("userID") String userID, @RequestParam("userEmail") String userEmail, Model model) throws Exception {
         model.addAttribute(USER_PASSWORD.getText(), signService.findPW(userID, userEmail));
         return RESULT_MENT_FIND_PW.getPath();
     }
 
-    @RequestMapping("/callback")
-    private String callback(Model model) throws Exception {
-        System.out.println("controller callback");
-        return "signView/callback";
-    }
-
     @RequestMapping("/NaverTest")
-    private String NaverTest(Model model) throws Exception {
+    private String callback(HttpSession session, HttpServletRequest request, Model model) throws Exception {
+        String clientId = "mS20tLuLdThxAjEEr_yP";//애플리케이션 클라이언트 아이디값";
+        String clientSecret = "CA3T9EN7Wo";//애플리케이션 클라이언트 시크릿값";
+
+        String code = request.getParameter("code");
+        String state = request.getParameter("state");
+        String redirectURI = URLEncoder.encode("http://localhost:8080/Naver", "UTF-8");
+        String access_token = "";
+
+        StringBuffer apiURL = new StringBuffer();
+        apiURL.append("https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&");
+        apiURL.append("client_id=" + clientId);
+        apiURL.append("&client_secret=" + clientSecret);
+        apiURL.append("&redirect_uri=" + redirectURI);
+        apiURL.append("&code=" + code);
+        apiURL.append("&state=" + state);
+
+        try {
+            URL url = new URL(apiURL.toString());
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("GET");
+            int responseCode = con.getResponseCode();
+            BufferedReader br;
+            if (responseCode == 200) { // 정상 호출
+                br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            } else {  // 에러 발생
+                br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+            }
+            String inputLine;
+            StringBuffer res = new StringBuffer();
+            while ((inputLine = br.readLine()) != null) {
+                res.append(inputLine);
+            }
+            br.close();
+            if (responseCode == 200) {
+                JSONParser parsing = new JSONParser();
+                Object obj = parsing.parse(res.toString());
+                JSONObject jsonObj = (JSONObject) obj;
+
+                access_token = (String) jsonObj.get("access_token");
+                session.setAttribute("access_token", access_token);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        UserVO naverUser = signService.setTokenInfo(access_token);
+        String naverID = signService.checkNaverID(naverUser.getUserID());
+
+        //회원, 비회원 체크
+        if (naverID != null && !"null".equals(naverID)) {
+            //session 변경해서 로그인 상태로 만들기
+            //return "Main";
+        } else {
+            session.setAttribute("naverUser", naverUser);
+            return "signView/NewNaverMember";
+        }
         return "signView/NaverTest";
     }
+
+    @RequestMapping("/newNaveMember")
+    private String newNaveMember(HttpSession session, HttpServletRequest request, Model model) throws Exception {
+        UserVO newNaverUser = (UserVO)session.getAttribute("naverUser");
+
+        if(signService.setNewNaverMember(newNaverUser)==1){
+            request.setAttribute("Message", "회원 가입 성공");
+        }else{
+            request.setAttribute("Message", "회원 가입 실패");
+        }
+
+        return "signView/ResultNewNaverMember";
+    }
+
 }

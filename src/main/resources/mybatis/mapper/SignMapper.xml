@@ -49,4 +49,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select userPassword from user where userID = #{userID} and userEmail = #{userEmail}
 	</select>
 
+	<select id="checkNaverID" parameterType="String" resultType="String">
+		select IFNULL(userID, null) from user where userID = #{naverID}
+	</select>
+
+	<insert id="setNewNaverMember" parameterType="UserVO">
+		insert into user (userID, userName, userNickname, userEmail, userSex, userAge)
+		values (#{userID}, #{userName}, #{userNickname}, #{userEmail}, #{userSex}, #{userAge})
+	</insert>
+
 </mapper>

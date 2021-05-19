@@ -1,11 +1,10 @@
 package com.liveamonth.liveamonth.model.mapper.signMapper;
 
-import java.util.HashMap;
-
+import com.liveamonth.liveamonth.entity.vo.UserVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
-import com.liveamonth.liveamonth.entity.vo.UserVO;
+import java.util.HashMap;
 
 @Repository
 @Mapper
@@ -22,8 +21,9 @@ public interface SignMapper {
 
     String findPW(HashMap<String, Object> hash) throws Exception;
 
-
     String checkEmail(String userEmail)  throws Exception;
 
-    
+    String checkNaverID(String naverID) throws Exception;
+
+    int setNewNaverMember(UserVO newNaverUser) throws Exception;
 }

@@ -1,15 +1,17 @@
 package com.liveamonth.liveamonth.model.service.signService;
 
-import java.io.PrintWriter;
-import java.util.HashMap;
-
+import com.liveamonth.liveamonth.entity.vo.UserVO;
+import com.liveamonth.liveamonth.model.mapper.signMapper.SignMapper;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.liveamonth.liveamonth.entity.vo.UserVO;
-import com.liveamonth.liveamonth.model.mapper.signMapper.SignMapper;
-
-import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.HashMap;
 
 
 @Service
@@ -74,6 +76,71 @@ public class SignServiceImpl implements SignService {
     public String checkEmail(String userEmail) throws Exception {
         System.out.println(signMapper.checkEmail(userEmail));
         return signMapper.checkEmail(userEmail);
+    }
+
+    @Override
+    public UserVO setTokenInfo(String access_token) throws Exception {
+        UserVO naverUserVO = new UserVO();
+
+        String header = "Bearer " + access_token;
+        String apiurl = "https://openapi.naver.com/v1/nid/me";
+        URL url = new URL(apiurl);
+        HttpURLConnection con = (HttpURLConnection)url.openConnection();
+        con.setRequestMethod("GET");
+        con.setRequestProperty("Authorization", header);
+        int responseCode = con.getResponseCode();
+        BufferedReader br;
+        StringBuffer res = new StringBuffer();
+
+        if(responseCode==200) { // 정상 호출
+            br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            String inputLine;
+
+            while ((inputLine = br.readLine()) != null) {
+                res.append(inputLine);
+            }
+
+            JSONParser parsing = new JSONParser();
+            Object obj = parsing.parse(res.toString());
+            JSONObject jsonObj = (JSONObject)obj;
+            JSONObject resObj = (JSONObject)jsonObj.get("response");
+
+            String naverID = (String)resObj.get("id");
+            String email = (String)resObj.get("email");
+            String name = (String)resObj.get("name");
+            String stringGender = (String)resObj.get("gender");
+            String birthyear = (String)resObj.get("birthyear");
+            String nickname = (String)resObj.get("nickname");
+
+            boolean gender;
+
+            if(stringGender.equals("M")){
+                gender = false;
+            }else{
+                gender = true;
+            }
+            naverUserVO.setUserID(naverID);
+            naverUserVO.setUserAge(Integer.parseInt(birthyear));
+            naverUserVO.setUserEmail(email);
+            naverUserVO.setUserName(name);
+            naverUserVO.setUserSex(gender);
+            naverUserVO.setUserNickname(nickname);
+
+        } else {  // 에러 발생
+            br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+        }
+        br.close();
+        return naverUserVO;
+    }
+
+    @Override
+    public String checkNaverID(String naverID) throws Exception {
+        return this.signMapper.checkNaverID(naverID);
+    }
+
+    @Override
+    public int setNewNaverMember(UserVO newNaverUser) throws Exception {
+        return this.signMapper.setNewNaverMember(newNaverUser);
     }
 
 }
