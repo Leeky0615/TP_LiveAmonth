@@ -9,10 +9,10 @@ public class ScheduleVO {
     private String scheduleSubject;
     private int scheduleViewCount;
     private boolean scheduleStatus;
-    private String schedulePlace;
 
     // Reference
     private int userNO;
+    private CityVO cityVO;
 
     // Constructor
     public ScheduleVO() {
@@ -20,8 +20,8 @@ public class ScheduleVO {
         this.scheduleSubject = null;
         this.scheduleViewCount = 0;
         this.scheduleStatus = false;
-        this.schedulePlace = null;
 
+        this.cityVO = null;
         this.userNO = 0;
     }
 }

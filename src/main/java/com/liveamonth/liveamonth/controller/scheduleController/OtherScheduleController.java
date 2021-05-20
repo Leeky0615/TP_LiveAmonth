@@ -6,6 +6,7 @@ import com.liveamonth.liveamonth.entity.dto.PagingDTO;
 import com.liveamonth.liveamonth.entity.vo.ScheduleLikeVO;
 import com.liveamonth.liveamonth.entity.vo.ScheduleReplyVO;
 import com.liveamonth.liveamonth.entity.vo.UserVO;
+import com.liveamonth.liveamonth.model.service.cityInfoService.CityService;
 import com.liveamonth.liveamonth.model.service.scheduleService.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,7 +23,6 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static com.liveamonth.liveamonth.constants.ControllerPathConstants.ESchedulePath.*;
-import static com.liveamonth.liveamonth.constants.EntityConstants.CityName;
 import static com.liveamonth.liveamonth.constants.EntityConstants.ESchedule.SCHEDULE_NO;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EScheduleReply.SCHEDULE_REPLY_NO;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.USER_VO;
@@ -30,13 +30,14 @@ import static com.liveamonth.liveamonth.constants.LogicConstants.EAlertMessage.*
 import static com.liveamonth.liveamonth.constants.LogicConstants.EPaging.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleAttributes.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleFilterAndOrders;
-import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleFilterAndOrders.SCHEDULE_FO_ORDER;
-import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleFilterAndOrders.SCHEDULE_FO_PLACE;
+import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleFilterAndOrders.*;
 
 @Controller
 public class OtherScheduleController {
     @Autowired
     private ScheduleService scheduleService;
+    @Autowired
+    private CityService cityService;
 
     private int checkOption(String option) {
         if (option != null) {
@@ -65,15 +66,11 @@ public class OtherScheduleController {
     private List<HashMap<String, Object>> makeOtherScheduleList(HttpServletRequest request, String action) throws Exception {
         HashMap<String, Object> filtersAndOrder = new HashMap<>();
         // action = list : 초기 헤더메뉴 클릭시
-        System.out.println("action = " + action);
         if (action.equals(SCHEDULE_LIST.getText())) { // 기본값
             for (EScheduleFilterAndOrders eFO : EScheduleFilterAndOrders.values()) {
                 if (eFO == SCHEDULE_FO_ORDER)
-                    filtersAndOrder.put(eFO.getText(), "orderByNew");//("orderBy","orderVubByNexw)
+                    filtersAndOrder.put(eFO.getText(), ORDER_BY_NEW.getText());//("orderBy","orderVubByNew)
                 else filtersAndOrder.put(eFO.getText() + "Filter", false);
-            }
-            for (Map.Entry<String, Object> entry : filtersAndOrder.entrySet()) {
-                System.out.println("[Key]:" + entry.getKey() + " [Value]:" + entry.getValue());
             }
         } else if (action.equals(SCHEDULE_FILTER.getText())) {// action = filter : OtherSchedule 페이지에서 필터 및 정렬 수행시
             // Hashmap에 필터/정렬 Object를 담는다.
@@ -90,9 +87,9 @@ public class OtherScheduleController {
                     boolean optionStatus = false;
                     if (option != -1) {
                         optionStatus = true; // option이 null(-1)이 아니면 true
-                        if (eFO == SCHEDULE_FO_PLACE) {
+                        if (eFO == SCHEDULE_FO_CITY_NAME) {
                             //schedulePlace는 HashMap에 값을 String으로 넣어 줘야하므로 CityNameList에서 option(int)에 해당하는 인덱스 값을 넣어줌.
-                            filtersAndOrder.put(eFO.getText(), CityName.values()[option]);
+                            filtersAndOrder.put(eFO.getText(), cityService.getCityNameList().get(option));
                         } else {
                             // 나머지 경우는 그냥 option(int)를 넣어줌
                             filtersAndOrder.put(eFO.getText(), option);
@@ -112,9 +109,8 @@ public class OtherScheduleController {
     public String otherScheduleList(Model model, HttpServletRequest request, CalendarDTO calendarDTO) throws Exception {
         List<HashMap<String, Object>> otherScheduleList = this.makeOtherScheduleList(request, request.getParameter(SCHEDULE_ACTION.getText()));
         HashMap<String, Object> requestList = makeRequestList(request);
-
         model.addAttribute(FITERED_OTHER_SCHEDULE_LIST.getText(), otherScheduleList);
-        model.addAttribute(SCHEDULE_PLACE_LIST.getText(), CityName.values());
+        model.addAttribute(SCHEDULE_PLACE_LIST.getText(), cityService.getCityNameList());
         model.addAttribute(REQUEST_LIST.getText(), requestList);
         return OTHER_SCHEDULE_LIST.getPath();
     }

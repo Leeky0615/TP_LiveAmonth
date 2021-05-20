@@ -17,15 +17,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select max(scheduleContentNO) from scheduleContent;
 	</select>
 
-	<select id="getScheduleList" resultType="ScheduleVO" parameterType="int">
-		select * from schedule where userNO = #{userNO};
+	<resultMap type = "scheduleVO" id="scheduleVO">
+		<id column="scheduleNO" property="scheduleNO"/>
+		<result column="scheduleSubject" property="scheduleSubject"/>
+		<result column="scheduleStatus" property="scheduleStatus"/>
+		<result column="userNO" property="userNO"/>
+		<association property="cityVO" javaType="CityVO">
+			<id column="cityNO" property="cityNO"/>
+			<result column="cityName" property="cityName"/>
+		</association>
+	</resultMap>
+	<select id="getScheduleList" resultMap="scheduleVO" parameterType="int">
+		select * from schedule,city where userNO = #{userNO} and city.cityNO= schedule.cityNO;
 	</select>
 
 
 	<resultMap type = "java.util.HashMap" id="scheduleFilterAndOrder">
 		<id column="scheduleNO" property="scheduleNO"/>
 		<result column="scheduleSubject" property="scheduleSubject"/>
-		<result column="schedulePlace" property="schedulePlace"/>
 		<result column="scheduleViewCount" property="scheduleViewCount"/>
 		<result column="scheduleLikeCount" property="scheduleLikeCount"/>
 		<association property="userVO" javaType="UserVO">
@@ -34,21 +43,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<result column="userAge" property="userAge"/>
 			<result column="userSex" property="userSex"/>
 		</association>
+		<association property="cityVO" javaType="CityVO">
+			<id column="cityNO" property="cityNO"/>
+			<result column="cityName" property="cityName"/>
+		</association>
 	</resultMap>
 
  	<select id="getOtherScheduleList" parameterType="HashMap" resultMap="scheduleFilterAndOrder">
-		select a.*, IF(isnull(scheduleLikeCount), 0, scheduleLikeCount) as scheduleLikeCount from (select schedule.scheduleNO, user.userNO, userNickname, scheduleSubject, userAge,userSex,schedulePlace,scheduleViewCount from user, schedule where schedule.userNO = user.userNO and schedule.scheduleStatus = true) as a
-		left join(select scheduleLike.scheduleNO, count(scheduleLikeUserNO) as scheduleLikeCount from schedule, scheduleLike where schedule.scheduleNO = scheduleLike.scheduleNO group by scheduleLike.scheduleNO) as b
+		select a.*, IF(isnull(scheduleLikeCount), 0, scheduleLikeCount) as scheduleLikeCount
+		from (select schedule.scheduleNO, user.userNO, userNickname, scheduleSubject, userAge,userSex,city.cityNO, cityName,scheduleViewCount
+				from user, schedule, city
+				where schedule.userNO = user.userNO
+				and schedule.cityNO = city.cityNO
+		  		and schedule.scheduleStatus = true
+				<if test="userAgeFilter==true">
+					and userAge between Year(curdate())-#{userAge}-9 and Year(curdate())-#{userAge}
+				</if>
+				<if test="userSexFilter==true">
+					and userSex = #{userSex}
+				</if>
+				<if test="schedulePlaceFilter==true">
+					and cityName = ${cityName}
+				</if>
+		    	) as a
+		left join(select scheduleLike.scheduleNO, count(scheduleLikeUserNO) as scheduleLikeCount
+				from schedule, scheduleLike
+				where schedule.scheduleNO = scheduleLike.scheduleNO
+				group by scheduleLike.scheduleNO) as b
 		ON a.scheduleNO = b.scheduleNO
-		<if test="userAgeFilter">
-			and userAge between Year(curdate())-#{userAge}-9 and Year(curdate())-#{userAge}
-		</if>
-		<if test="userSexFilter">
-			and userSex = #{userSex}
-		</if>
-		<if test="schedulePlaceFilter">
-			and schedulePlace = #{schedulePlace}
-		</if>
 		<choose>
 			<when test="orderBy == 'orderByView'">
 				ORDER BY scheduleViewCount desc;
@@ -128,8 +150,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>
 
 	<!-- insert -->
-	<insert id="addSchedule" parameterType="ScheduleVO">
-		insert into schedule values(#{scheduleNO}, #{scheduleSubject}, #{scheduleStatus}, #{schedulePlace},#{scheduleViewCount},#{userNO})
+	<insert id="addSchedule" parameterType="java.util.HashMap">
+		insert into schedule values(#{scheduleNO}, #{scheduleSubject}, #{scheduleStatus},#{scheduleViewCount},#{userNO},#{cityNO})
 	</insert>
 
 	<insert id="addScheduleContent" parameterType="ScheduleContentVO">
@@ -162,8 +184,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where scheduleContentNO = #{scheduleContentNO}
 	</update>
 	<!-- 스케줄 수정 -->
-	<update id="modifySchedule" parameterType="ScheduleVO">
-		update schedule set scheduleSubject = #{scheduleSubject}, scheduleStatus = #{scheduleStatus}, schedulePlace = #{schedulePlace} where scheduleNO = #{scheduleNO}
+	<update id="modifySchedule" parameterType="java.util.HashMap">
+		update schedule
+		set scheduleSubject = #{scheduleSubject}, scheduleStatus = #{scheduleStatus}, cityNO = #{cityNO}
+		where scheduleNO = #{scheduleNO}
 	</update>
 
 	<update id="modifyScheduleReply" parameterType="ScheduleReplyVO">

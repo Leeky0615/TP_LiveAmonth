@@ -54,7 +54,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form name="addSchedule" action="addSchedule">
+                <form name="addSchedule" action="/addSchedule">
                     <div class="contents">
                         <div class="text_subject">제목 :</div>
                         <div class="text_desc">
@@ -63,9 +63,9 @@
 
                         <div class="text_subject">지역</div>
                         <div class="text_desc">
-                            <select class="sm-width" name="schedulePlace" id="schedulePlace">
-                                <c:forEach var="schedulePlace" items="${schedulePlaceList}">
-                                    <option value="${schedulePlace}">${schedulePlace.nameKR}</option>
+                            <select class="sm-width" name="cityNO">
+                                <c:forEach var="schedulePlace" items="${schedulePlaceList}" varStatus="status">
+                                    <option value="${status.index+1}">${schedulePlace}</option>
                                 </c:forEach>
                             </select>
                         </div>
@@ -76,8 +76,9 @@
                     <div class="text_subject">공개여부</div>
                     <div class="text_desc">
                         <label class="switch">
-                            <input type="checkbox" name="scheduleStatus">
+                            <input type="checkbox" name="scheduleStatus" id="scheduleStatus">
                             <span class="slider round"></span>
+<%--                            <script> $("input:checkbox[id='scheduleStatus']").prop("checked", true);</script>--%>
                         </label>
                     </div>
                     <div>
@@ -113,22 +114,26 @@
                                 </div>
                                 <div>
                                     <div class="text_subject">지역</div>
-                                    <select class="sm-width" name="schedulePlace" id="modifyPlace">
-                                        <c:forEach var="schedulePlace" items="${schedulePlaceList}">
-                                            <option value="${schedulePlace}">${schedulePlace.nameKR}</option>
+                                    <select class="sm-width" name="cityNO" id="modifyPlace">
+                                        <c:forEach var="schedulePlace" items="${schedulePlaceList}" varStatus="status">
+                                            <option value="${status.index+1}" >${schedulePlace}</option>
+                                            <script> $("#modifyPlace").val("${scheduleVO.cityVO.cityNO}").prop("selected", true); </script>
                                         </c:forEach>
                                     </select>
-                                    <script> $("#modifyPlace").val("${scheduleVO.schedulePlace}").prop("selected", true); </script>
                                 </div>
 
                                 <br><br>
 
                                 <div class="text_subject">공개여부</div>
                                 <label class="switch">
-                                    <input type="checkbox" name="scheduleStatus" id="modiftScheduleStatus">
+                                    <input type="checkbox" name="scheduleStatus" <c:if test="${scheduleVO.scheduleStatus}">checked</c:if>>
                                     <span class="slider round"></span>
                                 </label>
-                                <script> if(${scheduleVO.scheduleStatus}==true) {$("input:checkbox[id='modiftScheduleStatus']").prop("checked", true);} </script>
+<%--                                <script> if(${scheduleVO.scheduleStatus}) {--%>
+<%--                                        $("input:checkbox[id='modifyScheduleStatus']").prop("checked", true);--%>
+<%--                                    }else{--%>
+<%--                                        $("input:checkbox[id='modifyScheduleStatus']").prop("checked", false);--%>
+<%--                                    } </script>--%>
                                 <div>
                                     <button type="button" class="board_move_go pointer" onclick="modifyScheduleButton();">수정</button>
                                     <button type="button" class="board_move_go pointer" data-dismiss="modal">취소</button>
