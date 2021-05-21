@@ -14,21 +14,25 @@ create table user
 
 create table schedule
 (
-    scheduleNO        int not null auto_increment,
-    scheduleSubject   varchar(20),
-    scheduleStatus    boolean,
-    schedulePlace     varchar(20),
-    scheduleViewCount int,
-    userNO            int,
-    primary key (scheduleNO),
-    foreign key (userNO) references user (userNO) on delete cascade
+    scheduleNO        int auto_increment
+        primary key,
+    scheduleSubject   varchar(20) null,
+    scheduleStatus    tinyint(1)  null,
+    scheduleViewCount int         null,
+    userNO            int         null,
+    cityNO            int         null,
+    foreign key (userNO) references user (userNO)
+        on delete cascade,
+    foreign key (cityNO) references city (cityNO)
+        on update cascade on delete set null
 );
 
-create table scheduleLike(
-    scheduleNO int not null,
+create table scheduleLike
+(
+    scheduleNO         int not null,
     scheduleLikeUserNO int,
     primary key (scheduleNO, scheduleLikeUserNO),
-    foreign key (scheduleNO) references schedule(scheduleNO) on delete cascade,
+    foreign key (scheduleNO) references schedule (scheduleNO) on delete cascade,
     foreign key (scheduleLikeUserNO) references user (userNO) on delete cascade
 );
 
@@ -58,22 +62,24 @@ create table scheduleReply
     foreign key (scheduleNO) references schedule (scheduleNO) on delete cascade
 );
 
-create table review(
-       reviewNO int not null auto_increment,
-       reviewCategory varchar(10),
-       reviewSubject varchar(100),
-       reviewDesc varchar(900),
-       reviewDate date,
-       reviewViewCount int,
-       reviewImage varchar(100),
-       userNo int,
-       primary key (reviewNO),
-       foreign key (userNO) references user (userNO) on delete cascade
+create table review
+(
+    reviewNO        int not null auto_increment,
+    reviewCategory  varchar(10),
+    reviewSubject   varchar(100),
+    reviewDesc      varchar(900),
+    reviewDate      date,
+    reviewViewCount int,
+    reviewImage     varchar(100),
+    userNo          int,
+    primary key (reviewNO),
+    foreign key (userNO) references user (userNO) on delete cascade
 );
 
 
-create table reviewLike(
-    reviewNO int not null,
+create table reviewLike
+(
+    reviewNO         int not null,
     reviewLikeUserNO int,
     primary key (reviewNO, reviewLikeUserNO),
     foreign key (reviewNO) references review (reviewNO) on delete cascade,

@@ -1,10 +1,13 @@
 package com.liveamonth.liveamonth.controller.scheduleController;
 
 import com.liveamonth.liveamonth.constants.ControllerPathConstants;
+import com.liveamonth.liveamonth.constants.EntityConstants;
 import com.liveamonth.liveamonth.entity.dto.CalendarDTO;
+import com.liveamonth.liveamonth.entity.vo.CityVO;
 import com.liveamonth.liveamonth.entity.vo.ScheduleContentVO;
 import com.liveamonth.liveamonth.entity.vo.ScheduleVO;
 import com.liveamonth.liveamonth.entity.vo.UserVO;
+import com.liveamonth.liveamonth.model.service.cityInfoService.CityService;
 import com.liveamonth.liveamonth.model.service.scheduleService.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,12 +20,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static com.liveamonth.liveamonth.constants.ControllerPathConstants.ESchedulePath.REDIRECT_SCHEDULE;
 import static com.liveamonth.liveamonth.constants.ControllerPathConstants.ESchedulePath.SCHEDULE;
-import static com.liveamonth.liveamonth.constants.EntityConstants.CityName;
+import static com.liveamonth.liveamonth.constants.EntityConstants.ECity.CITY_NO;
 import static com.liveamonth.liveamonth.constants.EntityConstants.ESchedule.*;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EScheduleContent.SCHEDULE_CONTENT_NO;
+import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.USER_NO;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.USER_VO;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EAlertMessage.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleAttributes.*;
@@ -31,6 +36,9 @@ import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleAttrib
 public class ScheduleController {
     @Autowired
     private ScheduleService scheduleService;
+
+    @Autowired
+    private CityService cityService;
 
     private int scheduleContentNO;
 
@@ -72,16 +80,17 @@ public class ScheduleController {
     }
 
     @RequestMapping("/schedule")
-    public String schedule(Model model, HttpServletRequest request, CalendarDTO calendarDTO){
+    public String schedule(Model model, HttpServletRequest request, CalendarDTO calendarDTO) throws Exception {
         HttpSession session = request.getSession();
         UserVO session_UserVO = (UserVO) session.getAttribute(USER_VO.getText());
         int userNO = session_UserVO.getUserNO();
 
-        model.addAttribute(SCHEDULE_PLACE_LIST.getText(), CityName.values());
+        model.addAttribute(SCHEDULE_PLACE_LIST.getText(), cityService.getCityNameList());
 
         ArrayList<ScheduleVO> scheduleVOList;
         try {
             scheduleVOList = scheduleService.getScheduleList(userNO);
+            System.out.println(scheduleVOList.get(0).getCityVO().getCityName());
             model.addAttribute(SCHEDULE_VO_LIST.getText(), scheduleVOList);
             if (scheduleVOList.isEmpty()) {
                 model.addAttribute(MESSAGE.getText(), "아직 캘린더를 생성하지 않으셨습니다. 캘린더를 추가해주세요.");
@@ -121,15 +130,25 @@ public class ScheduleController {
         session.setAttribute(SELECTED_SCHEDULE_NO.getText(), request.getParameter(SELECT_SCHEDULE.getText()));
         return REDIRECT_SCHEDULE.getRedirectPath();
     }
+    private HashMap<String, Object> getScehduleInfos(HttpServletRequest request, int scheduleNO,int userNO){
+        HashMap<String, Object> objects = new HashMap<>();
+        objects.put(SCHEDULE_VO.getText(), scheduleNO);
+        objects.put(SCHEDULE_SUBJECT.getText(), request.getParameter(SCHEDULE_SUBJECT.getText()));
+        if(request.getParameter(SCHEDULE_STATUS.getText()) != null)objects.put(SCHEDULE_STATUS.getText(),true);
+        else objects.put(SCHEDULE_STATUS.getText(),false);
+        objects.put(CITY_NO.getText(), request.getParameter(CITY_NO.getText()));
+        objects.put(SCHEDULE_VIEW_COUNT.getText(), 0); //addSchedule에만 필요
+        objects.put(USER_NO.getText(), userNO); // addSchedule에만 필요
+        return objects;
+    }
 
     @RequestMapping(value = "addSchedule")
     public String addSchedule(HttpServletRequest request, ScheduleVO scheduleVO, RedirectAttributes rttr) {
         HttpSession session = request.getSession();
         UserVO session_UserVO = (UserVO) session.getAttribute(USER_VO.getText());
-        scheduleVO.setUserNO(session_UserVO.getUserNO());
 
         try {
-            scheduleService.addSchedule(scheduleVO);
+            scheduleService.addSchedule(this.getScehduleInfos(request,scheduleVO.getScheduleNO(),session_UserVO.getUserNO()));
             rttr.addFlashAttribute(MESSAGE.getText(), ADD_SCHEDULE.getText());
         } catch (Exception e) {
             rttr.addFlashAttribute(MESSAGE.getText(), FAIL_TO_ADD_SCHEDULE.getText());
@@ -138,14 +157,13 @@ public class ScheduleController {
         return REDIRECT_SCHEDULE.getRedirectPath();
     }
 
-
     @RequestMapping(value = "modifySchedule")
     public String modifySchedule(HttpServletRequest request, ScheduleVO scheduleVO, RedirectAttributes rttr){
         HttpSession session = request.getSession();
-        scheduleVO.setScheduleNO(Integer.parseInt(String.valueOf(session.getAttribute(SELECTED_SCHEDULE_NO.getText()))));
+        int scheduleNO = Integer.parseInt(String.valueOf(session.getAttribute(SELECTED_SCHEDULE_NO.getText())));
 
         try {
-            scheduleService.modifySchedule(scheduleVO);
+            scheduleService.modifySchedule(this.getScehduleInfos(request,scheduleNO,0));
             rttr.addFlashAttribute(MESSAGE.getText(), COMPLETE_SCHEDULE_MODIFICATION.getText());
         } catch (Exception e) {
             rttr.addFlashAttribute(MESSAGE.getText(),  FAIL_TO_MODIFY_SCHEDULE.getText());

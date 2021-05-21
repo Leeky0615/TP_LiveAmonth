@@ -118,7 +118,6 @@ public class ScheduleServiceImpl implements ScheduleService {
     //otherList
     @Override
 	public ArrayList<HashMap<String, Object>> getOtherScheduleList(HashMap<String, Object> filtersAndOrder) throws Exception{
-        System.out.println(scheduleMapper.getOtherScheduleList(filtersAndOrder));
 		return scheduleMapper.getOtherScheduleList(filtersAndOrder);
 	}
 
@@ -147,11 +146,11 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public boolean addSchedule(ScheduleVO scheduleVO) throws Exception {
+    public boolean addSchedule(HashMap<String, Object> scheduleVO) throws Exception {
         return scheduleMapper.addSchedule(scheduleVO);
     }
 	
-	public boolean modifySchedule(ScheduleVO scheduleVO) throws Exception {
+	public boolean modifySchedule(HashMap<String, Object> scheduleVO) throws Exception {
 		return scheduleMapper.modifySchedule(scheduleVO);
 	}
 
