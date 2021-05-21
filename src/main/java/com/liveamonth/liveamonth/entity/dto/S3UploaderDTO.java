@@ -39,7 +39,7 @@ public class S3UploaderDTO {
         String fileName = userID +"."+extension;
         String saveFileName = dirName + fileName; // S3에 저장된 파일 이름
         String uploadedFileName = (saveFileName).replace(File.separatorChar, '/');
-        fileUpload(saveFileName, bytes);
+        fileUpload(uploadedFileName, bytes);
         return fileName;
     }
 
