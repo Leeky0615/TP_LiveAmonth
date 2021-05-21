@@ -140,7 +140,7 @@
                                             </div>
                                         </c:if>
                                     </c:forEach>
-                                    <c:set var="beforePageReviewReplyNO" value="null"></c:set>
+                                    <c:set var="beforePageReviewReplyNO" value="0"></c:set>
                                 </div>
                             </div>
                         </c:if>

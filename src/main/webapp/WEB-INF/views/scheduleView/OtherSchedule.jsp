@@ -180,6 +180,7 @@
         </div>
         <div class="col-md-12 bootstrap snippets">
             <div class="panel">
+                <p>${otherScheduleAndLikeCount.scheduleNO}</p>
                 <jsp:include page="ScheduleReplyDesc.jsp">
                     <jsp:param value="${otherScheduleAndLikeCount.scheduleNO}" name="scheduleNO"/>
                     <jsp:param value="0" name="scheduleReplyNO"/>
@@ -259,7 +260,7 @@
                                             </div>
                                         </c:if>
                                     </c:forEach>
-                                    <c:set var="beforePageScheduleReplyNO" value="null"></c:set>
+                                    <c:set var="beforePageScheduleReplyNO" value="0" ></c:set>
                                 </div>
                             </div>
                         </c:if>

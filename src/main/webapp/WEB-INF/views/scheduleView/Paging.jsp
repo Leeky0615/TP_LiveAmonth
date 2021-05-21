@@ -5,7 +5,7 @@
 <div id="paging" class="col-lg-12">
     <div class="property-pagination">
         <c:choose>
-            <c:when test="${param.replyPageType=='reviewReplyPage'}">
+            <c:when test="${param.replyPageType==\"reviewReplyPage\"}">
                 <c:url var="action" value="getReview?reviewNO=${param.reviewNO}"/>
             </c:when>
             <c:otherwise>

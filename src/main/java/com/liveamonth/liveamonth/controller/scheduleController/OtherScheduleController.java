@@ -115,7 +115,7 @@ public class OtherScheduleController {
         return OTHER_SCHEDULE_LIST.getPath();
     }
 
-    @RequestMapping("/otherSchedule")
+    @RequestMapping("otherSchedule")
     public String otherSchedule(Model model, HttpServletRequest request, CalendarDTO calendarDTO, RedirectAttributes rttr){
         HttpSession session = request.getSession();
         UserVO session_UserVO = (UserVO) session.getAttribute(USER_VO.getText());
@@ -158,7 +158,7 @@ public class OtherScheduleController {
         }
 
         try {
-            ArrayList<HashMap<String, Object>> scheduleReplyList= scheduleService.getScheduleReplyList(scheduleNO, selectPage);
+            ArrayList<HashMap<String, Object>> scheduleReplyList = scheduleService.getScheduleReplyList(scheduleNO, selectPage);
             model.addAttribute(SCHEDULEREPLY_VO_LIST.getText(), scheduleReplyList);
         } catch (Exception e) {
             rttr.addFlashAttribute(MESSAGE.getText(), "댓글 리스트 조회에 실패했습니다.");
@@ -214,7 +214,7 @@ public class OtherScheduleController {
         return REDIRECT_OTHER_SCHEDULE.getRedirectPath();
     }
 
-    @RequestMapping("/deleteScheduleReply")
+    @RequestMapping("deleteScheduleReply")
     public String deleteScheduleReply(HttpServletRequest request, RedirectAttributes rttr){
         int scheduleReplyNO = Integer.parseInt(String.valueOf(request.getParameter(SCHEDULE_REPLY_NO.getText())));
         int scheduleNO = Integer.parseInt(String.valueOf(request.getParameter(SCHEDULE_NO.getText())));
@@ -235,9 +235,9 @@ public class OtherScheduleController {
     public String modifyScheduleReply(RedirectAttributes rttr, ScheduleReplyVO scheduleReplyVO){
         try {
             scheduleService.modifyScheduleReply(scheduleReplyVO);
-            rttr.addFlashAttribute(MESSAGE.getText(), COMPLETE_SCHEDULEREPLY_DELETION.getText());
+            rttr.addFlashAttribute(MESSAGE.getText(), COMPLETE_SCHEDULEREPLY_MODIFICATION.getText());
         } catch (Exception e) {
-            rttr.addFlashAttribute(MESSAGE.getText(), FAIL_TO_DELETE_SCHEDULEREPLY.getText());
+            rttr.addFlashAttribute(MESSAGE.getText(), FAIL_TO_MODIFY_SCHEDULEREPLY.getText());
             e.printStackTrace();
         }
         rttr.addAttribute(SCHEDULE_NO.getText(), scheduleReplyVO.getScheduleNO());

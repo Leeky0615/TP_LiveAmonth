@@ -1,6 +1,5 @@
 package com.liveamonth.liveamonth.controller.reviewController;
 
-import com.liveamonth.liveamonth.constants.LogicConstants;
 import com.liveamonth.liveamonth.entity.dto.PagingDTO;
 import com.liveamonth.liveamonth.entity.vo.ReviewLikeVO;
 import com.liveamonth.liveamonth.entity.vo.ReviewVO;
@@ -21,8 +20,9 @@ import java.util.HashMap;
 import java.util.Locale;
 
 import static com.liveamonth.liveamonth.constants.ControllerPathConstants.EReviewPath.*;
-import static com.liveamonth.liveamonth.constants.EntityConstants.*;
-import static com.liveamonth.liveamonth.constants.EntityConstants.EReview.*;
+import static com.liveamonth.liveamonth.constants.EntityConstants.EReview.REVIEW_NO;
+import static com.liveamonth.liveamonth.constants.EntityConstants.EReview.REVIEW_VO;
+import static com.liveamonth.liveamonth.constants.EntityConstants.EReviewCategoryName;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.USER_VO;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EPaging.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EReview.*;
@@ -82,7 +82,7 @@ public class ReviewController {
         return CATEGORY_REVIEW_PAGE.getPath();
     }
 
-    @GetMapping("/reviewWrite")
+    @GetMapping("reviewWrite")
     public String reviewWrite(Model model, HttpServletRequest request) {
         int reviewNO;
         if (request.getParameter(REVIEW_NO.getText()) != null) {
@@ -154,7 +154,7 @@ public class ReviewController {
         return DEFUALT_REVIEW_PAGE.getPath();
     }
 
-    @GetMapping("/getReview")
+    @GetMapping("getReview")
     public String getReview(Model model, HttpServletRequest request, RedirectAttributes rttr) {
         int reviewNO = Integer.parseInt(String.valueOf(request.getParameter(REVIEW_NO.getText())));
         HttpSession session = request.getSession();
