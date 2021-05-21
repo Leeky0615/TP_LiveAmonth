@@ -9,22 +9,22 @@ import com.liveamonth.liveamonth.model.service.signService.SignService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 
 import static com.liveamonth.liveamonth.constants.ControllerPathConstants.EMyPagePath.*;
-import static com.liveamonth.liveamonth.constants.EntityConstants.*;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EOneToOneAsk.*;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.*;
+import static com.liveamonth.liveamonth.constants.EntityConstants.OneToOneAskCategory;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EMyPageAttributes.*;
-import static com.liveamonth.liveamonth.constants.LogicConstants.EMyPageAttributes.CHECK_USER;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EPageOptions.*;
-import static com.liveamonth.liveamonth.constants.LogicConstants.EPageOptions.PAGE_MODIFY;
-
-import java.util.ArrayList;
 
 
 @Controller
@@ -200,7 +200,7 @@ public class MyPageController {
     public String modifyUserImage(HttpSession session, @RequestParam("fileName") MultipartFile mFile, Model model) throws Exception {
         UserVO userVO = (UserVO) session.getAttribute(USER_VO.getText());
         if(userVO.getUserImage() != null) s3Uploader.delete(IMAGE_DIR.getText()+userVO.getUserImage());
-        String saveName = s3Uploader.uploadProfileImg(mFile, IMAGE_DIR_NAME.getText(),userVO.getUserID());
+        String saveName = s3Uploader.uploadProfileImg(IMAGE_DIR_NAME.getText(), userVO.getUserID(), mFile.getName(), mFile.getBytes());
         myPageService.modifyUserImg(saveName,userVO.getUserID());
         userVO.setUserImage(saveName);
         model.addAttribute(USER_VO.getText(), userVO);
