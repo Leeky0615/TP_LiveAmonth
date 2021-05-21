@@ -31,7 +31,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from schedule,city where userNO = #{userNO} and city.cityNO= schedule.cityNO;
 	</select>
 
-
 	<resultMap type = "java.util.HashMap" id="scheduleFilterAndOrder">
 		<id column="scheduleNO" property="scheduleNO"/>
 		<result column="scheduleSubject" property="scheduleSubject"/>

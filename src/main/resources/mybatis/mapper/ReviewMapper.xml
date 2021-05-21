@@ -139,6 +139,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <delete id="deleteReviewReply" parameterType="int">
         delete from reviewReply where reviewReplyNO = #{reviewReplyNO}
     </delete>
+
     <delete id="deleteReview" parameterType="int">
         delete from review where reviewNO = #{reviewNO}
     </delete>
