@@ -64,7 +64,7 @@ public class ReviewReplyController {
         return REDIRECT_REVIEW_CONTENT.getRedirectPath();
     }
 
-    @RequestMapping("/deleteReviewReply")
+    @RequestMapping("deleteReviewReply")
     public String deleteScheduleReply(HttpServletRequest request, RedirectAttributes rttr){
         int reviewReplyNO = Integer.parseInt(String.valueOf(request.getParameter(REVIEW_REPLY_NO.getText())));
         int reviewNO = Integer.parseInt(String.valueOf(request.getParameter(REVIEW_NO.getText())));

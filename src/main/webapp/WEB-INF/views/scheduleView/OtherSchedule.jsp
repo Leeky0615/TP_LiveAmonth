@@ -277,7 +277,7 @@
                                             </div>
                                         </c:if>
                                     </c:forEach>
-                                    <c:set var="beforePageScheduleReplyNO" value="null"></c:set>
+                                    <c:set var="beforePageScheduleReplyNO" value="-1" ></c:set>
                                 </div>
                             </div>
                         </c:if>
