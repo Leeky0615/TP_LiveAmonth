@@ -1,10 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
-<%@page import="java.text.SimpleDateFormat" %>
-<%@page import="java.util.Calendar" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="com.liveamonth.liveamonth.entity.dto.CalendarDTO" %>
-<%@ page import="com.liveamonth.liveamonth.entity.vo.ScheduleVO" %>
-<%@page import="java.util.*" %>
 
 <link rel="stylesheet" href="resources/css/schedule.css" type="text/css">
 <link rel="stylesheet" href="resources/css/onOff.css" type="text/css">
@@ -129,11 +124,12 @@
                                     <input type="checkbox" name="scheduleStatus" <c:if test="${scheduleVO.scheduleStatus}">checked</c:if>>
                                     <span class="slider round"></span>
                                 </label>
-<%--                                <script> if(${scheduleVO.scheduleStatus}) {--%>
-<%--                                        $("input:checkbox[id='modifyScheduleStatus']").prop("checked", true);--%>
-<%--                                    }else{--%>
-<%--                                        $("input:checkbox[id='modifyScheduleStatus']").prop("checked", false);--%>
-<%--                                    } </script>--%>
+                                <script> if(${scheduleVO.scheduleStatus}) {
+                                        $("input:checkbox[id='modifyScheduleStatus']").prop("checked", true);
+                                    }else{
+                                        $("input:checkbox[id='modifyScheduleStatus']").prop("checked", false);
+                                    }
+                                </script>
                                 <div>
                                     <button type="button" class="board_move_go pointer" onclick="modifyScheduleButton();">수정</button>
                                     <button type="button" class="board_move_go pointer" data-dismiss="modal">취소</button>

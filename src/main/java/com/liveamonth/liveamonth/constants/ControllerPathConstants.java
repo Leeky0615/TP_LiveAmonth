@@ -91,6 +91,7 @@ public class ControllerPathConstants {
         OTHER_SCHEDULE("OtherSchedule"),
         OTHER_SCHEDULE_LIST("OtherScheduleList"),
         SCHEDULE("Schedule"),
+        REDIRECT_OTHER_SCHEDULELIST("redirect:otherScheduleList"),
         REDIRECT_SCHEDULE("redirect:schedule"),
         REDIRECT_OTHER_SCHEDULE("redirect:otherSchedule");
         private String path;

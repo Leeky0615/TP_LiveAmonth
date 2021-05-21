@@ -1,5 +1,7 @@
 package com.liveamonth.liveamonth.controller.reviewController;
 
+
+
 import com.liveamonth.liveamonth.entity.vo.ReviewLikeVO;
 import com.liveamonth.liveamonth.entity.vo.ReviewReplyVO;
 import com.liveamonth.liveamonth.entity.vo.UserVO;
@@ -22,7 +24,7 @@ import static com.liveamonth.liveamonth.constants.ControllerPathConstants.ERevie
 import static com.liveamonth.liveamonth.constants.EntityConstants.EReview.REVIEW_NO;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EReviewReply.REVIEW_REPLY_NO;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.USER_VO;
-
+import static com.liveamonth.liveamonth.constants.LogicConstants.EReviewMessage.*;
 
 @Controller
 public class ReviewReplyController {
@@ -35,8 +37,7 @@ public class ReviewReplyController {
         try {
             return reviewService.getReviewLikeCountAndStatus(reviewLikeVO);
         } catch (Exception e) {
-            e.printStackTrace();
-            System.err.println(e + "좋아요/취소 기능 에러 발생");
+            System.err.println(REVIEW_LIKE_TRANS_FAIL_MESSAGE.getText() + e);
         }
         return null;
     }
@@ -53,14 +54,12 @@ public class ReviewReplyController {
         reviewReplyVO.setReviewReplyDate(dTime);
 
         reviewReplyVO.setUserNO(userNO);
-
         try {
             reviewService.addReviewReply(reviewReplyVO);
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println(REVIEWREPLY_ADD_FAIL_MESSAGE.getText() + e);
         }
         rttr.addAttribute(REVIEW_NO.getText(), reviewReplyVO.getReviewNO());
-
         return REDIRECT_REVIEW_CONTENT.getRedirectPath();
     }
 
@@ -72,10 +71,9 @@ public class ReviewReplyController {
         try {
             reviewService.deleteReviewReply(reviewReplyNO);
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println(REVIEWREPLY_MODIFY_FAIL_MESSAGE.getText() + e);
         }
         rttr.addAttribute(REVIEW_NO.getText(), reviewNO);
-
         return REDIRECT_REVIEW_CONTENT.getRedirectPath();
     }
 
@@ -84,10 +82,9 @@ public class ReviewReplyController {
         try {
             reviewService.modifyReviewReply(reviewReplyVO);
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println(REVIEWREPLY_DELETE_FAIL_MESSAGE.getText() + e);
         }
         rttr.addAttribute(REVIEW_NO.getText(), reviewReplyVO.getReviewNO());
-
         return REDIRECT_REVIEW_CONTENT.getRedirectPath();
     }
 

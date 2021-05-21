@@ -1,3 +1,11 @@
+function addReviewReply(userNO) {
+    if (userNO == "" || userNO == null) {
+        alert("로그인 후 이용해주세요.");
+        return false;
+    }
+    location.replace("/reviewWrite")
+}
+
 
 function addReviewButton (){
     var addReviewForm = document.getElementById("reviewForm");
