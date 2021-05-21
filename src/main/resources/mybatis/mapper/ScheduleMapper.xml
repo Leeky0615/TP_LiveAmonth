@@ -37,7 +37,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 
  	<select id="getOtherScheduleList" parameterType="HashMap" resultMap="scheduleFilterAndOrder">
-		select a.*, IF(isnull(scheduleLikeCount), 0, scheduleLikeCount) as scheduleLikeCount from (select schedule.scheduleNO, user.userNO, userNickname, scheduleSubject, userAge,userSex,schedulePlace,scheduleViewCount from user, schedule where schedule.userNO = user.userNO and schedule.scheduleStatus = true) as a
+		select a.*, IF(isnull(scheduleLikeCount), 0, scheduleLikeCount) as scheduleLikeCount
+		from (select schedule.scheduleNO, user.userNO, userNickname, scheduleSubject, userAge,userSex,schedulePlace,scheduleViewCount from user, schedule where schedule.userNO = user.userNO and schedule.scheduleStatus = true) as a
 		left join(select scheduleLike.scheduleNO, count(scheduleLikeUserNO) as scheduleLikeCount from schedule, scheduleLike where schedule.scheduleNO = scheduleLike.scheduleNO group by scheduleLike.scheduleNO) as b
 		ON a.scheduleNO = b.scheduleNO
 		<if test="userAgeFilter">

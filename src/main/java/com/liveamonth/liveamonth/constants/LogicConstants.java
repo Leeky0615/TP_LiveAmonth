@@ -150,7 +150,9 @@ public class LogicConstants {
     public enum EReviewAttribute{
         REVIEW_TYPE_LIST("reviewTypeList"),
         REVIEW_PLACE_LIST("reviewPlaceList"),
-        REVIEW_CATEGORY_LIST("reviewCategoryList");
+        REVIEW_CATEGORY_LIST("reviewCategoryList"),
+        REVIEW_SEARCH_DATE("reviewSearchDate"),
+        REVIEW_SEARCH_DETAIL("reviewSearchDetail");
 
         private String text;
         private EReviewAttribute(String text){this.text = text;}

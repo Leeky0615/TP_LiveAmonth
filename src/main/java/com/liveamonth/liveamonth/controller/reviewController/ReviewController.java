@@ -26,7 +26,7 @@ import static com.liveamonth.liveamonth.constants.EntityConstants.EReview.*;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.USER_VO;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EPaging.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EReview.*;
-import static com.liveamonth.liveamonth.constants.LogicConstants.EReviewAttribute.REVIEW_CATEGORY_LIST;
+import static com.liveamonth.liveamonth.constants.LogicConstants.EReviewAttribute.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleAttributes.MESSAGE;
 
 @Controller
@@ -36,10 +36,10 @@ public class ReviewController {
 
     @GetMapping("/review")
     public String showDefauleReviewPage(Model model) throws Exception {
-        int selectPage = 1;
-        ArrayList<HashMap<String, Object>> allReviewList = reviewService.getAllReviewList(selectPage);
-        ArrayList<HashMap<String, Object>> freeReviewList = reviewService.getFreeReviewList(selectPage);
-        ArrayList<HashMap<String, Object>> popularReviewList = reviewService.getPopularReviewList(selectPage);
+
+        ArrayList<HashMap<String, Object>> allReviewList = reviewService.getDefaultReviewList("all");
+        ArrayList<HashMap<String, Object>> freeReviewList = reviewService.getDefaultReviewList("free");
+        ArrayList<HashMap<String, Object>> popularReviewList = reviewService.getDefaultReviewList("popular");
         model.addAttribute(ALL_REVIEW_LIST.getText(), allReviewList);
         model.addAttribute(FREE_REVIEW_LIST.getText(), freeReviewList);
         model.addAttribute(POPULAR_REVIEW_LIST.getText(), popularReviewList);
@@ -58,44 +58,16 @@ public class ReviewController {
         String likeDescAsc = String.valueOf(request.getParameter("likeDescAsc"));
         String viewDescAsc = String.valueOf(request.getParameter("viewDescAsc"));
 
-        String descAesc = null;
+        String descAsc = reviewService.orderByCategoryReview(orderBy,clickPage,dateDescAsc, likeDescAsc,viewDescAsc);
         switch (orderBy) {
             case "dateOrderBy":
-                if(clickPage.equals("null")) {
-                    if (dateDescAsc == null) {
-                        System.out.println(clickPage);
-                        dateDescAsc = "desc";
-                    } else if (dateDescAsc.equals("desc")) {
-                        dateDescAsc = "asc";
-                    } else {
-                        dateDescAsc = "desc";
-                    }
-                }
-                descAesc = dateDescAsc;
+                dateDescAsc = descAsc;
                 break;
             case "likeOrderBy":
-                if(clickPage.equals("null")) {
-                    if (likeDescAsc == null) {
-                        likeDescAsc = "desc";
-                    } else if (likeDescAsc.equals("desc")) {
-                        likeDescAsc = "asc";
-                    } else {
-                        likeDescAsc = "desc";
-                    }
-                }
-                descAesc = likeDescAsc;
+                likeDescAsc = descAsc;
                 break;
             case "viewOrderBy":
-                if(clickPage.equals("null")) {
-                    if (viewDescAsc == null) {
-                        viewDescAsc = "desc";
-                    } else if (viewDescAsc.equals("desc")) {
-                        viewDescAsc = "asc";
-                    } else {
-                        viewDescAsc = "desc";
-                    }
-                }
-                descAesc = viewDescAsc;
+                viewDescAsc = descAsc;
                 break;
             default:
                 break;
@@ -104,7 +76,7 @@ public class ReviewController {
         if (request.getParameter(SELECTED_PAGE.getText()) != null) {
             selectPage = Integer.parseInt(request.getParameter(SELECTED_PAGE.getText()));
         }
-        ArrayList<HashMap<String, Object>> reviewList = reviewService.getCategoryReviewList(category, selectPage,orderBy,descAesc);
+        ArrayList<HashMap<String, Object>> reviewList = reviewService.getCategoryReviewList(category, selectPage,orderBy,descAsc);
         PagingDTO paging = reviewService.showPaging(selectPage, category);
         model.addAttribute("selectPage",selectPage);
         model.addAttribute("orderBy",orderBy);
@@ -117,6 +89,35 @@ public class ReviewController {
         model.addAttribute(REVIEW_CATEGORY_LIST.getText(), EReviewCategoryName.values());
         model.addAttribute("selectedPage",selectPage);
         return CATEGORY_REVIEW_PAGE.getPath();
+    }
+
+
+    @GetMapping("/searchReviewPage")
+    public String showSearchReviewPage(Model model, HttpServletRequest request) throws Exception {
+        String search = String.valueOf(request.getParameter("search"));
+
+        String searchDate = String.valueOf(request.getParameter("searchDate"));
+        String searchCategory = String.valueOf(request.getParameter("searchCategory"));
+        String searchDetail = String.valueOf(request.getParameter("searchDetail"));
+
+
+        int selectPage = 1;
+        if (request.getParameter(SELECTED_PAGE.getText()) != null) {
+            selectPage = Integer.parseInt(request.getParameter(SELECTED_PAGE.getText()));
+        }
+        PagingDTO paging = reviewService.showSearchPaging(selectPage, search,searchDate,searchCategory,searchDetail);
+        ArrayList<HashMap<String, Object>> reviewList = reviewService.getSearchReviewList(selectPage, search,searchDate,searchCategory,searchDetail);
+        model.addAttribute("reviewList", reviewList);
+        model.addAttribute("search", search);
+        model.addAttribute(REVIEW_CATEGORY_LIST.getText(), EReviewCategoryName.values());
+        model.addAttribute(REVIEW_SEARCH_DATE.getText(), EReviewSearchDate.values());
+        model.addAttribute(REVIEW_SEARCH_DETAIL.getText(), EReviewSearchDetail.values());
+        model.addAttribute(PAIGING.getText(), paging);
+
+        model.addAttribute("selectedDate",searchDate);
+        model.addAttribute("selectedCategory",searchCategory);
+        model.addAttribute("selectedDetail",searchDetail);
+        return  SEARCH_REVIEW_PAGE.getPath();
     }
 
     @GetMapping("/reviewWrite")

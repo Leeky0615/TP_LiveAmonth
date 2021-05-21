@@ -12,13 +12,11 @@ import java.util.HashMap;
 @Repository
 @Mapper
 public interface ReviewMapper {
-    public ArrayList<HashMap<String, Object>> getAllReviewList(HashMap<String, Integer> page) throws Exception;
+    public ArrayList<HashMap<String, Object>> getDefaultReviewList(String category) throws Exception;
 
-    public ArrayList<HashMap<String, Object>> getFreeReviewList(HashMap<String, Integer> page) throws Exception;
+    public ArrayList<HashMap<String, Object>> getCategoryReviewList(HashMap<String, Object> CategoryAndPage) throws Exception;
 
-    public ArrayList<HashMap<String, Object>> getPopularReviewList(HashMap<String, Integer> page) throws Exception;
-
-    public ArrayList<HashMap<String, Object>> getCategoryReviewList(HashMap<String, Object> CategoryAndPage);
+    public ArrayList<HashMap<String, Object>> getSearchReviewList(HashMap<String, Object> searchAndPage) throws Exception;
 
     public ReviewVO getReviewVO(int reviewNO) throws Exception;
 
@@ -49,4 +47,7 @@ public interface ReviewMapper {
     public void deleteReview(int reviewNO) throws Exception;
 
     public void modifyReview(ReviewVO reviewVO) throws Exception;
+
+    public int getSearchReviewListCount(HashMap<String, Object> searchAndPage) throws Exception;
+
 }
