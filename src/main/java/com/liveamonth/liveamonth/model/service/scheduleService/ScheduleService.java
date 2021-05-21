@@ -23,11 +23,11 @@ public interface ScheduleService {
 
     void modifyScheduleContent(int scheduleContentNO, String scheduleContentSubject, String scheduleContentDesc, int scheduleContentCost) throws Exception;
 
-    boolean addSchedule(ScheduleVO scheduleVO) throws Exception;
+    boolean addSchedule(HashMap<String, Object> scheduleVO) throws Exception;
 
     ArrayList<ScheduleVO> getScheduleList(int userNO) throws Exception;
 
-    boolean modifySchedule(ScheduleVO scheduleVO) throws Exception;
+    boolean modifySchedule(HashMap<String, Object> scheduleVO) throws Exception;
 
     boolean deleteSchedule(int scheduleNO) throws Exception;
 

@@ -40,6 +40,7 @@ public class LogicConstants {
         SCHEDULE_ACTION("action"),
         SCHEDULE_LIST("list"),
         SCHEDULE_FILTER("filter"),
+        ORDER_BY_NEW("orderByNew"),
         MODIFY_SCHEDULE_CONTENT_SUBJECT("modifyScheduleContentSubject"),
         MODIFY_SCHEDULE_CONTENT_DESC("modifyScheduleContentDesc"),
         MODIFY_SCHEDULE_CONTENT_COST("modifyScheduleContentCost"),
@@ -69,7 +70,7 @@ public class LogicConstants {
     public enum EScheduleFilterAndOrders{
         SCHEDULE_FO_SEX("userSex"),
         SCHEDULE_FO_AGE("userAge"),
-        SCHEDULE_FO_PLACE("schedulePlace"),
+        SCHEDULE_FO_CITY_NAME("cityName"),
         SCHEDULE_FO_ORDER("orderBy");
         private String text;
         private EScheduleFilterAndOrders(String text) {this.text = text;}

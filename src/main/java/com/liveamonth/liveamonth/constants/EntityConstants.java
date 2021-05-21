@@ -45,25 +45,6 @@ public class EntityConstants {
         }
     }
 
-    public enum CityName {
-        SEOUL("서울"),
-        GANGNEUNG("강릉"),
-        GYEONGJU("경주"),
-        BUSAN("부산"),
-        YEOSU("여수"),
-        JEJU("제주"),
-        ALL_PLACE("전지역");
-        private String nameKR;
-
-        private CityName(String nameKR) {
-            this.nameKR = nameKR;
-        }
-
-        public String getNameKR() {
-            return this.nameKR;
-        }
-    }
-
     public enum ECityInfo {
         CITY_INFO_VO("cityInfoVO"),
         CITY_INFO_VO_LIST("cityInfoVOList"),
