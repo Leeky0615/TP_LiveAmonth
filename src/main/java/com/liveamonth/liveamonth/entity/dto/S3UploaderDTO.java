@@ -37,9 +37,9 @@ public class S3UploaderDTO {
     public String uploadProfileImg(String dirName, String userID, String originalFilename, byte[] bytes) throws Exception {
         String extension = FilenameUtils.getExtension(originalFilename);
         String fileName = userID +"."+extension;
-        String saveFileName = dirName + "/" +  fileName; // S3에 저장된 파일 이름
+        String saveFileName = dirName + fileName; // S3에 저장된 파일 이름
         String uploadedFileName = (saveFileName).replace(File.separatorChar, '/');
-        fileUpload(uploadedFileName, bytes);
+        fileUpload(saveFileName, bytes);
         return fileName;
     }
 
