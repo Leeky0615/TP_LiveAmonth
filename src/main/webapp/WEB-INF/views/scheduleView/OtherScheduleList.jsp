@@ -2,12 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<%@ page import="com.liveamonth.liveamonth.entity.vo.ScheduleVO" %>
-<%@ page import="com.liveamonth.liveamonth.entity.vo.UserVO" %>
-<%@page import="java.util.ArrayList" %>
-<%@page import="java.util.HashMap" %>
-<%@page import="java.util.List" %>
-<%@page import="com.liveamonth.liveamonth.constants.EntityConstants.*" %>
 
 <body>
 <form action="/otherScheduleList" class="filter-form">
