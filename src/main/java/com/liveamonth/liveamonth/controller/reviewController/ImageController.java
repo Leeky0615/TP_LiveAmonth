@@ -13,7 +13,6 @@ import java.io.IOException;
 
 import static com.liveamonth.liveamonth.constants.LogicConstants.EReviewImage.*;
 
-
 @RequiredArgsConstructor
 @RestController
 public class ImageController {
@@ -26,10 +25,13 @@ public class ImageController {
 
         JsonObject jsonObject = new JsonObject();
         try {
-            String savedFileName = s3Uploader.upload(multipartFile, S3_UPLOAD_FOLDER.getText());
+            String savedFileName = s3Uploader.uploadTest(S3_UPLOAD_FOLDER.getText(), multipartFile.getOriginalFilename(), multipartFile.getBytes());
             jsonObject.addProperty(TEMP_IMAGE_URL.getText(), TEMP_IMAGE_PATH.getText()+savedFileName);
             jsonObject.addProperty(RESPONSECODE.getText(), "success");
         } catch (IOException e) {
+            jsonObject.addProperty(RESPONSECODE.getText(), "error");
+            e.printStackTrace();
+        } catch (Exception e) {
             jsonObject.addProperty(RESPONSECODE.getText(), "error");
             e.printStackTrace();
         }
