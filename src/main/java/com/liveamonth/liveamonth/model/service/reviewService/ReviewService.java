@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public interface ReviewService {
+    public ArrayList<HashMap<String, Object>> getMainPopularReviewList(int selectPage) throws Exception;
 
     public ArrayList<HashMap<String, Object>> getAllReviewList(int selectPage) throws Exception;
 

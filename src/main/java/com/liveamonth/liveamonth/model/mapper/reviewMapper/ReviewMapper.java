@@ -18,6 +18,8 @@ public interface ReviewMapper {
 
     public ArrayList<HashMap<String, Object>> getPopularReviewList(HashMap<String, Integer> page) throws Exception;
 
+    public ArrayList<HashMap<String, Object>> getMainPopularReviewList(HashMap<String, Integer> page) throws Exception;
+
     public ArrayList<HashMap<String, Object>> getCategoryReviewList(HashMap<String, Object> CategoryAndPage);
 
     public ReviewVO getReviewVO(int reviewNO) throws Exception;

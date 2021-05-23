@@ -34,7 +34,7 @@ public class MainController {
 
     @RequestMapping(value = "/")
     public String main(Model model) throws Exception {
-        ArrayList<HashMap<String, Object>> popularReviewList = reviewService.getPopularReviewList(1);
+        ArrayList<HashMap<String, Object>> popularReviewList = reviewService.getMainPopularReviewList(1);
         model.addAttribute(POPULAR_REVIEW_LIST.getText(), popularReviewList);
 
         HashMap<String, Object> filtersAndOrder = new HashMap<>();
