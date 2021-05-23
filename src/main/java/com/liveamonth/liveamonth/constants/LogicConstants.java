@@ -152,7 +152,38 @@ public class LogicConstants {
         REVIEW_PLACE_LIST("reviewPlaceList"),
         REVIEW_CATEGORY_LIST("reviewCategoryList"),
         REVIEW_SEARCH_DATE("reviewSearchDate"),
-        REVIEW_SEARCH_DETAIL("reviewSearchDetail");
+        REVIEW_SEARCH_DETAIL("reviewSearchDetail"),
+        ALL_REVIEW_LIST("AllReviewList"),
+        POPULAR_REVIEW_LIST("popularReviewList"),
+        FREE_REVIEW_LIST("freeReviewList"),
+        REVIEW_LIST("reviewList"),
+
+        ALL("all"),
+        FREE("free"),
+        POPULAR("popular"),
+        CATEGORY("category"),
+        CLICK_PAGE("clickPage"),
+        SELECT_PAGE("selectPage"),
+
+
+        ORDER_BY("orderBy"),
+        DATE_ORDER_BY("dateOrderBy"),
+        LIKE_ORDER_BY("likeOrderBy"),
+        VIEW_ORDER_BY("viewOrderBy"),
+
+        DATE_DESC_ASC("dateDescAsc"),
+        LIKE_DESC_ASC("likeDescAsc"),
+        VIEW_DESC_ASC("viewDescAsc"),
+
+        SEARCH("search"),
+        SEARCH_DATE("searchDate"),
+        SEARCH_CATEGORY("searchCategory"),
+        SEARCH_DETAIL("searchDetail"),
+
+        SELECTED_DATE("selectedDate"),
+        SELECTED_CATEGORY("selectedCategory"),
+        SELECTED_DETAIL("selectedDetail");
+
 
         private String text;
         private EReviewAttribute(String text){this.text = text;}
@@ -174,14 +205,6 @@ public class LogicConstants {
         public String getText() {return this.text;}
     }
 
-    public enum EReview{
-        ALL_REVIEW_LIST("AllReviewList"),
-        POPULAR_REVIEW_LIST("popularReviewList"),
-        FREE_REVIEW_LIST("freeReviewList");
 
-        private String text;
-        private EReview(String text){this.text = text;}
-        public String getText() {return this.text;}
-    }
 
 }

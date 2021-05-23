@@ -25,7 +25,6 @@ import static com.liveamonth.liveamonth.constants.EntityConstants.*;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EReview.*;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.USER_VO;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EPaging.*;
-import static com.liveamonth.liveamonth.constants.LogicConstants.EReview.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EReviewAttribute.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleAttributes.MESSAGE;
 
@@ -37,9 +36,9 @@ public class ReviewController {
     @GetMapping("/review")
     public String showDefauleReviewPage(Model model) throws Exception {
 
-        ArrayList<HashMap<String, Object>> allReviewList = reviewService.getDefaultReviewList("all");
-        ArrayList<HashMap<String, Object>> freeReviewList = reviewService.getDefaultReviewList("free");
-        ArrayList<HashMap<String, Object>> popularReviewList = reviewService.getDefaultReviewList("popular");
+        ArrayList<HashMap<String, Object>> allReviewList = reviewService.getDefaultReviewList(ALL.getText());
+        ArrayList<HashMap<String, Object>> freeReviewList = reviewService.getDefaultReviewList(FREE.getText());
+        ArrayList<HashMap<String, Object>> popularReviewList = reviewService.getDefaultReviewList(POPULAR.getText());
         model.addAttribute(ALL_REVIEW_LIST.getText(), allReviewList);
         model.addAttribute(FREE_REVIEW_LIST.getText(), freeReviewList);
         model.addAttribute(POPULAR_REVIEW_LIST.getText(), popularReviewList);
@@ -50,13 +49,13 @@ public class ReviewController {
 
     @GetMapping("/categoryReviewPage")
     public String showCategoryReviewPage(Model model, HttpServletRequest request) throws Exception {
-        String category = String.valueOf(request.getParameter("category"));
-        String clickPage = String.valueOf(request.getParameter("clickPage"));
+        String category = String.valueOf(request.getParameter(CATEGORY.getText()));
+        String clickPage = String.valueOf(request.getParameter( CLICK_PAGE.getText()));
         //정렬 기능
-        String orderBy = String.valueOf(request.getParameter("orderBy"));
-        String dateDescAsc =String.valueOf(request.getParameter("dateDescAsc"));
-        String likeDescAsc = String.valueOf(request.getParameter("likeDescAsc"));
-        String viewDescAsc = String.valueOf(request.getParameter("viewDescAsc"));
+        String orderBy = String.valueOf(request.getParameter( ORDER_BY.getText()));
+        String dateDescAsc =String.valueOf(request.getParameter( DATE_DESC_ASC.getText()));
+        String likeDescAsc = String.valueOf(request.getParameter(LIKE_DESC_ASC.getText()));
+        String viewDescAsc = String.valueOf(request.getParameter(VIEW_DESC_ASC.getText()));
 
         String descAsc = reviewService.orderByCategoryReview(orderBy,clickPage,dateDescAsc, likeDescAsc,viewDescAsc);
         switch (orderBy) {
@@ -78,27 +77,27 @@ public class ReviewController {
         }
         ArrayList<HashMap<String, Object>> reviewList = reviewService.getCategoryReviewList(category, selectPage,orderBy,descAsc);
         PagingDTO paging = reviewService.showPaging(selectPage, category);
-        model.addAttribute("selectPage",selectPage);
-        model.addAttribute("orderBy",orderBy);
-        model.addAttribute("dateDescAsc",dateDescAsc);
-        model.addAttribute("likeDescAsc",likeDescAsc);
-        model.addAttribute("viewDescAsc",viewDescAsc);
+        model.addAttribute(SELECT_PAGE.getText(),selectPage);
+        model.addAttribute(ORDER_BY.getText(),orderBy);
+        model.addAttribute(DATE_DESC_ASC.getText(),dateDescAsc);
+        model.addAttribute(LIKE_DESC_ASC.getText(),likeDescAsc);
+        model.addAttribute( VIEW_DESC_ASC.getText(),viewDescAsc);
         model.addAttribute(PAIGING.getText(), paging);
-        model.addAttribute("reviewList", reviewList);
-        model.addAttribute("category", category);
+        model.addAttribute(REVIEW_LIST.getText(), reviewList);
+        model.addAttribute(CATEGORY.getText(), category);
         model.addAttribute(REVIEW_CATEGORY_LIST.getText(), EReviewCategoryName.values());
-        model.addAttribute("selectedPage",selectPage);
+        model.addAttribute(SELECTED_PAGE.getText(),selectPage);
         return CATEGORY_REVIEW_PAGE.getPath();
     }
 
 
     @GetMapping("/searchReviewPage")
     public String showSearchReviewPage(Model model, HttpServletRequest request) throws Exception {
-        String search = String.valueOf(request.getParameter("search"));
+        String search = String.valueOf(request.getParameter(SEARCH.getText()));
 
-        String searchDate = String.valueOf(request.getParameter("searchDate"));
-        String searchCategory = String.valueOf(request.getParameter("searchCategory"));
-        String searchDetail = String.valueOf(request.getParameter("searchDetail"));
+        String searchDate = String.valueOf(request.getParameter(SEARCH_DATE.getText()));
+        String searchCategory = String.valueOf(request.getParameter(SEARCH_CATEGORY.getText()));
+        String searchDetail = String.valueOf(request.getParameter(SEARCH_DETAIL.getText()));
 
 
         int selectPage = 1;
@@ -107,16 +106,16 @@ public class ReviewController {
         }
         PagingDTO paging = reviewService.showSearchPaging(selectPage, search,searchDate,searchCategory,searchDetail);
         ArrayList<HashMap<String, Object>> reviewList = reviewService.getSearchReviewList(selectPage, search,searchDate,searchCategory,searchDetail);
-        model.addAttribute("reviewList", reviewList);
-        model.addAttribute("search", search);
+        model.addAttribute(REVIEW_LIST.getText(), reviewList);
+        model.addAttribute(SEARCH.getText(), search);
         model.addAttribute(REVIEW_CATEGORY_LIST.getText(), EReviewCategoryName.values());
         model.addAttribute(REVIEW_SEARCH_DATE.getText(), EReviewSearchDate.values());
         model.addAttribute(REVIEW_SEARCH_DETAIL.getText(), EReviewSearchDetail.values());
         model.addAttribute(PAIGING.getText(), paging);
 
-        model.addAttribute("selectedDate",searchDate);
-        model.addAttribute("selectedCategory",searchCategory);
-        model.addAttribute("selectedDetail",searchDetail);
+        model.addAttribute(SELECTED_DATE.getText(),searchDate);
+        model.addAttribute(SELECTED_CATEGORY.getText(),searchCategory);
+        model.addAttribute(SELECTED_DETAIL.getText(),searchDetail);
         return  SEARCH_REVIEW_PAGE.getPath();
     }
 

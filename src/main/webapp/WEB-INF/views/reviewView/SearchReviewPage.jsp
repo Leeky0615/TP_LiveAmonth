@@ -75,7 +75,7 @@
                             <div>
                                 <div class="col-lg-2">
                                     <div class="pd-title">
-                                        <input type="text" style="width:200px; height:40px;" id="search" name="search">
+                                        <input type="text" style="width:200px; height:40px;" id="search" name="search" value="${search}">
                                     </div>
                                 </div>
                             </div>
