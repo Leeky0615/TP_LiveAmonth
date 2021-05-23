@@ -1,6 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <link rel="stylesheet" href="resources/css/review.css" type="text/css">
+<script type="text/javascript" src="resources/js/review.js"></script>
 
 <body>
 <div class="container">
@@ -72,18 +74,8 @@
 </jsp:include>
 
 
-<button type="button" class="btn btn-sm btn-primary pull-right" onclick="addScheduleReply(${param.scheduleReplyNO});">
+<button type="button" class="btn btn-sm btn-primary pull-right" onclick="addReviewReply(${userVO.userNO});">
     글작성
 </button>
 </body>
-<script>
-    function addScheduleReply(scheduleReplyNO) {
-        var userNO = "${userVO.userNO}";
-        if (userNO == "" || userNO == null) {
-            alert("로그인 후 이용해주세요.");
-            return false;
-        }
-        location.replace("/reviewWrite")
-    }
-</script>
 </html>

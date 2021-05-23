@@ -4,9 +4,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
-<head>
-    <title>한달 살기</title>
-</head>
 <body>
 <tiles:insertAttribute name="header"/>
 <tiles:insertAttribute name="cityInfoSlide"/>

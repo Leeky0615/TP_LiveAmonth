@@ -1,6 +1,5 @@
 package com.liveamonth.liveamonth.controller.reviewController;
 
-import com.liveamonth.liveamonth.constants.LogicConstants;
 import com.liveamonth.liveamonth.entity.dto.PagingDTO;
 import com.liveamonth.liveamonth.entity.vo.ReviewLikeVO;
 import com.liveamonth.liveamonth.entity.vo.ReviewVO;
@@ -21,13 +20,13 @@ import java.util.HashMap;
 import java.util.Locale;
 
 import static com.liveamonth.liveamonth.constants.ControllerPathConstants.EReviewPath.*;
-import static com.liveamonth.liveamonth.constants.EntityConstants.*;
-import static com.liveamonth.liveamonth.constants.EntityConstants.EReview.*;
+import static com.liveamonth.liveamonth.constants.EntityConstants.EReview.REVIEW_NO;
+import static com.liveamonth.liveamonth.constants.EntityConstants.EReview.REVIEW_VO;
+import static com.liveamonth.liveamonth.constants.EntityConstants.EReviewCategoryName;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.USER_VO;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EPaging.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EReview.*;
-import static com.liveamonth.liveamonth.constants.LogicConstants.EReviewAttribute.REVIEW_CATEGORY_LIST;
-import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleAttributes.MESSAGE;
+import static com.liveamonth.liveamonth.constants.LogicConstants.EReviewMessage.*;
 
 @Controller
 public class ReviewController {
@@ -82,7 +81,7 @@ public class ReviewController {
         return CATEGORY_REVIEW_PAGE.getPath();
     }
 
-    @GetMapping("/reviewWrite")
+    @GetMapping("reviewWrite")
     public String reviewWrite(Model model, HttpServletRequest request) {
         int reviewNO;
         if (request.getParameter(REVIEW_NO.getText()) != null) {
@@ -92,8 +91,7 @@ public class ReviewController {
                 reviewVO = reviewService.getReviewVO(reviewNO);
                 model.addAttribute(REVIEW_VO.getText(), reviewVO);
             } catch (Exception e) {
-                model.addAttribute(MESSAGE.getText(), "후기 조회에 실패했습니다.");
-                e.printStackTrace();
+                System.err.println(REVIEW_LOAD_FAIL_MESSAGE.getText() + e);
                 return DEFUALT_REVIEW_PAGE.getPath();
             }
         }
@@ -116,8 +114,7 @@ public class ReviewController {
         try {
             reviewNO = reviewService.addReview(reviewVO);
         } catch (Exception e) {
-            rttr.addAttribute(MESSAGE.getText(), "후기 등록에 실패하셨습니다.");
-            e.printStackTrace();
+            System.err.println(REVIEW_ADD_FAIL_MESSAGE.getText() + e);
             return DEFUALT_REVIEW_PAGE.getPath();
         }
         rttr.addAttribute(REVIEW_NO.getText(), reviewNO);
@@ -128,13 +125,10 @@ public class ReviewController {
     public String modifyReview(HttpServletRequest request, ReviewVO reviewVO, RedirectAttributes rttr) {
         int reviewNO = Integer.parseInt(request.getParameter(REVIEW_NO.getText()));
         reviewVO.setReviewNO(reviewNO);
-
         try {
             reviewService.modifyReview(reviewVO);
         } catch (Exception e) {
-            rttr.addAttribute(MESSAGE.getText(), "후기 등록에 실패하셨습니다.");
-            e.printStackTrace();
-            return DEFUALT_REVIEW_PAGE.getPath();
+            System.err.println(REVIEW_MODIFY_FAIL_MESSAGE.getText() + e);
         }
         rttr.addAttribute(REVIEW_NO.getText(), reviewNO);
         return REDIRECT_REVIEW_CONTENT.getRedirectPath();
@@ -146,15 +140,14 @@ public class ReviewController {
         try {
             reviewService.deleteReview(reviewNO);
         } catch (Exception e) {
-            rttr.addAttribute(MESSAGE.getText(), "후기 삭제에 실패하셨습니다.");
-            e.printStackTrace();
-            return DEFUALT_REVIEW_PAGE.getPath();
+            System.err.println(REVIEW_DELETE_FAIL_MESSAGE.getText() + e);
+            rttr.addAttribute(REVIEW_NO.getText(), reviewNO);
+            return REDIRECT_REVIEW_CONTENT.getPath();
         }
-        rttr.addAttribute(REVIEW_NO.getText(), reviewNO);
         return DEFUALT_REVIEW_PAGE.getPath();
     }
 
-    @GetMapping("/getReview")
+    @GetMapping("getReview")
     public String getReview(Model model, HttpServletRequest request, RedirectAttributes rttr) {
         int reviewNO = Integer.parseInt(String.valueOf(request.getParameter(REVIEW_NO.getText())));
         HttpSession session = request.getSession();
@@ -165,16 +158,15 @@ public class ReviewController {
             reviewVO = reviewService.getReviewVO(reviewNO);
             model.addAttribute(REVIEW_VO.getText(), reviewVO);
         } catch (Exception e) {
-            model.addAttribute(MESSAGE.getText(), "후기 조회에 실패했습니다.");
-            e.printStackTrace();
+            System.err.println(REVIEW_LOAD_FAIL_MESSAGE.getText() + e);
             return DEFUALT_REVIEW_PAGE.getPath();
         }
 
         try {
             reviewService.increaseReviewViewCount(reviewNO);
         } catch (Exception e) {
-            rttr.addFlashAttribute(MESSAGE.getText(), "조회수 증가에 실패하셨습니다.");
-            e.printStackTrace();
+            System.err.println(REVIEW_VIEWCOUNT_INCREASE_FAIL_MESSAGE.getText() + e);
+            return DEFUALT_REVIEW_PAGE.getPath();
         }
 
         int selectPage = 1;
@@ -184,11 +176,10 @@ public class ReviewController {
 
         try {
             ArrayList<HashMap<String, Object>> reviewReplyList = reviewService.getReviewReplyList(reviewNO, selectPage);
-            model.addAttribute("reviewReplyList", reviewReplyList);
+            model.addAttribute(REVIEW_REPLY_LIST.getText(), reviewReplyList);
         } catch (Exception e) {
-            rttr.addFlashAttribute(MESSAGE.getText(), "댓글 리스트 조회에 실패했습니다.");
-            e.printStackTrace();
-            return "redirect:review";
+            System.err.println(REVIEW_LOAD_FAIL_MESSAGE.getText() + e);
+            return DEFUALT_REVIEW_PAGE.getPath();
         }
 
         PagingDTO paging = null;
@@ -196,16 +187,16 @@ public class ReviewController {
             paging = reviewService.showPaging(selectPage, reviewNO);
             model.addAttribute(PAIGING.getText(), paging);
         } catch (Exception e) {
-            rttr.addFlashAttribute(MESSAGE.getText(), "댓글 페이징에 실패했습니다.");
-            e.printStackTrace();
+            System.err.println(REVIEWREPLY_PAGING_FAIL_MESSAGE.getText() + e);
+            return DEFUALT_REVIEW_PAGE.getPath();
         }
 
         try {
             int likeCount = reviewService.getReviewLikeCount(reviewNO);
-            model.addAttribute("reviewLikeCount", likeCount);
+            model.addAttribute(REVIEW_LIKE_COUNT.getText(), likeCount);
         } catch (Exception e) {
-            rttr.addFlashAttribute(MESSAGE.getText(), "좋아요 수 조회에 실패했습니다.");
-            e.printStackTrace();
+            System.err.println(REVIEW_LIKECOUNT_LOAD_FAIL_MESSAGE.getText() + e);
+            return DEFUALT_REVIEW_PAGE.getPath();
         }
 
         if (session_UserVO != null) {
@@ -216,8 +207,8 @@ public class ReviewController {
                 int status = reviewService.getReviewLikeStatus(reviewLikeVO);
                 model.addAttribute(LIKE_STATUS.getText(), status);
             } catch (Exception e) {
-                rttr.addFlashAttribute(MESSAGE.getText(), "좋아요 상태 조회에 실패했습니다.");
-                e.printStackTrace();
+                System.err.println(REVIEW_LIKESTATUS_LOAD_FAIL_MESSAGE.getText() + e);
+                return DEFUALT_REVIEW_PAGE.getPath();
             }
         }
         model.addAttribute(REVIEW_CATEGORY_LIST.getText(), EReviewCategoryName.values());
