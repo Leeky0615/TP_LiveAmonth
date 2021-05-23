@@ -59,6 +59,7 @@ public class CityServiceImpl implements CityService {
     public List<CityWeatherVO> getCityWeatherList(String cityName) throws Exception {
         return cityMapper.getCityWeatherList(cityName);
     }
+
     @Override
     public List<CityTransportVO> getCityTransportList(String cityName) throws Exception {
         return cityMapper.getCityTransportList(cityName);

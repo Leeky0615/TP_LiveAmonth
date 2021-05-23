@@ -186,8 +186,17 @@
                         <c:if test="${scheduleVOReply.scheduleReply.scheduleReplyRefNO == 0 || scheduleVOReply.NO == scheduleVOReplyList[0].NO}">
                             <div class="media-block">
                                 <a class="media-left" href="#">
-                                    <img class="img-circle img-sm" alt="Profile Picture"
-                                         src="${scheduleVOReply.userVO.getUserImageURL()}"></a>
+                                    <c:choose>
+                                        <c:when test="${scheduleVOReply.userVO.userImage == null}">
+                                            <img class="img-circle img-sm" alt="Profile Picture"
+                                                 src="https://liveamonth-resources.s3.ap-northeast-2.amazonaws.com/img/user/default.jpg">
+                                        </c:when>
+                                        <c:otherwise>
+                                            <img class="img-circle img-sm" alt="Profile Picture"
+                                                 src="${scheduleVOReply.userVO.getUserImageURL()}">
+                                        </c:otherwise>
+                                    </c:choose>
+                                    </a>
                                 <div class="media-body">
                                     <c:choose>
                                         <c:when test="${scheduleVOReply.scheduleReply.scheduleReplyRefNO == 0}">
@@ -224,8 +233,17 @@
                                             <div>
                                                 <div class="media-block">
                                                     <a class="media-left" href="#">
-                                                        <img class="img-circle img-sm" alt="Profile Picture"
-                                                             src="${scheduleVOReplyRef.userVO.getUserImageURL()}"></a>
+                                                        <c:choose>
+                                                            <c:when test="${scheduleVOReplyRef.userVO.userImage == null}">
+                                                                <img class="img-circle img-sm" alt="Profile Picture"
+                                                                     src="https://liveamonth-resources.s3.ap-northeast-2.amazonaws.com/img/user/default.jpg">
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <img class="img-circle img-sm" alt="Profile Picture"
+                                                                     src="${scheduleVOReplyRef.userVO.getUserImageURL()}">
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                        </a>
                                                     <div class="media-body">
                                                         <jsp:include page="ScheduleReply.jsp">
                                                             <jsp:param value="${otherScheduleAndLikeCount.scheduleNO}"

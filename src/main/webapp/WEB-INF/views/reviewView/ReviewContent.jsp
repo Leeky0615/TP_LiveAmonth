@@ -8,10 +8,8 @@
     <script src="resources/js/reply.js"></script>
 </head>
 <body>
-
 <input type="hidden" id="userNO" name="userNO" value="${userVO.userNO}"/>
 <input type="hidden" id="selectedReviewNO" name="selectedReviewNO" value="${reviewVO.reviewNO}"/>
-
 <section class="blog-details-section spad">
     <div class="container">
         <div class="row">
@@ -50,7 +48,6 @@
         </div>
     </div>
 </section>
-
 <section class="blog-details-section spad">
     <div class="container">
         <div class="container bootdey likeDiv">
@@ -69,7 +66,6 @@
         </div>
     </div>
 </section>
-
 <section class="blog-details-section spad">
     <div class="container bootdey">
         <div class="col-lg-7">
@@ -90,8 +86,18 @@
                         <c:if test="${reviewReplyMap.reviewReplyVO.reviewReplyRefNO == 0 || reviewReplyMap.NO == reviewReplyList[0].NO}">
                             <div class="media-block">
                                 <a class="media-left" href="#">
-                                    <img class="img-circle img-sm" alt="Profile Picture"
-                                         src="https://blog.kakaocdn.net/dn/c3vWTf/btqUuNfnDsf/VQMbJlQW4ywjeI8cUE91OK/img.jpg"></a>
+                                    <c:choose>
+                                        <c:when test="${reviewReplyMap.userVO.userImage == null}">
+                                            <img class="img-circle img-sm" alt="Profile Picture"
+                                                 src="https://liveamonth-resources.s3.ap-northeast-2.amazonaws.com/img/user/default.jpg">
+                                        </c:when>
+                                        <c:otherwise>
+                                            <img class="img-circle img-sm" alt="Profile Picture"
+                                                 src="${reviewReplyMap.userVO.getUserImageURL()}">
+                                        </c:otherwise>
+                                    </c:choose>
+<%--                                    <img class="img-circle img-sm" alt="Profile Picture"--%>
+<%--                                         src="https://blog.kakaocdn.net/dn/c3vWTf/btqUuNfnDsf/VQMbJlQW4ywjeI8cUE91OK/img.jpg"></a>--%>
                                 <div class="media-body">
                                     <c:choose>
                                         <c:when test="${reviewReplyMap.reviewReplyVO.reviewReplyRefNO == 0}">
@@ -122,8 +128,17 @@
                                             <div>
                                                 <div class="media-block">
                                                     <a class="media-left" href="#">
-                                                        <img class="img-circle img-sm" alt="Profile Picture"
-                                                             src="https://blog.kakaocdn.net/dn/c3vWTf/btqUuNfnDsf/VQMbJlQW4ywjeI8cUE91OK/img.jpg"></a>
+                                                        <c:choose>
+                                                            <c:when test="${reviewReplyRefMap.userVO.userImage == null}">
+                                                                <img class="img-circle img-sm" alt="Profile Picture"
+                                                                     src="https://liveamonth-resources.s3.ap-northeast-2.amazonaws.com/img/user/default.jpg">
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <img class="img-circle img-sm" alt="Profile Picture"
+                                                                     src="${reviewReplyRefMap.userVO.getUserImageURL()}">
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                    </a>
                                                     <div class="media-body">
                                                         <jsp:include page="ReviewReply.jsp">
                                                             <jsp:param value="${reviewReplyRefMap.reviewReplyVO.reviewNO}" name="reviewNO"/>

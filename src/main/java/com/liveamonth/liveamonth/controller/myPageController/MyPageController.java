@@ -141,7 +141,7 @@ public class MyPageController {
             this.setPageAttr(model,PAGE_MODIFY,false);
         }else if(page.equals(PAGE_DROP_USER.getText())){
             this.setPageAttr(model,PAGE_DROP_USER,false);
-            s3Uploader.delete(IMAGE_DIR.getText()+session_UserVO.getUserImage());
+            s3Uploader.delete(IMAGE_DIR.getText()+session_UserVO.getUserImage()); // 회원 탈퇴시 S3에 있는 이미지도 삭제
             myPageService.dropUser(session_UserVO.getUserID());
             session.invalidate();
         }else if(page.equals(PAGE_ONE_TO_ONE_ASK) && oneToOneAskVO != null){
@@ -200,10 +200,10 @@ public class MyPageController {
     public String modifyUserImage(HttpSession session, @RequestParam("fileName") MultipartFile mFile, Model model) throws Exception {
         UserVO userVO = (UserVO) session.getAttribute(USER_VO.getText());
         if(userVO.getUserImage() != null) s3Uploader.delete(IMAGE_DIR.getText()+userVO.getUserImage());
-        String saveName = s3Uploader.uploadProfileImg(IMAGE_DIR_NAME.getText(), userVO.getUserID(), mFile.getOriginalFilename(), mFile.getBytes());
+
+        String saveName = s3Uploader.uploadProfileImg(IMAGE_DIR.getText(), userVO.getUserID(), mFile.getOriginalFilename(), mFile.getBytes());
         myPageService.modifyUserImg(saveName,userVO.getUserID());
-        userVO.setUserImage(saveName);
-        model.addAttribute(USER_VO.getText(), userVO);
+
         return REDIRECT_MY_PAGE.getText();
     }
 }
