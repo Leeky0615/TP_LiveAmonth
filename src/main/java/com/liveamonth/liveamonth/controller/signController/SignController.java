@@ -52,7 +52,6 @@ public class SignController {
         model.addAttribute(FIRST_IN.getText(), true);
         return SIGN_IN.getPath();
     }
-
     @RequestMapping("/logout")
     private String logout(HttpSession session, Model model) throws Exception {
         session.invalidate();
