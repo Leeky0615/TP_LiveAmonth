@@ -19,7 +19,7 @@
                         <h3 class="mb-4">Sign In</h3>
                     </div>
                 </div>
-
+                
                 <form action="checkSign" class="signin-form">
                     <div class="form-group mt-3">
                         <input type="text" class="form-control" id="userID" name="userID" required>
@@ -42,7 +42,7 @@
                     <div class="form-group d-md-flex">
                         <div class="w-50 text-left">
                             <label class="checkbox-wrap checkbox-primary mb-0">Remember Me
-                                <input type="checkbox" name="userCookie" checked>
+                                <input type="checkbox" name="userCookie">
                                 <span class="checkmark"></span>
                             </label>
                         </div>

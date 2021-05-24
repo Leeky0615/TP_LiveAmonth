@@ -43,7 +43,6 @@ import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleAttrib
 import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleFilterAndOrders.SCHEDULE_FO_ORDER;
 import static com.liveamonth.liveamonth.constants.LogicConstants.ESignAttributes.AT;
 import static com.liveamonth.liveamonth.constants.LogicConstants.ESignAttributes.FIRST_IN;
-
 @Controller
 public class SignController {
     private boolean firstIn;
