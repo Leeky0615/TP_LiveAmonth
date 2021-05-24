@@ -11,7 +11,7 @@
             <div class="recent-post">
                 <div class="rp-item">
                     <div class="rp-text">
-                        <a href="#" onclick=acyncMovePage("reCheckPassword?page=modify");>회원정보 수정</a>
+                        <a href="reCheckPassword?page=modify">회원정보 수정</a>
                     </div>
                 </div>
             </div>
@@ -44,28 +44,12 @@
                     <div class="rp-text">
                         <div class="rp-item">
                             <div class="rp-text">
-                                <a href="#"  onclick=acyncMovePage("oneToOneAsk");>1:1 문의하기</a>
+                                <a href="oneToOneAsk">1:1 문의하기</a>
                             </div>
                         </div>
                         <div class="rp-item">
                             <div class="rp-text">
-                                <a  href="#"  onclick=acyncMovePage("oneToOneAskReply");>1:1문의답변(직원용)</a>
-                            </div>
-                        </div>
-                        <div class="rp-item">
-                            <div class="rp-text">
-                                <a href="#">공지사항</a>
-                            </div>
-                        </div>
-                        <div class="rp-item">
-                            <div class="rp-text">
-                                <a  href="#" onclick=acyncMovePage("faq");>FAQ</a>
-                            </div>
-                        </div>
-
-                        <div class="rp-item">
-                            <div class="rp-text">
-                                <a  href="#" onclick=acyncMovePage("personalTerms");>개인정보 처리방침</a>
+                                <a href="oneToOneAskReply">1:1문의답변(직원용)</a>
                             </div>
                         </div>
                     </div>
@@ -79,7 +63,7 @@
             <div class="recent-post">
                 <div class="rp-item">
                     <div class="rp-text">
-                        <a href="#" onclick=acyncMovePage("reCheckPassword?page=dropUser");>회원 탈퇴</a>
+                        <a href="reCheckPassword?page=dropUser">회원 탈퇴</a>
                     </div>
                 </div>
             </div>

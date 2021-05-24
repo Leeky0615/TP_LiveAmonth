@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <!-- Footer Section Begin -->
 <footer class="footer-section">
@@ -24,11 +25,13 @@
                 <div class="fs-widget">
                     <h5>Help</h5>
                     <ul>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Contact Support</a></li>
-                        <li><a href="#">Knowledgebase</a></li>
-                        <li><a href="#">Careers</a></li>
-                        <li><a href="faq">FAQs</a></li>
+                        <c:if test="${userVO.userNO != null}">
+                            <li><a href="oneToOneAsk">1:1 문의하기</a></li>
+                        </c:if>
+                        <li><a href="selectedCustomerCenterMenu?menu=Faq">FAQ</a></li>
+                        <li><a href="selectedCustomerCenterMenu?menu=PersonalTerms">개인정보 처리방침</a></li>
+                        <li><a href="selectedCustomerCenterMenu?menu=TermsAndConditions">이용약관</a></li>
+                        <li><a href="selectedCustomerCenterMenu?menu=Notice">공지사항</a></li>
                     </ul>
                 </div>
             </div>
@@ -36,18 +39,24 @@
                 <div class="fs-widget">
                     <h5>Links</h5>
                     <ul>
-                        <li><a href="#">Contact</a></li>
-                        <li><a href="#">Create Property</a></li>
-                        <li><a href="#">My Properties</a></li>
-                        <li><a href="#">Register</a></li>
-                        <li><a href="#">Login</a></li>
+                        <li><a href="cityInfo?cityName=all">도시 소개</a></li>
+                        <li><a href="otherScheduleList?action=list">다른 사람 스케줄</a></li>
+                        <li><a href="review">후기 게시판</a></li>
+                        <c:if test="${empty userVO.userNO}">
+                            <li><a href="signIn">로그인</a></li>
+                            <li><a href="signUp">회원가입</a></li>
+                        </c:if>
+                        <c:if test="${userVO.userNO != null}">
+                            <li><a href="logout">로그아웃</a></li>
+                            <li><a href="myPage">마이페이지</a></li>
+                        </c:if>
                     </ul>
                 </div>
             </div>
             <div class="col-lg-4 col-md-6">
                 <div class="fs-widget">
                     <h5>Newsletter</h5>
-                    <p>Deserunt mollit anim id est laborum.</p>
+                    <p>더 많은 한달살기 정보를 메일로 받아보세요~!</p>
                     <form action="#" class="subscribe-form">
                         <input type="text" placeholder="Email">
                         <button type="submit" class="site-btn">Subscribe</button>

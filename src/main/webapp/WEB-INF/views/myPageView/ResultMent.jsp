@@ -12,14 +12,14 @@
                         <p>${text}</p>
                     </div>
                     <c:choose>
-                        <c:when test="${page == 'modify'}">
-                            <button class="site-btn" href="#" onclick=acyncMovePage("reCheckPassword?page=${page}");>마이페이지로 돌아가기</button>
+                        <c:when test="${page == \"modify\"}">
+                            <a class="site-btn" href="reCheckPassword?page=${page}">마이페이지로 돌아가기</a>
                         </c:when>
-                        <c:when test="${page == 'oneToOneAsk' || page == 'deleteOneToOneAsk'}">
-                            <button class="site-btn" href="#" onclick=acyncMovePage("oneToOneAsk");>1:1문의 페이지로 돌아가기</button>
+                        <c:when test="${page == \"oneToOneAsk\" || page == \"deleteOneToOneAsk\"}">
+                            <a class="site-btn" href="oneToOneAsk">1:1문의 페이지로 돌아가기</a>
                         </c:when>
                         <c:otherwise>
-                            <button class="site-btn" href="logout">메인으로 돌아가기</button>
+                            <a class="site-btn" href="logout">메인으로 돌아가기</a>
                         </c:otherwise>
                     </c:choose>
                 </div>

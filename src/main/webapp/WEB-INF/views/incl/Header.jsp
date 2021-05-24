@@ -24,30 +24,6 @@
 
 <%--해당 js가 Footer에 있을 시 script에서 쿼리가 실행이 안됨. 그래서 위로 올림.--%>
 <script src="resources/js/jquery-3.3.1.min.js"></script>
-
-<div class="offcanvas-menu-overlay"></div>
-<div class="offcanvas-menu-wrapper">
-    <div class="canvas-close">
-        <span class="icon_close"></span>
-    </div>
-    <div class="logo">
-        <a href="/"> <img src="resources/img/logo.png" alt="/">
-        </a>
-    </div>
-    <div id="mobile-menu-wrap"></div>
-    <div class="om-widget">
-        <a href="#" class="hw-btn">Login</a>
-    </div>
-    <div class="om-social">
-        <a href="#"><i class="fa fa-facebook"></i></a> <a href="#"><i
-            class="fa fa-twitter"></i></a> <a href="#"><i
-            class="fa fa-youtube-play"></i></a> <a href="#"><i
-            class="fa fa-instagram"></i></a> <a href="#"><i
-            class="fa fa-pinterest-p"></i></a>
-    </div>
-</div>
-<!-- Offcanvas Menu Wrapper End -->
-
 <!-- Header Section Begin -->
 <header class="header-section">
     <div class="hs-top">
@@ -108,12 +84,12 @@
                                 </ul>
                             </li>
                             <li class="active"><a href="myPage">MyPage</a></li>
-                            <li class="active"><a href="customercenter">Customer Center</a>
+                            <li class="active"><a href="customerCenter">Customer Center</a>
                                 <ul class="dropdown">
-                                    <li><a href="customercenter">1:1문의</a></li>
-                                    <li><a href="customercenter">공지사항</a></li>
-                                    <li><a href="faq">FAQ</a></li>
-                                    <li><a href="customercenter">개인정보처리방침</a></li>
+                                    <li><a href="selectedCustomerCenterMenu?menu=Faq">FAQ</a></li>
+                                    <li><a href="selectedCustomerCenterMenu?menu=PersonalTerms">개인정보 처리방침</a></li>
+                                    <li><a href="selectedCustomerCenterMenu?menu=TermsAndConditions">이용약관</a></li>
+                                    <li><a href="selectedCustomerCenterMenu?menu=Notice">공지사항</a></li>
                                 </ul>
                             </li>
 

@@ -1,9 +1,7 @@
 package com.liveamonth.liveamonth.controller.scheduleController;
 
 import com.liveamonth.liveamonth.constants.ControllerPathConstants;
-import com.liveamonth.liveamonth.constants.EntityConstants;
 import com.liveamonth.liveamonth.entity.dto.CalendarDTO;
-import com.liveamonth.liveamonth.entity.vo.CityVO;
 import com.liveamonth.liveamonth.entity.vo.ScheduleContentVO;
 import com.liveamonth.liveamonth.entity.vo.ScheduleVO;
 import com.liveamonth.liveamonth.entity.vo.UserVO;
@@ -98,7 +96,7 @@ public class ScheduleController {
         } catch (Exception e) {
             model.addAttribute(MESSAGE.getText(), "캘린더 리스트 조회에 실패하셨습니다.");
             e.printStackTrace();
-            return ControllerPathConstants.EMainPath.MAIN.getPath();
+            return ControllerPathConstants.ETemplatePath.MAIN.getPath();
         }
 
         int scheduleNO = 0;

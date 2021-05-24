@@ -1,5 +1,7 @@
 package com.liveamonth.liveamonth.controller.myPageController;
 
+import com.liveamonth.liveamonth.constants.ControllerPathConstants;
+import com.liveamonth.liveamonth.constants.LogicConstants;
 import com.liveamonth.liveamonth.constants.LogicConstants.EPageOptions;
 import com.liveamonth.liveamonth.entity.dto.S3UploaderDTO;
 import com.liveamonth.liveamonth.entity.vo.OneToOneAskVO;
@@ -20,6 +22,7 @@ import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 
 import static com.liveamonth.liveamonth.constants.ControllerPathConstants.EMyPagePath.*;
+import static com.liveamonth.liveamonth.constants.ControllerPathConstants.ETemplatePath.MY_PAGE;
 import static com.liveamonth.liveamonth.constants.EntityConstants.*;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EOneToOneAsk.*;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.*;
@@ -45,7 +48,7 @@ public class MyPageController {
     public String myPage(Model model, HttpSession session) {
         model.addAttribute(CHECK_USER.getText(),  true);
         model.addAttribute(USER_VO.getText(), session.getAttribute(USER_VO.getText()));
-        return MY_PAGE.getText();
+        return MY_PAGE.getPath();
     }
     private void setPageAttr(Model model, EPageOptions pageOption, Boolean stepStatus){
         switch (pageOption){
@@ -149,7 +152,7 @@ public class MyPageController {
             s3Uploader.delete(IMAGE_DIR.getText()+session_UserVO.getUserImage()); // 회원 탈퇴시 S3에 있는 이미지도 삭제
             myPageService.dropUser(session_UserVO.getUserID());
             session.invalidate();
-        }else if(page.equals(PAGE_ONE_TO_ONE_ASK) && oneToOneAskVO != null){
+        }else if(page.equals(PAGE_ONE_TO_ONE_ASK.getText()) && oneToOneAskVO != null){
             myPageService.addOneToOneAsk(oneToOneAskVO, session_UserVO.getUserNO());
             this.setPageAttr(model,PAGE_ONE_TO_ONE_ASK,false);
         }else if(page.equals(PAGE_DELETE_ONE_TO_ONE_ASK.getText()) && oneToOneAskVO != null){
@@ -180,7 +183,7 @@ public class MyPageController {
     }
 
     @RequestMapping("/writeOneToOneAsk")
-    private String writeOneToOneAsk(Model model) throws Exception {
+    private String writeOneToOneAsk(Model model){
         model.addAttribute(ONE_TO_ONE_ASK_CATEGORY.getText(), OneToOneAskCategory.values());
         return Write_ONE_TO_ONE_ASK.getPath();
     }
@@ -190,15 +193,6 @@ public class MyPageController {
         int oneToOneAskNO = Integer.parseInt(request.getParameter(ONE_TO_ONE_ASK_NO.getText()));
         myPageService.deleteOneToOneAsk(oneToOneAskNO);
         return RESULT_MENT_DELETE_ONE_TO_ONE_ASK.getPath();
-    }
-
-    @RequestMapping("/personalTerms")
-    private String personalTerms(){
-        return PERSONAL_TERMS.getPath();
-    }
-    @RequestMapping("/faq")
-    private String faq(HttpServletRequest request) throws Exception {
-        return FAQ.getPath();
     }
 
     @RequestMapping(value = "modifyUserImage")

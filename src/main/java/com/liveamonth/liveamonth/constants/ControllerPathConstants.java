@@ -12,10 +12,14 @@ public class ControllerPathConstants {
     /*
      * MainController Path Constants
      */
-    public enum EMainPath {
-        MAIN("Main");
+    public enum ETemplatePath {
+        MAIN("Main"),
+        MY_PAGE("MyPage"),
+        CITY("City"),
+        REVIEW("Review"),
+        CUSTOMER_CENTER("CustomerCenter");
         private String path;
-        private EMainPath(String path) {this.path = path;}
+        private ETemplatePath(String path) {this.path = path;}
         public String getPath() {return this.path;}
     }
 
@@ -23,7 +27,6 @@ public class ControllerPathConstants {
      * MyPageController Path Constants
      */
     public enum EMyPagePath {
-        MY_PAGE("MyPage"),
         REDIRECT_MY_PAGE("redirect:myPage"),
         MODIFY_USER_INFO("ModifyUserInfo"),
         RE_CHECK_PASSWORD("ReCheckPassword"),
@@ -33,9 +36,7 @@ public class ControllerPathConstants {
     	SHOW_ONE_TO_ONE_ASK("ShowOneToOneAsk"),
     	Write_ONE_TO_ONE_ASK("WriteOneToOneAsk"),
     	RESULT_MENT_ONE_TO_ONE_ASK("ResultMentOneToOneAsk"),
-    	RESULT_MENT_DELETE_ONE_TO_ONE_ASK("ResultMentDeleteOneToOneAsk"),
-        PERSONAL_TERMS("PersonalTerms"),
-        FAQ("Faq");
+    	RESULT_MENT_DELETE_ONE_TO_ONE_ASK("ResultMentDeleteOneToOneAsk");
         private String path;
         private EMyPagePath(String path) {this.path = path;}
         public String getPath() {return "myPageView/"+this.path;}
@@ -73,7 +74,7 @@ public class ControllerPathConstants {
      * ReviewController Path Constants
      */
     public enum EReviewPath {
-        DEFUALT_REVIEW_PAGE("DefaultReviewPage"),
+        DEFAULT_REVIEW_PAGE("DefaultReviewPage"),
         REVIEW_CONTENT("ReviewContent"),
         REVIEW_WRITER("ReviewWriter"),
         CATEGORY_REVIEW_PAGE("CategoryReviewPage"),
@@ -99,5 +100,24 @@ public class ControllerPathConstants {
         private ESchedulePath(String path) {this.path = path;}
         public String getPath() {return "scheduleView/"+this.path;}
         public String getRedirectPath() {return this.path;}
+    }
+
+    /*
+     * CustomerCenterController Path Constants
+     */
+    public enum ECustomerCenterPath {
+        FAQ("Faq","FAQ"),
+        PERSONAL_TERMS("PersonalTerms","개인정보 처리방침"),
+        TERMS_AND_CONDITIONS("TermsAndConditions","이용약관"),
+        NOTICE("Notice","공지사항");
+        private String path;
+        private String menuName;
+        private ECustomerCenterPath(String path,String menuName) {
+            this.path = path;
+            this.menuName = menuName;
+        }
+        public String getPath() {return "customerCenterView/"+this.path;}
+        public String getText() {return this.path;}
+        public String getMenuName() {return this.menuName;}
     }
 }

@@ -23,7 +23,6 @@
                         <div class="w-100">
                             <h3 class="mb-4">${ userID }
                             </h3>
-
                         </div>
                     </div>
                     <div class="form-group">

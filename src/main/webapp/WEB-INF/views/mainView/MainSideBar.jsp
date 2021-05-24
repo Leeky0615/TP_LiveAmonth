@@ -89,25 +89,5 @@
             </c:if>
         </div>
     </div>
-
-    <div class="blank-form">
-
-        <div class="section-title sidebar-title-b">
-        </div>
-    </div>
-
-    <div class="customercenter-form">
-
-        <div class="section-title sidebar-title-b">
-            <h6>고객센터</h6>
-        </div>
-        <div class="hs-top">
-            <div class="ht-widget">
-                <a href="faq" class="hw-btn">FAQ</a>
-                <a href="personalTerms" class="hw-btn">개인정보처리방침</a>
-
-            </div>
-        </div>
-    </div>
 </div>
 </body>

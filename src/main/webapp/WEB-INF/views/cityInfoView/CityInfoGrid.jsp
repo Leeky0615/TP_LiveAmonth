@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-lg-5">
                 <div class="section-title">
-                    <h4>지역들</h4>
+                    <h4>도시 정보</h4>
                 </div>
             </div>
         </div>

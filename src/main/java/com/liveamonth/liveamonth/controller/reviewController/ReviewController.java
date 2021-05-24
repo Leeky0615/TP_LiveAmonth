@@ -33,7 +33,6 @@ import static com.liveamonth.liveamonth.constants.LogicConstants.EReviewAttribut
 import static com.liveamonth.liveamonth.constants.LogicConstants.EReviewAttribute.REVIEW_CATEGORY_LIST;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EReviewMessage.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EReviewAttribute.*;
-import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleAttributes.MESSAGE;
 
 @Controller
 public class ReviewController {
@@ -137,7 +136,7 @@ public class ReviewController {
                 model.addAttribute(REVIEW_VO.getText(), reviewVO);
             } catch (Exception e) {
                 System.err.println(REVIEW_LOAD_FAIL_MESSAGE.getText() + e);
-                return DEFUALT_REVIEW_PAGE.getPath();
+                return DEFAULT_REVIEW_PAGE.getPath();
             }
         }
         model.addAttribute(REVIEW_CATEGORY_LIST.getText(), EReviewCategoryName.values());
@@ -160,7 +159,7 @@ public class ReviewController {
             reviewNO = reviewService.addReview(reviewVO);
         } catch (Exception e) {
             System.err.println(REVIEW_ADD_FAIL_MESSAGE.getText() + e);
-            return DEFUALT_REVIEW_PAGE.getPath();
+            return DEFAULT_REVIEW_PAGE.getPath();
         }
         rttr.addAttribute(REVIEW_NO.getText(), reviewNO);
         return REDIRECT_REVIEW_CONTENT.getRedirectPath();
@@ -189,7 +188,7 @@ public class ReviewController {
             rttr.addAttribute(REVIEW_NO.getText(), reviewNO);
             return REDIRECT_REVIEW_CONTENT.getPath();
         }
-        return DEFUALT_REVIEW_PAGE.getPath();
+        return DEFAULT_REVIEW_PAGE.getPath();
     }
 
     @GetMapping("getReview")
@@ -204,14 +203,14 @@ public class ReviewController {
             model.addAttribute(REVIEW_VO.getText(), reviewVO);
         } catch (Exception e) {
             System.err.println(REVIEW_LOAD_FAIL_MESSAGE.getText() + e);
-            return DEFUALT_REVIEW_PAGE.getPath();
+            return DEFAULT_REVIEW_PAGE.getPath();
         }
 
         try {
             reviewService.increaseReviewViewCount(reviewNO);
         } catch (Exception e) {
             System.err.println(REVIEW_VIEWCOUNT_INCREASE_FAIL_MESSAGE.getText() + e);
-            return DEFUALT_REVIEW_PAGE.getPath();
+            return DEFAULT_REVIEW_PAGE.getPath();
         }
 
         int selectPage = 1;
@@ -224,7 +223,7 @@ public class ReviewController {
             model.addAttribute(REVIEW_REPLY_LIST.getText(), reviewReplyList);
         } catch (Exception e) {
             System.err.println(REVIEW_LOAD_FAIL_MESSAGE.getText() + e);
-            return DEFUALT_REVIEW_PAGE.getPath();
+            return DEFAULT_REVIEW_PAGE.getPath();
         }
 
         PagingDTO paging = null;
@@ -233,7 +232,7 @@ public class ReviewController {
             model.addAttribute(PAIGING.getText(), paging);
         } catch (Exception e) {
             System.err.println(REVIEWREPLY_PAGING_FAIL_MESSAGE.getText() + e);
-            return DEFUALT_REVIEW_PAGE.getPath();
+            return DEFAULT_REVIEW_PAGE.getPath();
         }
 
         try {
@@ -241,7 +240,7 @@ public class ReviewController {
             model.addAttribute(REVIEW_LIKE_COUNT.getText(), likeCount);
         } catch (Exception e) {
             System.err.println(REVIEW_LIKECOUNT_LOAD_FAIL_MESSAGE.getText() + e);
-            return DEFUALT_REVIEW_PAGE.getPath();
+            return DEFAULT_REVIEW_PAGE.getPath();
         }
 
         if (session_UserVO != null) {
@@ -253,7 +252,7 @@ public class ReviewController {
                 model.addAttribute(LIKE_STATUS.getText(), status);
             } catch (Exception e) {
                 System.err.println(REVIEW_LIKESTATUS_LOAD_FAIL_MESSAGE.getText() + e);
-                return DEFUALT_REVIEW_PAGE.getPath();
+                return DEFAULT_REVIEW_PAGE.getPath();
             }
         }
         model.addAttribute(REVIEW_CATEGORY_LIST.getText(), EReviewCategoryName.values());

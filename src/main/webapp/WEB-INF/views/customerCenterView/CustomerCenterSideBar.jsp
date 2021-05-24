@@ -9,16 +9,14 @@
         <h6>고객센터</h6>
       </div>
       <div class="recent-post">
-        <div class="rp-item">
-          <div class="rp-text">
-            <a href="#"  onclick=acyncMovePage("oneToOneAsk");>1:1 문의</a>
-            <a  href="#" onclick=acyncMovePage("faq");>공지사항</a>
-            <a  href="#" onclick=acyncMovePage("faq");>FAQ</a>
-            <a  href="#" onclick=acyncMovePage("personalTerms");>개인정보 처리방침</a>
+        <c:forEach var="customerMenu" items="${customerCenterMenus}">
+          <div class="rp-item">
+            <div class="rp-text">
+              <a href="selectedCustomerCenterMenu?menu=${customerMenu.text}">${customerMenu.menuName}</a>
+            </div>
           </div>
-        </div>
+        </c:forEach>
       </div>
     </div>
-
   </div>
 </div>
