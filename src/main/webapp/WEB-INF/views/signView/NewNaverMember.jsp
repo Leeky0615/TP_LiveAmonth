@@ -5,8 +5,22 @@
 <head>
 </head>
 <body>
-<h1>회원 가입을 진행할 수 있습니다.</h1>
-    <a href="/main">회원가입 취소</a>
-    <a href="/newNaveMember">회원가입 진행</a>
+<section class="contact-form-section spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="cf-content">
+                    <div class="cc-title">
+                        <h1>회원 가입을 진행할 수 있습니다.</h1>
+                    </div>
+                    <a href="/">회원가입 취소 </a>&nbsp;&nbsp;
+                    <a href="/newNaverMember">회원가입 진행</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
 </body>
 </html>

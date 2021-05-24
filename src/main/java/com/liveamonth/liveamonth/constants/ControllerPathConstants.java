@@ -24,20 +24,22 @@ public class ControllerPathConstants {
      */
     public enum EMyPagePath {
         MY_PAGE("MyPage"),
+        REDIRECT_MY_PAGE("redirect:myPage"),
         MODIFY_USER_INFO("ModifyUserInfo"),
-        RE_CHECK_USER_PW("ReCheckUserPW"),
-        DROP_USER("DropUser"),
-        RESULT_MENT_DROP_USER("ResultMentDropUser"),
-        RESULT_MENT_MODIFY_USER_INFO("ResultMentModifyUserInfo"),
+        RE_CHECK_PASSWORD("ReCheckPassword"),
+        RESULT_MENT("ResultMent"),
     	FINALLY_ASK_DROP_USER("FinallyAskDropUser"),
     	ONE_TO_ONE_ASK("OneToOneAsk"),
     	SHOW_ONE_TO_ONE_ASK("ShowOneToOneAsk"),
     	Write_ONE_TO_ONE_ASK("WriteOneToOneAsk"),
     	RESULT_MENT_ONE_TO_ONE_ASK("ResultMentOneToOneAsk"),
-    	RESULT_MENT_DELETE_ONE_TO_ONE_ASK("ResultMentDeleteOneToOneAsk");
-    	private String path;
+    	RESULT_MENT_DELETE_ONE_TO_ONE_ASK("ResultMentDeleteOneToOneAsk"),
+        PERSONAL_TERMS("PersonalTerms"),
+        FAQ("Faq");
+        private String path;
         private EMyPagePath(String path) {this.path = path;}
         public String getPath() {return "myPageView/"+this.path;}
+        public String getText() {return this.path;}
     }
 
     /*
@@ -71,7 +73,11 @@ public class ControllerPathConstants {
      * ReviewController Path Constants
      */
     public enum EReviewPath {
-        REVIEW("Review");
+        DEFUALT_REVIEW_PAGE("DefaultReviewPage"),
+        REVIEW_CONTENT("ReviewContent"),
+        REVIEW_WRITER("ReviewWriter"),
+        CATEGORY_REVIEW_PAGE("CategoryReviewPage"),
+        REDIRECT_REVIEW_CONTENT("redirect:getReview");
         private String path;
         private EReviewPath(String path) {this.path = path;}
         public String getPath() {return "reviewView/"+this.path;}

@@ -6,6 +6,19 @@
 <head>
 </head>
 <body>
-<h1>${Message}</h1>
+<section class="contact-form-section spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="cf-content">
+                    <div class="cc-title">
+                        <h1>${Message}</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 </body>
 </html>

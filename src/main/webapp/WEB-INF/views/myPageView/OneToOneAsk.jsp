@@ -31,7 +31,7 @@
                         <td>${oneToOneAskVOList.oneToOneAskNO}</td>
                         <td>${oneToOneAskVOList.oneToOneAskCategory}</td>
                         <td>
-                            <a href="showOneToOneAsk?oneToOneAskNO=${oneToOneAskVOList.oneToOneAskNO}">${oneToOneAskVOList.oneToOneAskSubject}</a>
+                            <a href="#" onclick=acyncMovePage("showOneToOneAsk?oneToOneAskNO=${oneToOneAskVOList.oneToOneAskNO}");>${oneToOneAskVOList.oneToOneAskSubject}</a>
                         </td>
                         <td>${oneToOneAskVOList.oneToOneAskDate}</td>
                     </tr>
@@ -41,7 +41,6 @@
         </div>
     </c:otherwise>
 </c:choose>
-<form action="writeOneToOneAsk" method=post class="cc-form">
-    <button type="submit" class="site-btn">문의하기</button>
+<button class="site-btn" href="#" onclick=acyncMovePage("writeOneToOneAsk");>문의 하기</button>
 </form>
 </body>

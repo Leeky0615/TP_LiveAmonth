@@ -30,5 +30,6 @@ public interface MyPageMapper {
 
 	OneToOneAskVO findOneToOneAskVO(int oneToOneAskNO) throws Exception;
 
-	public void deleteOneToOneAsk(int oneToOneAskNO)  throws Exception;
+	void deleteOneToOneAsk(int oneToOneAskNO)  throws Exception;
+	void modifyUserImg(String saveName, String userID);
 }

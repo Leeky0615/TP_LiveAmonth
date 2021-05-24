@@ -8,17 +8,17 @@
                 onclick="deleteScheduleReplyButton(${param.scheduleReplyNO});"> 삭제
         </button>
         <button id="modifyReply" class="btn btn-sm btn-default btn-hover-primary" style="float: right;"
-                onclick="showModifyScheduleReplyDesc(${param.scheduleReplyNO});"> 수정
+                onclick="showModifyReplyDesc(${param.scheduleReplyNO});"> 수정
         </button>
     </c:if>
     <p class="text-muted text-sm"><i class="far fa-clock"></i> ${param.scheduleReplyDate} </p>
 </div>
 
-<p id="scheduleReplyDesc${param.scheduleReplyNO}" class="scheduleReplyDesc">
+<p id="ReplyDesc${param.scheduleReplyNO}" class="ReplyDesc">
     ${param.scheduleReplyDesc}
 </p>
 
-<div id="modifyScheduleReplyDesc${param.scheduleReplyNO}" class="modifyScheduleReplyDesc">
+<div id="modifyReplyDesc${param.scheduleReplyNO}" class="modifyReplyDesc">
     <form id="modifyScheduleReply${param.scheduleReplyNO}" action="modifyScheduleReply">
         <input type="hidden" name="scheduleReplyNO" id="modifyScheduleReplyNO" value="${param.scheduleReplyNO}"/>
         <input type="hidden" name="scheduleNO" id="modifyScheduleNO" value="${param.scheduleNO}"/>
@@ -45,7 +45,7 @@
     </div>
     <hr>
     <div id="replyDiv${param.scheduleReplyNO}" class="panel replyDiv">
-        <jsp:include page="scheduleReplyDesc.jsp">
+        <jsp:include page="ScheduleReplyDesc.jsp">
             <jsp:param value="${param.scheduleNO}" name="scheduleNO"/>
             <jsp:param value="${param.scheduleReplyNO}" name="scheduleReplyNO"/>
         </jsp:include>

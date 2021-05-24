@@ -18,4 +18,5 @@ public interface MyPageService {
 	void addOneToOneAsk(OneToOneAskVO oneToOneAskVO, int userNO) throws Exception;
 	OneToOneAskVO findOneToOneAskVO(int oneToOneAskNO) throws Exception;
 	void deleteOneToOneAsk(int oneToOneAskNO) throws Exception;
+    void modifyUserImg(String saveName, String userID);
 }

@@ -5,15 +5,12 @@ import com.liveamonth.liveamonth.entity.vo.ScheduleVO;
 import com.liveamonth.liveamonth.entity.vo.UserVO;
 import com.liveamonth.liveamonth.model.mapper.myPageMapper.MyPageMapper;
 import com.liveamonth.liveamonth.model.mapper.scheduleMapper.ScheduleMapper;
-import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.servlet.http.HttpSession;
 
 import java.util.*;
 import java.text.*;
@@ -77,5 +74,10 @@ public class MyPageServiceImpl implements MyPageService {
 	public void deleteOneToOneAsk(int oneToOneAskNO) throws Exception {
 		myPageMapper.deleteOneToOneAsk(oneToOneAskNO);
 		
+	}
+
+	@Override
+	public void modifyUserImg(String saveName,String userID) {
+		myPageMapper.modifyUserImg(saveName,userID);
 	}
 }

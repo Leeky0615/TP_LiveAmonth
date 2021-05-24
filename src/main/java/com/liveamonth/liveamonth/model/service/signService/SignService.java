@@ -16,7 +16,9 @@ public interface SignService {
     String findID(String userName, String userEmail) throws Exception;
 
     String findPW(String userID, String userEmail) throws Exception;
-
+    
+    String updatePW(String userID, String userEmail) throws Exception;
+    
 	String checkEmail(String userEmail) throws Exception;
 
     UserVO setTokenInfo(String access_token) throws Exception;
@@ -24,4 +26,6 @@ public interface SignService {
     String checkNaverID(String naverID) throws Exception;
 
     int setNewNaverMember(UserVO newNaverUser) throws Exception;
+
+    void updateNaverUser(UserVO userVO) throws Exception;
 }

@@ -1,46 +1,26 @@
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%@page import="java.text.SimpleDateFormat" %>
 <%@page import="java.util.Calendar" %>
-<%@ page contentType="text/html; charset=utf-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.liveamonth.liveamonth.entity.dto.CalendarDTO" %>
 <%@ page import="com.liveamonth.liveamonth.entity.vo.ScheduleVO" %>
 <%@page import="java.util.*" %>
 
-<body style="background:#ffffff">
-<script
-        src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-<!-- jquery datepicker -->
-<link rel="stylesheet"
-      href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css"
-      type="text/css"/>
-<script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
-<!-- jquery datepicker 끝 -->
-<meta http-equiv="content-type" content="text/html; charset=utf-8">
-<link rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-      integrity="sha384-
-	ggOyROiXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-      crossorigin="anonymous">
-<link href="resources/css/schedule.css" rel="stylesheet"
-      type="text/css">
-<link href="resources/css/onOff.css" rel="stylesheet"
-      type="text/css">
+<link rel="stylesheet" href="resources/css/schedule.css" type="text/css">
+<link rel="stylesheet" href="resources/css/onOff.css" type="text/css">
+
 <script src="resources/js/schedule.js"></script>
-<script src="resources/js/board.js"></script>
-<link rel="stylesheet" href="resources/css/style.css" type="text/css">
-<link rel="stylesheet" href="resources/css/signUpStyle.css" type="text/css">
-<link rel="stylesheet" href="resources/css/font-awesome.min.css" type="text/css">
-<script type="text/javaScript" language="javascript"></script>
+
+<body style="background:#ffffff">
 
 <div class="search-form-content">
     <form action="swapSchedule" class="filter-form">
         <select class="sm-width" name="selectSchedule" id="selectSchedule">
             <c:forEach var="scheduleVO" items="${scheduleVOList}">
-                <option id="${scheduleVO.scheduleNO}"
-                        value="${scheduleVO.scheduleNO}">${scheduleVO.scheduleSubject}</option>
+                <option id="${scheduleVO.scheduleNO}" value="${scheduleVO.scheduleNO}">${scheduleVO.scheduleSubject}</option>
             </c:forEach>
         </select>
-        <script> $("#" + ${selectedScheduleNO}).prop("selected", true); </script>
+        <script> $('#${selectedScheduleNO}').prop("selected",true); </script>
         <input type="submit" class="search-btn sm-width" style="width:5%;" value="확인">
 
         <button type="button" class="search-btn sm-width" style="float: right;" data-toggle="modal"
@@ -52,6 +32,17 @@
 
     </form>
 </div>
+
+<div class="search-form-content">
+    <form action="knowScheduleDurationPay" class="filter-form">
+        <div class="text_desc">
+            <input type="date" id="schedulePayStartDay" name="schedulePayStartDay" class="sm-width"/> ~
+            <input type="date" id="schedulePayFinishDay" name="schedulePayFinishDay" class="sm-width"/>
+            <button type="submit" class="search-btn sm-width" style="float: right;">금액확인하기</button>
+        </div>
+    </form>
+</div>
+
 <div class="modal fade" id="addScheduleModal" role="dialog" aria-labelledby="addScheduleLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -132,24 +123,24 @@
 
                                 <br><br>
 
-								<div class="text_subject">공개여부</div>
-								<label class="switch">
-									<input type="checkbox" name="scheduleStatus" id="modiftScheduleStatus">
-									<span class="slider round"></span>
-								</label>
-								<script> if(${scheduleVO.scheduleStatus}==true) {$("input:checkbox[id='modiftScheduleStatus']").prop("checked", true);} </script>
-								<div>
-									<button type="button" class="board_move_go pointer" onclick="modifyScheduleButton();">수정</button>
-									<button type="button" class="board_move_go pointer" data-dismiss="modal">취소</button>
-									<button type="button" class="board_move_go pointer" style="float: right;" onclick="deleteScheduleButton();">삭제</button>
-								</div>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-		</c:if>
-	</c:forEach>
+                                <div class="text_subject">공개여부</div>
+                                <label class="switch">
+                                    <input type="checkbox" name="scheduleStatus" id="modiftScheduleStatus">
+                                    <span class="slider round"></span>
+                                </label>
+                                <script> if(${scheduleVO.scheduleStatus}==true) {$("input:checkbox[id='modiftScheduleStatus']").prop("checked", true);} </script>
+                                <div>
+                                    <button type="button" class="board_move_go pointer" onclick="modifyScheduleButton();">수정</button>
+                                    <button type="button" class="board_move_go pointer" data-dismiss="modal">취소</button>
+                                    <button type="button" class="board_move_go pointer" style="float: right;" onclick="deleteScheduleButton();">삭제</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </c:if>
+    </c:forEach>
 </div>
 
 
@@ -261,7 +252,6 @@
     </td>
     </c:forEach>
     </tbody>
-
     </table>
     </div>
 

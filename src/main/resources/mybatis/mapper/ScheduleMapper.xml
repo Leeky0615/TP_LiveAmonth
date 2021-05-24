@@ -17,11 +17,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select max(scheduleContentNO) from scheduleContent;
 	</select>
 
-
-	<select id="getMaxScheduleNO" resultType="int">
-		select max(scheduleNO) from schedule;
-	</select>
-
 	<select id="getScheduleList" resultType="ScheduleVO" parameterType="int">
 		select * from schedule where userNO = #{userNO};
 	</select>
@@ -33,7 +28,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="schedulePlace" property="schedulePlace"/>
 		<result column="scheduleViewCount" property="scheduleViewCount"/>
 		<result column="scheduleLikeCount" property="scheduleLikeCount"/>
-		<association property="userVO" javaType="userVO">
+		<association property="userVO" javaType="UserVO">
 			<id column="userNO" property="userNO"/>
 			<result column="userNickname" property="userNickname"/>
 			<result column="userAge" property="userAge"/>
@@ -42,12 +37,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 
  	<select id="getOtherScheduleList" parameterType="HashMap" resultMap="scheduleFilterAndOrder">
-		select schedule.scheduleNO, user.userNO, userNickname, scheduleSubject,(Year(curdate())-user.userAge) as userAge,userSex,schedulePlace,scheduleViewCount,COUNT(scheduleLike.scheduleNO) as scheduleLikeCount
-		from user, schedule, scheduleLike
-		where user.userNO = schedule.userNO
-		and schedule.scheduleNO = scheduleLike.scheduleNO and schedule.scheduleStatus = true
+		select a.*, IF(isnull(scheduleLikeCount), 0, scheduleLikeCount) as scheduleLikeCount from (select schedule.scheduleNO, user.userNO, userNickname, scheduleSubject, userAge,userSex,schedulePlace,scheduleViewCount from user, schedule where schedule.userNO = user.userNO and schedule.scheduleStatus = true) as a
+		left join(select scheduleLike.scheduleNO, count(scheduleLikeUserNO) as scheduleLikeCount from schedule, scheduleLike where schedule.scheduleNO = scheduleLike.scheduleNO group by scheduleLike.scheduleNO) as b
+		ON a.scheduleNO = b.scheduleNO
 		<if test="userAgeFilter">
-			and Year(curdate())-user.userAge between #{userAge} and #{userAge}+9
+			and userAge between Year(curdate())-#{userAge}-9 and Year(curdate())-#{userAge}
 		</if>
 		<if test="userSexFilter">
 			and userSex = #{userSex}
@@ -55,23 +49,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="schedulePlaceFilter">
 			and schedulePlace = #{schedulePlace}
 		</if>
-		GROUP BY schedule.scheduleNO
 		<choose>
 			<when test="orderBy == 'orderByView'">
-				ORDER BY schedule.scheduleViewCount desc;
+				ORDER BY scheduleViewCount desc;
 			</when>
 			<when test="orderBy == 'orderByLiked'">
-				ORDER BY COUNT(scheduleLike.scheduleNO) desc;
+				ORDER BY scheduleLikeCount desc;
 			</when>
 			<otherwise>
-				ORDER BY schedule.scheduleNO desc;
+				ORDER BY scheduleNO desc;
 			</otherwise>
 		</choose>
 	</select>
 
 	<resultMap type = "java.util.HashMap" id="scheduleReplyAndNickname">
 		<id column="NO" property="NO"/>
-		<result column="userNickname" property="userNickname"/>
+		<association property="userVO" javaType="userVO">
+			<result column="userNickname" property="userNickname"/>
+			<result column="userImage" property="userImage"/>
+		</association>
 		<association property="scheduleReply" javaType="ScheduleReplyVO">
 			<id column="scheduleReplyNO" property="scheduleReplyNO"/>
 			<result column="scheduleReplyDesc" property="scheduleReplyDesc"/>
@@ -84,14 +80,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select id="getScheduleReplyList" parameterType="java.util.HashMap" resultMap="scheduleReplyAndNickname">
 		select @rownum:=@rownum+1 as NO, sortScheduleReply.* from
-			(select IF(scheduleReplyRefNO >= 0, scheduleReplyRefNO, scheduleReplyNO) as sortScheduleReplyNO, scheduleReply.*, userNickName
+			(select IF(scheduleReplyRefNO >= 0, scheduleReplyRefNO, scheduleReplyNO) as sortScheduleReplyNO, scheduleReply.*, userNickName,userImage
 				from scheduleReply, user where scheduleReply.userNO = user.userNO AND scheduleNO= #{scheduleNO} order by sortScheduleReplyNO, scheduleReplyNO) sortScheduleReply,
 		   	(select @rownum:=#{startNO})TMP
 		limit #{startNO}, #{displayPage};
-	</select>
-
-	<select id="getMaxScheduleReplyNO" resultType="int">
-		select max(scheduleReplyNO) from scheduleReply;
 	</select>
 
 	<select id="getScheduleReplyCount" parameterType="int" resultType="int">
@@ -112,7 +104,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="likeCount" property="likeCount"/>
 	</resultMap>
 	<select id ="getScheduleAndLikeCount" parameterType="int" resultMap="scheduleAndLikeCount">
-		select schedule.scheduleNO, scheduleViewCount, count(scheduleLikeUserNO) as likeCount from schedule, scheduleLike where schedule.scheduleNO = scheduleLike.scheduleNO and schedule.scheduleNO = #{scheduleNO} group by schedule.scheduleNO;
+		select schedule.scheduleNO, scheduleViewCount, count(scheduleLikeUserNO) as likeCount from schedule left join scheduleLike on schedule.scheduleNO = scheduleLike.scheduleNO where schedule.scheduleNO = 3 group by schedule.scheduleNO;
+	</select>
+
+	<select id="getScheduleDurationPay" parameterType="HashMap" resultType="int">
+		select IFNULL(sum(scheduleContentCost),0) from scheduleContent where scheduleNO = #{scheduleNO} and scheduleContentDate between #{schedulePayStartDay} and #{schedulePayFinishDay};
 	</select>
 
 	<!-- delete -->
@@ -133,7 +129,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>
 
 	<!-- insert -->
-
 	<insert id="addSchedule" parameterType="ScheduleVO">
 		insert into schedule values(#{scheduleNO}, #{scheduleSubject}, #{scheduleStatus}, #{schedulePlace},#{scheduleViewCount},#{userNO})
 	</insert>
@@ -155,19 +150,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		, #{userNO}, #{scheduleNO})
 	</insert>
 
-	<insert id="addScheduleLike" parameterType="com.liveamonth.liveamonth.entity.vo.ScheduleLikeVO">
+	<insert id="addScheduleLike" parameterType="ScheduleLikeVO">
 		insert into scheduleLike values (#{scheduleNO}, #{scheduleLikeUserNO})
 	</insert>
 
 	<!-- update -->
-
+	<!-- 스케줄 내용 수정 -->
 	<update id="modifyScheduleContent" parameterType="ScheduleContentVO">
 		update scheduleContent
 		set scheduleContentSubject = #{scheduleContentSubject}, scheduleContentDesc = #{scheduleContentDesc},
 		scheduleContentCost = #{scheduleContentCost}
 		where scheduleContentNO = #{scheduleContentNO}
 	</update>
-	
+	<!-- 스케줄 수정 -->
 	<update id="modifySchedule" parameterType="ScheduleVO">
 		update schedule set scheduleSubject = #{scheduleSubject}, scheduleStatus = #{scheduleStatus}, schedulePlace = #{schedulePlace} where scheduleNO = #{scheduleNO}
 	</update>

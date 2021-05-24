@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <body>
+      <%  boolean firstIn = (boolean)request.getAttribute("firstIn"); %>
 <section class="ftco-section">
     <div class="container">
         <div class="row justify-content-center">
@@ -9,7 +8,6 @@
                 <h2 class="heading-section">Login Page</h2>
             </div>
         </div>
-
         <form action="/resultMentFindID" method="post">
             <div class="row justify-content-center">
                 <div class="col-md-7 col-lg-5">
@@ -28,12 +26,17 @@
                         <input type="text" class="form-control" id="userEmail" name="userEmail" required>
                         <label class="form-control-placeholder" for="userEmail">Email</label>
                     </div>
+
                     <div class="form-group">
                         <button type="submit" id=findBtn class="form-control btn btn-primary rounded submit px-3">find
                         </button>
                         <p></p>
-
                     </div>
+
+		            <%if(firstIn == false){%>
+		             <p class="text-center" style="color:#ff0000">가입하지 않는 이메일이거나, 잘못된 이름입니다.</p>
+		            <% }%>
+
                 </div>
             </div>
         </form>

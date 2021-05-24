@@ -1,8 +1,8 @@
 package com.liveamonth.liveamonth.entity.vo;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+
+import java.util.Calendar;
 
 import static com.liveamonth.liveamonth.constants.EntityConstants.ImageURL;
 
@@ -15,7 +15,7 @@ public class UserVO {
 	private String userName;
 	private String userNickname;
 	private int userAge;
-	private boolean userSex;
+	private Boolean userSex;
 	private String userEmail;
 	private String userImage;
 
@@ -27,8 +27,7 @@ public class UserVO {
 		this.userName = null;
 		this.userNickname = null;
 		this.userAge = 0;
-		this.userSex = false;
-		this.userEmail = null;
+		this.userSex = null;
 		this.userEmail = null;
 	}
 
@@ -49,10 +48,18 @@ public class UserVO {
 	public void setUserNickname(String userNickname) {this.userNickname = userNickname;}
 
 	public int getUserAge() {return userAge;}
+	public int getUserRealAge(){
+		return Calendar.getInstance().get(Calendar.YEAR) - this.userAge;
+	}
 	public void setUserAge(int userAge) {this.userAge = userAge;}
 
-	public boolean isUserSex() {return userSex;}
-	public void setUserSex(boolean userSex) {this.userSex = userSex;}
+//	public Boolean isUserSex() {return userSex;}
+	public Boolean getUserSex() {return userSex;}
+	public void setUserSex(Boolean userSex) {this.userSex = userSex;}
+	public String getUserSexToString() {
+		if (this.getUserSex()) return "여성";
+		else return "남성";
+	}
 
 	public String getUserEmail() {return userEmail;}
 	public void setUserEmail(String userEmail) {this.userEmail = userEmail;}

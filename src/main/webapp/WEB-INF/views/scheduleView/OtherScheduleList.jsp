@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-         pageEncoding="utf-8" %>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
@@ -114,15 +113,15 @@
                 <div class="pc-table">
                     <table>
                         <thead>
-                            <tr>
-                                <th class="type">스케줄(이미지, 제목)</th>
-                                <th class="type">장소</th>
-                                <th class="type">닉네임</th>
-                                <th class="type">성별</th>
-                                <th class="type">나이</th>
-                                <th class="type">조회 수</th>
-                                <th class="type">좋아요 수</th>
-                            </tr>
+                        <tr>
+                            <th class="type">스케줄(이미지, 제목)</th>
+                            <th class="type">장소</th>
+                            <th class="type">닉네임</th>
+                            <th class="type">성별</th>
+                            <th class="type">나이</th>
+                            <th class="type">조회 수</th>
+                            <th class="type">좋아요 수</th>
+                        </tr>
                         </thead>
                         <tbody>
                         <c:if test="${otherScheduleList != null}">
@@ -132,14 +131,6 @@
                                         <c:set var="place" value="${cityName.nameKR}"/>
                                     </c:if>
                                 </c:forEach>
-                                <c:choose>
-                                    <c:when test="${scheduleContent.userVO.userSex eq 'false'}">
-                                        <c:set var="sex" value="남자"/>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <c:set var="sex" value="여자"/>
-                                    </c:otherwise>
-                                </c:choose>
                                 <tr>
                                     <td>
                                         <div class="title"><c:out value="${scheduleContent.scheduleSubject}"/></div>
@@ -149,8 +140,8 @@
                                     </td>
                                     <td>${place}</td>
                                     <td>${scheduleContent.userVO.userNickname}</td>
-                                    <td>${sex}</td>
-                                    <td>${scheduleContent.userVO.userAge}세</td>
+                                    <td>${ScheduleContent.userVO.getUserSex()}</td>
+                                    <td>${scheduleContent.userVO.getUserRealAge()}세</td>
                                     <td>${scheduleContent.scheduleViewCount}</td>
                                     <td>${scheduleContent.scheduleLikeCount}</td>
                                 </tr>

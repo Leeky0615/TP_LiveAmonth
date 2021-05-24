@@ -2,7 +2,7 @@ package com.liveamonth.liveamonth.model.service.scheduleService;
 
 
 import com.liveamonth.liveamonth.entity.dto.CalendarDTO;
-import com.liveamonth.liveamonth.entity.dto.Paging;
+import com.liveamonth.liveamonth.entity.dto.PagingDTO;
 import com.liveamonth.liveamonth.entity.vo.ScheduleContentVO;
 import com.liveamonth.liveamonth.entity.vo.ScheduleLikeVO;
 import com.liveamonth.liveamonth.entity.vo.ScheduleReplyVO;
@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.List;
 
 import static com.liveamonth.liveamonth.constants.EntityConstants.EPage.DISPLAY_PAGE;
 import static com.liveamonth.liveamonth.constants.EntityConstants.ESchedule.SCHEDULE_NO;
@@ -119,18 +118,10 @@ public class ScheduleServiceImpl implements ScheduleService {
     //otherList
     @Override
 	public ArrayList<HashMap<String, Object>> getOtherScheduleList(HashMap<String, Object> filtersAndOrder) throws Exception{
+        System.out.println(scheduleMapper.getOtherScheduleList(filtersAndOrder));
 		return scheduleMapper.getOtherScheduleList(filtersAndOrder);
 	}
 
-    @Override
-    public boolean addSchedule(ScheduleVO scheduleVO) throws Exception {
-        scheduleVO.setScheduleNO(getMaxScheduleNO() + 1);
-
-        if (scheduleMapper.addSchedule(scheduleVO)) {
-            return true;
-        }
-        return false;
-    }
 
     @Override
     public ArrayList<ScheduleVO> getScheduleList(int userNO) throws Exception {
@@ -156,27 +147,17 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-	public int getMaxScheduleNO() throws Exception {
-        Object MaxNO = scheduleMapper.getMaxScheduleNO();
-        if(MaxNO != null) {
-            return Integer.parseInt(String.valueOf(MaxNO));
-        }
-		return FIRST_SCHEDULE_NO.getText();
-	}
+    public boolean addSchedule(ScheduleVO scheduleVO) throws Exception {
+        return scheduleMapper.addSchedule(scheduleVO);
+    }
 	
 	public boolean modifySchedule(ScheduleVO scheduleVO) throws Exception {
-		if(scheduleMapper.modifySchedule(scheduleVO)) {
-			return true;
-		}
-		return false;
+		return scheduleMapper.modifySchedule(scheduleVO);
 	}
 
 	@Override
 	public boolean deleteSchedule(int scheduleNO) throws Exception {
-		if(scheduleMapper.deleteSchedule(scheduleNO)) {
-			return true;
-		}
-		return false;
+		return scheduleMapper.deleteSchedule(scheduleNO);
 	}
 
     @Override
@@ -187,36 +168,25 @@ public class ScheduleServiceImpl implements ScheduleService {
         scheduleNOAndPage.put(START_NO.getText(), startNum);
         scheduleNOAndPage.put(DISPLAY_PAGE.getText(), STATIC_DISPLAY_PAGE_NUM.getText());
 
-        return scheduleMapper.getScheduleReplyList(scheduleNOAndPage);
+        ArrayList<HashMap<String, Object>> list = scheduleMapper.getScheduleReplyList(scheduleNOAndPage);
+
+        return list;
     }
 
     @Override
     public boolean addScheduleReplyVO(ScheduleReplyVO scheduleReplyVO, int userNO) throws Exception {
-        String MaxNO = String.valueOf(scheduleMapper.getMaxScheduleReplyNO());
-        if(MaxNO == "null") {
-            scheduleReplyVO.setScheduleReplyNO(FIRST_SCHEDULEREPLY_NO.getText());
-        } else {
-            scheduleReplyVO.setScheduleReplyNO(Integer.parseInt(MaxNO) + 1);
-        }
         scheduleReplyVO.setUserNO(userNO);
-
         return scheduleMapper.addScheduleReplyVO(scheduleReplyVO);
     }
 
     @Override
     public boolean deleteScheduleReply(int scheduleReplyNO) throws Exception {
-        if(scheduleMapper.deleteScheduleReply(scheduleReplyNO)){
-            return true;
-        }
-        return false;
+        return scheduleMapper.deleteScheduleReply(scheduleReplyNO);
     }
 
     @Override
     public boolean modifyScheduleReply(ScheduleReplyVO scheduleReplyVO) throws Exception {
-        if(scheduleMapper.modifyScheduleReply(scheduleReplyVO)){
-            return true;
-        }
-        return false;
+        return scheduleMapper.modifyScheduleReply(scheduleReplyVO);
     }
 
     @Override
@@ -247,8 +217,8 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public Paging showPaging(int selectPage, int scheduleNO) throws Exception {
-        Paging paging = new Paging();
+    public PagingDTO showPaging(int selectPage, int scheduleNO) throws Exception {
+        PagingDTO paging = new PagingDTO();
         paging.setPage(selectPage);
         paging.setTotalCount(scheduleMapper.getScheduleReplyCount(scheduleNO));
         return paging;
@@ -257,5 +227,15 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public void increaseScheduleViewCount(int scheduleNO) {
         scheduleMapper.increaseScheduleViewCount(scheduleNO);
+    }
+
+    @Override
+    public int getScheduleDurationPay(String schedulePayStartDay, String schedulePayFinishDay, int scheduleNO) throws Exception {
+        HashMap<String, Object> hash = new HashMap<String, Object>();
+        hash.put("schedulePayStartDay", schedulePayStartDay);
+        hash.put("schedulePayFinishDay", schedulePayFinishDay);
+        hash.put("scheduleNO", scheduleNO);
+
+        return scheduleMapper.getScheduleDurationPay(hash);
     }
 }
