@@ -7,15 +7,37 @@
     <div class="blog-sidebar">
         <div class="feature-post">
             <div class="section-title sidebar-title-b">
+                <h6>검색</h6>
+            </div>
+            <div class="recent-post">
+                <form action="searchReviewPage" class="signin-form">
+                    <div class="rp-item">
+                        <div class="rp-text">
+                            <input type="text" style="width:73%; height:50%; overflow:hidden;" id="search" name="search">
+                            <input type="submit" value="검색"  style="font-size:2px; padding:7px 7px; overflow:hidden;"
+                                   class="btn btn-sm btn-primary pull-right">
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+
+
+
+
+        <div class="feature-post">
+            <div class="section-title sidebar-title-b">
                 <h6>전체 게시판</h6>
             </div>
             <div class="recent-post">
                 <div class="rp-item">
                     <div class="rp-text">
-                        <a href="categoryReviewPage?category=all">전체글보기</a>
+                        <a href="categoryReviewPage?category=all">전체게시판</a>
                     </div>
                     <div class="rp-text">
-                        <a href="categoryReviewPage?category=popular">인기글보기</a>
+                        <a href="categoryReviewPage?category=popular">인기게시판</a>
                     </div>
                     <div class="rp-text">
                         <a href="categoryReviewPage?category=free">자유게시판</a>
@@ -92,7 +114,7 @@
                         <c:forEach var="reviewCategory" items="${reviewCategoryList}">
                             <c:choose>
                                 <c:when test="${fn:contains(reviewCategory,'REVIEW')}">
-                                    <a href="?category='${reviewCategory}'"><option value="${reviewCategory}">${reviewCategory.nameKR}</option></a>
+                                    <a href="categoryReviewPage?category=${reviewCategory}"><option value="${reviewCategory}">${reviewCategory.nameKR}</option></a>
                                 </c:when>
                             </c:choose>
                         </c:forEach>

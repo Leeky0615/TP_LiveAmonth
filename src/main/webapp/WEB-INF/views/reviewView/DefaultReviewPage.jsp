@@ -42,7 +42,7 @@
                 <li class="reviewCategorySubject">
                     <a href="getReview?reviewNO=${reviewVO.reviewNO}">${reviewVO.reviewSubject}</a>
                     <span class="reviewReplyCount">
-                        <c:if test="${reviewVO.replyCount ne 0}">
+                        <c:if test="${reviewVO.replyCount ne null}">
                             [${reviewVO.replyCount}]
                         </c:if>
                     </span>
@@ -66,7 +66,7 @@
                 <li class="reviewCategorySubject">
                     <a href="getReview?reviewNO=${reviewVO.reviewNO}">${reviewVO.reviewSubject}</a>
                     <span class="reviewReplyCount">
-                        <c:if test="${reviewVO.replyCount ne 0}">
+                        <c:if test="${reviewVO.replyCount ne null}">
                             [${reviewVO.replyCount}]
                         </c:if>
                     </span>
@@ -90,7 +90,7 @@
                 <li class="reviewCategorySubject">
                     <a href="getReview?reviewNO=${reviewVO.reviewNO}">${reviewVO.reviewSubject}</a>
                     <span class="reviewReplyCount">
-                        <c:if test="${reviewVO.replyCount ne 0}">
+                        <c:if test="${reviewVO.replyCount ne null}">
                             [${reviewVO.replyCount}]
                         </c:if>
                     </span>

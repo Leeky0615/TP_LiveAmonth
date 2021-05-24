@@ -77,6 +77,7 @@ public class ControllerPathConstants {
         REVIEW_CONTENT("ReviewContent"),
         REVIEW_WRITER("ReviewWriter"),
         CATEGORY_REVIEW_PAGE("CategoryReviewPage"),
+        SEARCH_REVIEW_PAGE("SearchReviewPage"),
         REDIRECT_REVIEW_CONTENT("redirect:getReview");
         private String path;
         private EReviewPath(String path) {this.path = path;}
