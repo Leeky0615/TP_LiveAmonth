@@ -1,5 +1,6 @@
 package com.liveamonth.liveamonth.controller.reviewController;
 
+import com.liveamonth.liveamonth.constants.EntityConstants;
 import com.liveamonth.liveamonth.entity.dto.PagingDTO;
 import com.liveamonth.liveamonth.entity.vo.ReviewLikeVO;
 import com.liveamonth.liveamonth.entity.vo.ReviewVO;
@@ -26,6 +27,10 @@ import static com.liveamonth.liveamonth.constants.EntityConstants.EReviewCategor
 import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.USER_VO;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EPaging.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EReview.*;
+import static com.liveamonth.liveamonth.constants.LogicConstants.EReviewAttribute.ALL_REVIEW_LIST;
+import static com.liveamonth.liveamonth.constants.LogicConstants.EReviewAttribute.FREE_REVIEW_LIST;
+import static com.liveamonth.liveamonth.constants.LogicConstants.EReviewAttribute.POPULAR_REVIEW_LIST;
+import static com.liveamonth.liveamonth.constants.LogicConstants.EReviewAttribute.REVIEW_CATEGORY_LIST;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EReviewMessage.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EReviewAttribute.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleAttributes.MESSAGE;
@@ -111,8 +116,8 @@ public class ReviewController {
         model.addAttribute(REVIEW_LIST.getText(), reviewList);
         model.addAttribute(SEARCH.getText(), search);
         model.addAttribute(REVIEW_CATEGORY_LIST.getText(), EReviewCategoryName.values());
-        model.addAttribute(REVIEW_SEARCH_DATE.getText(), EReviewSearchDate.values());
-        model.addAttribute(REVIEW_SEARCH_DETAIL.getText(), EReviewSearchDetail.values());
+        model.addAttribute(REVIEW_SEARCH_DATE.getText(), EntityConstants.EReviewSearchDate.values());
+        model.addAttribute(REVIEW_SEARCH_DETAIL.getText(), EntityConstants.EReviewSearchDetail.values());
         model.addAttribute(PAIGING.getText(), paging);
 
         model.addAttribute(SELECTED_DATE.getText(),searchDate);
