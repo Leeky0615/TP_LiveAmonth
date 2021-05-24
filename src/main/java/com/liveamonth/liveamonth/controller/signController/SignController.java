@@ -1,6 +1,6 @@
 package com.liveamonth.liveamonth.controller.signController;
 
-
+import com.liveamonth.liveamonth.constants.EntityConstants.EEmail;
 import com.liveamonth.liveamonth.entity.vo.CityInfoVO;
 import com.liveamonth.liveamonth.entity.vo.UserVO;
 import com.liveamonth.liveamonth.model.service.cityInfoService.CityService;
@@ -17,20 +17,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.math.BigInteger;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.security.SecureRandom;
 import java.util.List;
 
 import static com.liveamonth.liveamonth.constants.ControllerPathConstants.EMainPath.MAIN;
 import static com.liveamonth.liveamonth.constants.ControllerPathConstants.ESignPath.*;
 import static com.liveamonth.liveamonth.constants.EntityConstants.CityInfoCategory.INTRO;
+import static com.liveamonth.liveamonth.constants.EntityConstants.ESignUp.EMAIL;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.*;
-import static com.liveamonth.liveamonth.constants.LogicConstants.ECityInfoAttributes.CITY_INTRO_LIST;
-import static com.liveamonth.liveamonth.constants.LogicConstants.ECityInfoAttributes.CITY_NAME_LIST;
+import static com.liveamonth.liveamonth.constants.LogicConstants.ECityInfoAttributes.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.ESignAttributes.FIRST_IN;
-
-//naverlogin
-//
+import static com.liveamonth.liveamonth.constants.LogicConstants.ESignAttributes.AT;
 
 @Controller
 public class SignController {
@@ -42,10 +42,24 @@ public class SignController {
     @Autowired
     private CityService cityService;
 
+    //naver login api에 접속
     @RequestMapping("/signIn")
-    public String SignInPage(Model model) throws Exception {
+    public String SignInPage(Model model, HttpSession session) throws Exception {
         this.firstIn = true;
+
+        String clientId = "mS20tLuLdThxAjEEr_yP";//애플리케이션 클라이언트 아이디값";
+        String redirectURI = URLEncoder.encode("http://localhost:8080/naverLogin", "UTF-8");
+        SecureRandom random = new SecureRandom();
+        String state = new BigInteger(130, random).toString();
+        String apiURL = "https://nid.naver.com/oauth2.0/authorize?response_type=code";
+        apiURL += "&client_id=" + clientId;
+        apiURL += "&redirect_uri=" + redirectURI;
+        apiURL += "&state=" + state;
+        session.setAttribute("state", state);
+
         model.addAttribute(FIRST_IN.getText(), this.firstIn);
+        model.addAttribute("apiURL", apiURL);
+
         return SIGN_IN.getPath();
     }
 
@@ -85,7 +99,14 @@ public class SignController {
 
     @RequestMapping("/signUp")
     public String SignUpPage(Model model) throws Exception {
+        model.addAttribute(EMAIL.getText(), EEmail.values());
         return SIGN_UP.getPath();
+    }
+
+    @RequestMapping("/naverSignUp")
+    public String naverSignUp(Model model) throws Exception {
+        model.addAttribute(EMAIL.getText(), EEmail.values());
+        return "signView/NaverSignUp";
     }
 
     @ResponseBody
@@ -128,6 +149,19 @@ public class SignController {
         return RESULT_MENT_SIGN_UP.getPath();
     }
 
+    @RequestMapping("/resultMentNaverSignUp")
+    private String resultMentNaverSignUp(@ModelAttribute UserVO userVO, HttpServletRequest request) throws Exception {
+        //email을 갖고 있는 경우와 아닌 경우
+        if(!userVO.getUserEmail().contains("@")){
+            String userEmail = request.getParameter(USER_EMAIL.getText());
+            String email = request.getParameter(EMAIL.getText());
+            userVO.setUserEmail(userEmail + AT.getText() + email);
+        }
+        signService.updateNaverUser(userVO);
+
+        return "signView/ResultMentSignUp";
+    }
+
     @RequestMapping(value = "/resultMentFindID", method = RequestMethod.POST)
     public String findID(@RequestParam("userName")
                                  String userName, @RequestParam("userEmail")
@@ -153,8 +187,8 @@ public class SignController {
         return RESULT_MENT_FIND_PW.getPath();
     }
 
-    @RequestMapping("/NaverTest")
-    private String callback(HttpSession session, HttpServletRequest request, Model model) throws Exception {
+    @RequestMapping("/naverLogin")
+    private String naverLogin(HttpSession session, HttpServletRequest request, Model model) throws Exception {
         String clientId = "mS20tLuLdThxAjEEr_yP";//애플리케이션 클라이언트 아이디값";
         String clientSecret = "CA3T9EN7Wo";//애플리케이션 클라이언트 시크릿값";
 
@@ -206,20 +240,35 @@ public class SignController {
         //회원, 비회원 체크
         if (naverID != null && !"null".equals(naverID)) {
             //session 변경해서 로그인 상태로 만들기
-            //return "Main";
+            session.setAttribute("userVO",naverUser);
+            model.addAttribute(RANDOM_CITY_INTRO_LIST.getText(), cityService.getRandomCityInfoListByCategory(INTRO.name()));
+            model.addAttribute(CITY_INTRO_LIST.getText(), cityService.getCityInfoListByCategory(INTRO.name()));
+            return "Main";
         } else {
             session.setAttribute("naverUser", naverUser);
             return "signView/NewNaverMember";
         }
-        return "signView/NaverTest";
     }
 
-    @RequestMapping("/newNaveMember")
-    private String newNaveMember(HttpSession session, HttpServletRequest request, Model model) throws Exception {
+    @RequestMapping("/newNaverMember")
+    private String newNaverMember(HttpSession session, HttpServletRequest request, Model model) throws Exception {
         UserVO newNaverUser = (UserVO)session.getAttribute("naverUser");
+        String naverID = signService.checkNaverID(newNaverUser.getUserID());
+        boolean flag = true;
 
-        if(signService.setNewNaverMember(newNaverUser)==1){
-            request.setAttribute("Message", "회원 가입 성공");
+        if(newNaverUser.getUserSex() == null || newNaverUser.getUserEmail() == null || newNaverUser.getUserName() == null||
+                newNaverUser.getUserNickname() == null || newNaverUser.getUserAge() == 0){
+            flag = false;
+        }
+
+        if(session.getAttribute("userVO") == null && signService.setNewNaverMember(newNaverUser)==1){
+            //필수항목 다 동의 한경우
+            if(flag){
+                session.setAttribute("userVO",newNaverUser);
+                request.setAttribute("Message", "회원 가입 성공");
+            }else{ //필수 항목 하나라도 동의 안한 경우
+                return "redirect:naverSignUp";
+            }
         }else{
             request.setAttribute("Message", "회원 가입 실패");
         }

@@ -45,15 +45,6 @@ public class SignServiceImpl implements SignService {
         return userVO;
     }
 
-//    @Override
-//    public int checkSign2(String userID, String userPassword) throws Exception {
-//        HashMap<String, Object> hash = new HashMap<String, Object>();
-//        hash.put("userID", userID);
-//        hash.put("userPassword", userPassword);
-//        int userNO = signMapper.checkSign2(hash);
-//
-//        return userNO;
-//    }
 
     @Override
     public String findID( String userName, String userEmail) throws Exception {
@@ -70,6 +61,11 @@ public class SignServiceImpl implements SignService {
         hash.put("userID", userID);
         hash.put("userEmail", userEmail);
         return signMapper.findPW(hash);
+    }
+
+    @Override
+    public String updatePW(String userID, String userEmail) throws Exception {
+        return null;
     }
 
     @Override
@@ -111,21 +107,30 @@ public class SignServiceImpl implements SignService {
             String stringGender = (String)resObj.get("gender");
             String birthyear = (String)resObj.get("birthyear");
             String nickname = (String)resObj.get("nickname");
+            Boolean gender;
 
-            boolean gender;
-
-            if(stringGender.equals("M")){
-                gender = false;
+            //성별 선택 안한 경우
+            if(stringGender != null && !"null".equals(stringGender)){
+                 if(stringGender.equals("M")){
+                    gender = false;
+                }else{
+                  gender = true;
+              }
             }else{
-                gender = true;
+                gender = null;
             }
+
             naverUserVO.setUserID(naverID);
-            naverUserVO.setUserAge(Integer.parseInt(birthyear));
+            naverUserVO.setUserNickname(nickname);
             naverUserVO.setUserEmail(email);
             naverUserVO.setUserName(name);
             naverUserVO.setUserSex(gender);
-            naverUserVO.setUserNickname(nickname);
-
+            // 나이 선택 안하면 null이므로 0값 넣어주기
+            if(birthyear == null){
+                naverUserVO.setUserAge(0);
+            }else{
+                naverUserVO.setUserAge(Integer.parseInt(birthyear));
+            }
         } else {  // 에러 발생
             br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
         }
@@ -141,6 +146,11 @@ public class SignServiceImpl implements SignService {
     @Override
     public int setNewNaverMember(UserVO newNaverUser) throws Exception {
         return this.signMapper.setNewNaverMember(newNaverUser);
+    }
+
+    @Override
+    public void updateNaverUser(UserVO userVO) throws Exception {
+        this.signMapper.updateNaverUser(userVO);
     }
 
 }

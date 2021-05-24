@@ -26,4 +26,6 @@ public interface SignMapper {
     String checkNaverID(String naverID) throws Exception;
 
     int setNewNaverMember(UserVO newNaverUser) throws Exception;
+
+    void updateNaverUser(UserVO userVO) throws Exception;
 }
