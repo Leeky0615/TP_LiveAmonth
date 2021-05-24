@@ -37,4 +37,4 @@ out/
 .vscode/
 
 # naver test by kim
-signView/
+/signView/SignIn

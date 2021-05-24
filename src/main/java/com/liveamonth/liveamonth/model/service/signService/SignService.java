@@ -1,9 +1,6 @@
 package com.liveamonth.liveamonth.model.service.signService;
 
 import com.liveamonth.liveamonth.entity.vo.UserVO;
-import org.springframework.stereotype.Service;
-
-import javax.servlet.http.HttpServletResponse;
 
 
 public interface SignService {
@@ -16,11 +13,7 @@ public interface SignService {
 
     UserVO checkSign(String userID, String userPassword) throws Exception;
 
-
-    // public int checkSign2(String userID, String userPassword) throws Exception;
-
     String findID(String userName, String userEmail) throws Exception;
-
 
     String findPW(String userID, String userEmail) throws Exception;
     
@@ -28,5 +21,11 @@ public interface SignService {
     
 	String checkEmail(String userEmail) throws Exception;
 
+    UserVO setTokenInfo(String access_token) throws Exception;
 
+    String checkNaverID(String naverID) throws Exception;
+
+    int setNewNaverMember(UserVO newNaverUser) throws Exception;
+
+    void updateNaverUser(UserVO userVO) throws Exception;
 }

@@ -34,15 +34,27 @@ function checkValue() {
 	}
 };
 
-
-function hideBusinessNumber() {
-	$('#businessBlock').hide();
-	document.SignInfo.businessLicense.value = "0";
+function unvisibleIDandPW(){
+	document.getElementById("userIDBlock").style.display="none";
+	document.getElementById("userPasswordBlock").style.display="none";
+	document.getElementById("userPasswordCheckBlock").style.display="none";
+	$("#submit").removeAttr("disabled");
 };
-
-function showNumber() {
-	document.SignInfo.businessLicense.value = "";
-	$('#businessBlock').show();
+function unvisibleUserName(){
+	document.getElementById("userNameBlock").style.display="none";
+};
+function unvisibleUserNickname(){
+	document.getElementById("userNicknameBlock").style.display="none";
+};
+function unvisibleUserAge(){
+	document.getElementById("userAgeBlock").style.display="none";
+};
+function unvisibleUserSex(){
+	document.getElementById("userSexBlock").style.display="none";
+};
+function unvisibleUserEmail(){
+	document.getElementById("userEmailBlock").style.display="none";
+	document.getElementById("emailBlock").style.display="none";
 };
 
 function maxLengthCheck(object) {
@@ -70,6 +82,38 @@ $('#userEmail').blur(function() {
 		$("#submit").removeAttr("disabled");
 	}
 });
+
+function checkPassword(){
+	var userPassword = document.getElementById("userPassword").value;
+	if(userPassword.length<6 || userPassword.length>16){
+		document.getElementById("checkPassword").innerHTML = "6글자 이상, 16글자 이하만 사용가능.";
+		document.getElementById("checkPassword").style.color='red';
+		document.getElementById("userPassword").value = "";
+
+	}else{
+		if(document.getElementById("checkPassword").style.color=='red'){
+			document.getElementById("checkPassword").style.color='blue';
+		}
+
+	}
+	$("#submit").attr("disabled", "disabled");
+
+	if(document.getElementById('userPassword').value !='' && document.getElementById('checkUserPassword').value!=''){
+		if(document.getElementById('userPassword').value==document.getElementById('checkUserPassword').value){
+			document.getElementById('checkPassword').innerHTML='비밀번호가 일치합니다.'
+			document.getElementById('checkPassword').style.color='blue';
+			$("#submit").removeAttr("disabled");
+		}
+		else{
+			document.getElementById('checkPassword').innerHTML='비밀번호가 일치하지 않습니다.';
+			document.getElementById('checkPassword').style.color='red';
+			document.getElementById('checkUserPassword').value = "";
+			$("#submit").attr("disabled", "disabled");
+		}
+	}
+}
+function email_change(){
+	var emailSelected = $("#emailSelected option:selected").val();
 
 function checkPassword(){
 	var userPassword = document.getElementById("userPassword").value;

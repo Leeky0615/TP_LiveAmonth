@@ -77,6 +77,7 @@ public class ControllerPathConstants {
         REVIEW_CONTENT("ReviewContent"),
         REVIEW_WRITER("ReviewWriter"),
         CATEGORY_REVIEW_PAGE("CategoryReviewPage"),
+        SEARCH_REVIEW_PAGE("SearchReviewPage"),
         REDIRECT_REVIEW_CONTENT("redirect:getReview");
         private String path;
         private EReviewPath(String path) {this.path = path;}
@@ -91,6 +92,7 @@ public class ControllerPathConstants {
         OTHER_SCHEDULE("OtherSchedule"),
         OTHER_SCHEDULE_LIST("OtherScheduleList"),
         SCHEDULE("Schedule"),
+        REDIRECT_OTHER_SCHEDULELIST("redirect:otherScheduleList"),
         REDIRECT_SCHEDULE("redirect:schedule"),
         REDIRECT_OTHER_SCHEDULE("redirect:otherSchedule");
         private String path;

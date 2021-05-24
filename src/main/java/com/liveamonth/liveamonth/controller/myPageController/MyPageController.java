@@ -9,16 +9,21 @@ import com.liveamonth.liveamonth.model.service.signService.SignService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 
 import static com.liveamonth.liveamonth.constants.ControllerPathConstants.EMyPagePath.*;
 import static com.liveamonth.liveamonth.constants.EntityConstants.*;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EOneToOneAsk.*;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.*;
+import static com.liveamonth.liveamonth.constants.EntityConstants.OneToOneAskCategory;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EMyPageAttributes.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EMyPageAttributes.CHECK_USER;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EPageOptions.*;
@@ -141,7 +146,7 @@ public class MyPageController {
             this.setPageAttr(model,PAGE_MODIFY,false);
         }else if(page.equals(PAGE_DROP_USER.getText())){
             this.setPageAttr(model,PAGE_DROP_USER,false);
-            s3Uploader.delete(IMAGE_DIR.getText()+session_UserVO.getUserImage());
+            s3Uploader.delete(IMAGE_DIR.getText()+session_UserVO.getUserImage()); // 회원 탈퇴시 S3에 있는 이미지도 삭제
             myPageService.dropUser(session_UserVO.getUserID());
             session.invalidate();
         }else if(page.equals(PAGE_ONE_TO_ONE_ASK) && oneToOneAskVO != null){
@@ -200,9 +205,8 @@ public class MyPageController {
     public String modifyUserImage(HttpSession session, @RequestParam("fileName") MultipartFile mFile, Model model) throws Exception {
         UserVO userVO = (UserVO) session.getAttribute(USER_VO.getText());
         if(userVO.getUserImage() != null) s3Uploader.delete(IMAGE_DIR.getText()+userVO.getUserImage());
-        String saveName = s3Uploader.uploadProfileImg(mFile, IMAGE_DIR.getText(),userVO.getUserID());
+        String saveName = s3Uploader.uploadProfileImg(IMAGE_DIR.getText(), userVO.getUserID(), mFile.getOriginalFilename(), mFile.getBytes());
         myPageService.modifyUserImg(saveName,userVO.getUserID());
-
         userVO.setUserImage(saveName);
         model.addAttribute(USER_VO.getText(), userVO);
         return REDIRECT_MY_PAGE.getText();

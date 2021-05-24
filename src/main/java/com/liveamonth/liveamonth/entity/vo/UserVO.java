@@ -57,7 +57,7 @@ public class UserVO {
 
 	public boolean isUserSex() {return userSex;}
 	public String getUserSexToString() {
-		if (this.isUserSex()) return "여성";
+		if (this.userSex) return "여성";
 		else return "남성";
 	}
 	public void setUserSex(boolean userSex) {this.userSex = userSex;}

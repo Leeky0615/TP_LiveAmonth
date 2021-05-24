@@ -20,6 +20,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		#{userPassword}
 	</select>
 
+
 	<select id="checkSign2" parameterType="HashMap" resultType="int">
 		select userNO from user where userID = #{userID} and userPassword = #{userPassword}
 	</select>
@@ -46,16 +47,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
  	<!-- PWFind -->
- 	
 		<select id="findPW" parameterType="HashMap" resultType="String">
 		select userPassword from user where userID = #{userID} and userEmail = #{userEmail}
-	</select> 
+	</select>
 
-	
+
 	<!-- 비밀번호 변경 -->
 	<update id="updatePW" parameterType="HashMap" >
 		update user set userPassword = #{userPassword} where userID = #{userID} and userEmail = #{userEmail}
 	</update>
-	
 
+
+	<select id="checkNaverID" parameterType="String" resultType="String">
+		select IFNULL(userID, null) from user where userID = #{naverID}
+	</select>
+
+	<insert id="setNewNaverMember" parameterType="UserVO">
+		<selectKey resultType = "int" keyProperty="userNO" order = "BEFORE">
+			select MAX(userNO)+1 from user
+		</selectKey>
+		insert into user (userNO, userID, userName, userNickname, userEmail, userSex, userAge)
+		values (#{userNO}, #{userID}, #{userName}, #{userNickname}, #{userEmail}, #{userSex}, #{userAge})
+	</insert>
+
+	<update id ="updateNaverUser" parameterType="UserVO" >
+		UPDATE user SET userName = #{userName}, userNickname=#{userNickname},userEmail=#{userEmail},userSex=#{userSex},userAge=#{userAge}
+		WHERE userID=#{userID}
+	</update>
 </mapper>

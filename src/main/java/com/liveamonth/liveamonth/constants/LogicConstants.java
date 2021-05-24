@@ -25,6 +25,8 @@ public class LogicConstants {
         COMPLETE_SCHEDULEREPLY_DELETION("댓글이 삭제되었습니다.."),
         FAIL_TO_DELETE_SCHEDULEREPLY("댓글 삭제에 실패하였습니다."),
 
+
+
         PLEASE_ADD_DURATION("기간을 설정해 주십시오."),
         WON("원");
 
@@ -33,6 +35,10 @@ public class LogicConstants {
         public String getText() {return this.text;}
     }
 
+
+
+
+
     public enum EScheduleAttributes{
         SELECTED_SCHEDULE_NO("selectedScheduleNO"),
         MESSAGE("message"),
@@ -40,6 +46,7 @@ public class LogicConstants {
         SCHEDULE_ACTION("action"),
         SCHEDULE_LIST("list"),
         SCHEDULE_FILTER("filter"),
+        ORDER_BY_NEW("orderByNew"),
         MODIFY_SCHEDULE_CONTENT_SUBJECT("modifyScheduleContentSubject"),
         MODIFY_SCHEDULE_CONTENT_DESC("modifyScheduleContentDesc"),
         MODIFY_SCHEDULE_CONTENT_COST("modifyScheduleContentCost"),
@@ -69,7 +76,7 @@ public class LogicConstants {
     public enum EScheduleFilterAndOrders{
         SCHEDULE_FO_SEX("userSex"),
         SCHEDULE_FO_AGE("userAge"),
-        SCHEDULE_FO_PLACE("schedulePlace"),
+        SCHEDULE_FO_CITY_NAME("cityName"),
         SCHEDULE_FO_ORDER("orderBy");
         private String text;
         private EScheduleFilterAndOrders(String text) {this.text = text;}
@@ -146,14 +153,93 @@ public class LogicConstants {
         private EPaging(String text){this.text = text;}
         public String getText() {return this.text;}
     }
-
     public enum EReviewAttribute{
         REVIEW_TYPE_LIST("reviewTypeList"),
         REVIEW_PLACE_LIST("reviewPlaceList"),
-        REVIEW_CATEGORY_LIST("reviewCategoryList");
+        REVIEW_CATEGORY_LIST("reviewCategoryList"),
+        REVIEW_SEARCH_DATE("reviewSearchDate"),
+        REVIEW_SEARCH_DETAIL("reviewSearchDetail"),
+        ALL_REVIEW_LIST("AllReviewList"),
+        POPULAR_REVIEW_LIST("popularReviewList"),
+        FREE_REVIEW_LIST("freeReviewList"),
+        REVIEW_LIST("reviewList"),
+
+        ALL("all"),
+        FREE("free"),
+        POPULAR("popular"),
+        CATEGORY("category"),
+        CLICK_PAGE("clickPage"),
+        SELECT_PAGE("selectPage"),
+
+
+        ORDER_BY("orderBy"),
+        DATE_ORDER_BY("dateOrderBy"),
+        LIKE_ORDER_BY("likeOrderBy"),
+        VIEW_ORDER_BY("viewOrderBy"),
+
+        DATE_DESC_ASC("dateDescAsc"),
+        LIKE_DESC_ASC("likeDescAsc"),
+        VIEW_DESC_ASC("viewDescAsc"),
+
+        SEARCH("search"),
+        SEARCH_DATE("searchDate"),
+        SEARCH_CATEGORY("searchCategory"),
+        SEARCH_DETAIL("searchDetail"),
+
+        SELECTED_DATE("selectedDate"),
+        SELECTED_CATEGORY("selectedCategory"),
+        SELECTED_DETAIL("selectedDetail");
+
 
         private String text;
         private EReviewAttribute(String text){this.text = text;}
+        public String getText() {return this.text;}
+    }
+    public enum EReviewMessage {
+        REVIEW_TYPE_LIST("reviewTypeList"),
+        REVIEW_PLACE_LIST("reviewPlaceList"),
+        REVIEW_CATEGORY_LIST("reviewCategoryList"),
+
+        REVIEW_LIKE_TRANS_FAIL_MESSAGE("좋아요/취소 변환 실패 : "),
+        REVIEWREPLY_ADD_FAIL_MESSAGE("후기 댓글 등록 실패 : "),
+        REVIEWREPLY_MODIFY_FAIL_MESSAGE("후기 댓글 수정 실패 : "),
+        REVIEWREPLY_DELETE_FAIL_MESSAGE("후기 댓글 삭제 실패 : "),
+
+        REVIEW_LIKESTATUS_LOAD_FAIL_MESSAGE("후기 좋아요 상태 조회 실패 : "),
+        REVIEW_LIKECOUNT_LOAD_FAIL_MESSAGE("후기 좋아요 수 조회 실패 : "),
+        REVIEWREPLY_PAGING_FAIL_MESSAGE("후기 댓글 페이징 실패 : "),
+        REIVEWREPLY_LOAD_FAIL_MESSAGE("후기 댓글 조회 실패 : "),
+        REVIEWIMG_UPLOAD_FAIL_MESSAGE("후기 이미지 업로드 실패 : "),
+        REVIEW_VIEWCOUNT_INCREASE_FAIL_MESSAGE("후기 조회수 증가 실패 : "),
+        REVIEW_DELETE_FAIL_MESSAGE("후기 삭제 실패 : "),
+        REVIEW_MODIFY_FAIL_MESSAGE("후기 수정 실패 :"),
+        REVIEW_ADD_FAIL_MESSAGE("후기 등록 실패 : "),
+        REVIEW_LOAD_FAIL_MESSAGE("후기 조회 실패 : ");
+
+        private String text;
+        private EReviewMessage(String text){this.text = text;}
+        public String getText() {return this.text;}
+    }
+
+
+    public enum EOtherScheduleMessage{
+        SCHEDULE_LOAD_FAIL_MESSAGE("후기 조회 실패 : "),
+
+        SCHEDULE_VIEWCOUNT_INCREASE_FAIL_MESSAGE("스케줄 조회수 증가 실패 : "),
+
+        SCHEDULE_LIKESTATUS_LOAD_FAIL_MESSAGE("스케줄 좋아요 상태 조회 실패 : "),
+        SCHEDULE_LIKECOUNT_LOAD_FAIL_MESSAGE("스케줄 좋아요 수 조회 실패 : "),
+        SCHEDULE_LIKE_TRANS_FAIL_MESSAGE("스케줄 좋아요/취소 변환 실패 : "),
+
+        SCHEDULEREPLY_LOAD_FAIL_MESSAGE("스케줄 댓글 조회 실패 : "),
+        SCHEDULEREPLY_PAGING_FAIL_MESSAGE("스케줄 댓글 페이징 실패 : "),
+        SCHEDULEREPLY_ADD_FAIL_MESSAGE("스케줄 댓글 등록 실패 : "),
+        SCHEDULEREPLY_MODIFY_FAIL_MESSAGE("스케줄 댓글 수정 실패 : "),
+        SCHEDULEREPLY_DELETE_FAIL_MESSAGE("스케줄 댓글 삭제 실패 : ");
+
+
+        private String text;
+        private EOtherScheduleMessage(String text) {this.text = text;}
         public String getText() {return this.text;}
     }
 
@@ -173,6 +259,8 @@ public class LogicConstants {
     }
 
     public enum EReview{
+        REVIEW_LIKE_COUNT("reviewLikeCount"),
+        REVIEW_REPLY_LIST("reviewReplyList"),
         ALL_REVIEW_LIST("AllReviewList"),
         POPULAR_REVIEW_LIST("popularReviewList"),
         FREE_REVIEW_LIST("freeReviewList");

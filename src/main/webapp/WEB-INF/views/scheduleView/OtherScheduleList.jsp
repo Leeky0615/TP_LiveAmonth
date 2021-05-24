@@ -2,12 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<%@ page import="com.liveamonth.liveamonth.entity.vo.ScheduleVO" %>
-<%@ page import="com.liveamonth.liveamonth.entity.vo.UserVO" %>
-<%@page import="java.util.ArrayList" %>
-<%@page import="java.util.HashMap" %>
-<%@page import="java.util.List" %>
-<%@page import="com.liveamonth.liveamonth.constants.EntityConstants.*" %>
 
 <body>
 <form action="/otherScheduleList" class="filter-form">
@@ -27,7 +21,7 @@
                         <c:when test="${requestData.key eq 'userAge'}">
                             <c:set var="userAge" value="${requestData.value}"/>
                         </c:when>
-                        <c:when test="${requestData.key eq 'schedulePlace'}">
+                        <c:when test="${requestData.key eq 'cityName'}">
                             <c:set var="index" value="${requestData.value}"/>
                         </c:when>
                         <c:when test="${requestData.key eq 'orderBy'}">
@@ -65,11 +59,11 @@
                             <div class="col-lg-2">
                                 <div class="pd-title">
                                     <p>장소</p>
-                                    <select name="schedulePlace" id="schedulePlace" class="sm-width">
+                                    <select name="cityName" id="cityName" class="sm-width">
                                         <option value="null" <c:if test="${index == -1}"> selected </c:if>>기본</option>
                                         <c:forEach var="schedulePlace" items="${schedulePlaceList}" varStatus="status">
                                             <option value="${status.index}" <c:if
-                                                    test="${status.index == index}"> selected </c:if>>${schedulePlace.nameKR}</option>
+                                                    test="${status.index == index}"> selected </c:if>>${schedulePlace}</option>
                                         </c:forEach>
                                     </select>
                                 </div>
@@ -126,11 +120,6 @@
                         <tbody>
                         <c:if test="${otherScheduleList != null}">
                             <c:forEach var="scheduleContent" items="${otherScheduleList}" varStatus="status">
-                                <c:forEach var="cityName" items="${schedulePlaceList}">
-                                    <c:if test="${scheduleContent.schedulePlace eq cityName}">
-                                        <c:set var="place" value="${cityName.nameKR}"/>
-                                    </c:if>
-                                </c:forEach>
                                 <tr>
                                     <td>
                                         <div class="title"><c:out value="${scheduleContent.scheduleSubject}"/></div>
@@ -138,9 +127,9 @@
                                             <img src="resources/img/scheduleImg.png" alt="">
                                         </a>
                                     </td>
-                                    <td>${place}</td>
+                                    <td>${scheduleContent.cityVO.cityName}</td>
                                     <td>${scheduleContent.userVO.userNickname}</td>
-                                    <td>${ScheduleContent.userVO.getUserSex()}</td>
+                                    <td>${scheduleContent.userVO.getUserSexToString()}</td>
                                     <td>${scheduleContent.userVO.getUserRealAge()}세</td>
                                     <td>${scheduleContent.scheduleViewCount}</td>
                                     <td>${scheduleContent.scheduleLikeCount}</td>

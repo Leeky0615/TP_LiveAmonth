@@ -1,12 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<%@page import="java.text.SimpleDateFormat" %>
-<%@page import="java.util.Calendar" %>
 <%@ page contentType="text/html; charset=utf-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page import="com.liveamonth.liveamonth.entity.dto.CalendarDTO" %>
-<%@ page import="com.liveamonth.liveamonth.entity.vo.ScheduleVO" %>
-<%@page import="java.util.*" %>
 
 <link href="resources/css/schedule.css" rel="stylesheet" type="text/css">
 <link href="resources/css/reply.css" rel="stylesheet" type="text/css">
@@ -277,7 +272,7 @@
                                             </div>
                                         </c:if>
                                     </c:forEach>
-                                    <c:set var="beforePageScheduleReplyNO" value="null"></c:set>
+                                    <c:set var="beforePageScheduleReplyNO" value="-1" ></c:set>
                                 </div>
                             </div>
                         </c:if>

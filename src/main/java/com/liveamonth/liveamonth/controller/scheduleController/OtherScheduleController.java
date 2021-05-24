@@ -1,11 +1,13 @@
 package com.liveamonth.liveamonth.controller.scheduleController;
 
 
+
 import com.liveamonth.liveamonth.entity.dto.CalendarDTO;
 import com.liveamonth.liveamonth.entity.dto.PagingDTO;
 import com.liveamonth.liveamonth.entity.vo.ScheduleLikeVO;
 import com.liveamonth.liveamonth.entity.vo.ScheduleReplyVO;
 import com.liveamonth.liveamonth.entity.vo.UserVO;
+import com.liveamonth.liveamonth.model.service.cityInfoService.CityService;
 import com.liveamonth.liveamonth.model.service.scheduleService.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,10 +21,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 
 import static com.liveamonth.liveamonth.constants.ControllerPathConstants.ESchedulePath.*;
-import static com.liveamonth.liveamonth.constants.EntityConstants.CityName;
 import static com.liveamonth.liveamonth.constants.EntityConstants.ESchedule.SCHEDULE_NO;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EScheduleReply.SCHEDULE_REPLY_NO;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.USER_VO;
@@ -30,13 +34,16 @@ import static com.liveamonth.liveamonth.constants.LogicConstants.EAlertMessage.*
 import static com.liveamonth.liveamonth.constants.LogicConstants.EPaging.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleAttributes.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleFilterAndOrders;
+import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleFilterAndOrders.SCHEDULE_FO_CITY_NAME;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleFilterAndOrders.SCHEDULE_FO_ORDER;
-import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleFilterAndOrders.SCHEDULE_FO_PLACE;
+import static com.liveamonth.liveamonth.constants.LogicConstants.EOtherScheduleMessage.*;
 
 @Controller
 public class OtherScheduleController {
     @Autowired
     private ScheduleService scheduleService;
+    @Autowired
+    private CityService cityService;
 
     private int checkOption(String option) {
         if (option != null) {
@@ -65,15 +72,11 @@ public class OtherScheduleController {
     private List<HashMap<String, Object>> makeOtherScheduleList(HttpServletRequest request, String action) throws Exception {
         HashMap<String, Object> filtersAndOrder = new HashMap<>();
         // action = list : 초기 헤더메뉴 클릭시
-        System.out.println("action = " + action);
         if (action.equals(SCHEDULE_LIST.getText())) { // 기본값
             for (EScheduleFilterAndOrders eFO : EScheduleFilterAndOrders.values()) {
                 if (eFO == SCHEDULE_FO_ORDER)
-                    filtersAndOrder.put(eFO.getText(), "orderByNew");//("orderBy","orderVubByNexw)
+                    filtersAndOrder.put(eFO.getText(), ORDER_BY_NEW.getText());//("orderBy","orderVubByNew)
                 else filtersAndOrder.put(eFO.getText() + "Filter", false);
-            }
-            for (Map.Entry<String, Object> entry : filtersAndOrder.entrySet()) {
-                System.out.println("[Key]:" + entry.getKey() + " [Value]:" + entry.getValue());
             }
         } else if (action.equals(SCHEDULE_FILTER.getText())) {// action = filter : OtherSchedule 페이지에서 필터 및 정렬 수행시
             // Hashmap에 필터/정렬 Object를 담는다.
@@ -90,9 +93,9 @@ public class OtherScheduleController {
                     boolean optionStatus = false;
                     if (option != -1) {
                         optionStatus = true; // option이 null(-1)이 아니면 true
-                        if (eFO == SCHEDULE_FO_PLACE) {
+                        if (eFO == SCHEDULE_FO_CITY_NAME) {
                             //schedulePlace는 HashMap에 값을 String으로 넣어 줘야하므로 CityNameList에서 option(int)에 해당하는 인덱스 값을 넣어줌.
-                            filtersAndOrder.put(eFO.getText(), CityName.values()[option]);
+                            filtersAndOrder.put(eFO.getText(), cityService.getCityNameList().get(option));
                         } else {
                             // 나머지 경우는 그냥 option(int)를 넣어줌
                             filtersAndOrder.put(eFO.getText(), option);
@@ -112,14 +115,13 @@ public class OtherScheduleController {
     public String otherScheduleList(Model model, HttpServletRequest request, CalendarDTO calendarDTO) throws Exception {
         List<HashMap<String, Object>> otherScheduleList = this.makeOtherScheduleList(request, request.getParameter(SCHEDULE_ACTION.getText()));
         HashMap<String, Object> requestList = makeRequestList(request);
-
         model.addAttribute(FITERED_OTHER_SCHEDULE_LIST.getText(), otherScheduleList);
-        model.addAttribute(SCHEDULE_PLACE_LIST.getText(), CityName.values());
+        model.addAttribute(SCHEDULE_PLACE_LIST.getText(), cityService.getCityNameList());
         model.addAttribute(REQUEST_LIST.getText(), requestList);
         return OTHER_SCHEDULE_LIST.getPath();
     }
 
-    @RequestMapping("/otherSchedule")
+    @RequestMapping("otherSchedule")
     public String otherSchedule(Model model, HttpServletRequest request, CalendarDTO calendarDTO, RedirectAttributes rttr){
         HttpSession session = request.getSession();
         UserVO session_UserVO = (UserVO) session.getAttribute(USER_VO.getText());
@@ -135,9 +137,8 @@ public class OtherScheduleController {
         try {
             scheduleService.increaseScheduleViewCount(scheduleNO);
         } catch (Exception e) {
-            rttr.addFlashAttribute(MESSAGE.getText(), "조회수 증가에 실패하셨습니다.");
-            e.printStackTrace();
-            return "redirect:otherScheduleList";
+            System.err.println(SCHEDULE_VIEWCOUNT_INCREASE_FAIL_MESSAGE.getText() + e);
+            return REDIRECT_OTHER_SCHEDULELIST.getPath();
         }
 
         CalendarDTO calendarDto = null;
@@ -146,9 +147,8 @@ public class OtherScheduleController {
             model.addAttribute(DATE_LIST.getText(), calendarDto.getDateList()); //날짜 데이터 배열
             model.addAttribute(TODAY_INFORMATION.getText(), calendarDto.getTodayInformation());
         } catch (Exception e) {
-            rttr.addFlashAttribute(MESSAGE.getText(), "스케줄 조회에 실패하셨습니다.");
-            e.printStackTrace();
-            return "redirect:otherScheduleList";
+            System.err.println(SCHEDULE_LOAD_FAIL_MESSAGE.getText() + e);
+            return REDIRECT_OTHER_SCHEDULELIST.getPath();
         }
 
         PagingDTO paging = null;
@@ -156,27 +156,24 @@ public class OtherScheduleController {
             paging = scheduleService.showPaging(selectPage, scheduleNO);
             model.addAttribute(PAIGING.getText(), paging);
         } catch (Exception e) {
-            rttr.addFlashAttribute(MESSAGE.getText(), "댓글 페이징에 실패했습니다.");
-            e.printStackTrace();
-            return "redirect:otherScheduleList";
+            System.err.println(SCHEDULEREPLY_PAGING_FAIL_MESSAGE.getText() + e);
+            return REDIRECT_OTHER_SCHEDULELIST.getPath();
         }
 
         try {
-            ArrayList<HashMap<String, Object>> scheduleReplyList= scheduleService.getScheduleReplyList(scheduleNO, selectPage);
+            ArrayList<HashMap<String, Object>> scheduleReplyList = scheduleService.getScheduleReplyList(scheduleNO, selectPage);
             model.addAttribute(SCHEDULEREPLY_VO_LIST.getText(), scheduleReplyList);
         } catch (Exception e) {
-            rttr.addFlashAttribute(MESSAGE.getText(), "댓글 리스트 조회에 실패했습니다.");
-            e.printStackTrace();
-            return "redirect:otherScheduleList";
+            System.err.println(SCHEDULEREPLY_LOAD_FAIL_MESSAGE.getText() + e);
+            return REDIRECT_OTHER_SCHEDULELIST.getPath();
         }
 
         try {
             HashMap<String, String> scheduleAndLikeCount = scheduleService.getScheduleAndLikeCount(scheduleNO);
             model.addAttribute(OTHER_SCHEDULE_AND_LIKE_COUNT.getText(), scheduleAndLikeCount);
         } catch (Exception e) {
-            rttr.addFlashAttribute(MESSAGE.getText(), "좋아요 수 조회에 실패했습니다.");
-            e.printStackTrace();
-            return "redirect:otherScheduleList";
+            System.err.println(SCHEDULE_LIKECOUNT_LOAD_FAIL_MESSAGE.getText() + e);
+            return REDIRECT_OTHER_SCHEDULELIST.getPath();
         }
 
         if (session_UserVO != null) {
@@ -187,9 +184,8 @@ public class OtherScheduleController {
                 int status = scheduleService.getScheduleLikeStatus(scheduleLikeVO);
                 model.addAttribute(LIKE_STATUS.getText(), status);
             } catch (Exception e) {
-                rttr.addFlashAttribute(MESSAGE.getText(), "좋아요 상태 조회에 실패했습니다.");
-                e.printStackTrace();
-                return "redirect:otherScheduleList";
+                System.err.println(SCHEDULE_LIKESTATUS_LOAD_FAIL_MESSAGE.getText() + e);
+                return REDIRECT_OTHER_SCHEDULELIST.getPath();
             }
         }
         return OTHER_SCHEDULE.getPath();
@@ -218,7 +214,7 @@ public class OtherScheduleController {
         return REDIRECT_OTHER_SCHEDULE.getRedirectPath();
     }
 
-    @RequestMapping("/deleteScheduleReply")
+    @RequestMapping("deleteScheduleReply")
     public String deleteScheduleReply(HttpServletRequest request, RedirectAttributes rttr){
         int scheduleReplyNO = Integer.parseInt(String.valueOf(request.getParameter(SCHEDULE_REPLY_NO.getText())));
         int scheduleNO = Integer.parseInt(String.valueOf(request.getParameter(SCHEDULE_NO.getText())));
@@ -239,9 +235,9 @@ public class OtherScheduleController {
     public String modifyScheduleReply(RedirectAttributes rttr, ScheduleReplyVO scheduleReplyVO){
         try {
             scheduleService.modifyScheduleReply(scheduleReplyVO);
-            rttr.addFlashAttribute(MESSAGE.getText(), COMPLETE_SCHEDULEREPLY_DELETION.getText());
+            rttr.addFlashAttribute(MESSAGE.getText(), COMPLETE_SCHEDULEREPLY_MODIFICATION.getText());
         } catch (Exception e) {
-            rttr.addFlashAttribute(MESSAGE.getText(), FAIL_TO_DELETE_SCHEDULEREPLY.getText());
+            rttr.addFlashAttribute(MESSAGE.getText(), FAIL_TO_MODIFY_SCHEDULEREPLY.getText());
             e.printStackTrace();
         }
         rttr.addAttribute(SCHEDULE_NO.getText(), scheduleReplyVO.getScheduleNO());
