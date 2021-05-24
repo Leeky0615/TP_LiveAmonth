@@ -161,7 +161,7 @@
                         </c:if>
                     </c:forEach>
 
-                    <jsp:include page="../scheduleView/Paging.jsp">
+                    <jsp:include page="../scheduleView/paging.jsp">
                         <jsp:param value="${reviewReplyList[0].reviewReplyVO.reviewNO}" name="reviewNO"/>
                         <jsp:param value="${paging.page}" name="page"/>
                         <jsp:param value="${paging.beginPage}" name="beginPage"/>

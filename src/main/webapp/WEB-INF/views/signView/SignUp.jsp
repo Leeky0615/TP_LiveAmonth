@@ -1,6 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+         pageEncoding="utf-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="com.liveamonth.liveamonth.entity.vo.UserVO" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<%@ page import="com.liveamonth.liveamonth.constants.EntityConstants.*" %>
 
 <body>
 <script src="resources/js/SignUp.js"></script>

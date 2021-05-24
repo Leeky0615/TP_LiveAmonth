@@ -19,7 +19,7 @@
                         <h3 class="mb-4">Sign In</h3>
                     </div>
                 </div>
-                
+
                 <form action="checkSign" class="signin-form">
                     <div class="form-group mt-3">
                         <input type="text" class="form-control" id="userID" name="userID" required>
@@ -35,6 +35,9 @@
                     <div class="form-group">
                         <button type="submit" class="form-control btn btn-primary rounded submit px-3">로그인</button>
                     </div>
+                    <div class="form-group">
+                        <a href= ${apiURL}><img  src="resources/img/naverLogin_btn.png"/></a>
+                    </div>
                     <c:if test="${!firstIn}">
                         <p class="text-center" style="color:#ff0000">가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.</p>
                     </c:if>
@@ -42,7 +45,7 @@
                     <div class="form-group d-md-flex">
                         <div class="w-50 text-left">
                             <label class="checkbox-wrap checkbox-primary mb-0">Remember Me
-                                <input type="checkbox" name="userCookie">
+                                <input type="checkbox" name="userCookie" checked>
                                 <span class="checkmark"></span>
                             </label>
                         </div>

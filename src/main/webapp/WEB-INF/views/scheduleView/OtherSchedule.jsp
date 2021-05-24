@@ -278,7 +278,7 @@
                         </c:if>
                     </c:forEach>
 
-                    <jsp:include page="Paging.jsp">
+                    <jsp:include page="paging.jsp">
                         <jsp:param value="${otherScheduleAndLikeCount.scheduleNO}" name="scheduleNO"/>
                         <jsp:param value="${paging.page}" name="page"/>
                         <jsp:param value="${paging.beginPage}" name="beginPage"/>
