@@ -108,6 +108,14 @@
                                 </ul>
                             </li>
                             <li class="active"><a href="myPage">MyPage</a></li>
+                            <li class="active"><a href="customercenter">Customer Center</a>
+                                <ul class="dropdown">
+                                    <li><a href="customercenter">1:1문의</a></li>
+                                    <li><a href="customercenter">공지사항</a></li>
+                                    <li><a href="faq">FAQ</a></li>
+                                    <li><a href="customercenter">개인정보처리방침</a></li>
+                                </ul>
+                            </li>
 
                         </ul>
                     </nav>
