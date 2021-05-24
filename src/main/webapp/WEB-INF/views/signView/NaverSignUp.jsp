@@ -3,88 +3,61 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.liveamonth.liveamonth.entity.vo.UserVO" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
 <%@ page import="com.liveamonth.liveamonth.constants.EntityConstants.*" %>
 
 <body>
-<script src="resources/js/SignUp.js"></script>
+<script src="resources/js/signUp.js"></script>
+
 <section class="ftco-section">
     <div class="container">
-        <form action=resultMentSignUp method="post" class="signup-form" name="SignInfo" onsubmit="return checkValue()">
+        <form action="resultMentNaverSignUp" class="signup-form" name="SignInfo">
             <div class="row justify-content-center">
                 <div class="col-md-12 col-lg-12 col-xl-8">
                     <div class="login-wrap p-4 p-md-5">
                         <div class="icon d-flex align-items-center justify-content-center">
                             <span class="fa fa-edit"></span>
                         </div>
-                        <h3 class="text-center mb-4">회원 가입</h3>
+                        <h3 class="text-center mb-4">네이버 회원 추가 정보 입력</h3>
 
                         <form action="#" class="signup-form">
-                            <%--아이디--%>
-                            <div class="form-group mb-3">
-                                <label class="label" for="userID">ID</label>
-                                <input type="text" id="userID" class="form-control" placeholder="ID" name="userID"
-                                       engAndNumOnly>
-                                <button type="button" class="checkID">중복확인</button>
-                                <p class="result">
-                                    <span class="msg">중복확인을 해주세요.</span>
-                                </p>
-                            </div>
-
-                            <%--비밀번호 --%>
-                            <div class="form-group mb-3">
-                                <label class="label" for="userPassword">password</label> <input
-                                    type="password" id="userPassword"
-                                    class="form-control" placeholder="Password" onpaste="return false;"
-                                    oncopy="return false;" onchange="checkPassword()"
-                                    name="userPassword"> <span toggle="#password-field"
-                                                               class="fa fa-fw fa-eye field-icon toggle-password"></span>
-                            </div>
-
+                            <%-- naverID--%>
+                            <input type="hidden" name="userID" value = "${naverUser.userID}">
                             <%-- 이름 --%>
-
-                            <div class="form-group mb-3">
-                                <label class="label" for="checkUserPassword">Check password</label>
-                                <input type="password" id="checkUserPassword"
-                                       class="form-control" placeholder="checkPassword" onpaste="return false;"
-                                       oncopy="return false;" onchange="checkPassword()" name="checkUserPassword">
-                                <span toggle="#password-field"
-                                      class="fa fa-fw fa-eye field-icon toggle-password"></span>
-                                <span class="checkPassword" id="checkPassword">비밀번호 확인</span>
-                            </div>
-
-                            <div class="form-group mb-3">
+                            <div class="form-group mb-3" id="userNameBlock">
                                 <label class="label" for="userName">이름</label> <input
                                     type="text" id="userName" class="form-control" onpaste="return false;"
-                                    placeholder="이름(한글만 입력가능)" name="userName" onkeypress="koreanCheck()">
+                                    placeholder="이름(한글만 입력가능)" name="userName"
+                                    value = "${naverUser.userName}" onkeypress="koreanCheck()">
                             </div>
 
                             <%-- 닉네임 --%>
-                            <div class="form-group mb-3">
+                            <div class="form-group mb-3" id="userNicknameBlock">
                                 <label class="label" for="userNickname">닉네임</label>
                                 <input type="text" id="userNickname" class="form-control" placeholder="닉네임"
                                        onpaste="return false;"
-                                       name="userNickname">
-                                <button type="button" class="checkNickName">중복확인</button>
-                                <p class="nickNameResult">
-                                    <span class="nickNameMsg">중복확인을 해주세요.</span>
-                                </p>
+                                       name="userNickname" value = "${naverUser.userNickname}">
+<%--                                <button type="button" class="checkNickName">중복확인</button>--%>
+<%--                                <p class="nickNameResult">--%>
+<%--                                    <span class="nickNameMsg">중복확인을 해주세요.</span>--%>
+<%--                                </p>--%>
                             </div>
 
                             <%--성별--%>
                             <div class="form-group mb-3" id="userSexBlock">
                                 <label class="label" for="userSex">성별</label><br> <select
-                                    name="userSex" id="userSex" class="form-control" onpaste="return false;">
+                                    name="userSex" id="userSex" class="form-control" onpaste="return false;"
+                                    value = "${naverUser.userSex}">
                                 <option value=0>남성</option>
                                 <option value=1>여성</option>
                             </select>
                             </div>
                             <br>
 
-                            <div class="form-group mb-1">
+                            <div class="form-group mb-1" id="userEmailBlock">
                                 <label class="label" for="userEmail">이메일</label>
                                 <input type="text" id="userEmail" class="form-control result-email"
-                                       onpaste="return false;" name="userEmail" onfocus="this.value='';">
+                                       onpaste="return false;" name="userEmail" onfocus="this.value='';"
+                                       value = "${naverUser.userEmail}">
                                 @
                                 <input type="text" id="email" name="email" class="form-control" readOnly="true">
 
@@ -99,12 +72,12 @@
                                 </select>
                             </div>
 
-                            <%--                        출생년도--%>
-                            <div class="form-group mb-3">
+                            <%--출생년도--%>
+                            <div class="form-group mb-3" id="userAgeBlock">
                                 <label class="label" for="userAge">출생년도</label><br> <input
                                     type="number" class="int form-control" id="userAge"
                                     min="1900" max="2021" maxlength="4" placeholder="생년(4자)" onpaste="return false;"
-                                    name="userAge" oninput="maxLengthCheck(this)">
+                                    name="userAge" oninput="maxLengthCheck(this)" value = "${naverUser.userAge}">
                             </div>
                                 <div class="form-group mb-3">
                                     <label class="label">약관동의</label><br>
@@ -130,7 +103,7 @@
                             </div>
 
                             <div class="form-group">
-                                <button type="submit" id="submit" disabled="disabled"
+                                <button type="submit" id="submit"
                                         class="form-control btn btn-primary rounded submit px-3">
                                     Sign Up
                                 </button>
@@ -146,55 +119,21 @@
     </div>
 </section>
 </body>
+</html>
 
-<script>
-    $(".checkID").click(function () {
-        var query = {userID: $("#userID").val()};
-        $.ajax({
-            url: "checkID",
-            type: "post",
-            data: query,
-            success: function (data) {
-                if (data == 1) {
-                    $(".result .msg").text("사용불가");
-                    $(".result .msg").attr("style", "color:#f00");
-                    $("#submit").attr("disabled", "disabled");
-                } else {
-                    $(".result .msg").text("사용가능");
-                    $(".result .msg").attr("style", "color:#00f");
-                    $("#submit").removeAttr("disabled");
-                }
-            }
-        });  // ajax ��
-    });
-    $("#userID").keyup(function () {
-        $(".result .msg").text("중복확인을 해주세요");
-        $(".result .msg").attr("style", "color:#000");
-        $("#submit").attr("disabled", "disabled");
-    });
-    ///////////////////////////////////////////////////////////
-    $(".checkNickName").click(function () {
-        var query = {userNickname: $("#userNickname").val()};
-        $.ajax({
-            url: "checkNickName",
-            type: "post",
-            data: query,
-            success: function (data) {
-                if (data == 1) {
-                    $(".nickNameResult .nickNameMsg").text("사용불가");
-                    $(".nickNameResult .nickNameMsg").attr("style", "color:#f00");
-                    $("#submit").attr("disabled", "disabled");
-                } else {
-                    $(".nickNameResult .nickNameMsg").text("사용가능");
-                    $(".nickNameResult .nickNameMsg").attr("style", "color:#00f");
-                    $("#submit").removeAttr("disabled");
-                }
-            }
-        });  // ajax ��
-    });
-    $("#userNickname").keyup(function () {
-        $(".nickNameResult .nickNameMsg").text("중복확인을 해주세요");
-        $(".nickNameResult .nickNameMsg").attr("style", "color:#000");
-        $("#submit").attr("disabled", "disabled");
-    });
-</script>
+    <c:if test = "${naverUser.userName != null}">
+        <script> unvisibleUserName();</script>
+    </c:if>
+    <c:if test = "${naverUser.userNickname != null}">
+        <script> unvisibleUserNickname();</script>
+    </c:if>
+    <c:if test = "${naverUser.userAge != 0}">
+        <script> unvisibleUserAge();</script>
+    </c:if>
+    <c:if test = "${naverUser.userSex != null}">
+        <script> unvisibleUserSex();</script>
+    </c:if>
+    <c:if test = "${naverUser.userEmail != null}">
+        <script> unvisibleUserEmail();</script>
+    </c:if>
+
