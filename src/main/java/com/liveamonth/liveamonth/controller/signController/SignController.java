@@ -16,7 +16,6 @@ import com.liveamonth.liveamonth.model.service.reviewService.ReviewService;
 import com.liveamonth.liveamonth.model.service.scheduleService.ScheduleService;
 import net.bytebuddy.implementation.bind.MethodDelegationBinder;
 import com.liveamonth.liveamonth.model.service.signService.SignService;
-import com.sun.deploy.net.URLEncoder;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.awt.*;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
