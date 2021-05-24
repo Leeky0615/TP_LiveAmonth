@@ -7,6 +7,8 @@
     <definition name="Main" template="/WEB-INF/tiles/template/MainTemplate.jsp">
         <put-attribute name="header" value="/WEB-INF/views/incl/Header.jsp"/>
         <put-attribute name="cityInfoSlide" value="/WEB-INF/views/mainView/MainCitySlide.jsp" />
+        <put-attribute name="mainPopularContents" value="/WEB-INF/views/mainView/MainPopularContents.jsp" />
+        <put-attribute name="mainSideBar" value="/WEB-INF/views/mainView/MainSideBar.jsp" />
         <put-attribute name="cityInfoGrid" value="/WEB-INF/views/cityInfoView/CityInfoGrid.jsp"/>
         <put-attribute name="footer" value="/WEB-INF/views/incl/Footer.jsp"/>
     </definition>

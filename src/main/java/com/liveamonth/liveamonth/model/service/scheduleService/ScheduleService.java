@@ -52,4 +52,6 @@ public interface ScheduleService {
     void increaseScheduleViewCount(int scheduleNO);
 
     int getScheduleDurationPay(String schedulePayStartDay, String schedulePayFinishDay, int scheduleNO) throws Exception;
+
+    List<HashMap<String, Object>> getMainOtherScheduleList() throws Exception;
 }

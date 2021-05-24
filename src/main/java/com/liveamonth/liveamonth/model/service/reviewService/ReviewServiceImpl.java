@@ -27,7 +27,14 @@ public class ReviewServiceImpl implements ReviewService {
 
 	@Autowired
     private ReviewMapper reviewMapper;
-
+    @Override
+    public ArrayList<HashMap<String, Object>> getMainPopularReviewList(int selectPage) throws Exception {
+        int startNum = (selectPage-1)*15;
+        HashMap<String, Integer> page = new HashMap<String, Integer>();
+        page.put(START_NO.getText(), startNum);
+        page.put(DISPLAY_PAGE.getText(), STATIC_DISPLAY_PAGE_NUM.getText());
+        return reviewMapper.getMainPopularReviewList(page);
+    }
     @Override
     public ArrayList<HashMap<String, Object>> getAllReviewList(int selectPage) throws Exception {
         int startNum = (selectPage-1)*15;
@@ -55,7 +62,6 @@ public class ReviewServiceImpl implements ReviewService {
         HashMap<String, Integer> page = new HashMap<String, Integer>();
         page.put(START_NO.getText(), startNum);
         page.put(DISPLAY_PAGE.getText(), STATIC_DISPLAY_PAGE_NUM.getText());
-
 
         return reviewMapper.getPopularReviewList(page);
     }
