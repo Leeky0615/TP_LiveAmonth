@@ -205,9 +205,10 @@ public class MyPageController {
     public String modifyUserImage(HttpSession session, @RequestParam("fileName") MultipartFile mFile, Model model) throws Exception {
         UserVO userVO = (UserVO) session.getAttribute(USER_VO.getText());
         if(userVO.getUserImage() != null) s3Uploader.delete(IMAGE_DIR.getText()+userVO.getUserImage());
-        String saveName = s3Uploader.uploadProfileImg(IMAGE_DIR.getText(), userVO.getUserID(), mFile.getName(), mFile.getBytes());
+        String saveName = s3Uploader.uploadProfileImg(IMAGE_DIR.getText(), userVO.getUserID(), mFile.getOriginalFilename(), mFile.getBytes());
         myPageService.modifyUserImg(saveName,userVO.getUserID());
-
+        userVO.setUserImage(saveName);
+        model.addAttribute(USER_VO.getText(), userVO);
         return REDIRECT_MY_PAGE.getText();
     }
 }
