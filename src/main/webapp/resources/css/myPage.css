@@ -172,3 +172,47 @@
     -o-transform: translateY(0);
     transform: translateY(0);
 }
+
+.modal-content{
+    width: 350px;
+}
+.modal-body .img{
+    padding-left: 17%;
+}
+.filebox{
+    padding-left: 20%;
+}
+.filebox label{
+    margin-top: 20px;
+    font-size: 14px;
+    color: #ffffff;
+    background: #00C89E;
+    border: none;
+    border-radius: 10%;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: inline-block;
+    padding: 10px 20px;
+}
+.filebox label:hover{
+    color: #00C89E;
+    background: #ffffff;
+}
+.filebox-btn{
+    margin-top: 20px;
+    font-size: 14px;
+    color: #ffffff;
+    background: #00C89E;
+    border: none;
+    border-radius: 10%;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: inline-block;
+    padding: 10px 20px;
+}
+.filebox-btn:hover{
+    color: #00C89E;
+    background: #ffffff;
+}
