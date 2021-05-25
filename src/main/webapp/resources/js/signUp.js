@@ -173,4 +173,14 @@ $(document).ready(function(){
                 .prev('input').attr('type','password');
         }
     });
+    $('#password-field').on('click',function(){
+        $('input').toggleClass('active');
+        if($('input').hasClass('active')){
+            $(this).attr('class',"fa fa-fw fa-eye-slash field-icon")
+                .prev('label').prev('input').attr('type',"text");
+        }else{
+            $(this).attr('class',"fa fa-fw fa-eye field-icon")
+                .prev('label').prev('input').attr('type','password');
+        }
+    });
 });

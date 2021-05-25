@@ -15,9 +15,10 @@
                     <li class="nav-item">
                         <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab">REVIEW</a>
                     </li>
-                </ul><!-- Tab panes -->
+                </ul>
+                <!-- Tab Contents -->
                 <div class="tab-content">
-                    <%--도시 소개--%>
+                    <%--다른사람 스케줄--%>
                     <div class="tab-pane active" id="tabs-1" role="tabpanel">
                         <div class="tab-desc">
                             <div class="row">

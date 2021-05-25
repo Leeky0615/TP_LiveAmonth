@@ -75,12 +75,13 @@
                                 </select>
                             </div>
 
+                            <%--이메일--%>
                             <label class="label mb-0" for="userEmail"><h5>E-Mail</h5></label>
                             <div class="form-group">
                                 <input type="text" id="userEmail" class="form-control result-email"
                                        onpaste="return false;" name="userEmail" onfocus="this.value='';"
                                        style="width: 44%;float: left">
-                                <h3 style="float: left;margin-left: 10px;margin-right: 10px">@</h3>
+                                <h3 style="float: left;margin-left: 11px;margin-right: 11px">@</h3>
                                 <input type="text" id="email" name="email" class="form-control" readOnly="true"
                                        style="width: 48%;float: left">
                             </div>
@@ -110,7 +111,7 @@
                                     <div><span class="msg">개인정보의 보유, 이용기간</span></div>
                                     <div><span class="msg">수집, 이용에 관한 동의일로부터 회원 탈퇴시 까지</span></div>
                                     <div><span class="msg">동의를 거부할 권리 및 동의를 거부할 경우의 불이익을 받을 수 있습니다.</span></div>
-                                    <div>     <span class="msg">귀하는 위 사항에 대하여 동의를 거부할 수 있습니다.
+                                    <div><span class="msg">귀하는 위 사항에 대하여 동의를 거부할 수 있습니다.
                                   다만 위 개인정보 수집에 관한 동의는 한달살기 사이트 회원가입을 위하여
                                   필수적이므로, 위 사항에 동의하여야만 회원이 될 수 있습니다.</span></div>
                                 </div>

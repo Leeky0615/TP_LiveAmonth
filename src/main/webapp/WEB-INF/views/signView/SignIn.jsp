@@ -4,6 +4,7 @@
 <body>
 <!-- login -->
 <%  boolean firstIn = (boolean)request.getAttribute("firstIn"); %>
+<script src="resources/js/signUp.js"></script>
 <section class="ftco-section">
     <div class="container">
         <div class="row justify-content-center">
@@ -26,11 +27,9 @@
                         <label class="form-control-placeholder" for="userID">ID</label>
                     </div>
                     <div class="form-group">
-                        <input id="password-field" type="password" id="userPassword" class="form-control"
-                               name="userPassword" required>
+                        <input type="password" id="userPassword" class="form-control" name="userPassword" required>
                         <label class="form-control-placeholder" for="userPassword">Password</label>
-
-                        <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                        <span id="password-field" class="fa fa-fw fa-eye field-icon"></span>
                     </div>
                     <div class="form-group">
                         <button type="submit" class="form-control btn btn-primary rounded submit px-3">·Î±×ÀÎ</button>
