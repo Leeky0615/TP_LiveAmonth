@@ -129,6 +129,7 @@ public class OtherScheduleController {
         UserVO session_UserVO = (UserVO) session.getAttribute(USER_VO.getText());
 
         int scheduleNO = Integer.parseInt(request.getParameter(SCHEDULE_NO.getText()));
+
         model.addAttribute(SCHEDULE_NO.getText(), scheduleNO);
 
         int selectPage = 1;

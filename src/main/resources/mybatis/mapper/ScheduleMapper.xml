@@ -126,7 +126,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="likeCount" property="likeCount"/>
 	</resultMap>
 	<select id ="getScheduleAndLikeCount" parameterType="int" resultMap="scheduleAndLikeCount">
-		select schedule.scheduleNO,schedule.scheduleSubject, scheduleViewCount, count(scheduleLikeUserNO) as likeCount from schedule left join scheduleLike on schedule.scheduleNO = scheduleLike.scheduleNO where schedule.scheduleNO = #{scheduleNO} group by schedule.scheduleNO;
+		select schedule.scheduleNO,schedule.scheduleSubject, scheduleViewCount, count(scheduleLikeUserNO) as likeCount
+		from schedule
+		    left join scheduleLike
+		        on schedule.scheduleNO = scheduleLike.scheduleNO
+		where schedule.scheduleNO = #{scheduleNO} group by schedule.scheduleNO;
 	</select>
 
 	<select id="getScheduleDurationPay" parameterType="HashMap" resultType="int">

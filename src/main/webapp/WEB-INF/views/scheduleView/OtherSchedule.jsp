@@ -9,14 +9,14 @@
 <script src="resources/js/reply.js"></script>
 
 <body style="background:#ffffff">
-<input type="hidden" id="userNO" name="userNO" value="${userVO.userNO}"/>
-<input type="hidden" id="selectedScheduleNO" name="selectedScheduleNO" value="${otherScheduleAndLikeCount.scheduleNO}"/>
+<input type="hidden" name="userNO" value="${userVO.userNO}"/>
+<input type="hidden" name="selectedScheduleNO" value="${otherScheduleAndLikeCount.scheduleNO}"/>
 <section class="blog-section spad">
     <div class="container">
         <div class="row">
             <div class="col-lg-8">
                 <div class="section-title">
-                    <h4> ${userVO.userNickname}님의 스케줄  [<span>${otherScheduleAndLikeCount.scheduleSubject}</span>]</h4>
+                    <h4> ${otherScheduleAndLikeCount.userNickname}님의 스케줄  [<span>${otherScheduleAndLikeCount.scheduleSubject}</span>]</h4>
                 </div>
                 <form name="calendarFrm" id="calendarFrm" action="otherSchedule">
                     <input type="hidden" name="year" value="${todayInformation.searchYear}"/>
@@ -184,7 +184,7 @@
                                                                       style="width: auto;color: #01d28e">${message}</span>
                                                             </div>
                                                         </c:if>
-                                                        <input type="hidden" id="userNO" name="userNO" value="${userVO.userNO}"/>
+                                                        <input type="hidden" id="selectedUserNO" name="selectedUserNO" value="${otherScheduleAndLikeCount.userVO.userNO}"/>
                                                         <input type="hidden" id="selectedScheduleNO" name="selectedScheduleNO" value="${otherScheduleAndLikeCount.scheduleNO}"/>
                                                         <div class="item-box mb-2" id="scheduleDurationPay">
                                                             <button type="submit" class="site-btn">금액확인하기</button>
@@ -336,7 +336,41 @@
         </div>
     </div>
 </section>
+<div class="modal fade" id="showScheduleContentModal" role="dialog"
+     aria-labelledby="showScheduleLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="showScheduleLabel">스케줄</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="info"></div>
+                <form name="deleteScheduleContent" action="deleteScheduleContent">
+                    <input type="hidden" name="year" value="${todayInformation.searchYear}"/>
+                    <input type="hidden" name="month" value="${todayInformation.searchMonth-1}"/>
+                    <div class="form-group mb-4 mt-2">
+                        <label class="label mb-0"><h5>제목</h5></label>
+                        <label id="scheduleContentSubjectMessage" class="form-control mb-1" readonly></label>
+                    </div>
+                    <%--날짜 --%>
+                    <div class="form-group mb-1">
+                        <label class="label mb-0"><h5>내용</h5></label>
+                        <textarea id="scheduleContentDescMessage"
+                                  class="form-control mb-1"
+                                  rows="6" readonly></textarea>
+                    </div>
+                    <div class="form-group mb-1">
+                        <label class="label mb-0"><h5>금액</h5></label>
+                        <label id="scheduleContentCostMessage" class="form-control mb-1" readonly></label>
+                    </div>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
 
-<jsp:include page="ScheduleModal.jsp"/>
 
 </body>
