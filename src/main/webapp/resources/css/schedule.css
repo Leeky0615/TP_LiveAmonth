@@ -6,7 +6,6 @@
 	.addButton{
 	text-align: center;
 	}
-	
 		.day{
 			width:100px; 
 			height:30px;
@@ -25,15 +24,15 @@
 			float: right;
 		}
 		.today_button{
-			width: 100px; 
+			width: 100px;
 			height:30px;
 		}
 		.calendar{
-			width:80%;
+			width:100%;
 			margin:auto;
 		}
 		.navigation{
-			margin-top:100px;
+			/*margin-top:100px;*/
 			margin-bottom:30px;
 			text-align: center;
 			font-size: 25px;
@@ -134,4 +133,42 @@
 .hoverScheduleSubject2 a, .hoverScheduleSubject2 a:before {
   -webkit-transition: all 0.2s ease;
           transition: all 0.2s ease;
+}
+.item-box {
+	padding-left: 20px;
+	font-size: 14px;
+	color: #111111;
+	font-weight: 500;
+	width: 80%;
+	height: 60px;
+	margin-right: 0px;
+}
+.item-box .item-title{
+	width: calc(30%);
+	height: 30px;
+	margin: 0;
+	float: left;
+}
+.item-box input {
+	width: calc(70%);
+	margin: 0;
+	float: right;
+}
+.item-box .item-desc{
+	width: calc(70%);
+	margin: 0;
+	float: right;
+}
+.item-box button{
+	margin :0px;
+	/*float: right;*/
+}
+.item-box .site-btn{
+	/*float: right;*/
+}
+
+.modal-body .info{
+	float: right;
+	font-size: 11px;
+	color: #f02020;
 }

@@ -1,435 +1,301 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <link rel="stylesheet" href="resources/css/schedule.css" type="text/css">
 <link rel="stylesheet" href="resources/css/onOff.css" type="text/css">
-
 <script src="resources/js/schedule.js"></script>
 
 <body style="background:#ffffff">
-
-<div class="search-form-content">
-    <form action="swapSchedule" class="filter-form">
-        <select class="sm-width" name="selectSchedule" id="selectSchedule">
-            <c:forEach var="scheduleVO" items="${scheduleVOList}">
-                <option id="${scheduleVO.scheduleNO}" value="${scheduleVO.scheduleNO}">${scheduleVO.scheduleSubject}</option>
-            </c:forEach>
-        </select>
-        <script> $('#${selectedScheduleNO}').prop("selected",true); </script>
-        <input type="submit" class="search-btn sm-width" style="width:5%;" value="확인">
-
-        <button type="button" class="search-btn sm-width" style="float: right;" data-toggle="modal"
-                data-target="#modifyScheduleModal">캘린더 수정
-        </button>
-        <button type="button" class="search-btn sm-width" style="float: right;" data-toggle="modal"
-                data-target="#addScheduleModal">새 캘린더 추가
-        </button>
-
-    </form>
-</div>
-
-<div class="search-form-content">
-    <form action="knowScheduleDurationPay" class="filter-form">
-        <div class="text_desc">
-            <input type="date" id="schedulePayStartDay" name="schedulePayStartDay" class="sm-width"/> ~
-            <input type="date" id="schedulePayFinishDay" name="schedulePayFinishDay" class="sm-width"/>
-            <button type="submit" class="search-btn sm-width" style="float: right;">금액확인하기</button>
-        </div>
-    </form>
-</div>
-
-<div class="modal fade" id="addScheduleModal" role="dialog" aria-labelledby="addScheduleLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addScheduleLabel">캘린더 등록</h5>
-                <button type="button" class="close" data-dismiss="modal"
-                        aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form name="addSchedule" action="/addSchedule">
-                    <div class="contents">
-                        <div class="text_subject">제목 :</div>
-                        <div class="text_desc">
-                            <input type="text" name="scheduleSubject" class="text_type1"/>
-                        </div>
-
-                        <div class="text_subject">지역</div>
-                        <div class="text_desc">
-                            <select class="sm-width" name="cityNO">
-                                <c:forEach var="schedulePlace" items="${schedulePlaceList}" varStatus="status">
-                                    <option value="${status.index+1}">${schedulePlace}</option>
-                                </c:forEach>
-                            </select>
-                        </div>
-                    </div>
-
-                    <br><br>
-
-                    <div class="text_subject">공개여부</div>
-                    <div class="text_desc">
-                        <label class="switch">
-                            <input type="checkbox" name="scheduleStatus" id="scheduleStatus">
-                            <span class="slider round"></span>
-<%--                            <script> $("input:checkbox[id='scheduleStatus']").prop("checked", true);</script>--%>
-                        </label>
-                    </div>
-                    <div>
-                        <button type="button" class="board_move_go pointer" onclick="addScheduleButton();">추가</button>
-                        <button type="button" class="board_move_go pointer" data-dismiss="modal">취소</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
-
-<div class="modal fade" id="modifyScheduleModal" role="dialog" aria-labelledby="modifyScheduleLabel" aria-hidden="true">
-    <c:forEach var="scheduleVO" items="${scheduleVOList}">
-        <c:if test="${scheduleVO.scheduleNO == selectedScheduleNO}">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="modifyScheduleLabel">캘린더 수정/삭제</h5>
-                        <button type="button" class="close" data-dismiss="modal"
-                                aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form name="modifySchedule" action="modifySchedule">
-                            <div class="contents">
-                                <div class="text_subject">제목 :</div>
-                                <div class="text_desc">
-                                    <input type="text" name="scheduleSubject" class="text_type1"
-                                           value="${scheduleVO.scheduleSubject}"/>
-                                </div>
-                                <div>
-                                    <div class="text_subject">지역</div>
-                                    <select class="sm-width" name="cityNO" id="modifyPlace">
-                                        <c:forEach var="schedulePlace" items="${schedulePlaceList}" varStatus="status">
-                                            <option value="${status.index+1}" >${schedulePlace}</option>
-                                            <script> $("#modifyPlace").val("${scheduleVO.cityVO.cityNO}").prop("selected", true); </script>
-                                        </c:forEach>
-                                    </select>
-                                </div>
-
-                                <br><br>
-
-                                <div class="text_subject">공개여부</div>
-                                <label class="switch">
-                                    <input type="checkbox" name="scheduleStatus" <c:if test="${scheduleVO.scheduleStatus}">checked</c:if>>
-                                    <span class="slider round"></span>
-                                </label>
-                                <script> if(${scheduleVO.scheduleStatus}) {
-                                        $("input:checkbox[id='modifyScheduleStatus']").prop("checked", true);
-                                    }else{
-                                        $("input:checkbox[id='modifyScheduleStatus']").prop("checked", false);
-                                    }
-                                </script>
-                                <div>
-                                    <button type="button" class="board_move_go pointer" onclick="modifyScheduleButton();">수정</button>
-                                    <button type="button" class="board_move_go pointer" data-dismiss="modal">취소</button>
-                                    <button type="button" class="board_move_go pointer" style="float: right;" onclick="deleteScheduleButton();">삭제</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+<section class="blog-section spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="section-title">
+                    <h4>스케줄 표</h4>
                 </div>
-            </div>
-        </c:if>
-    </c:forEach>
-</div>
-
-
-<form name="calendarFrm" id="calendarFrm" action="schedule"
-      method="GET">
-    <input type="hidden" name="year" value="${todayInformation.searchYear}"/>
-    <input type="hidden" name="month" value="${todayInformation.searchMonth-1}"/>
-    <script>
-        var message = "${message}";
-        console.log(message);
-        if (message != "") {
-            alert(message);
-        }
-    </script>
-    <div class="calendar">
-
-        <!--날짜 네비게이션  -->
-        <div class="navigation">
-
-            <a class="before_after_year"
-               href="./schedule?year=${todayInformation.searchYear-1}&month=${todayInformation.searchMonth-1}">
-                &lt;&lt; <!-- 이전해 -->
-            </a>
-            <a class="before_after_month"
-               href="./schedule?year=${todayInformation.beforeYear}&month=${todayInformation.beforeMonth}">
-                &lt; <!-- 이전달 -->
-            </a>
-            <span class="this_month"> &nbsp;${todayInformation.searchYear}. <c:if
-                    test="${todayInformation.searchMonth<10}">0</c:if>${todayInformation.searchMonth}
-				</span>
-            <a class="before_after_month"
-               href="/schedule?year=${todayInformation.afterYear}&month=${todayInformation.afterMonth}">
-                <!-- 다음달 --> &gt;
-            </a>
-            <a class="before_after_year"
-               href="/schedule?year=${todayInformation.searchYear+1}&month=${todayInformation.searchMonth-1}">
-                <!-- 다음해 --> &gt;&gt;
-            </a>
-            <span>
+                <form name="calendarFrm" id="calendarFrm" action="schedule" method="GET">
+                    <input type="hidden" name="year" value="${todayInformation.searchYear}"/>
+                    <input type="hidden" name="month" value="${todayInformation.searchMonth-1}"/>
+                    <div class="calendar">
+                        <!--날짜 네비게이션  -->
+                        <div class="navigation">
+                            <a class="before_after_year"
+                               href="./schedule?year=${todayInformation.searchYear-1}&month=${todayInformation.searchMonth-1}">
+                                &lt;&lt; <!-- 이전해 -->
+                            </a>
+                            <a class="before_after_month"
+                               href="./schedule?year=${todayInformation.beforeYear}&month=${todayInformation.beforeMonth}">
+                                &lt; <!-- 이전달 -->
+                            </a>
+                            <span class="this_month">
+                                &nbsp;${todayInformation.searchYear}.
+                                <c:if test="${todayInformation.searchMonth<10}">0</c:if>
+                                ${todayInformation.searchMonth}
+				            </span>
+                            <a class="before_after_month"
+                               href="/schedule?year=${todayInformation.afterYear}&month=${todayInformation.afterMonth}">
+                                <!-- 다음달 --> &gt;
+                            </a>
+                            <a class="before_after_year"
+                               href="/schedule?year=${todayInformation.searchYear+1}&month=${todayInformation.searchMonth-1}">
+                                <!-- 다음해 --> &gt;&gt;
+                            </a>
+                            <span>
 				<div>
 				<button type="button" class="site-btn" data-toggle="modal" style="float: right;"
                         data-target="#addScheduleContentModal">스케줄 등록</button>
 			</div>
 			</span>
-        </div>
-
-        <!-- <div class="today_button_div"> -->
-        <!-- <input type="button" class="today_button" onclick="javascript:location.href='/calendar.do'" value="go today"/> -->
-        <!-- </div> -->
-        <table class="calendar_body">
-
-            <thead>
-            <tr bgcolor="#CECECE">
-                <td class="day sun">일</td>
-                <td class="day">월</td>
-                <td class="day">화</td>
-                <td class="day">수</td>
-                <td class="day">목</td>
-                <td class="day">금</td>
-                <td class="day sat">토</td>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <c:forEach var="dateList" items="${dateList}"
-                           varStatus="dateStatus">
-                <c:choose>
-                <c:when test="${dateList.value=='today'}">
-                <c:if test="${dateStatus.index%7==0}">
-            <tr>
-                </c:if>
-                <td class="today">
-                    <div class="date"></div>
-                    </c:when>
-                    <c:when test="${dateStatus.index%7==6}">
-                <td class="sat_day">
-                    <div class="sat"></div>
-                    </c:when>
-                    <c:when test="${dateStatus.index%7==0}">
-            </tr>
-            <tr>
-                <td class="sun_day">
-                    <div class="sun">
-                        </c:when>
-                        <c:otherwise>
-                <td class="normal_day">
-                    <div class="date"></div>
-                    </c:otherwise>
-                    </c:choose>
-                        ${dateList.date}
-    </div>
-    <div>
-
-        <c:forEach var="scheduleList"
-                   items="${dateList.scheduleDataArray}"
-                   varStatus="scheduleDataArrayStatus">
-            <div class="hoverScheduleSubject">
-                <a href="#" data-toggle="modal"
-                   data-target="#showScheduleContentModal"
-                   onclick="showScheduleContentList('${scheduleList.scheduleContentNO}','${scheduleList.scheduleContentSubject}','${scheduleList.scheduleContentDate}',
-                           '${scheduleList.scheduleContentDesc}','${scheduleList.scheduleContentCost}')">
-											<span class="thick">
-                                                    ${scheduleList.scheduleContentSubject} </span>
-                </a>
-            </div>
-
-        </c:forEach>
-    </div>
-    </td>
-    </c:forEach>
-    </tbody>
-    </table>
-    </div>
-
-</form>
-
-<div class="modal fade" id="addScheduleContentModal" role="dialog" aria-labelledby="addScheduleContentLabel"
-     aria-hidden="true">
-
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addScheduleContentLabel">스케줄 등록</h5>
-                <button type="button" class="close" data-dismiss="modal"
-                        aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-
-                <div class="info">하루에 최대 4개의 스케쥴만 등록할 수 있습니다.</div>
-                <form name="addScheduleContent" action="addScheduleContent">
-                    <input type="hidden" name="year" value="${todayInformation.searchYear}"/>
-                    <input type="hidden" name="month" value="${todayInformation.searchMonth-1}"/>
-                    <div class="contents">
-
-                        <div class="text_subject">제목 :</div>
-                        <div class="text_desc">
-                            <input type="text" id="scheduleContentSubject" name="scheduleContentSubject"
-                                   class="text_type1"/>
                         </div>
-
-                        <div class="text_subject">날짜 :</div>
-                        <div class="text_desc">
-                            <input type="date" id="scheduleContentDate" name="scheduleContentDate" class="text_type1"
-                                   id="testDatepicker"/>
-                        </div>
-
-                        <div class="text_subject">내용 :</div>
-                        <div class="text_area_desc">
-                            <textarea name="scheduleContentDesc" id="scheduleContentDesc" class="textarea_type1"
-                                      rows="6"></textarea>
-                        </div>
-
-                        <div class="text_subject">금액 :</div>
-                        <div class="text_desc">
-                            <input type="number" id="scheduleContentCost" name="scheduleContentCost"
-                                   class="textarea_type1"/>
-                        </div>
-
-                        <div>
-                            <button type="button" class="board_move_go pointer" onclick="addScheduleContentButton();">
-                                일정등록
-                            </button>
-                            <button type="button" class="board_move_go pointer" data-dismiss="modal"
-                                    onclick="resetAddScheduleContentButton()">취소
-                            </button>
-                        </div>
-
+                        <table class="calendar_body">
+                            <thead>
+                            <tr bgcolor="#CECECE">
+                                <td class="day sun">일</td>
+                                <td class="day">월</td>
+                                <td class="day">화</td>
+                                <td class="day">수</td>
+                                <td class="day">목</td>
+                                <td class="day">금</td>
+                                <td class="day sat">토</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <c:forEach var="dateList" items="${dateList}" varStatus="dateStatus">
+                                <c:choose>
+                                <c:when test="${dateList.value=='today'}">
+                                <c:if test="${dateStatus.index%7==0}">
+                            <tr>
+                                </c:if>
+                                <td class="today">
+                                    <div class="date"></div>
+                                    </c:when>
+                                    <c:when test="${dateStatus.index%7==6}">
+                                <td class="sat_day">
+                                    <div class="sat"></div>
+                                    </c:when>
+                                    <c:when test="${dateStatus.index%7==0}">
+                            </tr>
+                            <tr>
+                                <td class="sun_day">
+                                    <div class="sun">
+                                        </c:when>
+                                        <c:otherwise>
+                                <td class="normal_day">
+                                    <div class="date"></div>
+                                    </c:otherwise>
+                                    </c:choose>
+                                        ${dateList.date}
+                                    <div>
+                                        <c:forEach var="scheduleList" items="${dateList.scheduleDataArray}"
+                                                   varStatus="scheduleDataArrayStatus">
+                                            <div class="hoverScheduleSubject">
+                                                <a href="#" data-toggle="modal"
+                                                   data-target="#showScheduleContentModal"
+                                                   onclick="showScheduleContentList('${scheduleList.scheduleContentNO}','${scheduleList.scheduleContentSubject}','${scheduleList.scheduleContentDate}',
+                                                           '${scheduleList.scheduleContentDesc}','${scheduleList.scheduleContentCost}')">
+                                                    <span class="thick"> ${scheduleList.scheduleContentSubject} </span>
+                                                </a>
+                                            </div>
+                                        </c:forEach>
+                                    </div>
+                                </td>
+                                </c:forEach>
+                            </tbody>
+                        </table>
                     </div>
                 </form>
             </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="modal fade" id="showScheduleContentModal" role="dialog"
-     aria-labelledby="showScheduleLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="showScheduleLabel">스케줄</h5>
-                <button type="button" class="close" data-dismiss="modal" onclick="resetAddScheduleContentButton()"
-                        aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-
-                <div class="info"></div>
-                <form name="deleteScheduleContent" action="deleteScheduleContent">
-                    <input type="hidden" name="year" value="${todayInformation.searchYear}"/> <input type="hidden"
-                                                                                                     name="month"
-                                                                                                     value="${todayInformation.searchMonth-1}"/>
-                    <div class="contents">
-                        <p class="scheduleContentSubject">
-                            <span class="scheduleContentSubjectMessage"></span>
-                        </p>
-                        <p class="scheduleContentDesc">
-                            <span class="scheduleContentDescMessage"></span>
-                        </p>
-                        <p class="scheduleContentCost">
-                            <span class="scheduleContentCostMessage"></span>
-                        </p>
-
-                        <div>
-
-                            <button type="button" class="board_move_go pointer"
-                                    style="float: right;" onclick="deleteScheduleContentButton();">
-                                삭제
-                            </button>
-
-                            <button type="button" class="board_move_go pointer"
-                                    data-toggle="modal" style="float: right;"
-                                    data-target="#modifyScheduleContentModal" data-dismiss="modal">수정하기
-                            </button>
+            <div class="col-lg-4">
+                <%--캘린더 관리--%>
+                <div class="section-title">
+                    <h4>캘린더 관리</h4>
+                </div>
+                <div class="search-form-content">
+                    <form action="swapSchedule" class="filter-form">
+                        <select class="sm-width" name="selectSchedule" id="selectSchedule">
+                            <c:forEach var="scheduleVO" items="${scheduleVOList}">
+                                <option id="${scheduleVO.scheduleNO}"
+                                        value="${scheduleVO.scheduleNO}">${scheduleVO.scheduleSubject}</option>
+                            </c:forEach>
+                        </select>
+                        <script>$('#${selectedScheduleNO}').prop("selected", true); </script>
+                        <input type="submit" class="search-btn sm-width" value="확인">
+                    </form>
+                </div>
+                <div class="pd-text" style="overflow: visible;">
+                    <div class="pd-board mb-3" style="overflow: visible;">
+                        <div class="tab-board" style="overflow: visible;">
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li class="user-service">
+                                    <a class="nav-link active" data-toggle="tab" href="#calendar-tabs-1" role="tab"
+                                       aria-selected="false">켈린더 등록</a>
+                                </li>
+                                <li class="user-service">
+                                    <a class="nav-link" data-toggle="tab" href="#calendar-tabs-2" role="tab"
+                                       aria-selected="true">캘린더 수정</a>
+                                </li>
+                            </ul><!-- Tab panes -->
+                            <div class="tab-content" style="overflow: visible;">
+                                <div class="tab-pane active" id="calendar-tabs-1" role="tabpanel"
+                                     style="overflow: visible;">
+                                    <div class="tab-desc" style="overflow: visible;">
+                                        <div class="row" style="overflow: visible;">
+                                            <div class="blog-item" style="overflow: visible;border-bottom: none;">
+                                                <form name="addSchedule" action="/addSchedule"
+                                                      class="agent-search-form mb-0">
+                                                    <div class="item-box mt-2 mb-2">
+                                                        <span class="item-title pt-1">제목</span>
+                                                        <input type="text" name="scheduleSubject" class="text_type1">
+                                                    </div>
+                                                    <div class="item-box mb-2">
+                                                        <span class="item-title mb-2 pt-2">지역</span>
+                                                        <div class="item-desc">
+                                                            <select class="sm-width" name="cityNO">
+                                                                <c:forEach var="schedulePlace"
+                                                                           items="${schedulePlaceList}"
+                                                                           varStatus="status">
+                                                                    <option value="${status.index+1}">${schedulePlace}</option>
+                                                                </c:forEach>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="item-box mb-2">
+                                                        <span class="item-title pt-1">공개여부</span>
+                                                        <label class="switch">
+                                                            <input type="checkbox" name="scheduleStatus"
+                                                                   id="scheduleStatus">
+                                                            <span class="slider round"></span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="item-box mb-2">
+                                                        <button type="button" class="site-btn"
+                                                                onclick="addScheduleButton();">추가
+                                                        </button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="calendar-tabs-2" role="tabpanel">
+                                    <div class="tab-desc" style="overflow: visible;">
+                                        <div class="row" style="overflow: visible;">
+                                            <div class="blog-item" style="overflow: visible;border-bottom: none;">
+                                                <c:forEach var="scheduleVO" items="${scheduleVOList}">
+                                                    <c:if test="${scheduleVO.scheduleNO == selectedScheduleNO}">
+                                                        <form name="modifySchedule" action="/modifySchedule"
+                                                              class="agent-search-form mb-0">
+                                                            <div class="item-box mt-2 mb-2">
+                                                                <span class="item-title pt-1">제목</span>
+                                                                <input type="text" name="scheduleSubject"
+                                                                       class="text_type1"
+                                                                       value="${scheduleVO.scheduleSubject}"/>
+                                                            </div>
+                                                            <div class="item-box mb-2">
+                                                                <span class="item-title mb-2 pt-2">지역</span>
+                                                                <div class="item-desc">
+                                                                    <select class="sm-width" name="cityNO"
+                                                                            id="modifyPlace">
+                                                                        <c:forEach var="schedulePlace"
+                                                                                   items="${schedulePlaceList}"
+                                                                                   varStatus="status">
+                                                                            <option value="${status.index+1}">${schedulePlace}</option>
+                                                                            <script> $("#modifyPlace").val("${scheduleVO.cityVO.cityNO}").prop("selected", true); </script>
+                                                                        </c:forEach>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="item-box mb-2">
+                                                                <span class="item-title pt-1">공개여부</span>
+                                                                <label class="switch">
+                                                                    <input type="checkbox" name="scheduleStatus"
+                                                                           <c:if test="${scheduleVO.scheduleStatus}">checked</c:if>>
+                                                                    <span class="slider round"></span>
+                                                                </label>
+                                                                <script>
+                                                                    if (${scheduleVO.scheduleStatus}) {
+                                                                        $("input:checkbox[id='modifyScheduleStatus']").prop("checked", true);
+                                                                    } else {
+                                                                        $("input:checkbox[id='modifyScheduleStatus']").prop("checked", false);
+                                                                    }
+                                                                </script>
+                                                            </div>
+                                                            <div class="item-box mb-2">
+                                                                <button type="button" class="site-btn"
+                                                                        onclick="modifyScheduleButton();">수정
+                                                                </button>
+                                                                <button type="button" class="site-btn"
+                                                                        onclick="deleteScheduleButton();">삭제
+                                                                </button>
+                                                            </div>
+                                                        </form>
+                                                    </c:if>
+                                                </c:forEach>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-
                     </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+                </div>
+                <%--스케줄 관리--%>
+                <div class="section-title mt-0">
+                    <h4>스케줄 관리</h4>
+                </div>
+                <div class="pd-text">
+                    <div class="pd-board mb-1">
+                        <div class="tab-board">
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li class="user-service">
+                                    <a class="nav-link active" data-toggle="tab" href="#schedule-tabs-1" role="tab">금액
+                                        확인하기</a>
+                                </li>
+                            </ul><!-- Tab panes -->
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="schedule-tabs-1" role="tabpanel">
+                                    <div class="tab-desc">
+                                        <div class="row">
+                                            <div class="blog-item">
+                                                <div class="search-form-content">
+                                                    <form action="knowScheduleDurationPay" class="filter-form"
+                                                          id="knowScheduleDurationPay">
+                                                        <div class="item-box mt-2 mb-2">
+                                                            <span class="item-title pt-1">시작일</span>
+                                                            <input type="date" id="schedulePayStartDay"
+                                                                   name="schedulePayStartDay">
+                                                        </div>
+                                                        <div class="item-box mb-2">
+                                                            <span class="item-title mb-2 pt-1">종료일</span>
+                                                            <input type="date" id="schedulePayFinishDay"
+                                                                   name="schedulePayFinishDay">
+                                                        </div>
 
-
-<div class="modal fade" id="modifyScheduleContentModal" role="dialog"
-     aria-labelledby="modifyScheduleContentLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modifyScheduleContentLabel">스케줄 수정</h5>
-                <button type="button" class="close" data-dismiss="modal"
-                        aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-
-                <div class="info">스케줄 수정하기</div>
-                <form name="modifyScheduleContent" action="modifyScheduleContent">
-                    <input type="hidden" name="year" value="${todayInformation.searchYear}"/>
-                    <input type="hidden" name="month"
-                           value="${todayInformation.searchMonth-1}"/>
-                    <div class="contents">
-
-                        <div class="text_subject">제목 :</div>
-                        <div class="text_desc">
-                            <input type="text" id="modifyScheduleContentSubject" name="modifyScheduleContentSubject"
-                                   class="text_type1"/>
+                                                        <c:if test="${message != null}">
+                                                            <div class="item-box mt-2 mb-2">
+                                                                <span class="item-title mb-2 pt-1">비용</span>
+                                                                <span class="item-title pt-1" style="width: auto;color: #01d28e">${message}</span>
+                                                            </div>
+                                                        </c:if>
+                                                        <div class="item-box mb-2" id="scheduleDurationPay">
+                                                            <button type="submit" class="site-btn">금액확인하기</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-
-                        <div class="text_subject">날짜 :</div>
-                        <div class="text_desc">
-                            <input type="date" id="modifyScheduleContentDate" name="modifyScheduleContentDate"
-                                   class="text_type1"
-                                   readonly/>
-                        </div>
-
-                        <div class="text_subject">내용 :</div>
-                        <div class="text_area_desc">
-                            <textarea name="modifyScheduleContentDesc" id="modifyScheduleContentDesc"
-                                      class="textarea_type1" rows="6"></textarea>
-                        </div>
-
-                        <div class="text_subject">금액 :</div>
-                        <div class="text_desc">
-                            <input type="number" id="modifyScheduleContentCost" name="modifyScheduleContentCost"
-                                   class="textarea_type1"/>
-                        </div>
-
-                        <div>
-                            <button type="button" class="board_move_go pointer"
-                                    onclick="modifyScheduleContentButton();">
-                                일정수정
-                            </button>
-                            <button type="button" class="board_move_go pointer"
-                                    data-dismiss="modal">취소
-                            </button>
-                        </div>
-
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div width="100%">
-</div>
+</section>
+<jsp:include page="ScheduleModal.jsp"/>
 </body>

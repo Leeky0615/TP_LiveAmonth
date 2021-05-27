@@ -39,9 +39,9 @@
 			  	type : "post",
 			  	data : query,
 			  	success : function(data) {
-				  	$(".scheduleContentSubject .scheduleContentSubjectMessage").text("제목: " + scheduleContentSubject);
-			    	$(".scheduleContentDesc .scheduleContentDescMessage").text("내용: " + scheduleContentDesc);
-			    	$(".scheduleContentCost .scheduleContentCostMessage").text("금액: " + scheduleContentCost);
+				  	$("#scheduleContentSubjectMessage").text(scheduleContentSubject);
+			    	$("#scheduleContentDescMessage").text(scheduleContentDesc);
+			    	$("#scheduleContentCostMessage").text(scheduleContentCost+"원");
 			    	$('#modifyScheduleContentSubject').val(scheduleContentSubject);
 			    	$('#modifyScheduleContentDesc').val(scheduleContentDesc);
 			    	$('#modifyScheduleContentDate').val(scheduleContentDate);
