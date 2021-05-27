@@ -1,13 +1,9 @@
-<%@ page import="com.liveamonth.liveamonth.entity.vo.UserVO" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <body>
 <script src="resources/js/myPage.js"></script>
 <section class="ftco-section">
-    <div class="section-title">
-        <h4>회원정보 수정</h4>
-    </div>
     <div class="container">
         <form id="checkUserForm" action="resultMent" class="signup-form">
             <div class="row justify-content-center">
@@ -16,7 +12,7 @@
                         <div class="icon d-flex align-items-center justify-content-center">
                             <span class="fa fa-edit"></span>
                         </div>
-                        <h3 class="text-center mb-4">정보 수정</h3>
+                        <h3 class="text-center mb-4">회원정보 수정</h3>
 
                         <form action="checkUserForm" class="signup-form">
                             <div class="form-group mb-3">

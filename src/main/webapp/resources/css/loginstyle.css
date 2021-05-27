@@ -446,24 +446,24 @@ pre {
   max-height: 340px;
   overflow-y: scroll; }
 
-.container {
-  width: 100%;
-  padding-right: 15px;
-  padding-left: 15px;
-  margin-right: auto;
-  margin-left: auto; }
-  @media (min-width: 576px) {
-    .container {
-      max-width: 540px; } }
-  @media (min-width: 768px) {
-    .container {
-      max-width: 720px; } }
-  @media (min-width: 992px) {
-    .container {
-      max-width: 960px; } }
-  @media (min-width: 1200px) {
-    .container {
-      max-width: 1140px; } }
+/*.container {*/
+/*  width: 100%;*/
+/*  padding-right: 15px;*/
+/*  padding-left: 15px;*/
+/*  margin-right: auto;*/
+/*  margin-left: auto; }*/
+/*  @media (min-width: 576px) {*/
+/*    .container {*/
+/*      max-width: 540px; } }*/
+/*  @media (min-width: 768px) {*/
+/*    .container {*/
+/*      max-width: 720px; } }*/
+/*  @media (min-width: 992px) {*/
+/*    .container {*/
+/*      max-width: 960px; } }*/
+/*  @media (min-width: 1200px) {*/
+/*    .container {*/
+/*      max-width: 1140px; } }*/
 
 .container-fluid {
   width: 100%;
@@ -3374,7 +3374,8 @@ input[type="button"].btn-block {
     cursor: default; }
 
 .nav-tabs {
-  border-bottom: 1px solid #dee2e6; }
+  border-bottom: 1px solid #dee2e6;
+  }
   .nav-tabs .nav-item {
     margin-bottom: -1px; }
   .nav-tabs .nav-link {

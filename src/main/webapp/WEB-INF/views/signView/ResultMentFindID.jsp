@@ -23,7 +23,6 @@
                         <div class="w-100">
                             <h3 class="mb-4">${ userID }
                             </h3>
-
                         </div>
                     </div>
                     <div class="form-group">
@@ -33,7 +32,7 @@
                     </div>
                                         		            <%if(firstIn == false){%>
 		             <p class="text-center" style="color:#ff0000">가입하지 않은 아이디이거나, 잘못된 이름입니다.</p>
-		            <% }%>
+		            <% }%>	
                 </div>
             </div>
         </form>

@@ -21,6 +21,8 @@ public interface SignMapper {
 
     String findPW(HashMap<String, Object> hash) throws Exception;
 
+    String updatePW(HashMap<String, Object> hash) throws Exception;
+
     String checkEmail(String userEmail)  throws Exception;
 
     String checkNaverID(String naverID) throws Exception;

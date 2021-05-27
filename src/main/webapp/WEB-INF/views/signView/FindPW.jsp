@@ -10,13 +10,11 @@
 
             <div class="row justify-content-center">
                 <div class="col-md-7 col-lg-5">
-
                     <div class="d-flex">
                         <div class="w-100">
                             <h3 class="mb-4">Find PW</h3>
                         </div>
                     </div>
-
                     <div class="form-group mt-3">
                         <input type="text" class="form-control" id="userID" name="userID" required>
                         <label class="form-control-placeholder" for="userID">ID</label>

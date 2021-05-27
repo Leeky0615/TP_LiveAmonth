@@ -1,15 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
          pageEncoding="utf-8" %>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
-<head>
-    <title>한달 살기</title>
-</head>
 <body>
+<link rel="stylesheet" href="resources/css/review.css" type="text/css">
 <tiles:insertAttribute name="header"/>
 <tiles:insertAttribute name="cityInfoSlide"/>
-<tiles:insertAttribute name="cityInfoGrid"/>
+<section class="blog-section spad">
+    <div class="container">
+        <div class="row">
+            <tiles:insertAttribute name="mainPopularContents"/>
+            <tiles:insertAttribute name="mainSideBar"/>
+            <tiles:insertAttribute name="cityInfoGrid"/>
+        </div>
+    </div>
+</section>
 <tiles:insertAttribute name="footer"/>
 </body>
 </html>

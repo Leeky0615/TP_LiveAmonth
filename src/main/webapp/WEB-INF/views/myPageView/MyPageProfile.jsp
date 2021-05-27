@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-         pageEncoding="utf-8" %>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
@@ -49,11 +48,11 @@
 </section>
 
 <div class="modal fade" id="modifyScheduleContentModal" role="dialog"
-     aria-labelledby="modifyScheduleContentLabel" aria-hidden="true">
+     aria-labelledby="modifyUserImageLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modifyScheduleContentLabel">스케줄 수정</h5>
+                <h5 class="modal-title" id="modifyUserImageLabel">프로필 이미지 변경</h5>
                 <button type="button" class="close" data-dismiss="modal"
                         aria-label="Close">
                     <span aria-hidden="true">&times;</span>

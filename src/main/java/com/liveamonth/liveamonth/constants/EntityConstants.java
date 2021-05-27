@@ -45,25 +45,6 @@ public class EntityConstants {
         }
     }
 
-    public enum CityName {
-        SEOUL("서울"),
-        GANGNEUNG("강릉"),
-        GYEONGJU("경주"),
-        BUSAN("부산"),
-        YEOSU("여수"),
-        JEJU("제주"),
-        ALL_PLACE("전지역");
-        private String nameKR;
-
-        private CityName(String nameKR) {
-            this.nameKR = nameKR;
-        }
-
-        public String getNameKR() {
-            return this.nameKR;
-        }
-    }
-
     public enum ECityInfo {
         CITY_INFO_VO("cityInfoVO"),
         CITY_INFO_VO_LIST("cityInfoVOList"),
@@ -197,6 +178,31 @@ public class EntityConstants {
         }
     }
 
+    public enum EReviewSearchDate{
+        TOTAL_DATE("전체기간"),
+        ONE_DAY("1일"),
+        ONE_WEEK("1주일"),
+        ONE_MONTH("1개월"),
+        SIX_MONTH("6개월"),
+        ONE_YEAR("1년");
+
+        private String nameKR;
+        private EReviewSearchDate(String nameKR){this.nameKR = nameKR;}
+        public String getNameKR() {return this.nameKR;}
+
+    }
+    public enum EReviewSearchDetail{
+        SUBJECT_DESC("제목+내용"),
+        SUBJECT("제목만"),
+        NICKNAME("글작성자"),
+        REPLY_CONTENT("댓글내용"),
+        REPLY_NICKNAME("댓글작성자");
+        private String nameKR;
+        private EReviewSearchDetail(String nameKR){this.nameKR = nameKR;}
+        public String getNameKR() {return this.nameKR;}
+
+    }
+
 
 
     public enum EReviewCategoryName{
@@ -314,7 +320,8 @@ public class EntityConstants {
         USER_NICKNAME("userNickname"),
         USER_AGE("userAge"),
         USER_SEX("userSex"),
-        USER_EMAIL("userEmail");
+        USER_EMAIL("userEmail"),
+        NAVER_USER("naverUser");
         private String text;
 
         private EUser(String text) {

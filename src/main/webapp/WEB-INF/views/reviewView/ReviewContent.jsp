@@ -8,10 +8,8 @@
     <script src="resources/js/reply.js"></script>
 </head>
 <body>
-
 <input type="hidden" id="userNO" name="userNO" value="${userVO.userNO}"/>
 <input type="hidden" id="selectedReviewNO" name="selectedReviewNO" value="${reviewVO.reviewNO}"/>
-
 <section class="blog-details-section spad">
     <div class="container">
         <div class="row">
@@ -50,7 +48,6 @@
         </div>
     </div>
 </section>
-
 <section class="blog-details-section spad">
     <div class="container">
         <div class="container bootdey likeDiv">
@@ -69,7 +66,6 @@
         </div>
     </div>
 </section>
-
 <section class="blog-details-section spad">
     <div class="container bootdey">
         <div class="col-lg-7">
@@ -159,7 +155,7 @@
                                             </div>
                                         </c:if>
                                     </c:forEach>
-                                    <c:set var="beforePageReviewReplyNO" value="null"></c:set>
+                                    <c:set var="beforePageReviewReplyNO" value="-1"></c:set>
                                 </div>
                             </div>
                         </c:if>

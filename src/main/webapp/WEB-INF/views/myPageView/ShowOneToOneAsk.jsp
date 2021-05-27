@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <body>
 <section class="ftco-section">
@@ -62,9 +61,11 @@
                             </button>
                     </div>
                     <div>
-                        <form action="resultMent?page=deleteOneToOneAsk" class="signup-form" id="checkUserForm">
+                        <form action="resultMent" class="signup-form" id="checkUserForm">
                             <input type="hidden" name="oneToOneAskNO"
                                    value="${oneToOneAskVO.oneToOneAskNO}">
+                            <input type="hidden" name="page"
+                                   value="deleteOneToOneAsk">
                             <button type="submit" id="submit"
                                     class="form-control btn btn-primary rounded submit px-3">삭제하기
                             </button>

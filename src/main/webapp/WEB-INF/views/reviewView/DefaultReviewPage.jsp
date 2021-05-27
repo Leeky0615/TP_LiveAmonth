@@ -1,6 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page language="java" contentType="text/html; charset=utf-8"
-         pageEncoding="utf-8" %>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <body>
 <link rel="stylesheet" href="resources/css/review.css" type="text/css">
 <div class="container">
@@ -43,7 +42,7 @@
                 <li class="reviewCategorySubject">
                     <a href="getReview?reviewNO=${reviewVO.reviewNO}">${reviewVO.reviewSubject}</a>
                     <span class="reviewReplyCount">
-                        <c:if test="${reviewVO.replyCount ne 0}">
+                        <c:if test="${reviewVO.replyCount ne null}">
                             [${reviewVO.replyCount}]
                         </c:if>
                     </span>
@@ -67,7 +66,7 @@
                 <li class="reviewCategorySubject">
                     <a href="getReview?reviewNO=${reviewVO.reviewNO}">${reviewVO.reviewSubject}</a>
                     <span class="reviewReplyCount">
-                        <c:if test="${reviewVO.replyCount ne 0}">
+                        <c:if test="${reviewVO.replyCount ne null}">
                             [${reviewVO.replyCount}]
                         </c:if>
                     </span>
@@ -91,7 +90,7 @@
                 <li class="reviewCategorySubject">
                     <a href="getReview?reviewNO=${reviewVO.reviewNO}">${reviewVO.reviewSubject}</a>
                     <span class="reviewReplyCount">
-                        <c:if test="${reviewVO.replyCount ne 0}">
+                        <c:if test="${reviewVO.replyCount ne null}">
                             [${reviewVO.replyCount}]
                         </c:if>
                     </span>

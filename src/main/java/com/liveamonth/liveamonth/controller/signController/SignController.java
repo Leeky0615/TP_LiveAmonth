@@ -1,11 +1,12 @@
 package com.liveamonth.liveamonth.controller.signController;
 
 import com.liveamonth.liveamonth.constants.EntityConstants.EEmail;
-import com.liveamonth.liveamonth.entity.vo.CityInfoVO;
+import com.liveamonth.liveamonth.entity.dto.S3UploaderDTO;
 import com.liveamonth.liveamonth.entity.vo.UserVO;
 import com.liveamonth.liveamonth.model.service.cityInfoService.CityService;
+import com.liveamonth.liveamonth.model.service.reviewService.ReviewService;
+import com.liveamonth.liveamonth.model.service.scheduleService.ScheduleService;
 import com.liveamonth.liveamonth.model.service.signService.SignService;
-import com.sun.deploy.net.URLEncoder;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,27 +21,36 @@ import java.io.InputStreamReader;
 import java.math.BigInteger;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.security.SecureRandom;
-import java.util.List;
 
-import static com.liveamonth.liveamonth.constants.ControllerPathConstants.EMainPath.MAIN;
 import static com.liveamonth.liveamonth.constants.ControllerPathConstants.ESignPath.*;
+import static com.liveamonth.liveamonth.constants.ControllerPathConstants.ETemplatePath.MAIN;
 import static com.liveamonth.liveamonth.constants.EntityConstants.CityInfoCategory.INTRO;
 import static com.liveamonth.liveamonth.constants.EntityConstants.ESignUp.EMAIL;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.*;
-import static com.liveamonth.liveamonth.constants.LogicConstants.ECityInfoAttributes.*;
-import static com.liveamonth.liveamonth.constants.LogicConstants.ESignAttributes.FIRST_IN;
+import static com.liveamonth.liveamonth.constants.LogicConstants.ECityInfoAttributes.CITY_INTRO_LIST;
+import static com.liveamonth.liveamonth.constants.LogicConstants.ECityInfoAttributes.RANDOM_CITY_INTRO_LIST;
+import static com.liveamonth.liveamonth.constants.LogicConstants.EReview.POPULAR_REVIEW_LIST;
+import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleAttributes.FITERED_OTHER_SCHEDULE_LIST;
 import static com.liveamonth.liveamonth.constants.LogicConstants.ESignAttributes.AT;
+import static com.liveamonth.liveamonth.constants.LogicConstants.ESignAttributes.FIRST_IN;
 
 @Controller
 public class SignController {
     private boolean firstIn;
+    @Autowired
+    private S3UploaderDTO s3Uploader;
 
     @Autowired
     private SignService signService;
 
     @Autowired
     private CityService cityService;
+    @Autowired
+    private ReviewService reviewService;
+    @Autowired
+    private ScheduleService scheduleService;
 
     //naver login api에 접속
     @RequestMapping("/signIn")
@@ -63,36 +73,36 @@ public class SignController {
         return SIGN_IN.getPath();
     }
 
+    private void setMainPageAttributes(Model model) throws Exception {
+        // 인기 REVIEW
+        model.addAttribute(POPULAR_REVIEW_LIST.getText(), reviewService.getMainPopularReviewList(1));
+        // 인기 SCHEDULE
+        model.addAttribute(FITERED_OTHER_SCHEDULE_LIST.getText(), scheduleService.getMainOtherScheduleList());
+        // MainCitySlide.jsp 사용
+        model.addAttribute(RANDOM_CITY_INTRO_LIST.getText(), cityService.getRandomCityInfoListByCategory(INTRO.name()));
+        // CityInfoGrid.jsp 사용
+        model.addAttribute(CITY_INTRO_LIST.getText(), cityService.getCityInfoListByCategory(INTRO.name()));
+    }
+
     @RequestMapping("/logout")
     private String logout(HttpSession session, Model model) throws Exception {
         session.invalidate();
-        List<String> cityNameList = cityService.getCityNameList();
-        List<CityInfoVO> cityIntroList = cityService.getCityInfoListByCategory(INTRO.name());
-
-        model.addAttribute(CITY_NAME_LIST.getText(), cityNameList);
-        model.addAttribute(CITY_INTRO_LIST.getText(), cityIntroList);
+        this.setMainPageAttributes(model);
         return MAIN.getPath();
     }
 
     @RequestMapping("/checkSign")
-    private String checkSign(Model model, HttpServletRequest request) throws Exception {
+    public String checkSign(Model model, HttpServletRequest request, HttpSession session) throws Exception {
         String userID = request.getParameter(USER_ID.getText());
         String userPassword = request.getParameter(USER_PASSWORD.getText());
         UserVO userVO = signService.checkSign(userID, userPassword);
 
         if (userVO == null) {
-            this.firstIn = false;
-            model.addAttribute(FIRST_IN.getText(), this.firstIn);
+            model.addAttribute(FIRST_IN.getText(), false);
             return SIGN_IN.getPath();
         } else {
-            HttpSession session = request.getSession();
             session.setAttribute(USER_VO.getText(), userVO);
-
-            List<String> cityNameList = cityService.getCityNameList();
-            List<CityInfoVO> cityIntroList = cityService.getCityInfoListByCategory(INTRO.name());
-
-            model.addAttribute(CITY_NAME_LIST.getText(), cityNameList);
-            model.addAttribute(CITY_INTRO_LIST.getText(), cityIntroList);
+            this.setMainPageAttributes(model);
             return MAIN.getPath();
         }
     }
@@ -106,11 +116,11 @@ public class SignController {
     @RequestMapping("/naverSignUp")
     public String naverSignUp(Model model) throws Exception {
         model.addAttribute(EMAIL.getText(), EEmail.values());
-        return "signView/NaverSignUp";
+        return NAVER_SIGN_UP.getPath();
     }
 
     @ResponseBody
-    @RequestMapping(value = "/checkID", method = RequestMethod.POST)
+    @PostMapping(value = "/checkID")
     public int postCheckID(HttpServletRequest request) throws Exception {
         String userID = request.getParameter(USER_ID.getText());
         String idCheck = signService.checkID(userID);
@@ -121,7 +131,7 @@ public class SignController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/checkNickName", method = RequestMethod.POST)
+    @PostMapping(value = "/checkNickName")
     public int postNickNameCheck(HttpServletRequest request) throws Exception {
         String userNickname = request.getParameter(USER_NICKNAME.getText());
         String nickNameCheck = signService.checkNickName(userNickname);
@@ -132,7 +142,7 @@ public class SignController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/checkEmail", method = RequestMethod.POST)
+    @PostMapping(value = "/checkEmail")
     public int postCheckEmailCheck(HttpServletRequest request) throws Exception {
         String userEmail = request.getParameter(USER_EMAIL.getText());
         String emailCheck = signService.checkEmail(userEmail);
@@ -144,7 +154,12 @@ public class SignController {
     }
 
     @RequestMapping("/resultMentSignUp")
-    private String resultMentSignUp(@ModelAttribute UserVO userVO) throws Exception {
+    private String resultMentSignUp(@ModelAttribute UserVO userVO, HttpServletRequest request) throws Exception {
+        String userEmail = request.getParameter(USER_EMAIL.getText());
+        String email = request.getParameter(EMAIL.getText());
+
+        userVO.setUserEmail(userEmail + AT.getText() + email);
+
         signService.insertUser(userVO);
         return RESULT_MENT_SIGN_UP.getPath();
     }
@@ -158,32 +173,44 @@ public class SignController {
             userVO.setUserEmail(userEmail + AT.getText() + email);
         }
         signService.updateNaverUser(userVO);
-
-        return "signView/ResultMentSignUp";
+        return RESULT_MENT_SIGN_UP.getPath();
     }
-
     @RequestMapping(value = "/resultMentFindID", method = RequestMethod.POST)
     public String findID(@RequestParam("userName")
-                                 String userName, @RequestParam("userEmail")
-                                 String userEmail, Model model) throws Exception {
+                                 String userName, @RequestParam("userEmail") String userEmail, Model model) throws Exception {
         model.addAttribute(USER_ID.getText(), signService.findID(userName, userEmail));
+
+        if (signService.findID(userName, userEmail) == null)
+            this.firstIn = false;
+        model.addAttribute(FIRST_IN.getText(), this.firstIn);
+
         return RESULT_MENT_FIND_ID.getPath();
     }
 
+
     @RequestMapping("/findID")
     private String findID(Model model) throws Exception {
+
+        this.firstIn = true;
+        model.addAttribute(FIRST_IN.getText(), this.firstIn);
         return FIND_ID.getPath();
     }
 
+
     @RequestMapping("/findPW")
-    private String findPW(Model model) throws Exception {
+    private String findPW() throws Exception {
         return FIND_PW.getPath();
     }
 
 
     @RequestMapping(value = "/ResultMentFindPW", method = RequestMethod.POST)
-    public String findPW(@RequestParam("userID") String userID, @RequestParam("userEmail") String userEmail, Model model) throws Exception {
+    public String findPW(@RequestParam("userID")
+                                 String userID, @RequestParam("userEmail") String userEmail, Model model) throws Exception {
         model.addAttribute(USER_PASSWORD.getText(), signService.findPW(userID, userEmail));
+
+        if (signService.findPW(userID, userEmail) == null)
+            this.firstIn = false;
+        model.addAttribute(FIRST_IN.getText(), this.firstIn);
         return RESULT_MENT_FIND_PW.getPath();
     }
 
@@ -240,20 +267,19 @@ public class SignController {
         //회원, 비회원 체크
         if (naverID != null && !"null".equals(naverID)) {
             //session 변경해서 로그인 상태로 만들기
-            session.setAttribute("userVO",naverUser);
-            model.addAttribute(RANDOM_CITY_INTRO_LIST.getText(), cityService.getRandomCityInfoListByCategory(INTRO.name()));
-            model.addAttribute(CITY_INTRO_LIST.getText(), cityService.getCityInfoListByCategory(INTRO.name()));
-            return "Main";
+            session.setAttribute(USER_VO.getText(),naverUser);
+//            model.addAttribute(RANDOM_CITY_INTRO_LIST.getText(), cityService.getRandomCityInfoListByCategory(INTRO.name()));
+//            model.addAttribute(CITY_INTRO_LIST.getText(), cityService.getCityInfoListByCategory(INTRO.name()));
+            return "redirect:/";
         } else {
-            session.setAttribute("naverUser", naverUser);
-            return "signView/NewNaverMember";
+            session.setAttribute(NAVER_USER.getText(), naverUser);
+            return NEW_NAVER_MEMBER.getPath();
         }
     }
 
     @RequestMapping("/newNaverMember")
     private String newNaverMember(HttpSession session, HttpServletRequest request, Model model) throws Exception {
-        UserVO newNaverUser = (UserVO)session.getAttribute("naverUser");
-        String naverID = signService.checkNaverID(newNaverUser.getUserID());
+        UserVO newNaverUser = (UserVO)session.getAttribute(NAVER_USER.getText());
         boolean flag = true;
 
         if(newNaverUser.getUserSex() == null || newNaverUser.getUserEmail() == null || newNaverUser.getUserName() == null||
@@ -261,10 +287,10 @@ public class SignController {
             flag = false;
         }
 
-        if(session.getAttribute("userVO") == null && signService.setNewNaverMember(newNaverUser)==1){
-            //필수항목 다 동의 한경우
+        if(session.getAttribute(USER_VO.getText()) == null && signService.setNewNaverMember(newNaverUser)==1){
+            //필수항목 다 동의 한 경우
             if(flag){
-                session.setAttribute("userVO",newNaverUser);
+                session.setAttribute(USER_VO.getText(),newNaverUser);
                 request.setAttribute("Message", "회원 가입 성공");
             }else{ //필수 항목 하나라도 동의 안한 경우
                 return "redirect:naverSignUp";
@@ -273,7 +299,7 @@ public class SignController {
             request.setAttribute("Message", "회원 가입 실패");
         }
 
-        return "signView/ResultNewNaverMember";
+        return RESULT_NEW_NAVER_MEMBER.getPath();
     }
 
 }

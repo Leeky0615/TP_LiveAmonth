@@ -3,13 +3,12 @@
 
 <body>
 <tiles:insertAttribute name="header"/>
-<tiles:insertAttribute name="myPageProfile"/>
 <section class="blog-section spad">
     <div class="container">
         <div class="row">
-            <tiles:insertAttribute name="myPageSideBar"/>
+            <tiles:insertAttribute name="customerCenterSideBar"/>
             <div class="col-lg-10" id="body">
-                <tiles:insertAttribute name="myPageBody"/>
+                <tiles:insertAttribute name="customerCenterBody"/>
             </div>
         </div>
     </div>

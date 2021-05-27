@@ -1,6 +1,7 @@
 package com.liveamonth.liveamonth.model.service.scheduleService;
 
 
+import com.liveamonth.liveamonth.constants.LogicConstants;
 import com.liveamonth.liveamonth.entity.dto.CalendarDTO;
 import com.liveamonth.liveamonth.entity.dto.PagingDTO;
 import com.liveamonth.liveamonth.entity.vo.ScheduleContentVO;
@@ -14,10 +15,12 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 
 import static com.liveamonth.liveamonth.constants.EntityConstants.EPage.DISPLAY_PAGE;
 import static com.liveamonth.liveamonth.constants.EntityConstants.ESchedule.SCHEDULE_NO;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EPaging.*;
+import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleFilterAndOrders.SCHEDULE_FO_ORDER;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleStaticInt.*;
 
 
@@ -118,7 +121,6 @@ public class ScheduleServiceImpl implements ScheduleService {
     //otherList
     @Override
 	public ArrayList<HashMap<String, Object>> getOtherScheduleList(HashMap<String, Object> filtersAndOrder) throws Exception{
-        System.out.println(scheduleMapper.getOtherScheduleList(filtersAndOrder));
 		return scheduleMapper.getOtherScheduleList(filtersAndOrder);
 	}
 
@@ -147,11 +149,11 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public boolean addSchedule(ScheduleVO scheduleVO) throws Exception {
+    public boolean addSchedule(HashMap<String, Object> scheduleVO) throws Exception {
         return scheduleMapper.addSchedule(scheduleVO);
     }
 	
-	public boolean modifySchedule(ScheduleVO scheduleVO) throws Exception {
+	public boolean modifySchedule(HashMap<String, Object> scheduleVO) throws Exception {
 		return scheduleMapper.modifySchedule(scheduleVO);
 	}
 
@@ -237,5 +239,16 @@ public class ScheduleServiceImpl implements ScheduleService {
         hash.put("scheduleNO", scheduleNO);
 
         return scheduleMapper.getScheduleDurationPay(hash);
+    }
+
+    @Override
+    public List<HashMap<String, Object>> getMainOtherScheduleList() throws Exception  {
+        HashMap<String, Object> filtersAndOrder = new HashMap<>();
+        for (LogicConstants.EScheduleFilterAndOrders eFO : LogicConstants.EScheduleFilterAndOrders.values()) {
+            if (eFO == SCHEDULE_FO_ORDER)
+                filtersAndOrder.put(eFO.getText(), "orderByLiked");//("orderBy","orderVubByNew)
+            else filtersAndOrder.put(eFO.getText() + "Filter", false);
+        }
+        return scheduleMapper.getOtherScheduleList(filtersAndOrder);
     }
 }

@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-         pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
 <body>
 
 <!-- Contact Form Section Begin -->
@@ -12,7 +11,7 @@
                         <h4>회원가입이 완료되었습니다.</h4>
                         <p>환영합니다...</p>
                     </div>
-                    <form action="/signIn" class="cc-form">
+                    <form action="/signIn" method = post class="cc-form">
                         <button type="submit" class="site-btn">로그인하러가기</button>
                     </form>
                 </div>

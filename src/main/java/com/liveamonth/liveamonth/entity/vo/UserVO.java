@@ -15,6 +15,7 @@ public class UserVO {
 	private String userName;
 	private String userNickname;
 	private int userAge;
+	//null 넣기 위해 참조형 type 수정
 	private Boolean userSex;
 	private String userEmail;
 	private String userImage;
@@ -53,13 +54,14 @@ public class UserVO {
 	}
 	public void setUserAge(int userAge) {this.userAge = userAge;}
 
-//	public Boolean isUserSex() {return userSex;}
-	public Boolean getUserSex() {return userSex;}
-	public void setUserSex(Boolean userSex) {this.userSex = userSex;}
+	//get 인식 못하는 문제
+//	public boolean isUserSex() {return userSex;}
+	public Boolean getUserSex(){return userSex;}
 	public String getUserSexToString() {
-		if (this.getUserSex()) return "여성";
+		if (this.userSex) return "여성";
 		else return "남성";
 	}
+	public void setUserSex(Boolean userSex) {this.userSex = userSex;}
 
 	public String getUserEmail() {return userEmail;}
 	public void setUserEmail(String userEmail) {this.userEmail = userEmail;}

@@ -1,17 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <body>
 <section class="ftco-section">
-
     <div class="container">
-
         <form action="resultMentOneToOneAskReply" class="signup-form">
 			<input type="hidden" id="oneToOneAskUserEmail" name="oneToOneAskUserEmail" value="${oneToOneAskVO.oneToOneAskUserEmail}">
 			<div class="section-title">
 				<h4>문의글 답변하기</h4>
 			</div>
-
             <div class="row justify-content-center">
 					<div class="col-md-12 col-lg-10 col-xl-10">
 						<div class="login-wrap p-4 p-md-5">
@@ -56,17 +52,11 @@
 										id="oneToOneAskReply" class="form-control" placeholder="답변작성"
 										name="oneToOneAskReply">
 								</div>
-
-
-
 								<br>
-
 								<div class="form-group">
 									<button type="submit" id="submit"
 										class="form-control btn btn-primary rounded submit px-3">제출하기</button>
 								</div>
-
-
 						</div>
 					</div>
 				</div>

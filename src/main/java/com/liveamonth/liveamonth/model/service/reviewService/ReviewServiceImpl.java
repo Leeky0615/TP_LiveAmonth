@@ -27,48 +27,42 @@ public class ReviewServiceImpl implements ReviewService {
 
 	@Autowired
     private ReviewMapper reviewMapper;
-
     @Override
-    public ArrayList<HashMap<String, Object>> getAllReviewList(int selectPage) throws Exception {
+    public ArrayList<HashMap<String, Object>> getMainPopularReviewList(int selectPage) throws Exception {
         int startNum = (selectPage-1)*15;
         HashMap<String, Integer> page = new HashMap<String, Integer>();
         page.put(START_NO.getText(), startNum);
         page.put(DISPLAY_PAGE.getText(), STATIC_DISPLAY_PAGE_NUM.getText());
-
-        return reviewMapper.getAllReviewList(page);
+        return reviewMapper.getMainPopularReviewList(page);
+    }
+    @Override
+    public ArrayList<HashMap<String, Object>> getDefaultReviewList(String category) throws Exception {
+        return reviewMapper.getDefaultReviewList(category);
     }
 
     @Override
-    public ArrayList<HashMap<String, Object>> getFreeReviewList(int selectPage) throws Exception {
+    public ArrayList<HashMap<String, Object>> getCategoryReviewList(String category, int selectPage, String orderBy, String descAsc) throws Exception {
         int startNum = (selectPage-1)*15;
-        HashMap<String, Integer> page = new HashMap<String, Integer>();
-        page.put(START_NO.getText(), startNum);
-        page.put(DISPLAY_PAGE.getText(), STATIC_DISPLAY_PAGE_NUM.getText());
+        HashMap<String, Object> categoryAndPage = new HashMap<String, Object>();
+        categoryAndPage.put("category", category);
+        categoryAndPage.put("orderBy", orderBy);
+        categoryAndPage.put("descAsc", descAsc);
+        categoryAndPage.put(START_NO.getText(), startNum);
+        categoryAndPage.put(DISPLAY_PAGE.getText(), STATIC_DISPLAY_PAGE_NUM.getText());
 
-
-        return reviewMapper.getFreeReviewList(page);
+        return reviewMapper.getCategoryReviewList(categoryAndPage);
     }
-
     @Override
-    public ArrayList<HashMap<String, Object>> getPopularReviewList(int selectPage) throws Exception {
+    public ArrayList<HashMap<String, Object>> getSearchReviewList(int selectPage, String search,String searchDate, String searchCategory, String searchDetail) throws Exception {
         int startNum = (selectPage-1)*15;
-        HashMap<String, Integer> page = new HashMap<String, Integer>();
-        page.put(START_NO.getText(), startNum);
-        page.put(DISPLAY_PAGE.getText(), STATIC_DISPLAY_PAGE_NUM.getText());
-
-
-        return reviewMapper.getPopularReviewList(page);
-    }
-
-    @Override
-    public ArrayList<HashMap<String, Object>> getCategoryReviewList(String category, int selectPage) throws Exception {
-        int startNum = (selectPage-1)*15;
-        HashMap<String, Object> CategoryAndPage = new HashMap<String, Object>();
-        CategoryAndPage.put("category", category);
-        CategoryAndPage.put(START_NO.getText(), startNum);
-        CategoryAndPage.put(DISPLAY_PAGE.getText(), STATIC_DISPLAY_PAGE_NUM.getText());
-
-        return reviewMapper.getCategoryReviewList(CategoryAndPage);
+        HashMap<String, Object> searchAndPage = new HashMap<String, Object>();
+        searchAndPage.put("search",search);
+        searchAndPage.put("searchDate",searchDate);
+        searchAndPage.put("searchCategory",searchCategory);
+        searchAndPage.put("searchDetail",searchDetail);
+        searchAndPage.put(START_NO.getText(), startNum);
+        searchAndPage.put(DISPLAY_PAGE.getText(), STATIC_DISPLAY_PAGE_NUM.getText());
+        return reviewMapper.getSearchReviewList(searchAndPage);
     }
 
     @Override
@@ -94,11 +88,30 @@ public class ReviewServiceImpl implements ReviewService {
     public PagingDTO showPaging(int selectPage,String category) throws Exception {
         PagingDTO paging = new PagingDTO();
         paging.setPage(selectPage);
-        paging.setTotalCount(reviewMapper.getReviewListCount(category));
-        System.out.println(category);
+        if(category.equals("popular")){
+            paging.setTotalCount(15);
+        }else{
+            paging.setTotalCount(reviewMapper.getReviewListCount(category));
+        }
+
+        return paging;
+    }
+
+    @Override
+    public PagingDTO showSearchPaging(int selectPage, String search,String searchDate, String searchCategory, String searchDetail) throws Exception {
+        HashMap<String, Object> searchAndPage = new HashMap<String, Object>();
+        searchAndPage.put("search",search);
+        searchAndPage.put("searchDate",searchDate);
+        searchAndPage.put("searchCategory",searchCategory);
+        searchAndPage.put("searchDetail",searchDetail);
+
+        PagingDTO paging = new PagingDTO();
+        paging.setPage(selectPage);
+        paging.setTotalCount(reviewMapper.getSearchReviewListCount(searchAndPage));
         System.out.println(paging.getTotalCount());
         return paging;
     }
+
     @Override
     public ArrayList<HashMap<String, Object>> getReviewReplyList(int reviewNO, int selectPage) throws Exception {
         int startNum = (selectPage-1)*15;
@@ -159,6 +172,47 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public void modifyReview(ReviewVO reviewVO) throws Exception {
         reviewMapper.modifyReview(reviewVO);
+    }
+
+    @Override
+    public String orderByCategoryReview(String orderBy,String clickPage,String dateDescAsc, String likeDescAsc, String viewDescAsc) {
+        String descAsc=null;
+
+        switch (orderBy) {
+            case "dateOrderBy":
+                if(clickPage.equals("null")) {
+                    if (dateDescAsc.equals("desc")) {
+                        dateDescAsc = "asc";
+                    } else {
+                        dateDescAsc = "desc";
+                    }
+                }
+                descAsc = dateDescAsc;
+                break;
+            case "likeOrderBy":
+                if(clickPage.equals("null")) {
+                    if (likeDescAsc.equals("desc")) {
+                        likeDescAsc = "asc";
+                    } else {
+                        likeDescAsc = "desc";
+                    }
+                }
+                descAsc = likeDescAsc;
+                break;
+            case "viewOrderBy":
+                if(clickPage.equals("null")) {
+                    if (viewDescAsc.equals("desc")) {
+                        viewDescAsc = "asc";
+                    } else {
+                        viewDescAsc = "desc";
+                    }
+                }
+                descAsc = viewDescAsc;
+                break;
+            default:
+                break;
+        }
+        return descAsc;
     }
 
 

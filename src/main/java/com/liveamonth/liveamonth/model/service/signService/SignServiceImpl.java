@@ -5,7 +5,10 @@ import com.liveamonth.liveamonth.model.mapper.signMapper.SignMapper;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailSender;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -16,6 +19,9 @@ import java.util.HashMap;
 
 @Service
 public class SignServiceImpl implements SignService {
+
+	@Autowired
+	private MailSender mailsender;
 
     @Autowired
     private SignMapper signMapper;
@@ -55,18 +61,37 @@ public class SignServiceImpl implements SignService {
     }
 
 
-    @Override
-    public String findPW(String userID, String userEmail) throws Exception {
-        HashMap<String, Object> hash = new HashMap<String, Object>();
-        hash.put("userID", userID);
-        hash.put("userEmail", userEmail);
-        return signMapper.findPW(hash);
-    }
 
-    @Override
-    public String updatePW(String userID, String userEmail) throws Exception {
-        return null;
-    }
+  @Override
+  public String findPW(String userID, String userEmail) throws Exception {
+      HashMap<String, Object> hash = new HashMap<String, Object>();
+      hash.put("userID", userID);
+      hash.put("userEmail", userEmail);
+
+      String pw = "";
+		for (int i = 0; i < 8; i++) {
+			pw += (char) ((Math.random() * 26) + 97);
+		}
+
+		SimpleMailMessage message = new SimpleMailMessage();
+	      message.setTo(userEmail);
+	      //message.setFrom();
+	      message.setSubject("임시 비밀번호입니다.");
+	      message.setText(pw);
+
+
+	      mailsender.send(message);
+	      return signMapper.findPW(hash);
+	}
+
+
+  @Transactional
+	public String updatePW(String userID, String userEmail) throws Exception {
+	      HashMap<String, Object> hash = new HashMap<String, Object>();
+	      hash.put("userID", userID);
+	      hash.put("userEmail", userEmail);
+		return signMapper.updatePW(hash);
+	}
 
     @Override
     public String checkEmail(String userEmail) throws Exception {
@@ -111,11 +136,11 @@ public class SignServiceImpl implements SignService {
 
             //성별 선택 안한 경우
             if(stringGender != null && !"null".equals(stringGender)){
-                 if(stringGender.equals("M")){
+                if(stringGender.equals("M")){
                     gender = false;
                 }else{
-                  gender = true;
-              }
+                    gender = true;
+                }
             }else{
                 gender = null;
             }
@@ -131,9 +156,9 @@ public class SignServiceImpl implements SignService {
             }else{
                 naverUserVO.setUserAge(Integer.parseInt(birthyear));
             }
-        } else {  // 에러 발생
-            br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
-        }
+            } else {  // 에러 발생
+                 br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+            }
         br.close();
         return naverUserVO;
     }
