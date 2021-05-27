@@ -43,11 +43,11 @@
                                 <!-- 다음해 --> &gt;&gt;
                             </a>
                             <span>
-				<div>
+				                <div>
 				<button type="button" class="site-btn" data-toggle="modal" style="float: right;"
                         data-target="#addScheduleContentModal">스케줄 등록</button>
-			</div>
-			</span>
+			    </div>
+			                </span>
                         </div>
                         <table class="calendar_body">
                             <thead>
@@ -277,7 +277,8 @@
                                                         <c:if test="${message != null}">
                                                             <div class="item-box mt-2 mb-2">
                                                                 <span class="item-title mb-2 pt-1">비용</span>
-                                                                <span class="item-title pt-1" style="width: auto;color: #01d28e">${message}</span>
+                                                                <span class="item-title pt-1"
+                                                                      style="width: auto;color: #01d28e">${message}</span>
                                                             </div>
                                                         </c:if>
                                                         <div class="item-box mb-2" id="scheduleDurationPay">

@@ -121,11 +121,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<resultMap type = "java.util.HashMap" id="scheduleAndLikeCount">
 		<id column="scheduleNO" property="scheduleNO"/>
+		<result column="scheduleSubject" property="scheduleSubject"/>
 		<result column="scheduleViewCount" property="scheduleViewCount"/>
 		<result column="likeCount" property="likeCount"/>
 	</resultMap>
 	<select id ="getScheduleAndLikeCount" parameterType="int" resultMap="scheduleAndLikeCount">
-		select schedule.scheduleNO, scheduleViewCount, count(scheduleLikeUserNO) as likeCount from schedule left join scheduleLike on schedule.scheduleNO = scheduleLike.scheduleNO where schedule.scheduleNO = #{scheduleNO} group by schedule.scheduleNO;
+		select schedule.scheduleNO,schedule.scheduleSubject, scheduleViewCount, count(scheduleLikeUserNO) as likeCount from schedule left join scheduleLike on schedule.scheduleNO = scheduleLike.scheduleNO where schedule.scheduleNO = #{scheduleNO} group by schedule.scheduleNO;
 	</select>
 
 	<select id="getScheduleDurationPay" parameterType="HashMap" resultType="int">

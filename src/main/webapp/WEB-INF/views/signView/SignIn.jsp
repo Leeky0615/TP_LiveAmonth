@@ -9,18 +9,11 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-6 text-center mb-5">
-                <h2 class="heading-section">Login Page</h2>
+                <a href="/"><img src="resources/img/logo.png" alt=""></a>
             </div>
         </div>
         <div class="row justify-content-center">
             <div class="col-md-7 col-lg-5">
-
-                <div class="d-flex">
-                    <div class="w-100">
-                        <h3 class="mb-4">Sign In</h3>
-                    </div>
-                </div>
-
                 <form action="checkSign" class="signin-form">
                     <div class="form-group mt-3">
                         <input type="text" class="form-control" id="userID" name="userID" required>
@@ -49,15 +42,15 @@
                             </label>
                         </div>
                         <div class="w-50 text-md-right">
-                            <a href="findID">Forgot ID</a>
+                            <a href="findID">아이디 찾기</a>
                         </div>
 
                         <div class="w-50 text-md-right">
-                            <a href="findPW">Forgot Password</a>
+                            <a href="findPW">비밀번호 찾기</a>
                         </div>
                     </div>
                 </form>
-                <p class="text-center">Not a member? <a href="signUp">Sign Up</a></p>
+                <p class="text-center">아직 회원이 아니신가요? <a href="signUp">회원가입</a></p>
             </div>
         </div>
     </div>

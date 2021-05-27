@@ -196,14 +196,13 @@ public class ScheduleController {
         int scheduleNO = Integer.parseInt(String.valueOf(session.getAttribute(SELECTED_SCHEDULE_NO.getText())));
 
         String message = "";
-        if(schedulePayStartDay == "" && schedulePayFinishDay ==""){
+        if(schedulePayStartDay == "" || schedulePayFinishDay ==""){
             message = PLEASE_ADD_DURATION.getText();
         }else{
            int scheduleDurationPay = scheduleService.getScheduleDurationPay(schedulePayStartDay,schedulePayFinishDay,scheduleNO);
             message = String.valueOf(scheduleDurationPay) + WON.getText();
         }
         rttr.addFlashAttribute(MESSAGE.getText(), message);
-
         return REDIRECT_SCHEDULE.getRedirectPath();
     }
 }

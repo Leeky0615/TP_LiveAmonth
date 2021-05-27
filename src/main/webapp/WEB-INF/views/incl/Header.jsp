@@ -37,7 +37,8 @@
                 <div class="col-lg-10">
                     <c:if test="${empty userVO.userNO}">
                         <div class="ht-widget">
-                            <a href="signIn" class="hw-btn">Login</a>
+                            <a href="signUp" class="hw-btn">SignUp</a>
+                            <a href="signIn" class="hw-btn">signIn</a>
                         </div>
                     </c:if>
                     <c:if test="${userVO.userNO != null}">

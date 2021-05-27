@@ -30,10 +30,9 @@
 			
 			modifyScheduleContentForm.submit();
 		}
-		
 		function showScheduleContentList(scheduleContentNO, scheduleContentSubject,scheduleContentDate,scheduleContentDesc,scheduleContentCost){
 			var query = {scheduleContentDate : scheduleContentDate, scheduleContentSubject : scheduleContentSubject, scheduleContentNO : scheduleContentNO, scheduleContentDesc : scheduleContentDesc,scheduleContentCost : scheduleContentCost};
-		
+
 			$.ajax({
 			  	url : "showScheduleContentList",
 			  	type : "post",
@@ -46,12 +45,12 @@
 			    	$('#modifyScheduleContentDesc').val(scheduleContentDesc);
 			    	$('#modifyScheduleContentDate').val(scheduleContentDate);
 			    	$('#modifyScheduleContentCost').val(scheduleContentCost);
-			    
+
 			  }
-			 }); 
-		
-		}	
-		
+			 });
+
+		}
+
 		function addScheduleButton() {
 			var addScheduleForm = document.addSchedule;
 			if (addScheduleForm.scheduleSubject.value == "" || addScheduleForm.scheduleSubject.value == null) {

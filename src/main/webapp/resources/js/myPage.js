@@ -6,7 +6,6 @@ $(".checkNickName").click(function () {
         type: "post",
         data: query,
         success: function (data) {
-
             if (data == 1) {
                 $(".nickNameResult .nickNameMsg").text("사용불가");
                 $(".nickNameResult .nickNameMsg").attr("style", "color:#f00");

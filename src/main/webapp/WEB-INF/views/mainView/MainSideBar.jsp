@@ -14,7 +14,7 @@
                 <p>더욱 다양한 한달살기 정보를 제공받으세요.</p>
                 <div class="hs-top">
                     <div class="ht-widget">
-                        <a href="signIn" class="hw-btn">Login</a>
+                        <a href="signIn" class="hw-btn">signIn</a>
                     </div>
                 </div>
             </c:if>

@@ -113,12 +113,13 @@
 
 
 #like{
-    font-size:2em;
+    /*font-size:2em;*/
     color:#f04040;
 }
 
 .likeSpan{
-    font-size:2em;
+    float: right;
+    margin-right: 20px;
 }
 
 .viewCountSpan{
