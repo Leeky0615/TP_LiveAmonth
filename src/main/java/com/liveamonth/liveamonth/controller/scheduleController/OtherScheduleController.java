@@ -115,9 +115,25 @@ public class OtherScheduleController {
     public String otherScheduleList(Model model, HttpServletRequest request, CalendarDTO calendarDTO) throws Exception {
         List<HashMap<String, Object>> otherScheduleList = this.makeOtherScheduleList(request, request.getParameter(SCHEDULE_ACTION.getText()));
         HashMap<String, Object> requestList = makeRequestList(request);
+
         model.addAttribute(FITERED_OTHER_SCHEDULE_LIST.getText(), otherScheduleList);
         model.addAttribute(SCHEDULE_PLACE_LIST.getText(), cityService.getCityNameList());
         model.addAttribute(REQUEST_LIST.getText(), requestList);
+
+        List<CalendarDTO> CalendarDTOList = new ArrayList<>();
+        List<List<CalendarDTO>> CalendarDTODateList = new ArrayList<>();
+        List<HashMap<String, Integer>> CalendarDTOTodayInformationList = new ArrayList<>();
+
+        for(HashMap<String, Object> otherSchedule : otherScheduleList){
+            int scheduleNO = (int)otherSchedule.get("scheduleNO");
+            CalendarDTO calendarDto = scheduleService.showCalendar(calendarDTO, scheduleNO);
+            CalendarDTOList.add(calendarDto);
+            CalendarDTODateList.add(calendarDto.getDateList());
+            CalendarDTOTodayInformationList.add((HashMap)calendarDto.getTodayInformation());
+        }
+
+        model.addAttribute("CalendarDTODateList", CalendarDTODateList); //날짜 데이터 배열 DATE_LIST
+        model.addAttribute("CalendarDTOTodayInformationList", CalendarDTOTodayInformationList); //TODAY_INFORMATION
         return OTHER_SCHEDULE_LIST.getPath();
     }
 

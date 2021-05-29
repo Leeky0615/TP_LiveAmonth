@@ -118,22 +118,26 @@
                         </tr>
                         </thead>
                         <tbody>
+                        <c:set var ="i" value = "0"/>
                         <c:if test="${otherScheduleList != null}">
-                            <c:forEach var="scheduleContent" items="${otherScheduleList}" varStatus="status">
-                                <tr>
-                                    <td>
-                                        <div class="title"><c:out value="${scheduleContent.scheduleSubject}"/></div>
-                                        <a href="/otherSchedule?userNO=${scheduleContent.userVO.userNO}&scheduleNO=${scheduleContent.scheduleNO}">
-                                            <img src="resources/img/scheduleImg.png" alt="">
+                            <c:forEach var="schedule" items="${otherScheduleList}" varStatus="status">
+                                <tr height="200px">
+                                    <td width="40%">
+                                        <a href="/otherSchedule?userNO=${schedule.userVO.userNO}&scheduleNO=${schedule.scheduleNO}">
+                                            <c:out value="${schedule.scheduleSubject}"/>
+                                            <c:set var = "todayInformation" value = "${CalendarDTOTodayInformationList.get(i)}" scope = "request"/>
+                                            <c:set var = "dateList" value = "${CalendarDTODateList.get(i)}" scope = "request"/>
+                                            <jsp:include page="SmallSizeOfOtherSchedule.jsp" flush="true"/>
                                         </a>
                                     </td>
-                                    <td>${scheduleContent.cityVO.cityName}</td>
-                                    <td>${scheduleContent.userVO.userNickname}</td>
-                                    <td>${scheduleContent.userVO.getUserSexToString()}</td>
-                                    <td>${scheduleContent.userVO.getUserRealAge()}세</td>
-                                    <td>${scheduleContent.scheduleViewCount}</td>
-                                    <td>${scheduleContent.scheduleLikeCount}</td>
+                                    <td>${schedule.cityVO.cityName}</td>
+                                    <td>${schedule.userVO.userNickname}</td>
+                                    <td>${schedule.userVO.getUserSexToString()}</td>
+                                    <td>${schedule.userVO.getUserRealAge()}세</td>
+                                    <td>${schedule.scheduleViewCount}</td>
+                                    <td>${schedule.scheduleLikeCount}</td>
                                 </tr>
+                                <c:set var="i" value="${i + 1}" />
                             </c:forEach>
                         </c:if>
                         </tbody>
