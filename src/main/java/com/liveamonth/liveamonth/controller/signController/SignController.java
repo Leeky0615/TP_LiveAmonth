@@ -1,38 +1,20 @@
 package com.liveamonth.liveamonth.controller.signController;
 
-import javax.imageio.ImageIO;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-import com.liveamonth.liveamonth.constants.EntityConstants;
 import com.liveamonth.liveamonth.constants.EntityConstants.EEmail;
-import com.liveamonth.liveamonth.constants.LogicConstants;
 import com.liveamonth.liveamonth.entity.dto.S3UploaderDTO;
-import com.liveamonth.liveamonth.constants.EntityConstants.EEmail;
-import com.liveamonth.liveamonth.entity.vo.CityInfoVO;
 import com.liveamonth.liveamonth.entity.vo.UserVO;
 import com.liveamonth.liveamonth.model.service.cityInfoService.CityService;
+import com.liveamonth.liveamonth.model.service.noticeService.NoticeService;
 import com.liveamonth.liveamonth.model.service.reviewService.ReviewService;
 import com.liveamonth.liveamonth.model.service.scheduleService.ScheduleService;
-import net.bytebuddy.implementation.bind.MethodDelegationBinder;
 import com.liveamonth.liveamonth.model.service.signService.SignService;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import com.liveamonth.liveamonth.model.service.signService.SignService;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.awt.*;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.BufferedReader;
@@ -40,25 +22,20 @@ import java.io.InputStreamReader;
 import java.math.BigInteger;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.security.SecureRandom;
-import java.util.List;
 
 import static com.liveamonth.liveamonth.constants.ControllerPathConstants.EMainPath.MAIN;
 import static com.liveamonth.liveamonth.constants.ControllerPathConstants.ESignPath.*;
 import static com.liveamonth.liveamonth.constants.EntityConstants.CityInfoCategory.INTRO;
-import static com.liveamonth.liveamonth.constants.EntityConstants.EEmail.*;
-import static com.liveamonth.liveamonth.constants.EntityConstants.ESignUp.EMAIL;
 import static com.liveamonth.liveamonth.constants.EntityConstants.ESignUp.EMAIL;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.*;
-import static com.liveamonth.liveamonth.constants.LogicConstants.ECityInfoAttributes.*;
+import static com.liveamonth.liveamonth.constants.LogicConstants.ECityInfoAttributes.CITY_INTRO_LIST;
+import static com.liveamonth.liveamonth.constants.LogicConstants.ECityInfoAttributes.RANDOM_CITY_INTRO_LIST;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EReview.POPULAR_REVIEW_LIST;
-import static com.liveamonth.liveamonth.constants.LogicConstants.EReviewImage.S3_UPLOAD_FOLDER;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleAttributes.FITERED_OTHER_SCHEDULE_LIST;
-import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleFilterAndOrders.SCHEDULE_FO_ORDER;
 import static com.liveamonth.liveamonth.constants.LogicConstants.ESignAttributes.AT;
-import static com.liveamonth.liveamonth.constants.LogicConstants.ECityInfoAttributes.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.ESignAttributes.FIRST_IN;
-import static com.liveamonth.liveamonth.constants.LogicConstants.ESignAttributes.AT;
 
 @Controller
 public class SignController {
@@ -75,6 +52,9 @@ public class SignController {
     private ReviewService reviewService;
     @Autowired
     private ScheduleService scheduleService;
+
+    @Autowired
+    private NoticeService noticeService;
 
     //naver login api에 접속
     @RequestMapping("/signIn")

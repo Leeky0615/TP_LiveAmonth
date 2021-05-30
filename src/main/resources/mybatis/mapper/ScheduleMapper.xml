@@ -17,6 +17,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select max(scheduleContentNO) from scheduleContent;
 	</select>
 
+	<select id = "getScheduleVO" parameterType="int" resultType = "ScheduleVO">
+		SELECT scheduleSubject FROM schedule where scheduleNO = #{scheduleNO};
+	</select>
+
+	<select id = "getScheduleReply" parameterType="int" resultType = "ScheduleReplyVO">
+		SELECT scheduleReplyDesc, scheduleReplyRefNO, scheduleNO FROM scheduleReply where scheduleReplyNO = #{scheduleReplyNO};
+	</select>
+
 	<resultMap type = "scheduleVO" id="scheduleVO">
 		<id column="scheduleNO" property="scheduleNO"/>
 		<result column="scheduleSubject" property="scheduleSubject"/>
@@ -132,6 +140,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select IFNULL(sum(scheduleContentCost),0) from scheduleContent where scheduleNO = #{scheduleNO} and scheduleContentDate between #{schedulePayStartDay} and #{schedulePayFinishDay};
 	</select>
 
+	<select id="getScheduleWriterNO" parameterType="int" resultType="int">
+		select userNO from schedule where scheduleNO = #{scheduleNO};
+	</select>
+
 	<!-- delete -->
 	<delete id="deleteScheduleContent" parameterType="int">
 		delete from scheduleContent where scheduleContentNO = #{scheduleContentNO}
@@ -158,7 +170,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		insert into scheduleContent values (#{scheduleContentNO}, #{scheduleContentSubject}, #{scheduleContentDesc}, #{scheduleContentDate}, #{scheduleContentCost}, #{scheduleNO})
 	</insert>
 
-	<insert id="addScheduleReplyVO" parameterType="ScheduleReplyVO">
+	<insert id="addScheduleReplyVO" parameterType="ScheduleReplyVO" useGeneratedKeys="true" keyProperty="scheduleReplyNO">
 		insert into scheduleReply values (#{scheduleReplyNO}, #{scheduleReplyDesc}, #{scheduleReplyDate},
 		<choose>
 			<when test = "scheduleReplyRefNO == 0">

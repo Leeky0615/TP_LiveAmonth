@@ -305,7 +305,7 @@ ol {
     display: inline-block;
 }
 
-.hs-top .ht-widget {
+.hs-top .ht-widget{
     text-align: right;
     padding: 20px 0;
 }
@@ -315,11 +315,11 @@ ol {
     padding: 50px 0;
 }
 
-.hs-top .ht-widget ul {
+.hs-top .ht-widget ul:not(.navbar-nav) {
     display: inline-block;
 }
 
-.hs-top .ht-widget ul li {
+.hs-top .ht-widget ul li:not(.nav-item) {
     list-style: none;
     font-size: 14px;
     color: #444444;
@@ -328,7 +328,7 @@ ol {
     font-weight: 500;
 }
 
-.hs-top .ht-widget ul li i {
+.hs-top .ht-widget ul li i:not(.fas) {
     display: inline-block;
     font-size: 16px;
     color: #00c8a0;
@@ -340,13 +340,13 @@ ol {
     margin-right: 10px;
 }
 
-.hs-top .ht-widget ul li span {
+.hs-top .ht-widget ul li span:not(.badge-danger):not(.font-weight-bold) {
     margin-left: 20px;
     display: inline-block;
     position: relative;
 }
 
-.hs-top .ht-widget ul li span:after {
+.hs-top .ht-widget ul li span:after:not(.badge-danger):not(.font-weight-bold) {
     position: absolute;
     left: -13px;
     top: -2px;

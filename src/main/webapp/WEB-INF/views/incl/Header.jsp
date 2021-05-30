@@ -22,6 +22,9 @@
 <link rel="stylesheet" href="resources/css/loginstyle.css" type="text/css">
 <link rel="stylesheet" href="resources/css/ihover.min.css" type="text/css">
 
+<link rel="stylesheet" href="resources/css/notice.css" type="text/css">
+<script src="resources/js/notice.js"></script>
+
 <%--해당 js가 Footer에 있을 시 script에서 쿼리가 실행이 안됨. 그래서 위로 올림.--%>
 <script src="resources/js/jquery-3.3.1.min.js"></script>
 
@@ -47,7 +50,6 @@
     </div>
 </div>
 <!-- Offcanvas Menu Wrapper End -->
-
 <!-- Header Section Begin -->
 <header class="header-section">
     <div class="hs-top">
@@ -59,14 +61,69 @@
                     </div>
                 </div>
                 <div class="col-lg-10">
+                    <c:if test="${userVO.userNO != null}">
+                        <script>
+                            window.onload = function () {
+                                $.ajax({
+                                    url: "getAllNotice",
+                                    type: "GET",
+                                    data: {userNO: ${userVO.userNO}},
+                                    success:
+                                        function (noticeMap) {
+                                            writeDropDwon(noticeMap);
+                                        },
+                                    error:
+                                        function (request, status, error) {}
+                                });
+                            }
+                            $(function () {
+                                timer = setInterval(function () {
+                                    $.ajax({
+                                        url: "getAllNotice",
+                                        type: "GET",
+                                        data: {userNO: ${userVO.userNO}},
+                                        success:
+                                            function (noticeMap) {
+                                                writeDropDwon(noticeMap);
+                                            },
+                                        error:
+                                            function (request, status, error) {}
+                                    });
+                                }, 1000);
+                            });
+                            $(document).ready(function () {
+                                $("#alertsDropdown").blur(function () {
+                                    $.ajax({
+                                        url: "updateReadStatus",
+                                        type: "POST",
+                                        data: {userNO: ${userVO.userNO}},
+                                        success: function (data) {},
+                                        error: function (request, status, error) {}
+                                    });
+                                });
+                            });
+
+                        </script>
+                        <div class="ht-widget navbar navbar-expand navbar-light bg-white topbar">
+                            <ul class="navbar-nav ml-auto">
+                                <li class="nav-item dropdown no-arrow mx-1">
+                                    <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
+                                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i id="noticeIcon" class="fas fa-bell fa-fw"></i>
+                                        <span class="badge badge-danger badge-counter" id="noticeCount"></span>
+                                    </a>
+                                    <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                         id="noticeDropdown" aria-labelledby="alertsDropdown">
+                                            <%--                                   <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>--%>
+                                    </div>
+                                </li>
+                            </ul>
+                            <a href="logout" class="hw-btn">Logout</a>
+                        </div>
+                    </c:if>
                     <c:if test="${empty userVO.userNO}">
                         <div class="ht-widget">
                             <a href="signIn" class="hw-btn">Login</a>
-                        </div>
-                    </c:if>
-                    <c:if test="${userVO.userNO != null}">
-                        <div class="ht-widget">
-                            <a href="logout" class="hw-btn">Logout</a>
                         </div>
                     </c:if>
                 </div>
@@ -83,7 +140,7 @@
                 <div class="col-lg-9">
                     <nav class="nav-menu">
                         <ul>
-                            <li class="active"><a href="cityInfo?cityName=all" >CITY</a>
+                            <li class="active"><a href="cityInfo?cityName=all">CITY</a>
                                 <ul class="dropdown">
                                     <li><a href="cityInfo?cityName=서울">서울</a></li>
                                     <li><a href="cityInfo?cityName=강릉">강릉</a></li>

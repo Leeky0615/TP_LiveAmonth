@@ -40,7 +40,7 @@ public interface ReviewMapper {
 
     public int getReviewReplyCount(int reviewNO) throws Exception;
 
-    public void addReviewReply(ReviewReplyVO reviewReplyVO) throws Exception;
+    public int addReviewReply(ReviewReplyVO reviewReplyVO) throws Exception;
 
     public void modifyReviewReply(ReviewReplyVO reviewReplyVO) throws Exception;
 
@@ -52,4 +52,7 @@ public interface ReviewMapper {
 
     public int getSearchReviewListCount(HashMap<String, Object> searchAndPage) throws Exception;
 
+    public ReviewReplyVO getReviewReply(int reviewReplyNO) throws Exception;
+
+    public int getReviewWriterNO(int reviewNO) throws Exception;
 }

@@ -15,6 +15,7 @@
         <typeAlias type="com.liveamonth.liveamonth.entity.vo.ScheduleReplyVO" alias="ScheduleReplyVO"/>
         <typeAlias type="com.liveamonth.liveamonth.entity.vo.ScheduleVO" alias="ScheduleVO"/>
         <typeAlias type="com.liveamonth.liveamonth.entity.vo.UserVO" alias="UserVO"/>
+        <typeAlias type="com.liveamonth.liveamonth.entity.vo.NoticeVO" alias="NoticeVO"/>
     </typeAliases>
 
     <mappers>
@@ -23,5 +24,6 @@
         <mapper resource="mybatis/mapper/CityMapper.xml"/>
         <mapper resource="mybatis/mapper/MyPageMapper.xml"/>
         <mapper resource="mybatis/mapper/ScheduleMapper.xml"/>
+        <mapper resource="mybatis/mapper/NoticeMapper.xml"/>
     </mappers>
 </configuration>

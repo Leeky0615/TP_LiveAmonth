@@ -1,9 +1,7 @@
 package com.liveamonth.liveamonth.controller.scheduleController;
 
 import com.liveamonth.liveamonth.constants.ControllerPathConstants;
-import com.liveamonth.liveamonth.constants.EntityConstants;
 import com.liveamonth.liveamonth.entity.dto.CalendarDTO;
-import com.liveamonth.liveamonth.entity.vo.CityVO;
 import com.liveamonth.liveamonth.entity.vo.ScheduleContentVO;
 import com.liveamonth.liveamonth.entity.vo.ScheduleVO;
 import com.liveamonth.liveamonth.entity.vo.UserVO;
@@ -90,7 +88,6 @@ public class ScheduleController {
         ArrayList<ScheduleVO> scheduleVOList;
         try {
             scheduleVOList = scheduleService.getScheduleList(userNO);
-            System.out.println(scheduleVOList.get(0).getCityVO().getCityName());
             model.addAttribute(SCHEDULE_VO_LIST.getText(), scheduleVOList);
             if (scheduleVOList.isEmpty()) {
                 model.addAttribute(MESSAGE.getText(), "아직 캘린더를 생성하지 않으셨습니다. 캘린더를 추가해주세요.");

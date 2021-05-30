@@ -3,9 +3,9 @@ package com.liveamonth.liveamonth.model.service.reviewService;
 import com.liveamonth.liveamonth.entity.dto.PagingDTO;
 import com.liveamonth.liveamonth.entity.vo.ReviewLikeVO;
 import com.liveamonth.liveamonth.entity.vo.ReviewReplyVO;
-import com.liveamonth.liveamonth.entity.dto.PagingDTO;
 import com.liveamonth.liveamonth.entity.vo.ReviewVO;
 import com.liveamonth.liveamonth.model.mapper.reviewMapper.ReviewMapper;
+import com.liveamonth.liveamonth.model.service.noticeService.NoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,16 +17,15 @@ import static com.liveamonth.liveamonth.constants.EntityConstants.EReview.REVIEW
 import static com.liveamonth.liveamonth.constants.LogicConstants.EPaging.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleStaticInt.STATIC_DISPLAY_PAGE_NUM;
 
-import static com.liveamonth.liveamonth.constants.EntityConstants.EPage.DISPLAY_PAGE;
-import static com.liveamonth.liveamonth.constants.EntityConstants.ESchedule.SCHEDULE_NO;
-import static com.liveamonth.liveamonth.constants.LogicConstants.EPaging.START_NO;
-import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleStaticInt.STATIC_DISPLAY_PAGE_NUM;
-
 @Service
 public class ReviewServiceImpl implements ReviewService {
 
 	@Autowired
     private ReviewMapper reviewMapper;
+
+    @Autowired
+    private NoticeService noticeService;
+
     @Override
     public ArrayList<HashMap<String, Object>> getMainPopularReviewList(int selectPage) throws Exception {
         int startNum = (selectPage-1)*15;
@@ -136,6 +135,9 @@ public class ReviewServiceImpl implements ReviewService {
         int likeStatus = reviewMapper.getReviewLikeStatus(reviewLikeVO);
         if(likeStatus == 0){
             reviewMapper.addReviewLike(reviewLikeVO);
+            int userNO = reviewMapper.getReviewWriterNO(reviewLikeVO.getReviewNO());
+            int noticeNO = noticeService.addNotice(userNO, reviewLikeVO.getReviewLikeUserNO());
+            noticeService.addRLNotice(noticeNO, reviewLikeVO.getReviewNO());
             likeStatus = 1;
         } else if (likeStatus == 1){
             reviewMapper.deleteReviewLike(reviewLikeVO);
@@ -151,7 +153,12 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public void addReviewReply(ReviewReplyVO reviewReplyVO) throws Exception {
-        reviewMapper.addReviewReply(reviewReplyVO);
+        long rowCount = reviewMapper.addReviewReply(reviewReplyVO);
+        long reviewReplyNO = reviewReplyVO.getReviewReplyNO();
+
+        int userNO = reviewMapper.getReviewWriterNO(reviewReplyVO.getReviewNO());
+        int noticeNO = noticeService.addNotice(userNO, reviewReplyVO.getUserNO());
+        noticeService.addRRNotice(noticeNO, (int)reviewReplyNO);
     }
 
     @Override

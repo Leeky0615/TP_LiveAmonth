@@ -294,6 +294,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where reviewNO = #{reviewNO};
     </select>
 
+    <select id="getReviewReply" parameterType="int" resultType="ReviewReplyVO">
+        select reviewReplyDesc, reviewReplyRefNO, reviewNO from reviewReply where reviewReplyNO = #{reviewReplyNO}
+    </select>
+
+
+    <select id="getReviewWriterNO" parameterType="int" resultType="int">
+        select userNO from review where reviewNO = #{reviewNO};
+    </select>
+
     <insert id="addReview" parameterType="ReviewVO" useGeneratedKeys="true" keyProperty="reviewNO">
         insert into review
         values (#{reviewNO}, #{reviewCategory}, #{reviewSubject}, #{reviewDesc}, #{reviewDate}, #{reviewViewCount},
@@ -305,7 +314,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         values (#{reviewNO}, #{reviewLikeUserNO})
     </insert>
 
-    <insert id="addReviewReply" parameterType="ReviewReplyVO">
+    <insert id="addReviewReply" parameterType="ReviewReplyVO" useGeneratedKeys="true" keyProperty="reviewReplyNO">
         insert into reviewReply values(#{reviewReplyNO}, #{reviewReplyDesc}, #{reviewReplyDate},
         <choose>
             <when test="reviewReplyRefNO == 0">
