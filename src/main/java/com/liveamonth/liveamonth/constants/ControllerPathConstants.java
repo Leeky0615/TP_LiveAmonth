@@ -35,7 +35,9 @@ public class ControllerPathConstants {
     	RESULT_MENT_ONE_TO_ONE_ASK("ResultMentOneToOneAsk"),
     	RESULT_MENT_DELETE_ONE_TO_ONE_ASK("ResultMentDeleteOneToOneAsk"),
         PERSONAL_TERMS("PersonalTerms"),
-        FAQ("Faq");
+        FAQ("Faq"),
+        MANAGE_REVIEW("ManageReview"),
+        MANAGE_SCHEDULE("ManageSchedule");
         private String path;
         private EMyPagePath(String path) {this.path = path;}
         public String getPath() {return "myPageView/"+this.path;}

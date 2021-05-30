@@ -23,12 +23,12 @@
             <div class="recent-post">
                 <div class="rp-item">
                     <div class="rp-text">
-                        <a href="#">게시판 관리</a>
+                        <a href="manageReview">게시판 관리</a>
                     </div>
                 </div>
                 <div class="rp-item">
                     <div class="rp-text">
-                        <a href="#">스케줄 관리</a>
+                        <a href="manageSchedule">스케줄 관리</a>
                     </div>
                 </div>
             </div>

@@ -64,6 +64,16 @@ public class ReviewServiceImpl implements ReviewService {
         searchAndPage.put(DISPLAY_PAGE.getText(), STATIC_DISPLAY_PAGE_NUM.getText());
         return reviewMapper.getSearchReviewList(searchAndPage);
     }
+    @Override
+    public ArrayList<HashMap<String, Object>> getMyReviewList(int selectPage, int userNO, String manageReviewCategory) throws Exception {
+        int startNum = (selectPage-1)*15;
+        HashMap<String, Object> myReviewAndPage = new HashMap<String, Object>();
+        myReviewAndPage.put("userNO", userNO);
+        myReviewAndPage.put("manageReviewCategory", manageReviewCategory);
+        myReviewAndPage.put(START_NO.getText(), startNum);
+        myReviewAndPage.put(DISPLAY_PAGE.getText(), STATIC_DISPLAY_PAGE_NUM.getText());
+        return reviewMapper.getMyReviewList(myReviewAndPage);
+    }
 
     @Override
     public ReviewVO getReviewVO(int reviewNO) throws Exception {
@@ -108,6 +118,17 @@ public class ReviewServiceImpl implements ReviewService {
         PagingDTO paging = new PagingDTO();
         paging.setPage(selectPage);
         paging.setTotalCount(reviewMapper.getSearchReviewListCount(searchAndPage));
+        return paging;
+    }
+
+    @Override
+    public PagingDTO showMyReviewPaging(int selectPage, String manageReviewCategory,int userNO) throws Exception {
+        HashMap<String, Object> myReviewAndPage = new HashMap<String, Object>();
+        myReviewAndPage.put("manageReviewCategory",manageReviewCategory);
+        myReviewAndPage.put("userNO",userNO);
+        PagingDTO paging = new PagingDTO();
+        paging.setPage(selectPage);
+        paging.setTotalCount(reviewMapper.getMyReviewListCount(myReviewAndPage));
         System.out.println(paging.getTotalCount());
         return paging;
     }
@@ -170,6 +191,14 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
+    public void deleteReviewList(int[] reviewNO_OR_reviewReplyNOList,String manageReviewCategory) throws Exception {
+        HashMap<String, Object> listAndCategory = new HashMap<String, Object>();
+        listAndCategory.put("reviewNO_OR_reviewReplyNOList",reviewNO_OR_reviewReplyNOList);
+        listAndCategory.put("manageReviewCategory",manageReviewCategory);
+        reviewMapper.deleteReviewList(listAndCategory);
+    }
+
+    @Override
     public void modifyReview(ReviewVO reviewVO) throws Exception {
         reviewMapper.modifyReview(reviewVO);
     }
@@ -214,7 +243,6 @@ public class ReviewServiceImpl implements ReviewService {
         }
         return descAsc;
     }
-
 
     @Override
     public int getReviewLikeCount(int reviewNO) throws Exception {

@@ -4,20 +4,10 @@
 <body>
 <div id="paging" class="col-lg-12">
     <div class="property-pagination">
-        <c:choose>
-            <c:when test="${param.replyPageType==\"reviewReplyPage\"}">
-                <c:url var="action" value="getReview?reviewNO=${param.reviewNO}"/>
-            </c:when>
-            <c:when test="${param.manageScheduleCategory=='writeSchedule'}">
-                <c:url var="action" value="manageSchedule?manageScheduleCategory=${param.manageScheduleCategory}"/>
-            </c:when>
-            <c:when test="${param.manageScheduleCategory=='writeScheduleReply'}">
-                <c:url var="action" value="manageSchedule?manageScheduleCategory=${param.manageScheduleCategory}"/>
-            </c:when>
-            <c:otherwise>
-                <c:url var="action" value="otherSchedule?scheduleNO=${param.scheduleNO}"/>
-            </c:otherwise>
-        </c:choose>
+
+        <c:url var="action" value="manageReview?manageReviewCategory=${param.manageReviewCategory}"/>
+
+
         <c:if test="${param.prev}">
             <a href="${action}&selectedPage=${param.beginPage-1}"><-</a>
         </c:if>

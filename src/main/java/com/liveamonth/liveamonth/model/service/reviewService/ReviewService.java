@@ -18,6 +18,8 @@ public interface ReviewService {
 
     ArrayList<HashMap<String, Object>> getCategoryReviewList(String category, int selectPage, String orderBy, String descAsc) throws Exception;
 
+    public ArrayList<HashMap<String, Object>> getMyReviewList(int selectPage, int userNO, String manageReviewCategory) throws Exception;
+
     public ReviewVO getReviewVO(int reviewNO) throws Exception;
 
     public int addReview(ReviewVO reviewVO) throws Exception;
@@ -38,6 +40,8 @@ public interface ReviewService {
 
     public PagingDTO showSearchPaging(int selectPage, String search,String searchDate, String searchCategory, String searchDetail) throws Exception;
 
+    public PagingDTO showMyReviewPaging(int selectPage, String manageReviewCategory,int userNO) throws Exception;
+
     public void addReviewReply(ReviewReplyVO reviewReplyVO) throws Exception;
 
     public void modifyReviewReply(ReviewReplyVO reviewReplyVO) throws Exception;
@@ -46,9 +50,13 @@ public interface ReviewService {
 
     public void deleteReview(int reviewNO) throws Exception;
 
+    public void deleteReviewList(int[] reviewNO_OR_reviewReplyNOList,String manageReviewCategory) throws Exception;
+
     public void modifyReview(ReviewVO reviewVO) throws Exception;
 
     public String orderByCategoryReview(String orderBy,String clickPage,String dateDescAsc, String likeDescAsc, String viewDescAsc);
+
+
 
 
 }

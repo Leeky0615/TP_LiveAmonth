@@ -60,4 +60,10 @@ public interface ScheduleMapper {
     void increaseScheduleViewCount(int scheduleNO);
 
     int getScheduleDurationPay(HashMap<String, Object> hash) throws Exception;
+
+    int getMyScheduleListCount(HashMap<String, Object> myScheduleAndPage) throws Exception;
+
+    ArrayList<HashMap<String, Object>> getMyScheduleList(HashMap<String, Object> myScheduleAndPage)throws Exception;
+
+    void deleteScheduleList(HashMap<String, Object> listAndCategory)throws Exception;
 }

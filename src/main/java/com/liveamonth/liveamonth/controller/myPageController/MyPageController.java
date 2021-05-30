@@ -1,10 +1,14 @@
 package com.liveamonth.liveamonth.controller.myPageController;
 
+import com.liveamonth.liveamonth.constants.LogicConstants;
 import com.liveamonth.liveamonth.constants.LogicConstants.EPageOptions;
+import com.liveamonth.liveamonth.entity.dto.PagingDTO;
 import com.liveamonth.liveamonth.entity.dto.S3UploaderDTO;
 import com.liveamonth.liveamonth.entity.vo.OneToOneAskVO;
 import com.liveamonth.liveamonth.entity.vo.UserVO;
 import com.liveamonth.liveamonth.model.service.myPageService.MyPageService;
+import com.liveamonth.liveamonth.model.service.reviewService.ReviewService;
+import com.liveamonth.liveamonth.model.service.scheduleService.ScheduleService;
 import com.liveamonth.liveamonth.model.service.signService.SignService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,10 +18,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
+import java.util.*;
 
 import static com.liveamonth.liveamonth.constants.ControllerPathConstants.EMyPagePath.*;
 import static com.liveamonth.liveamonth.constants.EntityConstants.*;
@@ -28,6 +31,12 @@ import static com.liveamonth.liveamonth.constants.LogicConstants.EMyPageAttribut
 import static com.liveamonth.liveamonth.constants.LogicConstants.EMyPageAttributes.CHECK_USER;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EPageOptions.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EPageOptions.PAGE_MODIFY;
+import static com.liveamonth.liveamonth.constants.LogicConstants.EPaging.PAIGING;
+import static com.liveamonth.liveamonth.constants.LogicConstants.EPaging.SELECTED_PAGE;
+import static com.liveamonth.liveamonth.constants.LogicConstants.EReview.POPULAR_REVIEW_LIST;
+import static com.liveamonth.liveamonth.constants.LogicConstants.EReviewAttribute.REVIEW_LIST;
+import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleAttributes.*;
+import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleFilterAndOrders.SCHEDULE_FO_ORDER;
 
 import java.util.ArrayList;
 
@@ -40,12 +49,16 @@ public class MyPageController {
     private SignService signService;
     @Autowired
     private S3UploaderDTO s3Uploader;
+    @Autowired
+    private ScheduleService scheduleService;
+    @Autowired
+    private ReviewService reviewService;
 
     @GetMapping("/myPage")
     public String myPage(Model model, HttpSession session) {
         model.addAttribute(CHECK_USER.getText(),  true);
         model.addAttribute(USER_VO.getText(), session.getAttribute(USER_VO.getText()));
-        return MY_PAGE.getText();
+        return "MyPage";
     }
     private void setPageAttr(Model model, EPageOptions pageOption, Boolean stepStatus){
         switch (pageOption){
@@ -211,4 +224,54 @@ public class MyPageController {
         model.addAttribute(USER_VO.getText(), userVO);
         return REDIRECT_MY_PAGE.getText();
     }
+
+
+    @GetMapping("/manageReview")
+    public String manageReview(Model model, HttpSession session,HttpServletRequest request) throws Exception{
+        UserVO userVO = (UserVO)session.getAttribute(USER_VO.getText());
+        String manageReviewCategory = String.valueOf(request.getParameter(MANAGE_REVIEW_CATEGORY.getText()));
+        String[]  myReviewCheckbox=request.getParameterValues(MY_REVIEW_CHECK_BOX.getText());
+
+        if(myReviewCheckbox !=null){
+            int[] reviewNO_OR_reviewReplyNOList =  Arrays.stream(myReviewCheckbox).mapToInt(Integer::parseInt).toArray();
+
+            reviewService.deleteReviewList(reviewNO_OR_reviewReplyNOList,manageReviewCategory);
+        }
+
+        int selectPage = 1;
+        if (request.getParameter(SELECTED_PAGE.getText()) != null) {
+            selectPage = Integer.parseInt(request.getParameter(SELECTED_PAGE.getText()));
+        }
+        PagingDTO paging = reviewService.showMyReviewPaging(selectPage,manageReviewCategory,userVO.getUserNO());
+        model.addAttribute(PAIGING.getText(), paging);
+        ArrayList<HashMap<String, Object>> reviewList = reviewService.getMyReviewList(selectPage, userVO.getUserNO(),manageReviewCategory);
+        model.addAttribute(REVIEW_LIST.getText(), reviewList);
+        model.addAttribute(MANAGE_REVIEW_CATEGORY.getText(), manageReviewCategory);
+        return MANAGE_REVIEW.getPath();
+    }
+
+    @GetMapping("/manageSchedule")
+    public String manageSchedule(Model model, HttpSession session,HttpServletRequest request) throws Exception{
+        UserVO userVO = (UserVO)session.getAttribute(USER_VO.getText());
+        String manageScheduleCategory = String.valueOf(request.getParameter(MANAGE_SCHEDULE_CATEGORY.getText()));
+        String[] myScheduleCheckbox=request.getParameterValues(MY_SCHEDULE_CHECK_BOX.getText());
+
+        if(myScheduleCheckbox !=null){
+            int[] scheduleNO_OR_scheduleReplyNOList = Arrays.stream(myScheduleCheckbox).mapToInt(Integer::parseInt).toArray();
+
+            scheduleService.deleteScheduleList(scheduleNO_OR_scheduleReplyNOList,manageScheduleCategory);
+        }
+
+        int selectPage = 1;
+        if (request.getParameter(SELECTED_PAGE.getText()) != null) {
+            selectPage = Integer.parseInt(request.getParameter(SELECTED_PAGE.getText()));
+        }
+        PagingDTO paging = scheduleService.showMySchedulePaging(selectPage,manageScheduleCategory,userVO.getUserNO());
+        model.addAttribute(PAIGING.getText(), paging);
+        ArrayList<HashMap<String, Object>> scheduleList = scheduleService.getMyScheduleList(selectPage, userVO.getUserNO(),manageScheduleCategory);
+        model.addAttribute( MY_SCHEDULE_LIST.getText(), scheduleList);
+        model.addAttribute(MANAGE_SCHEDULE_CATEGORY.getText(), manageScheduleCategory);
+        return MANAGE_SCHEDULE.getPath();
+    }
+
 }

@@ -48,8 +48,13 @@ public interface ReviewMapper {
 
     public void deleteReview(int reviewNO) throws Exception;
 
+    public void deleteReviewList(HashMap<String, Object> listAndCategory)throws Exception;
+
     public void modifyReview(ReviewVO reviewVO) throws Exception;
 
     public int getSearchReviewListCount(HashMap<String, Object> searchAndPage) throws Exception;
 
+    public ArrayList<HashMap<String, Object>> getMyReviewList(HashMap<String, Object> myReviewAndPage)throws Exception;
+
+    public int getMyReviewListCount(HashMap<String, Object> myReviewAndPage) throws Exception;
 }

@@ -132,6 +132,41 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select IFNULL(sum(scheduleContentCost),0) from scheduleContent where scheduleNO = #{scheduleNO} and scheduleContentDate between #{schedulePayStartDay} and #{schedulePayFinishDay};
 	</select>
 
+	<resultMap type="java.util.HashMap" id="scheduleVOAndReplyCount">
+		<id column="scheduleVO" property="scheduleVO"/>
+		<result column="userNickName" property="userNickName"/>
+		<result column="scheduleReplyCount" property="replyCount"/>
+		<result column="scheduleLikeCount" property="scheduleLikeCount"/>
+		<result column="scheduleReplyNO" property="scheduleReplyNO"/>
+	</resultMap>
+	<select id="getMyScheduleList" parameterType="String" resultMap="scheduleVOAndReplyCount">
+		select @rownum:=@rownum+1 as NO, scheduleData.*
+		from
+		(select schedule.scheduleNO,scheduleSubject,scheduleViewCount,scheduleReply.scheduleReplyCount,scheduleLike.scheduleLikeCount,scheduleReplyContent.scheduleReplyNO
+		from schedule
+		LEFT JOIN (select scheduleNO, count(*)as scheduleReplyCount from scheduleReply group by scheduleNO) as
+		scheduleReply ON schedule.scheduleNO = scheduleReply.scheduleNO
+		LEFT JOIN (select scheduleNO ,count(*)as scheduleLikeCount from scheduleLike group by scheduleNO) as
+		scheduleLike ON schedule.scheduleNO = scheduleLike.scheduleNO
+		LEFT JOIN ( select scheduleNO, scheduleReplyDesc,scheduleReply.userNO, userNickName,scheduleReplyNO from
+		scheduleReply,user
+		where scheduleReply.userNO = user.userNO) as scheduleReplyContent ON schedule.scheduleNO =
+		scheduleReplyContent.scheduleNO
+		<choose>
+			<when test="manageScheduleCategory == 'writeScheduleReply'">
+				where scheduleReplyContent.userNo = #{userNO}
+			</when>
+			<otherwise>
+				where schedule.userNO = #{userNO}
+			</otherwise>
+
+		</choose>
+		group by schedule.scheduleNO
+		order by schedule.scheduleNO desc) as scheduleData,
+		(select @rownum := #{startNO}) TMP
+		limit #{startNO}, #{displayPage};
+	</select>
+
 	<!-- delete -->
 	<delete id="deleteScheduleContent" parameterType="int">
 		delete from scheduleContent where scheduleContentNO = #{scheduleContentNO}
@@ -147,6 +182,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<delete id="deleteScheduleLike" parameterType="com.liveamonth.liveamonth.entity.vo.ScheduleLikeVO">
 		delete from scheduleLike where scheduleNO = #{scheduleNO} AND scheduleLikeUserNO = #{scheduleLikeUserNO};
+	</delete>
+
+	<delete id="deleteScheduleList" parameterType="java.util.HashMap">
+		delete
+		<choose>
+			<when test="manageScheduleCategory == 'writeScheduleReply'">
+				from scheduleReply where scheduleReplyNO in
+				<foreach collection="scheduleNO_OR_scheduleReplyNOList" item="scheduleReplyNO" open="(" close=")" separator=",">
+					#{scheduleReplyNO}
+				</foreach>
+			</when>
+
+			<otherwise>
+				from schedule
+				where scheduleNO in
+				<foreach collection="scheduleNO_OR_scheduleReplyNOList" item="scheduleNO" open="(" close=")" separator=",">
+					#{scheduleNO}
+				</foreach>
+			</otherwise>
+		</choose>
 	</delete>
 
 	<!-- insert -->
@@ -197,4 +252,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="increaseScheduleViewCount" parameterType="int">
 		update schedule set scheduleViewCount = scheduleViewCount + 1 where scheduleNO = #{scheduleNO};
 	</update>
+
+	<select id="getMyScheduleListCount" parameterType="String" resultType="int">
+		select
+		<choose>
+			<when test="manageScheduleCategory == 'writeScheduleReply'">
+				count(scheduleReplyNO) as count from scheduleReply where userNO = ${userNO}
+
+			</when>
+			<otherwise>
+				count(scheduleNO) as count from schedule where userNO = ${userNO}
+			</otherwise>
+		</choose>
+		;
+	</select>
+
+
 </mapper>
