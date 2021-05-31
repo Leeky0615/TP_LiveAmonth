@@ -74,7 +74,19 @@
                                         url: "updateReadStatus",
                                         type: "POST",
                                         data: {userNO: ${userVO.userNO}},
-                                        success: function (data) {},
+                                        success: function (data) {
+                                            $.ajax({
+                                                url: "getAllNotice",
+                                                type: "GET",
+                                                data: {userNO: ${userVO.userNO}},
+                                                success:
+                                                    function (noticeMap) {
+                                                        writeDropDwon(noticeMap);
+                                                    },
+                                                error:
+                                                    function (request, status, error) {}
+                                            });
+                                        },
                                         error: function (request, status, error) {}
                                     });
                                 });
