@@ -54,4 +54,10 @@ public interface ScheduleService {
     int getScheduleDurationPay(String schedulePayStartDay, String schedulePayFinishDay, int scheduleNO) throws Exception;
 
     List<HashMap<String, Object>> getMainOtherScheduleList() throws Exception;
+
+    ArrayList<HashMap<String, Object>> getMyScheduleList(int selectPage, int userNO, String manageScheduleCategory)throws Exception;
+
+    PagingDTO showMySchedulePaging(int selectPage, String manageScheduleCategory, int userNO)throws Exception;
+
+    void deleteScheduleList(int[] scheduleNO_or_scheduleReplyNOList, String manageScheduleCategory)throws Exception;
 }

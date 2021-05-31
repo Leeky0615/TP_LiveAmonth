@@ -27,6 +27,7 @@ public class ControllerPathConstants {
      * MyPageController Path Constants
      */
     public enum EMyPagePath {
+        MY_PAGE("MyPage"),
         REDIRECT_MY_PAGE("redirect:myPage"),
         MODIFY_USER_INFO("ModifyUserInfo"),
         RE_CHECK_PASSWORD("ReCheckPassword"),
@@ -36,7 +37,9 @@ public class ControllerPathConstants {
     	SHOW_ONE_TO_ONE_ASK("ShowOneToOneAsk"),
     	Write_ONE_TO_ONE_ASK("WriteOneToOneAsk"),
     	RESULT_MENT_ONE_TO_ONE_ASK("ResultMentOneToOneAsk"),
-    	RESULT_MENT_DELETE_ONE_TO_ONE_ASK("ResultMentDeleteOneToOneAsk");
+    	RESULT_MENT_DELETE_ONE_TO_ONE_ASK("ResultMentDeleteOneToOneAsk"),
+        MANAGE_REVIEW("ManageReview"),
+        MANAGE_SCHEDULE("ManageSchedule");
         private String path;
         private EMyPagePath(String path) {this.path = path;}
         public String getPath() {return "myPageView/"+this.path;}

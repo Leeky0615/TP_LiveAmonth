@@ -11,7 +11,9 @@ public class ReviewVO {
     private EReviewCategoryName reviewCategory;
     private String reviewSubject;
     private String reviewDesc;
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:MM")
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:MM:SS") 
+
     private String reviewDate;
     private int reviewViewCount;
 

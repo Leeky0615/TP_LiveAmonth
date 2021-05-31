@@ -12,10 +12,7 @@ import com.liveamonth.liveamonth.model.mapper.scheduleMapper.ScheduleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 import static com.liveamonth.liveamonth.constants.EntityConstants.EPage.DISPLAY_PAGE;
 import static com.liveamonth.liveamonth.constants.EntityConstants.ESchedule.SCHEDULE_NO;
@@ -250,5 +247,36 @@ public class ScheduleServiceImpl implements ScheduleService {
             else filtersAndOrder.put(eFO.getText() + "Filter", false);
         }
         return scheduleMapper.getOtherScheduleList(filtersAndOrder);
+    }
+
+    @Override
+    public ArrayList<HashMap<String, Object>> getMyScheduleList(int selectPage, int userNO, String manageScheduleCategory) throws Exception {
+        int startNum = (selectPage-1)*15;
+        HashMap<String, Object> myScheduleAndPage = new HashMap<String, Object>();
+        myScheduleAndPage.put("userNO", userNO);
+        myScheduleAndPage.put("manageScheduleCategory", manageScheduleCategory);
+        myScheduleAndPage.put(START_NO.getText(), startNum);
+        myScheduleAndPage.put(DISPLAY_PAGE.getText(), STATIC_DISPLAY_PAGE_NUM.getText());
+        return scheduleMapper.getMyScheduleList(myScheduleAndPage);
+    }
+
+    @Override
+    public PagingDTO showMySchedulePaging(int selectPage, String manageScheduleCategory, int userNO) throws Exception {
+        HashMap<String, Object> myScheduleAndPage = new HashMap<String, Object>();
+        myScheduleAndPage.put("manageScheduleCategory",manageScheduleCategory);
+        myScheduleAndPage.put("userNO",userNO);
+        PagingDTO paging = new PagingDTO();
+        paging.setPage(selectPage);
+        paging.setTotalCount(scheduleMapper.getMyScheduleListCount(myScheduleAndPage));
+        return paging;
+    }
+
+    @Override
+    public void deleteScheduleList(int[] scheduleNO_OR_scheduleReplyNOList, String manageScheduleCategory) throws Exception {
+        HashMap<String, Object> listAndCategory = new HashMap<String, Object>();
+        listAndCategory.put("scheduleNO_OR_scheduleReplyNOList", scheduleNO_OR_scheduleReplyNOList);
+        listAndCategory.put("manageScheduleCategory",manageScheduleCategory);
+
+        scheduleMapper.deleteScheduleList(listAndCategory);
     }
 }

@@ -49,6 +49,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result column="userNickName" property="userNickName"/>
         <result column="reviewReplyCount" property="replyCount"/>
         <result column="reviewLikeCount" property="reviewLikeCount"/>
+        <result column="reviewReplyNO" property="reviewReplyNO"/>
     </resultMap>
 
     <select id="getDefaultReviewList" parameterType="String" resultMap="reviewVOAndReplyCount">
@@ -215,6 +216,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             limit #{startNO}, #{displayPage};
     </select>
 
+    <select id="getMyReviewList" parameterType="String" resultMap="reviewVOAndReplyCount">
+        select @rownum:=@rownum+1 as NO, reviewData.*
+        from
+        (select review.reviewNO,reviewSubject,reviewViewCount,reviewReply.reviewReplyCount,reviewLike.reviewLikeCount,reviewDate,reviewReplyContent.reviewReplyNO
+        from review
+        LEFT JOIN (select reviewNO, count(*)as reviewReplyCount from reviewReply group by reviewNO) as
+        reviewReply ON review.reviewNO = reviewReply.reviewNO
+        LEFT JOIN (select reviewNO ,count(*)as reviewLikeCount from reviewLike group by reviewNO) as
+        reviewLike ON review.reviewNO = reviewLike.reviewNO
+        LEFT JOIN ( select reviewNO, reviewReplyDesc,reviewReply.userNO, userNickName,reviewReplyNO from
+        reviewReply,user
+        where reviewReply.userNO = user.userNO) as reviewReplyContent ON review.reviewNO =
+        reviewReplyContent.reviewNO
+        <choose>
+            <when test="manageReviewCategory == 'writeReviewReply'">
+                where reviewReplyContent.userNo = #{userNO}
+            </when>
+            <otherwise>
+                where review.userNO = #{userNO}
+            </otherwise>
+
+        </choose>
+        group by review.reviewNO
+        order by review.reviewNO desc) as reviewData,
+        (select @rownum := #{startNO}) TMP
+        limit #{startNO}, #{displayPage};
+    </select>
+
     <resultMap type="ReviewVO" id="Review">
         <id column="reviewNO" property="reviewNO"/>
         <result column="reviewCategory" property="reviewCategory"/>
@@ -337,6 +366,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where reviewNO = #{reviewNO}
     </delete>
 
+    <delete id="deleteReviewList" parameterType="java.util.HashMap">
+        delete
+        <choose>
+            <when test="manageReviewCategory == 'writeReviewReply'">
+                from reviewReply where reviewReplyNO in
+                <foreach collection="reviewNO_OR_reviewReplyNOList" item="reviewReplyNO" open="(" close=")" separator=",">
+                    #{reviewReplyNO}
+                </foreach>
+            </when>
+
+            <otherwise>
+                from review
+                where reviewNO in
+                <foreach collection="reviewNO_OR_reviewReplyNOList" item="reviewNO" open="(" close=")" separator=",">
+                    #{reviewNO}
+                </foreach>
+            </otherwise>
+        </choose>
+    </delete>
+
     <update id="increaseReviewViewCount" parameterType="int">
         update review
         set reviewViewCount = reviewViewCount + 1
@@ -395,7 +444,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
             <when test="searchDetail == 'REPLY_NICKNAME'">
                 , (select reviewNO,userNickName from reviewReply,user
-                where reviewReply.userNO = user.userNO and userNickName like '%함정%'
+                where reviewReply.userNO = user.userNO and userNickName like '%${search}%'
                 group by reviewNO) as reviewReplyNickName
                 where review.reviewNO = reviewReplyNickName.reviewNO
             </when>
@@ -433,4 +482,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </if>
 
     </select>
+
+    <select id="getMyReviewListCount" parameterType="String" resultType="int">
+        select
+        <choose>
+            <when test="manageReviewCategory == 'writeReviewReply'">
+                count(reviewReplyNO) as count from reviewReply where userNO = ${userNO}
+
+            </when>
+            <otherwise>
+                count(reviewNO) as count from review where userNO = ${userNO}
+            </otherwise>
+        </choose>
+        ;
+    </select>
+
 </mapper>

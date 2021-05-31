@@ -9,6 +9,6 @@
 
 <body>
 <section class="profile-section spad">
-    <h2 align="center"> 카페 상단 처럼 사진 나와야 함</h2>
+
 </section>
 </body>
