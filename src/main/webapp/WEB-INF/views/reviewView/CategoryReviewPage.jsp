@@ -5,33 +5,7 @@
 <script type="text/javascript" src="resources/js/review.js"></script>
 
 <body>
-<div class="container">
-    <div class="row">
-        <div class="col-lg-5">
-            <div class="section-title"></div>
-        </div>
-        <div class="col-lg-7">
-            <div class="property-controls">
-                <ul class="reviewMenu">
-                    <li><a href="review">메인화면</a></li>
-                    <li>
-                        <a href="#">간곳</a>
-                    </li>
-                    <li>
-                        <a href="#">먹은곳</a>
-                    </li>
-                    <li>
-                        <a href="#">느낀점</a>
-                    </li>
-                    <li>
-                        <a href="#">자유게시판</a>
-                    </li>
 
-                </ul>
-            </div>
-        </div>
-    </div>
-</div>
 <c:choose>
     <c:when test="${reviewList.size() == 0}">
         <div class="row justify-content-center">

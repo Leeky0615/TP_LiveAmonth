@@ -2,33 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <body>
 <link rel="stylesheet" href="resources/css/review.css" type="text/css">
-<div class="container">
-    <div class="row">
-        <div class="col-lg-5">
-            <div class="section-title"></div>
-        </div>
-        <div class="col-lg-7">
-            <div class="property-controls">
-                <ul class="reviewMenu">
-                    <li><a href="#">전체</a></li>
-                    <li>
-                        <a href="#">간곳</a>
-                    </li>
-                    <li>
-                        <a href="#">먹은곳</a>
-                    </li>
-                    <li>
-                        <a href="#">느낀점</a>
-                    </li>
-                    <li>
-                        <a href="#">자유게시판</a>
-                    </li>
 
-                </ul>
-            </div>
-        </div>
-    </div>
-</div>
 
 <div class="default_review_page">
     <div class="left_section">
