@@ -41,6 +41,7 @@ import static com.liveamonth.liveamonth.constants.LogicConstants.EMyPageAttribut
 import static com.liveamonth.liveamonth.constants.LogicConstants.EPaging.PAIGING;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EPaging.SELECTED_PAGE;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EReview.POPULAR_REVIEW_LIST;
+import static com.liveamonth.liveamonth.constants.LogicConstants.EReviewAttribute.REVIEW_LIST;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleAttributes.FITERED_OTHER_SCHEDULE_LIST;
 import static com.liveamonth.liveamonth.constants.LogicConstants.ESignAttributes.AT;
 import static com.liveamonth.liveamonth.constants.LogicConstants.ESignAttributes.FIRST_IN;
@@ -96,7 +97,20 @@ public class SignController {
         model.addAttribute("cityTransportGradeList", cityService.getCityTransportGradeList());
         model.addAttribute(CITY_INTRO_LIST.getText(), cityService.getCityInfoListByCategory(INTRO.name()));
     }
-
+    private void setMainPageManageContents(Model model, UserVO userVO) throws Exception{
+        // 내 스케줄
+        PagingDTO scheduklePaging = scheduleService.showMySchedulePaging(1,MANAGE_SCHEDULE_CATEGORY.getText(),userVO.getUserNO());
+        model.addAttribute(PAIGING.getText(), scheduklePaging);
+        ArrayList<HashMap<String, Object>> scheduleList = scheduleService.getMyScheduleList(1, userVO.getUserNO(),MANAGE_SCHEDULE_CATEGORY.getText());
+        model.addAttribute( MY_SCHEDULE_LIST.getText(), scheduleList);
+        model.addAttribute(MANAGE_SCHEDULE_CATEGORY.getText(), MANAGE_SCHEDULE_CATEGORY.getText());
+        // 내 게시글
+        PagingDTO reviewPaging = reviewService.showMyReviewPaging(1,MANAGE_REVIEW_CATEGORY.getText(),userVO.getUserNO());
+        model.addAttribute(PAIGING.getText(), reviewPaging);
+        ArrayList<HashMap<String, Object>> reviewList = reviewService.getMyReviewList(1, userVO.getUserNO(),MANAGE_REVIEW_CATEGORY.getText());
+        model.addAttribute(REVIEW_LIST.getText(), reviewList);
+        model.addAttribute(MANAGE_REVIEW_CATEGORY.getText(), MANAGE_REVIEW_CATEGORY.getText());
+    }
     @RequestMapping("/logout")
     private String logout(HttpSession session, Model model) throws Exception {
         session.invalidate();
@@ -116,24 +130,7 @@ public class SignController {
         } else {
             session.setAttribute(USER_VO.getText(), userVO);
             this.setMainPageAttributes(model);
-                String manageScheduleCategory = String.valueOf(request.getParameter(MANAGE_SCHEDULE_CATEGORY.getText()));
-                String[] myScheduleCheckbox=request.getParameterValues(MY_SCHEDULE_CHECK_BOX.getText());
-
-                if(myScheduleCheckbox !=null){
-                    int[] scheduleNO_OR_scheduleReplyNOList = Arrays.stream(myScheduleCheckbox).mapToInt(Integer::parseInt).toArray();
-
-                    scheduleService.deleteScheduleList(scheduleNO_OR_scheduleReplyNOList,manageScheduleCategory);
-                }
-
-                int selectPage = 1;
-                if (request.getParameter(SELECTED_PAGE.getText()) != null) {
-                    selectPage = Integer.parseInt(request.getParameter(SELECTED_PAGE.getText()));
-                }
-                PagingDTO paging = scheduleService.showMySchedulePaging(selectPage,manageScheduleCategory,userVO.getUserNO());
-                model.addAttribute(PAIGING.getText(), paging);
-                ArrayList<HashMap<String, Object>> scheduleList = scheduleService.getMyScheduleList(selectPage, userVO.getUserNO(),manageScheduleCategory);
-                model.addAttribute( MY_SCHEDULE_LIST.getText(), scheduleList);
-                model.addAttribute(MANAGE_SCHEDULE_CATEGORY.getText(), manageScheduleCategory);
+            this.setMainPageManageContents(model, userVO);
             return MAIN.getPath();
         }
     }

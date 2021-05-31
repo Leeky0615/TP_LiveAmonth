@@ -228,7 +228,6 @@ public class MyPageController {
 
         if(myReviewCheckbox !=null){
             int[] reviewNO_OR_reviewReplyNOList =  Arrays.stream(myReviewCheckbox).mapToInt(Integer::parseInt).toArray();
-
             reviewService.deleteReviewList(reviewNO_OR_reviewReplyNOList,manageReviewCategory);
         }
 
@@ -252,7 +251,6 @@ public class MyPageController {
 
         if(myScheduleCheckbox !=null){
             int[] scheduleNO_OR_scheduleReplyNOList = Arrays.stream(myScheduleCheckbox).mapToInt(Integer::parseInt).toArray();
-
             scheduleService.deleteScheduleList(scheduleNO_OR_scheduleReplyNOList,manageScheduleCategory);
         }
 

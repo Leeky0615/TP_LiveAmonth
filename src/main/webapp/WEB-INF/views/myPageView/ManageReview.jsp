@@ -33,7 +33,6 @@
     </c:when>
     <c:otherwise>
         <div class="table table-hover">
-
                 <input type="hidden" name="manageReviewCategory" id="manageReviewCategory"
                        value="${manageReviewCategory}">
                 <table>
