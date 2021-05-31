@@ -1,6 +1,6 @@
 package com.liveamonth.liveamonth.model.service.cityInfoService;
 
-import com.liveamonth.liveamonth.constants.EntityConstants;
+import com.liveamonth.liveamonth.constants.EntityConstants.CityTransportCategory;
 import com.liveamonth.liveamonth.entity.vo.CityInfoVO;
 import com.liveamonth.liveamonth.entity.vo.CityTransportVO;
 import com.liveamonth.liveamonth.entity.vo.CityWeatherVO;
@@ -8,10 +8,7 @@ import com.liveamonth.liveamonth.model.mapper.cityInfoMapper.CityMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 import static com.liveamonth.liveamonth.constants.EntityConstants.CityInfoCategory.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.ECityInfoAttributes.*;
@@ -69,5 +66,30 @@ public class CityServiceImpl implements CityService {
     public List<String> getCityNameList() throws Exception {
         return cityMapper.getCityInfoNameList();
     }
+    @Override
+    public List<CityWeatherVO> getAVGTempList(){
+        Calendar calendar = Calendar.getInstance();
+        int month = calendar.get(Calendar.MONTH) + 1;
+        return cityMapper.getAVGTempList(month);
+    }
+
+    @Override
+    public HashMap<String, String> getCityTransportGradeList() throws Exception{
+        HashMap<String, String> cityTransportGradeList = new HashMap<>();
+        for(String cityName: cityMapper.getCityInfoNameList()){
+            int score = 0;
+            String grade;
+            List<CityTransportVO> transportVOS = cityMapper.getCityTransportList(cityName);
+            for(CityTransportCategory transportCategory: CityTransportCategory.values()){
+                score += transportVOS.get(transportCategory.ordinal()).getCityStationCount() * transportCategory.getScore();
+            }
+            if(score > 61) grade = "상";
+            else if(score>21 && score<=61) grade = "중";
+            else grade = "하";
+            cityTransportGradeList.put(cityName, grade);
+        }
+        return cityTransportGradeList;
+    }
+
 
 }

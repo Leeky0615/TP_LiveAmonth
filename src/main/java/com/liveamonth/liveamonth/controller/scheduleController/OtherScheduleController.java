@@ -256,21 +256,4 @@ public class OtherScheduleController {
         }
         return null;
     }
-    @RequestMapping(value = "durationPay")
-    public String durationPay(HttpServletRequest request, RedirectAttributes rttr) throws Exception {
-        String schedulePayStartDay =  request.getParameter(SCHEDULE_PAY_START_DAY.getText());
-        String schedulePayFinishDay =  request.getParameter(SCHEDULE_PAY_FINISH_DAY.getText());
-        int scheduleNO = Integer.parseInt(String.valueOf(request.getParameter(OTHER_SCHEDULE_NO.getText())));
-        int userNO = Integer.parseInt(String.valueOf(request.getParameter(OTHER_USER_NO.getText())));
-
-        String message = "";
-        if(schedulePayStartDay == "" || schedulePayFinishDay == ""){
-            message = PLEASE_ADD_DURATION.getText();
-        }else{
-            int scheduleDurationPay = scheduleService.getScheduleDurationPay(schedulePayStartDay,schedulePayFinishDay,scheduleNO);
-            message = String.valueOf(scheduleDurationPay) + WON.getText();
-        }
-        rttr.addFlashAttribute(DURATION_PAY.getText(), message);
-        return "redirect:otherSchedule?userNO="+userNO+"&scheduleNO="+scheduleNO;
-    }
 }

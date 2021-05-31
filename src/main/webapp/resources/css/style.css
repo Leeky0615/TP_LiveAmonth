@@ -5084,7 +5084,7 @@ li .richText-btn[data-command=toggleCode] {
 
 
     .ih-item.square.effect13 .info {
-        background: #717070;
+        background: #9c9898;
         background: rgba(0, 0, 0, 0.6);
         visibility: hidden;
         opacity: 0;
@@ -5106,7 +5106,7 @@ li .richText-btn[data-command=toggleCode] {
 
     .ih-item.square.effect13 .info p {
         font-style: italic;
-        font-size: 12px;
+        font-size: 20px;
         position: relative;
         color: #bbb;
         padding: 20px 20px 20px;

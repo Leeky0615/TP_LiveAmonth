@@ -102,18 +102,23 @@ public class EntityConstants {
     }
 
     public enum CityTransportCategory {
-        SUBWAY("지하철역"),
-        BUS("버스 노선"),
-        BICYCLE("공공자전거"),
-        BUS_TERMINAL("버스 터미널"),
-        TRAIN("기차역"),
-        AIRPORT("공항");
+        SUBWAY("지하철역",4),
+        BUS("버스 노선",5),
+        BICYCLE("공공자전거",6),
+        BUS_TERMINAL("버스 터미널",3),
+        TRAIN("기차역",2),
+        AIRPORT("공항",1);
         private String nameKR;
-        private CityTransportCategory(String nameKR) {
+        private int score;
+        private CityTransportCategory(String nameKR,int score) {
             this.nameKR = nameKR;
+            this.score = score;
         }
         public String getNameKR() {
             return this.nameKR;
+        }
+        public int getScore() {
+            return this.score;
         }
     }
 

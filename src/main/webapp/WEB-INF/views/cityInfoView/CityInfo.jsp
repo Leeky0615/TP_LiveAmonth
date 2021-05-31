@@ -26,8 +26,9 @@
 <%--선택 도시가 ALL인 경우 CityGrid 출력!!--%>
 <c:if test="${cityName == 'all'}">
                     <div class="row property-filter">
-                        <c:forEach var="cityIntro" items="${cityIntroList}">
-                            <div class="col-lg-4 col-md-6 mix">
+                        <c:forEach var="cityIntro" items="${cityIntroList}"
+                        varStatus="status">
+                            <div class="col-lg-4 col-md-6">
                                 <div class="ih-item square effect13 left_to_right property-item">
                                     <a href="cityInfo?cityName=${cityIntro.cityVO.cityName}">
                                         <div class="pi-pic set-bg" data-setbg="${cityIntro.getCityInfoImageURL()}">
@@ -35,7 +36,10 @@
                                         </div>
                                         <div class="info">
                                             <h3>${cityIntro.cityVO.cityName}</h3>
-                                            <p>${cityIntro.cityVO.cityName}입니다.</p>
+                                                <p>
+                                                    ${currentMonthTempList[status.index].cityWeatherMonth}월 평균기온 : ${currentMonthTempList[status.index].cityWeatherAVGTemp}&#8451;
+                                                    <br><br>교통 등급 : ${cityTransportGradeList.get(cityIntro.cityVO.cityName)}
+                                                </p>
                                         </div>
                                     </a>
                                 </div>

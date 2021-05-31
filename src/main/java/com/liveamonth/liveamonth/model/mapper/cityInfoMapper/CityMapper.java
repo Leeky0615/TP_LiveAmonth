@@ -16,11 +16,9 @@ import java.util.List;
 @Mapper
 public interface CityMapper {
     List<CityInfoVO> getCityInfoList(String cityName, String cityInfoCategory) throws Exception;
-
     List<CityInfoVO> getCityInfoListByCategory(String cityInfoCategory) throws Exception;
-
     List<String> getCityInfoNameList() throws Exception;
-
     List<CityWeatherVO> getCityWeatherList(String cityName);
     List<CityTransportVO> getCityTransportList(String cityName);
+    List<CityWeatherVO> getAVGTempList(int month);
 }

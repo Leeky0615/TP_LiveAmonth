@@ -65,4 +65,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         and cityName = #{cityName};
     </select>
 
+    <select id="getAVGTempList" parameterType="int" resultType="CityWeatherVO">
+        SELECT * from cityWeather,city where cityWeather.cityNO = city.cityNO and cityWeatherMonth=#{month}
+    </select>
+
 </mapper>

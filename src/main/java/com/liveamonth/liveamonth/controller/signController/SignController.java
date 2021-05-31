@@ -84,6 +84,8 @@ public class SignController {
         // MainCitySlide.jsp 사용
         model.addAttribute(RANDOM_CITY_INTRO_LIST.getText(), cityService.getRandomCityInfoListByCategory(INTRO.name()));
         // CityInfoGrid.jsp 사용
+        model.addAttribute("currentMonthTempList",cityService.getAVGTempList());
+        model.addAttribute("cityTransportGradeList", cityService.getCityTransportGradeList());
         model.addAttribute(CITY_INTRO_LIST.getText(), cityService.getCityInfoListByCategory(INTRO.name()));
     }
 

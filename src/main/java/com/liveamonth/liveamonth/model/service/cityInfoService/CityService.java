@@ -15,4 +15,7 @@ public interface CityService {
     List<CityWeatherVO> getCityWeatherList(String cityName) throws Exception;
     List<CityTransportVO> getCityTransportList(String cityName) throws Exception;
     List<String> getCityNameList() throws Exception;
+    List<CityWeatherVO> getAVGTempList();
+
+    HashMap<String, String> getCityTransportGradeList() throws Exception;
 }
