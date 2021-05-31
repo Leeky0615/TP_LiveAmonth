@@ -89,9 +89,7 @@
                                         <i id="noticeIcon" class="fas fa-bell fa-fw"></i>
                                         <span class="badge badge-danger badge-counter" id="noticeCount"></span>
                                     </a>
-                                    <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                         id="noticeDropdown" aria-labelledby="alertsDropdown">
-                                            <%--                                   <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>--%>
+                                    <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" id="noticeDropdown" aria-labelledby="alertsDropdown">
                                     </div>
                                 </li>
                             </ul>
