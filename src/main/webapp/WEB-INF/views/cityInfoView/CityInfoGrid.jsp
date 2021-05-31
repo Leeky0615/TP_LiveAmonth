@@ -21,8 +21,7 @@
                             <div class="info">
                                 <h3>${cityIntro.cityVO.cityName}</h3>
                                 <p>
-                                    현재날씨 :<br>
-                                    교통점수 :
+
                                 </p>
                             </div>
                         </a>
