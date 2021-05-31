@@ -1,8 +1,9 @@
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %><html>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
+<html>
 <body>
 <div class="col-lg-4">
     <div class="blog-sidebar">
@@ -71,7 +72,52 @@
                                 <div class="tab-pane" id="profile-tabs-2" role="tabpanel">
                                     <div class="tab-desc">
                                         <div class="row">
-                                            내 스케줄 입니다!!
+                                            <c:choose>
+                                                <c:when test="${scheduleList.size() == 0}">
+                                                    <div class="row justify-content-center">
+                                                        <div class="col-md-6 text-center mb-5">
+                                                            <h2 class="heading-section">작성하신 글이 없습니다.</h2>
+                                                        </div>
+                                                    </div>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <div class="table table-hover">
+                                                        <input type="hidden" name="manageScheduleCategory"
+                                                               id="manageScheduleCategory"
+                                                               value="${manageScheduleCategory}">
+                                                        <table>
+                                                            <thead>
+                                                            <tr>
+                                                                <th></th>
+                                                                <th></th>
+                                                                <th>제목</th>
+                                                                <th>좋아요</th>
+                                                                <th>조회</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            <c:forEach var="scheduleList" end="5" items="${scheduleList}">
+                                                                <tr>
+                                                                    <td style="width:10%">${scheduleList.scheduleNO}</td>
+                                                                    <td><input type="checkbox" name="myScheduleCheckbox"
+                                                                               value="${scheduleList.scheduleNO}"></td>
+                                                                    <td style="width:35%"><a
+                                                                            href="otherSchedule?scheduleNO=${scheduleList.scheduleNO}">${scheduleList.scheduleSubject}</a>
+                                                                        <span class="scheduleReplyCount">
+                                                                    <c:if test="${scheduleList.replyCount ne null}">
+                                                                        [${scheduleList.replyCount}]
+                                                                    </c:if>
+                                                                     </span>
+                                                                    </td>
+                                                                    <td style="width:15%">${scheduleList.scheduleLikeCount}</td>
+                                                                    <td style="width:15%">${scheduleList.scheduleViewCount}</td>
+                                                                </tr>
+                                                            </c:forEach>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </c:otherwise>
+                                            </c:choose>
                                         </div>
                                     </div>
                                 </div>

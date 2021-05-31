@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.liveamonth.liveamonth.constants.EntityConstants.EEmail;
+import com.liveamonth.liveamonth.entity.dto.PagingDTO;
 import com.liveamonth.liveamonth.entity.dto.S3UploaderDTO;
 import com.liveamonth.liveamonth.entity.vo.UserVO;
 import com.liveamonth.liveamonth.model.service.cityInfoService.CityService;
@@ -24,6 +25,9 @@ import java.io.InputStreamReader;
 import java.math.BigInteger;
 import java.net.HttpURLConnection;
 import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 
 import static com.liveamonth.liveamonth.constants.ControllerPathConstants.ETemplatePath.MAIN;
 import static com.liveamonth.liveamonth.constants.ControllerPathConstants.ESignPath.*;
@@ -32,6 +36,10 @@ import static com.liveamonth.liveamonth.constants.EntityConstants.ESignUp.EMAIL;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.ECityInfoAttributes.CITY_INTRO_LIST;
 import static com.liveamonth.liveamonth.constants.LogicConstants.ECityInfoAttributes.RANDOM_CITY_INTRO_LIST;
+import static com.liveamonth.liveamonth.constants.LogicConstants.EMyPageAttributes.*;
+import static com.liveamonth.liveamonth.constants.LogicConstants.EMyPageAttributes.MANAGE_SCHEDULE_CATEGORY;
+import static com.liveamonth.liveamonth.constants.LogicConstants.EPaging.PAIGING;
+import static com.liveamonth.liveamonth.constants.LogicConstants.EPaging.SELECTED_PAGE;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EReview.POPULAR_REVIEW_LIST;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleAttributes.FITERED_OTHER_SCHEDULE_LIST;
 import static com.liveamonth.liveamonth.constants.LogicConstants.ESignAttributes.AT;
@@ -108,6 +116,24 @@ public class SignController {
         } else {
             session.setAttribute(USER_VO.getText(), userVO);
             this.setMainPageAttributes(model);
+                String manageScheduleCategory = String.valueOf(request.getParameter(MANAGE_SCHEDULE_CATEGORY.getText()));
+                String[] myScheduleCheckbox=request.getParameterValues(MY_SCHEDULE_CHECK_BOX.getText());
+
+                if(myScheduleCheckbox !=null){
+                    int[] scheduleNO_OR_scheduleReplyNOList = Arrays.stream(myScheduleCheckbox).mapToInt(Integer::parseInt).toArray();
+
+                    scheduleService.deleteScheduleList(scheduleNO_OR_scheduleReplyNOList,manageScheduleCategory);
+                }
+
+                int selectPage = 1;
+                if (request.getParameter(SELECTED_PAGE.getText()) != null) {
+                    selectPage = Integer.parseInt(request.getParameter(SELECTED_PAGE.getText()));
+                }
+                PagingDTO paging = scheduleService.showMySchedulePaging(selectPage,manageScheduleCategory,userVO.getUserNO());
+                model.addAttribute(PAIGING.getText(), paging);
+                ArrayList<HashMap<String, Object>> scheduleList = scheduleService.getMyScheduleList(selectPage, userVO.getUserNO(),manageScheduleCategory);
+                model.addAttribute( MY_SCHEDULE_LIST.getText(), scheduleList);
+                model.addAttribute(MANAGE_SCHEDULE_CATEGORY.getText(), manageScheduleCategory);
             return MAIN.getPath();
         }
     }
