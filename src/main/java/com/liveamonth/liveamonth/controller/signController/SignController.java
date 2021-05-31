@@ -34,8 +34,7 @@ import static com.liveamonth.liveamonth.constants.ControllerPathConstants.ESignP
 import static com.liveamonth.liveamonth.constants.EntityConstants.CityInfoCategory.INTRO;
 import static com.liveamonth.liveamonth.constants.EntityConstants.ESignUp.EMAIL;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.*;
-import static com.liveamonth.liveamonth.constants.LogicConstants.ECityInfoAttributes.CITY_INTRO_LIST;
-import static com.liveamonth.liveamonth.constants.LogicConstants.ECityInfoAttributes.RANDOM_CITY_INTRO_LIST;
+import static com.liveamonth.liveamonth.constants.LogicConstants.ECityInfoAttributes.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EMyPageAttributes.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EMyPageAttributes.MANAGE_SCHEDULE_CATEGORY;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EPaging.PAIGING;
@@ -93,8 +92,8 @@ public class SignController {
         // MainCitySlide.jsp 사용
         model.addAttribute(RANDOM_CITY_INTRO_LIST.getText(), cityService.getRandomCityInfoListByCategory(INTRO.name()));
         // CityInfoGrid.jsp 사용
-        model.addAttribute("currentMonthTempList",cityService.getAVGTempList());
-        model.addAttribute("cityTransportGradeList", cityService.getCityTransportGradeList());
+        model.addAttribute(CURRENT_MONTH_TEMP_LIST.getText(),cityService.getAVGTempList());
+        model.addAttribute(CITY_TRANSPORT_GRADE_LIST.getText(), cityService.getCityTransportGradeList());
         model.addAttribute(CITY_INTRO_LIST.getText(), cityService.getCityInfoListByCategory(INTRO.name()));
     }
     private void setMainPageManageContents(Model model, UserVO userVO) throws Exception{

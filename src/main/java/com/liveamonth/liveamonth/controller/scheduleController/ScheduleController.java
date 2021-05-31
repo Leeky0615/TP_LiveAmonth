@@ -201,7 +201,7 @@ public class ScheduleController {
         int scheduleNO;
         String schedulePayStartDay =  request.getParameter(SCHEDULE_PAY_START_DAY.getText());
         String schedulePayFinishDay =  request.getParameter(SCHEDULE_PAY_FINISH_DAY.getText());
-        if(request.getParameter("scheduleMenu") != null){
+        if(request.getParameter(SCHEDULE_MENU.getText()) != null){
             scheduleNO = Integer.parseInt(String.valueOf(request.getParameter(OTHER_SCHEDULE_NO.getText())));
             int userNO = Integer.parseInt(String.valueOf(request.getParameter(OTHER_USER_NO.getText())));
             path = "redirect:otherSchedule?userNO="+userNO+"&scheduleNO="+scheduleNO;

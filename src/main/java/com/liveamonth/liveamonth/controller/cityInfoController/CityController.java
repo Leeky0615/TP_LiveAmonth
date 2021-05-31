@@ -23,11 +23,11 @@ public class CityController {
 
     @RequestMapping(value = "/cityInfo")
     public String cityInfo(Model model, @RequestParam("cityName") String cityName) throws Exception {
-        if (!cityName.equals("all")) {
+        if (!cityName.equals(ALL.getText())) {
             model.addAttribute(SELECTED_CITY_INFOS.getText(), cityService.getSelectedCityList(cityName));
         }
-        model.addAttribute("currentMonthTempList",cityService.getAVGTempList());
-        model.addAttribute("cityTransportGradeList", cityService.getCityTransportGradeList());
+        model.addAttribute(CURRENT_MONTH_TEMP_LIST.getText(),cityService.getAVGTempList());
+        model.addAttribute(CITY_TRANSPORT_GRADE_LIST.getText(), cityService.getCityTransportGradeList());
         model.addAttribute(CITY_NAME.getText(), cityName);
         model.addAttribute(CITY_INTRO_LIST.getText(), cityService.getCityInfoListByCategory(INTRO.name()));
         return CITY_INFO.getPath();

@@ -98,11 +98,17 @@ public class ControllerPathConstants {
         SCHEDULE("Schedule"),
         REDIRECT_OTHER_SCHEDULELIST("redirect:otherScheduleList"),
         REDIRECT_SCHEDULE("redirect:schedule"),
-        REDIRECT_OTHER_SCHEDULE("redirect:otherSchedule");
+        REDIRECT_OTHER_SCHEDULE("redirect:otherSchedule?"),
+        PARAM_USER_NO("userNO="),
+        PARAM_SCHEDULE_NO("&scheduleNO=");
         private String path;
         private ESchedulePath(String path) {this.path = path;}
         public String getPath() {return "scheduleView/"+this.path;}
         public String getRedirectPath() {return this.path;}
+//        public String getOtherSchedulePath(String userNO, String scheduleNO) {
+//            return this.path+"userNO="+userNO
+//                +"&scheduleNO="+scheduleNO;}
+
     }
 
     /*

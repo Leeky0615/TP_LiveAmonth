@@ -59,6 +59,7 @@ public class LogicConstants {
         DURATION_PAY("durationPayMsg"),
         OTHER_SCHEDULE_NO("otherScheduleNO"),
         OTHER_USER_NO("otherScheduleUserNO"),
+        SCHEDULE_MENU("scheduleMenu"),
         OTHER_SCHEDULE_AND_LIKE_COUNT("otherScheduleAndLikeCount");
         private String text;
         private EScheduleAttributes(String text) {this.text = text;}
@@ -122,6 +123,7 @@ public class LogicConstants {
         public String getText() {return this.text;}
     }
     public enum ECityInfoAttributes {
+        ALL("all"),
         PAGE("page"),
         CITY_NAME("cityName"),
         SELECTED_CITY_NAME("selectedCityName"),
@@ -133,6 +135,8 @@ public class LogicConstants {
         CITY_WEATHER_LIST("cityWeatherList"),
         CITY_TRANSPORT_LIST("cityTransportList"),
         CITY_FOOD_LIST("cityFoodList"),
+        CURRENT_MONTH_TEMP_LIST("currentMonthTempList"),
+        CITY_TRANSPORT_GRADE_LIST("currentMonthTempList"),
         CITY_NAME_LIST("cityNameList");
 
         private String text;
