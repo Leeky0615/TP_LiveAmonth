@@ -9,6 +9,7 @@ import com.liveamonth.liveamonth.entity.vo.ScheduleLikeVO;
 import com.liveamonth.liveamonth.entity.vo.ScheduleReplyVO;
 import com.liveamonth.liveamonth.entity.vo.ScheduleVO;
 import com.liveamonth.liveamonth.model.mapper.scheduleMapper.ScheduleMapper;
+import com.liveamonth.liveamonth.model.service.noticeService.NoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,13 +19,17 @@ import static com.liveamonth.liveamonth.constants.EntityConstants.EPage.DISPLAY_
 import static com.liveamonth.liveamonth.constants.EntityConstants.ESchedule.SCHEDULE_NO;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EPaging.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleFilterAndOrders.SCHEDULE_FO_ORDER;
-import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleStaticInt.*;
+import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleStaticInt.FIRST_SCHEDULECONTENT_NO;
+import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleStaticInt.STATIC_DISPLAY_PAGE_NUM;
 
 
 @Service
 public class ScheduleServiceImpl implements ScheduleService {
     @Autowired
     private ScheduleMapper scheduleMapper;
+
+    @Autowired
+    private NoticeService noticeService;
 
     @Override
     public CalendarDTO showCalendar(CalendarDTO calendarDTO, int scheduleNO) throws Exception {
@@ -173,9 +178,17 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public boolean addScheduleReplyVO(ScheduleReplyVO scheduleReplyVO, int userNO) throws Exception {
-        scheduleReplyVO.setUserNO(userNO);
-        return scheduleMapper.addScheduleReplyVO(scheduleReplyVO);
+    public boolean addScheduleReplyVO(ScheduleReplyVO scheduleReplyVO, int senderNO) throws Exception {
+        scheduleReplyVO.setUserNO(senderNO);
+
+        long rowCount = scheduleMapper.addScheduleReplyVO(scheduleReplyVO);
+        long scheduleReplyNO = scheduleReplyVO.getScheduleReplyNO();
+
+        int userNO = scheduleMapper.getScheduleWriterNO(scheduleReplyVO.getScheduleNO());
+        int noticeNO = noticeService.addNotice(userNO, senderNO);
+        noticeService.addSRNotice(noticeNO, (int) scheduleReplyNO);
+
+        return false;
     }
 
     @Override
@@ -204,6 +217,9 @@ public class ScheduleServiceImpl implements ScheduleService {
         int likeStatus = scheduleMapper.getScheduleLikeStatus(scheduleLikeVO);
         if(likeStatus == 0){
            if(scheduleMapper.addScheduleLike(scheduleLikeVO)){
+               int userNO = scheduleMapper.getScheduleWriterNO(scheduleLikeVO.getScheduleNO());
+               int noticeNO = noticeService.addNotice(userNO, scheduleLikeVO.getScheduleLikeUserNO());
+               noticeService.addSLNotice(noticeNO, scheduleLikeVO.getScheduleNO());
                like.put(LIKE_STATUS.getText(), 1);
            }
         } else if(likeStatus == 1){

@@ -1,8 +1,6 @@
 package com.liveamonth.liveamonth.entity.vo;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.Calendar;
 
@@ -31,6 +29,7 @@ public class UserVO {
 		this.userAge = 0;
 		this.userSex = false;
 		this.userEmail = null;
+		this.userImage = null;
 	}
 
 	// Getter & Setter

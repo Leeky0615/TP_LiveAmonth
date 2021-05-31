@@ -17,6 +17,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select max(scheduleContentNO) from scheduleContent;
 	</select>
 
+	<select id = "getScheduleVO" parameterType="int" resultType = "ScheduleVO">
+		SELECT scheduleSubject FROM schedule where scheduleNO = #{scheduleNO};
+	</select>
+
+	<select id = "getScheduleReply" parameterType="int" resultType = "ScheduleReplyVO">
+		SELECT scheduleReplyDesc, scheduleReplyRefNO, scheduleNO FROM scheduleReply where scheduleReplyNO = #{scheduleReplyNO};
+	</select>
+
 	<resultMap type = "scheduleVO" id="scheduleVO">
 		<id column="scheduleNO" property="scheduleNO"/>
 		<result column="scheduleSubject" property="scheduleSubject"/>
@@ -126,10 +134,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="likeCount" property="likeCount"/>
 	</resultMap>
 	<select id ="getScheduleAndLikeCount" parameterType="int" resultMap="scheduleAndLikeCount">
-		select schedule.scheduleNO,schedule.scheduleSubject, scheduleViewCount, count(scheduleLikeUserNO) as likeCount
+		select schedule.scheduleNO,schedule.scheduleSubject, scheduleViewCount, count(scheduleLikeUserNO) as likeCount, user.*
 		from schedule
 		    left join scheduleLike
 		        on schedule.scheduleNO = scheduleLike.scheduleNO
+			left join user
+				on schedule.userNO = user.userNO
 		where schedule.scheduleNO = #{scheduleNO} group by schedule.scheduleNO;
 	</select>
 
@@ -170,6 +180,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		order by schedule.scheduleNO desc) as scheduleData,
 		(select @rownum := #{startNO}) TMP
 		limit #{startNO}, #{displayPage};
+	</select>
+
+	<select id="getScheduleWriterNO" parameterType="int" resultType="int">
+		select userNO from schedule where scheduleNO = #{scheduleNO};
 	</select>
 
 	<!-- delete -->
@@ -218,7 +232,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		insert into scheduleContent values (#{scheduleContentNO}, #{scheduleContentSubject}, #{scheduleContentDesc}, #{scheduleContentDate}, #{scheduleContentCost}, #{scheduleNO})
 	</insert>
 
-	<insert id="addScheduleReplyVO" parameterType="ScheduleReplyVO">
+	<insert id="addScheduleReplyVO" parameterType="ScheduleReplyVO" useGeneratedKeys="true" keyProperty="scheduleReplyNO">
 		insert into scheduleReply values (#{scheduleReplyNO}, #{scheduleReplyDesc}, #{scheduleReplyDate},
 		<choose>
 			<when test = "scheduleReplyRefNO == 0">

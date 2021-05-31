@@ -396,4 +396,21 @@ public class EntityConstants {
             return label;
         }
     }
+
+    public enum ENoticeType {
+        REVIEW_LIKE("reviewLike"),
+        SCHEDULE_LIKE("scheduleLike"),
+        REVIEW_REPLY("reviewReply"),
+        SCHEDULE_REPLY("scheduleReply"),
+        REVIEW_REPLY_REF("reviewReplyRef"),
+        SCHEDULE_REPLY_REF("scheduleReplyRef");
+
+        private String text;
+        private ENoticeType(String text) {
+            this.text = text;
+        }
+        public String getText() {
+            return text;
+        }
+    }
 }

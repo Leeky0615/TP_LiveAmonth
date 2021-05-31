@@ -30,7 +30,8 @@ import static com.liveamonth.liveamonth.constants.ControllerPathConstants.ESignP
 import static com.liveamonth.liveamonth.constants.EntityConstants.CityInfoCategory.INTRO;
 import static com.liveamonth.liveamonth.constants.EntityConstants.ESignUp.EMAIL;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.*;
-import static com.liveamonth.liveamonth.constants.LogicConstants.ECityInfoAttributes.*;
+import static com.liveamonth.liveamonth.constants.LogicConstants.ECityInfoAttributes.CITY_INTRO_LIST;
+import static com.liveamonth.liveamonth.constants.LogicConstants.ECityInfoAttributes.RANDOM_CITY_INTRO_LIST;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EReview.POPULAR_REVIEW_LIST;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleAttributes.FITERED_OTHER_SCHEDULE_LIST;
 import static com.liveamonth.liveamonth.constants.LogicConstants.ESignAttributes.AT;
