@@ -277,7 +277,7 @@ button.bg-dark:focus {
 }
 
 .text-white {
-    max-width: 80px;
+    max-width: 50px;
     max-height: 50px;
     color: #fff !important;
 }

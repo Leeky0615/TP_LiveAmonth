@@ -183,10 +183,12 @@ public class ScheduleServiceImpl implements ScheduleService {
 
         long rowCount = scheduleMapper.addScheduleReplyVO(scheduleReplyVO);
         long scheduleReplyNO = scheduleReplyVO.getScheduleReplyNO();
-
         int userNO = scheduleMapper.getScheduleWriterNO(scheduleReplyVO.getScheduleNO());
-        int noticeNO = noticeService.addNotice(userNO, senderNO);
-        noticeService.addSRNotice(noticeNO, (int) scheduleReplyNO);
+
+        if(userNO != senderNO){
+            int noticeNO = noticeService.addNotice(userNO, senderNO);
+            noticeService.addSRNotice(noticeNO, (int) scheduleReplyNO);
+        }
 
         return false;
     }
@@ -218,8 +220,10 @@ public class ScheduleServiceImpl implements ScheduleService {
         if(likeStatus == 0){
            if(scheduleMapper.addScheduleLike(scheduleLikeVO)){
                int userNO = scheduleMapper.getScheduleWriterNO(scheduleLikeVO.getScheduleNO());
-               int noticeNO = noticeService.addNotice(userNO, scheduleLikeVO.getScheduleLikeUserNO());
-               noticeService.addSLNotice(noticeNO, scheduleLikeVO.getScheduleNO());
+               if(userNO != scheduleLikeVO.getScheduleLikeUserNO()) {
+                   int noticeNO = noticeService.addNotice(userNO, scheduleLikeVO.getScheduleLikeUserNO());
+                   noticeService.addSLNotice(noticeNO, scheduleLikeVO.getScheduleNO());
+               }
                like.put(LIKE_STATUS.getText(), 1);
            }
         } else if(likeStatus == 1){

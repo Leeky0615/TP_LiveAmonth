@@ -74,6 +74,7 @@ public class NoticeServiceImpl implements NoticeService{
 
                     notice.setNoticeType(ENoticeType.REVIEW_REPLY_REF);
                 }
+                notice.setReviewNO(reviewReply.getReviewNO());
                 notice.setNoticeContent(desc);
 
             } else if (notice.getScheduleReplyNO() != 0) {
@@ -103,6 +104,8 @@ public class NoticeServiceImpl implements NoticeService{
 
                     notice.setNoticeType(ENoticeType.SCHEDULE_REPLY_REF);
                 }
+
+                notice.setScheduleNO(scheduleReplyVO.getScheduleNO());
                 notice.setNoticeContent(desc);
             }
             notice.setObjectSubject(subject);

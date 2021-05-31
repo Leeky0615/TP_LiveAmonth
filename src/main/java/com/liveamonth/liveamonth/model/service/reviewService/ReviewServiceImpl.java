@@ -157,8 +157,10 @@ public class ReviewServiceImpl implements ReviewService {
         if(likeStatus == 0){
             reviewMapper.addReviewLike(reviewLikeVO);
             int userNO = reviewMapper.getReviewWriterNO(reviewLikeVO.getReviewNO());
-            int noticeNO = noticeService.addNotice(userNO, reviewLikeVO.getReviewLikeUserNO());
-            noticeService.addRLNotice(noticeNO, reviewLikeVO.getReviewNO());
+            if(userNO != reviewLikeVO.getReviewLikeUserNO()) {
+                int noticeNO = noticeService.addNotice(userNO, reviewLikeVO.getReviewLikeUserNO());
+                noticeService.addRLNotice(noticeNO, reviewLikeVO.getReviewNO());
+            }
             likeStatus = 1;
         } else if (likeStatus == 1){
             reviewMapper.deleteReviewLike(reviewLikeVO);
@@ -176,10 +178,12 @@ public class ReviewServiceImpl implements ReviewService {
     public void addReviewReply(ReviewReplyVO reviewReplyVO) throws Exception {
         long rowCount = reviewMapper.addReviewReply(reviewReplyVO);
         long reviewReplyNO = reviewReplyVO.getReviewReplyNO();
-
         int userNO = reviewMapper.getReviewWriterNO(reviewReplyVO.getReviewNO());
-        int noticeNO = noticeService.addNotice(userNO, reviewReplyVO.getUserNO());
-        noticeService.addRRNotice(noticeNO, (int)reviewReplyNO);
+        if(userNO != reviewReplyVO.getUserNO()) {
+            int noticeNO = noticeService.addNotice(userNO, reviewReplyVO.getUserNO());
+            noticeService.addRRNotice(noticeNO, (int)reviewReplyNO);
+        }
+
     }
 
     @Override

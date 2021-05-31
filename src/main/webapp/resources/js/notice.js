@@ -7,11 +7,20 @@
 
         var htmls = "<h6 class=\"dropdown-header\"> Notice Center </h6>";
         for (var i = 0; i < noticeMap.noticeList.length; i++) {
-            if (noticeMap.noticeList[i].readStatus == true) {
-                htmls += "<a class=\"dropdown-item-new d-flex align-items-center\" href=\"#\">";
+
+            var url = "";
+            if(noticeMap.noticeList[i].noticeType == "REVIEW_LIKE" || noticeMap.noticeList[i].noticeType == "REVIEW_REPLY" || noticeMap.noticeList[i].noticeType == "REVIEW_REPLY_REF"){
+                url = "getReview?reviewNO="+ noticeMap.noticeList[i].reviewNO;
             } else {
-                htmls += "<a class=\"dropdown-item d-flex align-items-center\" href=\"#\">";
+                url = "otherSchedule?scheduleNO="+ noticeMap.noticeList[i].scheduleNO;
             }
+
+            if (noticeMap.noticeList[i].readStatus == true) {
+                htmls += "<a class=\"dropdown-item-new d-flex align-items-center\" href=" + url + ">";
+            } else {
+                htmls += "<a class=\"dropdown-item d-flex align-items-center\" href=" + url + ">";
+            }
+
             htmls += "<div class=\"mr-3\">";
             if (noticeMap.noticeList[i].senderVO.userImage == null) {
                 htmls += "<img class=\"text-white\" alt=\"Profile Picture\" src=\"https://liveamonth-resources.s3.ap-northeast-2.amazonaws.com/img/user/default.jpg\">";
