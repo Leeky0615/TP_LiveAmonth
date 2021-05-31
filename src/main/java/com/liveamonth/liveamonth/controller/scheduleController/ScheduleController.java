@@ -72,9 +72,14 @@ public class ScheduleController {
         String scheduleContentDesc = request.getParameter(MODIFY_SCHEDULE_CONTENT_DESC.getText());
         int scheduleContentCost = Integer.parseInt(request.getParameter(MODIFY_SCHEDULE_CONTENT_COST.getText()));
         scheduleService.modifyScheduleContent(scheduleContentNO, scheduleContentSubject, scheduleContentDesc, scheduleContentCost);
-
         rttr.addFlashAttribute(MESSAGE.getText(), COMPLETE_SCHEDULE_MODIFICATION.getText());
-        return REDIRECT_SCHEDULE.getRedirectPath();
+        if(request.getParameter("scheduleMenu") != null){
+            int scheduleNO = Integer.parseInt(String.valueOf(request.getParameter(OTHER_SCHEDULE_NO.getText())));
+            int userNO = Integer.parseInt(String.valueOf(request.getParameter(OTHER_USER_NO.getText())));
+            return "redirect:otherSchedule?userNO="+userNO+"&scheduleNO="+scheduleNO;
+        }else{
+            return REDIRECT_SCHEDULE.getRedirectPath();
+        }
     }
 
     @RequestMapping("/schedule")
@@ -130,13 +135,14 @@ public class ScheduleController {
     }
     private HashMap<String, Object> getScehduleInfos(HttpServletRequest request, int scheduleNO,int userNO){
         HashMap<String, Object> objects = new HashMap<>();
-        objects.put(SCHEDULE_VO.getText(), scheduleNO);
+        objects.put(SCHEDULE_NO.getText(), scheduleNO);
         objects.put(SCHEDULE_SUBJECT.getText(), request.getParameter(SCHEDULE_SUBJECT.getText()));
         if(request.getParameter(SCHEDULE_STATUS.getText()) != null)objects.put(SCHEDULE_STATUS.getText(),true);
         else objects.put(SCHEDULE_STATUS.getText(),false);
         objects.put(CITY_NO.getText(), request.getParameter(CITY_NO.getText()));
         objects.put(SCHEDULE_VIEW_COUNT.getText(), 0); //addSchedule에만 필요
         objects.put(USER_NO.getText(), userNO); // addSchedule에만 필요
+        System.out.println("objects = " + objects);
         return objects;
     }
 
@@ -191,9 +197,18 @@ public class ScheduleController {
 
     @RequestMapping(value = "knowScheduleDurationPay")
     public String knowScheduleDurationPay(HttpSession session, HttpServletRequest request, ScheduleVO scheduleVO, RedirectAttributes rttr) throws Exception {
+        String path;
+        int scheduleNO;
         String schedulePayStartDay =  request.getParameter(SCHEDULE_PAY_START_DAY.getText());
         String schedulePayFinishDay =  request.getParameter(SCHEDULE_PAY_FINISH_DAY.getText());
-        int scheduleNO = Integer.parseInt(String.valueOf(session.getAttribute(SELECTED_SCHEDULE_NO.getText())));
+        if(request.getParameter("scheduleMenu") != null){
+            scheduleNO = Integer.parseInt(String.valueOf(request.getParameter(OTHER_SCHEDULE_NO.getText())));
+            int userNO = Integer.parseInt(String.valueOf(request.getParameter(OTHER_USER_NO.getText())));
+            path = "redirect:otherSchedule?userNO="+userNO+"&scheduleNO="+scheduleNO;
+        }else{
+            scheduleNO = Integer.parseInt(String.valueOf(session.getAttribute(SELECTED_SCHEDULE_NO.getText())));
+            path = REDIRECT_SCHEDULE.getRedirectPath();
+        }
 
         String message = "";
         if(schedulePayStartDay == "" || schedulePayFinishDay ==""){
@@ -202,7 +217,7 @@ public class ScheduleController {
            int scheduleDurationPay = scheduleService.getScheduleDurationPay(schedulePayStartDay,schedulePayFinishDay,scheduleNO);
             message = String.valueOf(scheduleDurationPay) + WON.getText();
         }
-        rttr.addFlashAttribute(MESSAGE.getText(), message);
-        return REDIRECT_SCHEDULE.getRedirectPath();
+        rttr.addFlashAttribute(DURATION_PAY.getText(), message);
+        return path;
     }
 }

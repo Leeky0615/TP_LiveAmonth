@@ -63,9 +63,6 @@
                                 <li class="nav-item">
                                     <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab">전년도 기온 정보</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" data-toggle="tab" href="#tabs-4" role="tab">지역 날씨예보</a>
-                                </li>
                             </ul><!-- Tab panes -->
                             <div class="tab-content">
                                 <%--도시 소개--%>
@@ -117,35 +114,6 @@
                                         <ul class="left-table">
                                             <li>
                                                 <span class="type-title">전년도 월 평균 기온 :: ${selectedCityInfos.cityIntro[0].cityVO.cityName}</span>
-                                            </li>
-                                            <c:set var="cityWeather" value="${selectedCityInfos.cityWeatherList}"/>
-                                            <c:forEach var="i" begin="0" end="5">
-                                            <li>
-                                                <span class="type-name">${cityWeather[i].cityWeatherMonth}월</span>
-                                                <span class="type-value">평균 : ${cityWeather[i].cityWeatherAVGTemp}&#8451; | 최저 : ${cityWeather[i].cityWeatherMinTemp}&#8451; | 최고 : ${cityWeather[i].cityWeatherMaxTemp}&#8451;</span>
-                                            </li>
-                                            </c:forEach>
-                                            <li><span class="type-footer"> &nbsp;</span></li>
-                                        </ul>
-                                        <ul class="right-table">
-                                            <li><span class="type-title"> &nbsp;</span></li>
-                                            <c:forEach var="i" begin="6" end="11">
-                                                <li>
-                                                    <span class="type-name">${cityWeather[i].cityWeatherMonth}월</span>
-                                                    <span class="type-value">평균 : ${cityWeather[i].cityWeatherAVGTemp}&#8451; | 최저 : ${cityWeather[i].cityWeatherMinTemp}&#8451; | 최고 : ${cityWeather[i].cityWeatherMaxTemp}&#8451;</span>
-                                                </li>
-                                            </c:forEach>
-                                            <li class="type-footer">출처 : 기상청 홈페이지
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <%--지역 날씨 예보--%>
-                                <div class="tab-pane" id="tabs-4" role="tabpanel">
-                                    <div class="tab-details">
-                                        <ul class="left-table">
-                                            <li>
-                                                <span class="type-title">[${selectedCityInfos.cityIntro[0].cityVO.cityName}] 날씨예보</span>
                                             </li>
                                             <c:set var="cityWeather" value="${selectedCityInfos.cityWeatherList}"/>
                                             <c:forEach var="i" begin="0" end="5">

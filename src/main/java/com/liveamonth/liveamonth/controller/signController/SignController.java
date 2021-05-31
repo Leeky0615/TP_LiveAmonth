@@ -48,8 +48,10 @@ public class SignController {
 
     @Autowired
     private CityService cityService;
+
     @Autowired
     private ReviewService reviewService;
+
     @Autowired
     private ScheduleService scheduleService;
 

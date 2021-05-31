@@ -6,7 +6,12 @@
 <link rel="stylesheet" href="resources/css/schedule.css" type="text/css">
 <link rel="stylesheet" href="resources/css/onOff.css" type="text/css">
 <script src="resources/js/schedule.js"></script>
-
+<script>
+    var message = "${message}";
+    if (message != "") {
+        alert(message);
+    }
+</script>
 <body style="background:#ffffff">
 <section class="blog-section spad">
     <div class="container">
@@ -113,16 +118,16 @@
                 <div class="section-title">
                     <h4>캘린더 관리</h4>
                 </div>
-                <div class="search-form-content">
-                    <form action="swapSchedule" class="filter-form">
-                        <select class="sm-width" name="selectSchedule" id="selectSchedule">
+                <div class="search-form-content mb-0" style="display: inline-block">
+                    <form name="swapSchedule" action="swapSchedule" class="filter-form">
+                        <select class="sm-width" name="selectSchedule" id="selectSchedule"  onchange="this.form.submit()" style="width: 100%">
                             <c:forEach var="scheduleVO" items="${scheduleVOList}">
                                 <option id="${scheduleVO.scheduleNO}"
                                         value="${scheduleVO.scheduleNO}">${scheduleVO.scheduleSubject}</option>
                             </c:forEach>
                         </select>
                         <script>$('#${selectedScheduleNO}').prop("selected", true); </script>
-                        <input type="submit" class="search-btn sm-width" value="확인">
+<%--                        <input type="button" class="search-btn sm-width" value="확인">--%>
                     </form>
                 </div>
                 <div class="pd-text" style="overflow: visible;">
@@ -186,7 +191,7 @@
                                             <div class="blog-item" style="overflow: visible;border-bottom: none;">
                                                 <c:forEach var="scheduleVO" items="${scheduleVOList}">
                                                     <c:if test="${scheduleVO.scheduleNO == selectedScheduleNO}">
-                                                        <form name="modifySchedule" action="/modifySchedule"
+                                                        <form name="modifySchedule" action="modifySchedule"
                                                               class="agent-search-form mb-0">
                                                             <div class="item-box mt-2 mb-2">
                                                                 <span class="item-title pt-1">제목</span>
@@ -274,11 +279,11 @@
                                                                    name="schedulePayFinishDay">
                                                         </div>
 
-                                                        <c:if test="${message != null}">
+                                                        <c:if test="${durationPayMsg != null}">
                                                             <div class="item-box mt-2 mb-2">
                                                                 <span class="item-title mb-2 pt-1">비용</span>
                                                                 <span class="item-title pt-1"
-                                                                      style="width: auto;color: #01d28e">${message}</span>
+                                                                      style="width: auto;color: #01d28e">${durationPayMsg}</span>
                                                             </div>
                                                         </c:if>
                                                         <div class="item-box mb-2" id="scheduleDurationPay">

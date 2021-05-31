@@ -55,7 +55,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<result column="cityName" property="cityName"/>
 		</association>
 	</resultMap>
-
  	<select id="getOtherScheduleList" parameterType="HashMap" resultMap="scheduleFilterAndOrder">
 		select a.*, IF(isnull(scheduleLikeCount), 0, scheduleLikeCount) as scheduleLikeCount
 		from (select schedule.scheduleNO, user.userNO, userNickname, scheduleSubject, userAge,userSex,city.cityNO, cityName,scheduleViewCount
@@ -106,7 +105,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<result column="scheduleNO" property="scheduleNO"/>
 		</association>
 	</resultMap>
-
 	<select id="getScheduleReplyList" parameterType="java.util.HashMap" resultMap="scheduleReplyAndNickname">
 		select @rownum:=@rownum+1 as NO, sortScheduleReply.* from
 			(select IF(scheduleReplyRefNO >= 0, scheduleReplyRefNO, scheduleReplyNO) as sortScheduleReplyNO, scheduleReply.*, userNickName,userImage
@@ -132,14 +130,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="scheduleSubject" property="scheduleSubject"/>
 		<result column="scheduleViewCount" property="scheduleViewCount"/>
 		<result column="likeCount" property="likeCount"/>
+		<association property="userVO" javaType="UserVO">
+			<id column="userNO" property="userNO"/>
+			<result column="userNickname" property="userNickname"/>
+			<result column="userImage" property="userImage"/>
+			<result column="userAge" property="userAge"/>
+			<result column="userSex" property="userSex"/>
+			<result column="userEmail" property="userEmail"/>
+		</association>
+		<association property="cityVO" javaType="CityVO">
+			<id column="cityNO" property="cityNO"/>
+			<result column="cityName" property="cityName"/>
+		</association>
 	</resultMap>
 	<select id ="getScheduleAndLikeCount" parameterType="int" resultMap="scheduleAndLikeCount">
-		select schedule.scheduleNO,schedule.scheduleSubject, scheduleViewCount, count(scheduleLikeUserNO) as likeCount, user.*
+		select schedule.scheduleNO,schedule.scheduleSubject, scheduleViewCount, count(scheduleLikeUserNO) as likeCount, user.*, city.*
 		from schedule
-		    left join scheduleLike
-		        on schedule.scheduleNO = scheduleLike.scheduleNO
-			left join user
-				on schedule.userNO = user.userNO
+		    left join scheduleLike on schedule.scheduleNO = scheduleLike.scheduleNO
+			left join user on schedule.userNO = user.userNO
+			left join city on city.cityNO = schedule.cityNO
 		where schedule.scheduleNO = #{scheduleNO} group by schedule.scheduleNO;
 	</select>
 

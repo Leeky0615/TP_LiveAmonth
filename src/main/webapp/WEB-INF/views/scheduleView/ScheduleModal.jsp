@@ -100,13 +100,13 @@
                     </div>
 
                     <div>
-                        <button type="button" class="form-control btn btn-primary rounded submit px-3 mb-2"
-                                onclick="deleteScheduleContentButton();">
-                            일정 삭제
-                        </button>
-                        <button type="button" class="form-control btn btn-primary rounded submit px-3"
+                        <button type="button" class="form-control btn btn-primary rounded submit px-3  mb-2"
                                 data-toggle="modal"
                                 data-target="#modifyScheduleContentModal" data-dismiss="modal">수정하기
+                        </button>
+                        <button type="button" class="form-control btn btn-primary rounded submit px-3"
+                                onclick="deleteScheduleContentButton();">
+                            일정 삭제
                         </button>
                     </div>
             </div>

@@ -6,7 +6,6 @@ import com.liveamonth.liveamonth.entity.dto.CalendarDTO;
 import com.liveamonth.liveamonth.entity.dto.PagingDTO;
 import com.liveamonth.liveamonth.entity.vo.ScheduleLikeVO;
 import com.liveamonth.liveamonth.entity.vo.ScheduleReplyVO;
-import com.liveamonth.liveamonth.entity.vo.ScheduleVO;
 import com.liveamonth.liveamonth.entity.vo.UserVO;
 import com.liveamonth.liveamonth.model.service.cityInfoService.CityService;
 import com.liveamonth.liveamonth.model.service.scheduleService.ScheduleService;
@@ -30,7 +29,6 @@ import java.util.Locale;
 import static com.liveamonth.liveamonth.constants.ControllerPathConstants.ESchedulePath.*;
 import static com.liveamonth.liveamonth.constants.EntityConstants.ESchedule.*;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EScheduleReply.SCHEDULE_REPLY_NO;
-import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.USER_NO;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.USER_VO;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EAlertMessage.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EPaging.*;
@@ -262,8 +260,8 @@ public class OtherScheduleController {
     public String durationPay(HttpServletRequest request, RedirectAttributes rttr) throws Exception {
         String schedulePayStartDay =  request.getParameter(SCHEDULE_PAY_START_DAY.getText());
         String schedulePayFinishDay =  request.getParameter(SCHEDULE_PAY_FINISH_DAY.getText());
-        int scheduleNO = Integer.parseInt(String.valueOf(request.getParameter(SELECTED_SCHEDULE_NO.getText())));
-        int userNO = Integer.parseInt(String.valueOf(request.getParameter(USER_NO.getText())));
+        int scheduleNO = Integer.parseInt(String.valueOf(request.getParameter(OTHER_SCHEDULE_NO.getText())));
+        int userNO = Integer.parseInt(String.valueOf(request.getParameter(OTHER_USER_NO.getText())));
 
         String message = "";
         if(schedulePayStartDay == "" || schedulePayFinishDay == ""){
@@ -272,7 +270,7 @@ public class OtherScheduleController {
             int scheduleDurationPay = scheduleService.getScheduleDurationPay(schedulePayStartDay,schedulePayFinishDay,scheduleNO);
             message = String.valueOf(scheduleDurationPay) + WON.getText();
         }
-        rttr.addFlashAttribute(MESSAGE.getText(), message);
+        rttr.addFlashAttribute(DURATION_PAY.getText(), message);
         return "redirect:otherSchedule?userNO="+userNO+"&scheduleNO="+scheduleNO;
     }
 }

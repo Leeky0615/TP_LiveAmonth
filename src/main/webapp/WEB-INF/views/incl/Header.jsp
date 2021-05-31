@@ -134,14 +134,7 @@
                                     <li><a href="otherScheduleList?action=list">다른 사람 스케줄 보기</a></li>
                                 </ul>
                             </li>
-                            <li class="active"><a href="review">Review</a>
-                                <ul class="dropdown">
-                                    <li><a href="review">간 곳</a></li>
-                                    <li><a href="review">먹은 곳</a></li>
-                                    <li><a href="review">느낀 점</a></li>
-                                    <li><a href="review">자유 게시판</a></li>
-                                </ul>
-                            </li>
+                            <li class="active"><a href="review">Review</a></li>
                             <li class="active"><a href="myPage">MyPage</a></li>
                             <li class="active"><a href="customerCenter">Customer Center</a>
                                 <ul class="dropdown">

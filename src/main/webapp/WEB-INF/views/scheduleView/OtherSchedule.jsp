@@ -7,16 +7,24 @@
 <link href="resources/css/reply.css" rel="stylesheet" type="text/css">
 <script src="resources/js/schedule.js"></script>
 <script src="resources/js/reply.js"></script>
-
+<script>
+    var message = "${message}";
+    if (message != "") {
+        alert(message);
+    }
+</script>
 <body style="background:#ffffff">
-<input type="hidden" name="userNO" value="${userVO.userNO}"/>
-<input type="hidden" name="selectedScheduleNO" value="${otherScheduleAndLikeCount.scheduleNO}"/>
+<input type="hidden" id="userNO" name="userNO" value="${userVO.userNO}"/>
+<input type="hidden" id="selectedScheduleNO" name="selectedScheduleNO" value="${otherScheduleAndLikeCount.scheduleNO}"/>
+
 <section class="blog-section spad">
     <div class="container">
         <div class="row">
             <div class="col-lg-8">
                 <div class="section-title">
-                    <h4> ${otherScheduleAndLikeCount.userNickname}님의 스케줄  [<span>${otherScheduleAndLikeCount.scheduleSubject}</span>]</h4>
+                    <h4>
+                        [<span>${otherScheduleAndLikeCount.cityVO.cityName}</span>]${otherScheduleAndLikeCount.scheduleSubject}
+                    </h4>
                 </div>
                 <form name="calendarFrm" id="calendarFrm" action="otherSchedule">
                     <input type="hidden" name="year" value="${todayInformation.searchYear}"/>
@@ -49,14 +57,16 @@
                                 <i class="far fa-eye viewCountSpan"></i>
                                 &nbsp;${otherScheduleAndLikeCount.scheduleViewCount}
                             </span>
-                            <span id="likeCount" class="likeSpan"style="float: right"> &nbsp;${otherScheduleAndLikeCount.likeCount} </span>
-                            <a href="#" class="heart-icon" onclick="updateScheduleLike(); return false;" style="float: right">
+                            <span id="likeCount" class="scheduleLikeSpan"
+                                  style="float: right"> &nbsp;${otherScheduleAndLikeCount.likeCount} </span>
+                            <a href="#" class="heart-icon" onclick="updateScheduleLike(); return false;"
+                               style="float: right">
                                 <c:choose>
                                     <c:when test="${likeStatus == 1}">
-                                        <span id="like" class="icon_heart dis-none"></span>
+                                        <span id="ScheduleLike" class="icon_heart dis-none"></span>
                                     </c:when>
                                     <c:otherwise>
-                                        <span id="like" class="icon_heart_alt"></span>
+                                        <span id="ScheduleLike" class="icon_heart_alt"></span>
                                     </c:otherwise>
                                 </c:choose>
                             </a>
@@ -127,22 +137,23 @@
                 <div class="as-item">
                     <div class="user-pic">
                         <c:choose>
-                            <c:when test="${userVO.userImage == null}">
-                                <img src="https://liveamonth-resources.s3.ap-northeast-2.amazonaws.com/img/user/default.jpg" alt>
+                            <c:when test="${otherScheduleAndLikeCount.userVO.userImage == null}">
+                                <img src="https://liveamonth-resources.s3.ap-northeast-2.amazonaws.com/img/user/default.jpg"
+                                     alt>
                             </c:when>
                             <c:otherwise>
-                                <img src=${userVO.getUserImageURL()} alt>
+                                <img src=${otherScheduleAndLikeCount.userVO.getUserImageURL()} alt>
                             </c:otherwise>
                         </c:choose>
                     </div>
                     <div class="as-text">
                         <div class="at-title">
-                            <h6>${userVO.userNickname}님</h6>
+                            <h6>${otherScheduleAndLikeCount.userVO.userNickname}님</h6>
                         </div>
                         <ul>
-                            <li>Email <span>${userVO.userEmail}</span></li>
-                            <li>Sex <span>${userVO.getUserSexToString()}</span></li>
-                            <li>Age <span>${userVO.getUserRealAge()}세</span></li>
+                            <li>Email <span>${otherScheduleAndLikeCount.userVO.userEmail}</span></li>
+                            <li>Sex <span>${otherScheduleAndLikeCount.userVO.getUserSexToString()}</span></li>
+                            <li>Age <span>${otherScheduleAndLikeCount.userVO.getUserRealAge()}세</span></li>
                         </ul>
                     </div>
                 </div>
@@ -164,8 +175,10 @@
                                         <div class="row">
                                             <div class="blog-item">
                                                 <div class="search-form-content">
-                                                    <form action="durationPay" class="filter-form"
-                                                          id="durationPay">
+                                                    <form action="knowScheduleDurationPay" class="filter-form" id="durationPay">
+                                                        <input type="hidden" name="otherScheduleUserNO" value="${otherScheduleAndLikeCount.userVO.userNO}"/>
+                                                        <input type="hidden" name="otherScheduleNO" value="${otherScheduleAndLikeCount.scheduleNO}"/>
+                                                        <input type="hidden" name="scheduleMenu" value="otherSchedule"/>
                                                         <div class="item-box mt-2 mb-2">
                                                             <span class="item-title pt-1">시작일</span>
                                                             <input type="date" id="schedulePayStartDay"
@@ -176,16 +189,13 @@
                                                             <input type="date" id="schedulePayFinishDay"
                                                                    name="schedulePayFinishDay">
                                                         </div>
-
-                                                        <c:if test="${message != null}">
+                                                        <c:if test="${durationPayMsg != null}">
                                                             <div class="item-box mt-2 mb-2">
                                                                 <span class="item-title mb-2 pt-1">비용</span>
                                                                 <span class="item-title pt-1" id="message"
-                                                                      style="width: auto;color: #01d28e">${message}</span>
+                                                                      style="width: auto;color: #01d28e">${durationPayMsg}</span>
                                                             </div>
                                                         </c:if>
-                                                        <input type="hidden" id="selectedUserNO" name="selectedUserNO" value="${otherScheduleAndLikeCount.userVO.userNO}"/>
-                                                        <input type="hidden" id="selectedScheduleNO" name="selectedScheduleNO" value="${otherScheduleAndLikeCount.scheduleNO}"/>
                                                         <div class="item-box mb-2" id="scheduleDurationPay">
                                                             <button type="submit" class="site-btn">금액확인하기</button>
                                                         </div>
@@ -366,11 +376,89 @@
                         <label class="label mb-0"><h5>금액</h5></label>
                         <label id="scheduleContentCostMessage" class="form-control mb-1" readonly></label>
                     </div>
+                    <c:if test="${userVO.userNO == otherScheduleAndLikeCount.userVO.userNO}">
+                    <div>
+                        <button type="button" class="form-control btn btn-primary rounded submit px-3 mb-2"
+                                data-toggle="modal"
+                                data-target="#modifyScheduleContentModal" data-dismiss="modal">수정하기
+                        </button>
+                        <button type="button" class="form-control btn btn-primary rounded submit px-3 "
+                                onclick="deleteScheduleContentButton();">
+                            일정 삭제
+                        </button>
+
+                    </div>
+                    </c:if>
             </div>
             </form>
         </div>
     </div>
 </div>
+<div class="modal fade" id="modifyScheduleContentModal" role="dialog"
+     aria-labelledby="modifyScheduleContentLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modifyScheduleContentLabel">스케줄 수정</h5>
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form name="modifyScheduleContent" action="modifyScheduleContent">
+                    <input type="hidden" name="year" value="${todayInformation.searchYear}"/>
+                    <input type="hidden" name="month" value="${todayInformation.searchMonth-1}"/>
+                    <input type="hidden" name="otherScheduleUserNO" value="${otherScheduleAndLikeCount.userVO.userNO}"/>
+                    <input type="hidden" name="otherScheduleNO" value="${otherScheduleAndLikeCount.scheduleNO}"/>
+                    <input type="hidden" name="scheduleMenu" value="otherSchedule"/>
+                    <%--제목--%>
+                    <div class="form-group mb-4 mt-2">
+                        <label class="label mb-0"><h5>제목</h5></label>
+                        <input type="text" id="modifyScheduleContentSubject" name="modifyScheduleContentSubject"
+                               class="form-control mb-1"/>
+                    </div>
 
+                    <%--날짜 --%>
+                    <div class="form-group mb-1">
+                        <label class="label mb-0"><h5>날짜</h5></label>
+                        <input type="date" id="modifyScheduleContentDate" name="modifyScheduleContentDate"
+                               class="form-control mb-1"
+                               readonly/>
+                    </div>
+
+                    <%-- 내용 --%>
+                    <div class="form-group">
+                        <label class="label mb-0"><h5>내용</h5></label>
+                        <div class="text_area_desc">
+                            <textarea name="modifyScheduleContentDesc" id="modifyScheduleContentDesc"
+                                      class="form-control mb-1"
+                                      rows="6"></textarea>
+                        </div>
+                    </div>
+
+                    <%-- 금액 --%>
+                    <div class="form-group mb-5">
+                        <label class="label mb-0" style="display: block"><h5>금액</h5></label>
+                        <input type="number" id="modifyScheduleContentCost" name="modifyScheduleContentCost"
+                               class="form-control mb-2" style="width: 90%;float: left"/><h5 class="pt-2 pr-2"
+                                                                                             style="float: right;">
+                        원</h5>
+                    </div>
+
+                    <div>
+                        <button type="button" class="form-control btn btn-primary rounded submit px-3 mb-2"
+                                onclick="modifyScheduleContentButton();">
+                            일정 수정
+                        </button>
+                        <button type="button" class="form-control btn btn-primary rounded submit px-3"
+                                data-dismiss="modal">취소
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 </body>

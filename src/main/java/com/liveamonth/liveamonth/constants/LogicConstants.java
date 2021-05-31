@@ -56,6 +56,9 @@ public class LogicConstants {
         SELECT_SCHEDULE("selectSchedule"),
         FITERED_OTHER_SCHEDULE_LIST("otherScheduleList"),
         REQUEST_LIST("requestList"),
+        DURATION_PAY("durationPayMsg"),
+        OTHER_SCHEDULE_NO("otherScheduleNO"),
+        OTHER_USER_NO("otherScheduleUserNO"),
         OTHER_SCHEDULE_AND_LIKE_COUNT("otherScheduleAndLikeCount");
         private String text;
         private EScheduleAttributes(String text) {this.text = text;}

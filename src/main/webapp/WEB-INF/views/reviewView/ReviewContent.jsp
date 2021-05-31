@@ -10,12 +10,12 @@
 <body>
 <input type="hidden" id="userNO" name="userNO" value="${userVO.userNO}"/>
 <input type="hidden" id="selectedReviewNO" name="selectedReviewNO" value="${reviewVO.reviewNO}"/>
-<section class="blog-details-section spad">
+<section class="blog-details-section pt-0 spad">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
                 <div class="blog-item-list">
-                    <div class="blog-item large-blog">
+                    <div class="blog-item large-blog pb-0">
                         <div class="bi-text">
                             <c:if test="${userVO.userNO == reviewVO.userVO.userNO}">
                                 <button type="button" class="btn btn-sm btn-primary pull-right" onclick="deleteReviewButton(${reviewVO.reviewNO});"> 삭제 </button>
@@ -28,7 +28,20 @@
                                 <li>${reviewVO.reviewDate}</li>
                                 <li>조회수 ${reviewVO.reviewViewCount}</li>
                             </ul>
+
                         </div>
+                        <span id="likeCount" class="likeSpan" style="float: right;"> &nbsp;${reviewLikeCount} </span>
+                        <a href="#" class="heart-icon pt-2" onclick="updateReviewLike(); return false;" style="float: right">
+                            <c:choose>
+                                <c:when test="${likeStatus == 1}">
+                                    <span id="like" class="icon_heart dis-none"></span>
+                                </c:when>
+                                <c:otherwise>
+                                    <span id="like" class="icon_heart_alt"></span>
+                                </c:otherwise>
+                            </c:choose>
+                        </a>
+                        <span class="likeSpanText" style="float: right;"> 좋아요&nbsp;&nbsp; </span>
                     </div>
                 </div>
             </div>
@@ -48,24 +61,24 @@
         </div>
     </div>
 </section>
-<section class="blog-details-section spad">
-    <div class="container">
-        <div class="container bootdey likeDiv">
-            <span class="likeSpan"> 좋아요&nbsp;&nbsp; </span>
-            <a href="#" class="heart-icon" onclick="updateReviewLike(); return false; ">
-                <c:choose>
-                    <c:when test="${likeStatus == 1}">
-                        <span id="like" class="icon_heart dis-none"></span>
-                    </c:when>
-                    <c:otherwise>
-                        <span id="like" class="icon_heart_alt"></span>
-                    </c:otherwise>
-                </c:choose>
-            </a>
-            <span id="likeCount" class="likeSpan" style="margin-right: 20px;"> &nbsp;${reviewLikeCount} </span>
-        </div>
-    </div>
-</section>
+<%--<section class="blog-details-section spad">--%>
+<%--    <div class="container">--%>
+<%--        <div class="container bootdey likeDiv">--%>
+<%--            <span class="likeSpan"> 좋아요&nbsp;&nbsp; </span>--%>
+<%--            <a href="#" class="heart-icon" onclick="updateReviewLike(); return false; ">--%>
+<%--                <c:choose>--%>
+<%--                    <c:when test="${likeStatus == 1}">--%>
+<%--                        <span id="like" class="icon_heart dis-none"></span>--%>
+<%--                    </c:when>--%>
+<%--                    <c:otherwise>--%>
+<%--                        <span id="like" class="icon_heart_alt"></span>--%>
+<%--                    </c:otherwise>--%>
+<%--                </c:choose>--%>
+<%--            </a>--%>
+<%--            <span id="likeCount" class="likeSpan" style="margin-right: 20px;"> &nbsp;${reviewLikeCount} </span>--%>
+<%--        </div>--%>
+<%--    </div>--%>
+<%--</section>--%>
 <section class="blog-details-section spad">
     <div class="container bootdey">
         <div class="col-lg-7">
