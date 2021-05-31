@@ -165,7 +165,7 @@ public class SignController {
     }
 
     @RequestMapping("/resultMentNaverSignUp")
-    private String resultMentNaverSignUp(@ModelAttribute UserVO userVO, HttpServletRequest request) throws Exception {
+    private String resultMentNaverSignUp(@ModelAttribute UserVO userVO, HttpServletRequest request, HttpSession session) throws Exception {
         //email을 갖고 있는 경우와 아닌 경우
         if(!userVO.getUserEmail().contains("@")){
             String userEmail = request.getParameter(USER_EMAIL.getText());
@@ -173,7 +173,9 @@ public class SignController {
             userVO.setUserEmail(userEmail + AT.getText() + email);
         }
         signService.updateNaverUser(userVO);
-        return RESULT_MENT_SIGN_UP.getPath();
+        request.setAttribute("Message", "회원 가입 성공");
+        session.setAttribute(USER_VO.getText(),userVO);
+        return RESULT_NEW_NAVER_MEMBER.getPath();
     }
     @RequestMapping(value = "/resultMentFindID", method = RequestMethod.POST)
     public String findID(@RequestParam("userName")
@@ -268,8 +270,6 @@ public class SignController {
         if (naverID != null && !"null".equals(naverID)) {
             //session 변경해서 로그인 상태로 만들기
             session.setAttribute(USER_VO.getText(),naverUser);
-//            model.addAttribute(RANDOM_CITY_INTRO_LIST.getText(), cityService.getRandomCityInfoListByCategory(INTRO.name()));
-//            model.addAttribute(CITY_INTRO_LIST.getText(), cityService.getCityInfoListByCategory(INTRO.name()));
             return "redirect:/";
         } else {
             session.setAttribute(NAVER_USER.getText(), naverUser);
@@ -290,7 +290,7 @@ public class SignController {
         if(session.getAttribute(USER_VO.getText()) == null && signService.setNewNaverMember(newNaverUser)==1){
             //필수항목 다 동의 한 경우
             if(flag){
-                session.setAttribute(USER_VO.getText(),newNaverUser);
+//                session.setAttribute(USER_VO.getText(),newNaverUser);
                 request.setAttribute("Message", "회원 가입 성공");
             }else{ //필수 항목 하나라도 동의 안한 경우
                 return "redirect:naverSignUp";

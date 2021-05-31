@@ -120,10 +120,16 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     //otherList
     @Override
-	public ArrayList<HashMap<String, Object>> getOtherScheduleList(HashMap<String, Object> filtersAndOrder) throws Exception{
-		return scheduleMapper.getOtherScheduleList(filtersAndOrder);
-	}
+	public ArrayList<HashMap<String, Object>> getOtherScheduleList(HashMap<String, Object> filtersAndOrder, int Page) throws Exception{
+        int startNum = (Page-1)*15;
+        filtersAndOrder.put(START_NO.getText(), startNum);
+        filtersAndOrder.put(DISPLAY_PAGE.getText(), STATIC_DISPLAY_PAGE_NUM.getText());
 
+        System.out.println( filtersAndOrder.get(START_NO.getText()));
+        System.out.println(filtersAndOrder.get(DISPLAY_PAGE.getText()));
+
+        return scheduleMapper.getOtherScheduleList(filtersAndOrder);
+	}
 
     @Override
     public ArrayList<ScheduleVO> getScheduleList(int userNO) throws Exception {
@@ -223,6 +229,14 @@ public class ScheduleServiceImpl implements ScheduleService {
         PagingDTO paging = new PagingDTO();
         paging.setPage(selectPage);
         paging.setTotalCount(scheduleMapper.getScheduleReplyCount(scheduleNO));
+        return paging;
+    }
+
+    @Override
+    public PagingDTO showOtherScheduleListPaging(int selectPage) throws Exception {
+        PagingDTO paging = new PagingDTO();
+        paging.setPage(selectPage);
+        paging.setTotalCount(scheduleMapper.getOtherScheduleCount());
         return paging;
     }
 

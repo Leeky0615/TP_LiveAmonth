@@ -166,6 +166,7 @@
                 class="far fa-eye viewCountSpan"></i>  &nbsp;${otherScheduleAndLikeCount.scheduleViewCount} </span>
     </div>
 </section>
+
 <section class="blog-details-section spad">
     <div class="container bootdey">
         <div class="col-lg-7">

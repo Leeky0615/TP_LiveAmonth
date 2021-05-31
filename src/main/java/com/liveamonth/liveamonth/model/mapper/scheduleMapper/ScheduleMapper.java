@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 @Repository
 @Mapper
@@ -60,4 +59,6 @@ public interface ScheduleMapper {
     void increaseScheduleViewCount(int scheduleNO);
 
     int getScheduleDurationPay(HashMap<String, Object> hash) throws Exception;
+
+    int getOtherScheduleCount() throws Exception;
 }

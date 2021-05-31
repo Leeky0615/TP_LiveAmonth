@@ -69,7 +69,7 @@ public class OtherScheduleController {
         return requestList;
     }
 
-    private List<HashMap<String, Object>> makeOtherScheduleList(HttpServletRequest request, String action) throws Exception {
+    private List<HashMap<String, Object>> makeOtherScheduleList(HttpServletRequest request, String action, int selectPage) throws Exception {
         HashMap<String, Object> filtersAndOrder = new HashMap<>();
         // action = list : 초기 헤더메뉴 클릭시
         if (action.equals(SCHEDULE_LIST.getText())) { // 기본값
@@ -108,17 +108,22 @@ public class OtherScheduleController {
                 }
             }
         }
-        return scheduleService.getOtherScheduleList(filtersAndOrder);
+        return scheduleService.getOtherScheduleList(filtersAndOrder, selectPage);
     }
 
     @RequestMapping("/otherScheduleList")
     public String otherScheduleList(Model model, HttpServletRequest request, CalendarDTO calendarDTO) throws Exception {
-        List<HashMap<String, Object>> otherScheduleList = this.makeOtherScheduleList(request, request.getParameter(SCHEDULE_ACTION.getText()));
+        int selectPage = 1;
+        if (request.getParameter(SELECTED_PAGE.getText()) != null) {
+            selectPage = Integer.parseInt(request.getParameter(SELECTED_PAGE.getText()));
+            System.out.println("selectPage " + selectPage);
+        }
+
+        List<HashMap<String, Object>> otherScheduleList = this.makeOtherScheduleList(request, request.getParameter(SCHEDULE_ACTION.getText()), selectPage);
+
         HashMap<String, Object> requestList = makeRequestList(request);
 
-        model.addAttribute(FITERED_OTHER_SCHEDULE_LIST.getText(), otherScheduleList);
-        model.addAttribute(SCHEDULE_PLACE_LIST.getText(), cityService.getCityNameList());
-        model.addAttribute(REQUEST_LIST.getText(), requestList);
+        PagingDTO paging = scheduleService.showOtherScheduleListPaging(selectPage);
 
         List<CalendarDTO> CalendarDTOList = new ArrayList<>();
         List<List<CalendarDTO>> CalendarDTODateList = new ArrayList<>();
@@ -132,8 +137,15 @@ public class OtherScheduleController {
             CalendarDTOTodayInformationList.add((HashMap)calendarDto.getTodayInformation());
         }
 
+        model.addAttribute(FITERED_OTHER_SCHEDULE_LIST.getText(), otherScheduleList);
+        model.addAttribute(SCHEDULE_PLACE_LIST.getText(), cityService.getCityNameList());
+        model.addAttribute(REQUEST_LIST.getText(), requestList);
+
         model.addAttribute("CalendarDTODateList", CalendarDTODateList); //날짜 데이터 배열 DATE_LIST
         model.addAttribute("CalendarDTOTodayInformationList", CalendarDTOTodayInformationList); //TODAY_INFORMATION
+
+        model.addAttribute(PAIGING.getText(), paging);
+
         return OTHER_SCHEDULE_LIST.getPath();
     }
 

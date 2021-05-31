@@ -148,6 +148,13 @@
                         </div>
                     </c:if>
                 </div>
+                <jsp:include page="PagingForOtherScheduleList.jsp">
+                    <jsp:param value="${paging.page}" name="page"/>
+                    <jsp:param value="${paging.beginPage}" name="beginPage"/>
+                    <jsp:param value="${paging.endPage}" name="endPage"/>
+                    <jsp:param value="${paging.prev}" name="prev"/>
+                    <jsp:param value="${paging.next}" name="next"/>
+                </jsp:include>
             </div>
         </div>
     </div>

@@ -31,11 +31,64 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from schedule,city where userNO = #{userNO} and city.cityNO= schedule.cityNO;
 	</select>
 
+<!--	<resultMap type = "java.util.HashMap" id="scheduleFilterAndOrder">-->
+<!--		<id column="scheduleNO" property="scheduleNO"/>-->
+<!--		<result column="scheduleSubject" property="scheduleSubject"/>-->
+<!--		<result column="scheduleViewCount" property="scheduleViewCount"/>-->
+<!--		<result column="scheduleLikeCount" property="scheduleLikeCount"/>-->
+<!--		<association property="userVO" javaType="UserVO">-->
+<!--			<id column="userNO" property="userNO"/>-->
+<!--			<result column="userNickname" property="userNickname"/>-->
+<!--			<result column="userAge" property="userAge"/>-->
+<!--			<result column="userSex" property="userSex"/>-->
+<!--		</association>-->
+<!--		<association property="cityVO" javaType="CityVO">-->
+<!--			<id column="cityNO" property="cityNO"/>-->
+<!--			<result column="cityName" property="cityName"/>-->
+<!--		</association>-->
+<!--	</resultMap>-->
+
+<!-- 	<select id="getOtherScheduleList" parameterType="HashMap" resultMap="scheduleFilterAndOrder">-->
+<!--		select a.*, IF(isnull(scheduleLikeCount), 0, scheduleLikeCount) as scheduleLikeCount-->
+<!--		from (select schedule.scheduleNO, user.userNO, userNickname, scheduleSubject, userAge,userSex,city.cityNO, cityName,scheduleViewCount-->
+<!--				from user, schedule, city-->
+<!--				where schedule.userNO = user.userNO-->
+<!--				and schedule.cityNO = city.cityNO-->
+<!--		  		and schedule.scheduleStatus = true-->
+<!--				<if test="userAgeFilter==true">-->
+<!--					and userAge between Year(curdate())-#{userAge}-9 and Year(curdate())-#{userAge}-->
+<!--				</if>-->
+<!--				<if test="userSexFilter==true">-->
+<!--					and userSex = #{userSex}-->
+<!--				</if>-->
+<!--				<if test="schedulePlaceFilter==true">-->
+<!--					and cityName = ${cityName}-->
+<!--				</if>-->
+<!--		    	) as a-->
+<!--		left join(select scheduleLike.scheduleNO, count(scheduleLikeUserNO) as scheduleLikeCount-->
+<!--				from schedule, scheduleLike-->
+<!--				where schedule.scheduleNO = scheduleLike.scheduleNO-->
+<!--				group by scheduleLike.scheduleNO) as b-->
+<!--		ON a.scheduleNO = b.scheduleNO-->
+<!--		<choose>-->
+<!--			<when test="orderBy == 'orderByView'">-->
+<!--				ORDER BY scheduleViewCount desc;-->
+<!--			</when>-->
+<!--			<when test="orderBy == 'orderByLiked'">-->
+<!--				ORDER BY scheduleLikeCount desc;-->
+<!--			</when>-->
+<!--			<otherwise>-->
+<!--				ORDER BY scheduleNO desc;-->
+<!--			</otherwise>-->
+<!--		</choose>-->
+<!--	</select>-->
+
 	<resultMap type = "java.util.HashMap" id="scheduleFilterAndOrder">
-		<id column="scheduleNO" property="scheduleNO"/>
-		<result column="scheduleSubject" property="scheduleSubject"/>
-		<result column="scheduleViewCount" property="scheduleViewCount"/>
-		<result column="scheduleLikeCount" property="scheduleLikeCount"/>
+		<id column="NO" property="NO"/>
+			<result column="scheduleNO" property="scheduleNO"/>
+			<result column="scheduleSubject" property="scheduleSubject"/>
+			<result column="scheduleViewCount" property="scheduleViewCount"/>
+			<result column="scheduleLikeCount" property="scheduleLikeCount"/>
 		<association property="userVO" javaType="UserVO">
 			<id column="userNO" property="userNO"/>
 			<result column="userNickname" property="userNickname"/>
@@ -48,37 +101,74 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</association>
 	</resultMap>
 
- 	<select id="getOtherScheduleList" parameterType="HashMap" resultMap="scheduleFilterAndOrder">
-		select a.*, IF(isnull(scheduleLikeCount), 0, scheduleLikeCount) as scheduleLikeCount
+	<select id="getOtherScheduleList" parameterType="HashMap" resultMap="scheduleFilterAndOrder">
+		select @rownum:=@rownum+1 as NO, a.*, IF(isnull(scheduleLikeCount), 0, scheduleLikeCount) as scheduleLikeCount
 		from (select schedule.scheduleNO, user.userNO, userNickname, scheduleSubject, userAge,userSex,city.cityNO, cityName,scheduleViewCount
-				from user, schedule, city
-				where schedule.userNO = user.userNO
-				and schedule.cityNO = city.cityNO
-		  		and schedule.scheduleStatus = true
-				<if test="userAgeFilter==true">
-					and userAge between Year(curdate())-#{userAge}-9 and Year(curdate())-#{userAge}
-				</if>
-				<if test="userSexFilter==true">
-					and userSex = #{userSex}
-				</if>
-				<if test="schedulePlaceFilter==true">
-					and cityName = ${cityName}
-				</if>
-		    	) as a
+		from user, schedule, city
+		where schedule.userNO = user.userNO
+		and schedule.cityNO = city.cityNO
+		and schedule.scheduleStatus = true
+		<if test="userAgeFilter==true">
+			and userAge between Year(curdate())-#{userAge}-9 and Year(curdate())-#{userAge}
+		</if>
+		<if test="userSexFilter==true">
+			and userSex = #{userSex}
+		</if>
+		<if test="schedulePlaceFilter==true">
+			and cityName = ${cityName}
+		</if>
+		) as a
 		left join(select scheduleLike.scheduleNO, count(scheduleLikeUserNO) as scheduleLikeCount
-				from schedule, scheduleLike
-				where schedule.scheduleNO = scheduleLike.scheduleNO
-				group by scheduleLike.scheduleNO) as b
+		from schedule, scheduleLike
+		where schedule.scheduleNO = scheduleLike.scheduleNO
+		group by scheduleLike.scheduleNO) as b
+		ON a.scheduleNO = b.scheduleNO,
+		(select @rownum := 0) TMP
+		<choose>
+			<when test="orderBy == 'orderByView'">
+				ORDER BY a.scheduleViewCount desc
+			</when>
+			<when test="orderBy == 'orderByLiked'">
+				ORDER BY b.scheduleLikeCount desc
+			</when>
+			<otherwise>
+				ORDER BY a.scheduleNO desc
+			</otherwise>
+		</choose>
+		limit #{startNO}, #{displayPage};
+	</select>
+
+	<select id="getOtherScheduleCount" resultType="int">
+		select count(a.scheduleNO) as Count
+		from (select schedule.scheduleNO, user.userNO, userNickname, scheduleSubject, userAge,userSex,city.cityNO, cityName,scheduleViewCount
+		from user, schedule, city
+		where schedule.userNO = user.userNO
+		and schedule.cityNO = city.cityNO
+		and schedule.scheduleStatus = true
+		<if test="userAgeFilter==true">
+			and userAge between Year(curdate())-#{userAge}-9 and Year(curdate())-#{userAge}
+		</if>
+		<if test="userSexFilter==true">
+			and userSex = #{userSex}
+		</if>
+		<if test="schedulePlaceFilter==true">
+			and cityName = ${cityName}
+		</if>
+		) as a
+		left join(select scheduleLike.scheduleNO, count(scheduleLikeUserNO) as scheduleLikeCount
+		from schedule, scheduleLike
+		where schedule.scheduleNO = scheduleLike.scheduleNO
+		group by scheduleLike.scheduleNO) as b
 		ON a.scheduleNO = b.scheduleNO
 		<choose>
 			<when test="orderBy == 'orderByView'">
-				ORDER BY scheduleViewCount desc;
+				ORDER BY a.scheduleViewCount desc;
 			</when>
 			<when test="orderBy == 'orderByLiked'">
-				ORDER BY scheduleLikeCount desc;
+				ORDER BY b.scheduleLikeCount desc;
 			</when>
 			<otherwise>
-				ORDER BY scheduleNO desc;
+				ORDER BY a.scheduleNO desc;
 			</otherwise>
 		</choose>
 	</select>
