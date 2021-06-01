@@ -121,8 +121,8 @@
                         <c:set var ="i" value = "0"/>
                         <c:if test="${otherScheduleList != null}">
                             <c:forEach var="schedule" items="${otherScheduleList}" varStatus="status">
-                                <tr height="200px">
-                                    <td width="40%">
+                                <tr>
+                                    <td width="40%" height="300px">
                                         <a href="/otherSchedule?userNO=${schedule.userVO.userNO}&scheduleNO=${schedule.scheduleNO}">
                                             <c:out value="${schedule.scheduleSubject}"/>
                                             <c:set var = "todayInformation" value = "${CalendarDTOTodayInformationList.get(i)}" scope = "request"/>

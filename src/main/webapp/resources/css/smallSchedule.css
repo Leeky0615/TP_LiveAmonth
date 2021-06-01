@@ -1,9 +1,9 @@
 		.day{
-			width:100px; 
+			width:100px;
 			/*height:30px;*/
-			font-weight: bold;
+			/*font-weight: bold;*/
 			font-size:1px;
-			font-weight:bold;
+			/*font-weight:bold;*/
 			text-align: center;
 		}
 		.sat{
@@ -11,6 +11,7 @@
 		}
 		.sun{
 			color:red;
+			font-size: 5px;
 		}
 		.today_button_div{
 			float: right;
@@ -19,17 +20,13 @@
 			width:80%;
 			margin:auto;
 		}
-		.navigation{
-			text-align: center;
-			font-size: 1px;
-			vertical-align: middle;
-		}
 		.calendar_body{
 			width:100%;
+			height:50px;
 			background-color: #FFFFFF;
 			border:1px solid white;
 			/*margin-bottom: 60px;*/
-			border-collapse: collapse;
+			/*border-collapse: collapse;*/
 		}
 		.calendar_body .today{
 			border:1px solid white;
@@ -44,15 +41,6 @@
 			/*padding-left: 3px;*/
 			/*padding-top: 3px;*/
 		}
-		.date{
-			/*margin-bottom:10px;*/
-		}
-		.sat{
-			/*margin-bottom:10px;*/
-		}
-		.sun{
-			/*margin-bottom:10px;*/
-		}
 		.calendar_body .sat_day{
 			border:1px solid white;
 			/*height:120px;*/
@@ -61,7 +49,7 @@
 			vertical-align: top;
 		}
 		.calendar_body .sat_day .sat{
-			color: #529dbc; 
+			color: #529dbc;
 			font-weight: bold;
 			font-size: 1px;
 			/*padding-left: 3px;*/
@@ -75,9 +63,9 @@
 			vertical-align: top;
 		}
 		.calendar_body .sun_day .sun{
-			color: red; 
+			color: red;
 			font-weight: bold;
-			font-size: 1px;
+			font-size: 5px;
 			/*padding-left: 3px;*/
 			/*padding-top: 3px;*/
 		}
@@ -101,22 +89,86 @@
 		.schdule_add_button{
 			float:right;
 		}
-		
-		.link-2 a:before {
-  content: '';
-  border-bottom: solid 1px #5CAAEF;
-  position: absolute;
-  bottom: 0; left: 0;
-  width: 100%;
 
-  opacity: 0;
-}
 
-.hoverScheduleSubject a:hover:before {
-  opacity: 1.0;
-}
 
-.hoverScheduleSubject2 a, .hoverScheduleSubject2 a:before {
-  -webkit-transition: all 0.2s ease;
-          transition: all 0.2s ease;
-}
+		/*.day{*/
+		/*	width:100px;*/
+		/*	height:1px;*/
+		/*	font-weight: bold;*/
+		/*	font-size:1px;*/
+		/*	font-weight:bold;*/
+		/*	text-align: center;*/
+		/*}*/
+		/*.sat{*/
+		/*	color:#529dbc;*/
+		/*}*/
+		/*.sun{*/
+		/*	color:red;*/
+		/*}*/
+		/*.calendar{*/
+		/*	width:80%;*/
+		/*	margin:auto;*/
+		/*}*/
+		/*.navigation{*/
+		/*	margin-top:100px;*/
+		/*	margin-bottom:10px;*/
+		/*	text-align: center;*/
+		/*	font-size: 1px;*/
+		/*	vertical-align: middle;*/
+		/*}*/
+		/*.calendar_body{*/
+		/*	width:100%;*/
+		/*	background-color: #FFFFFF;*/
+		/*	border:1px solid white;*/
+		/*	margin-bottom: 10px;*/
+		/*	border-collapse: collapse;*/
+		/*}*/
+		/*.calendar_body .today{*/
+		/*	border:1px solid white;*/
+		/*	height:1px;*/
+		/*	background-color:#c9c9c9;*/
+		/*	text-align: left;*/
+		/*	vertical-align: top;*/
+		/*}*/
+		/*.calendar_body .date{*/
+		/*	font-weight: bold;*/
+		/*	font-size: 1px;*/
+		/*	padding-left: 3px;*/
+		/*	padding-top: 3px;*/
+		/*}*/
+		/*.calendar_body .sat_day{*/
+		/*	border:1px solid white;*/
+		/*	height:1px;*/
+		/*	background-color:#EFEFEF;*/
+		/*	text-align:left;*/
+		/*	vertical-align: top;*/
+		/*}*/
+		/*.calendar_body .sat_day .sat{*/
+		/*	color: #529dbc;*/
+		/*	font-weight: bold;*/
+		/*	font-size: 1px;*/
+		/*	padding-left: 3px;*/
+		/*	padding-top: 3px;*/
+		/*}*/
+		/*.calendar_body .sun_day{*/
+		/*	border:1px solid white;*/
+		/*	height:1px;*/
+		/*	background-color:#EFEFEF;*/
+		/*	text-align: left;*/
+		/*	vertical-align: top;*/
+		/*}*/
+		/*.calendar_body .sun_day .sun{*/
+		/*	color: red;*/
+		/*	font-weight: bold;*/
+		/*	font-size: 1px;*/
+		/*	padding-left: 3px;*/
+		/*	padding-top: 3px;*/
+		/*}*/
+		/*.calendar_body .normal_day{*/
+		/*	border:1px solid white;*/
+		/*	height:1px;*/
+		/*	background-color:#EFEFEF;*/
+		/*	vertical-align: top;*/
+		/*	text-align: left;*/
+		/*}*/
