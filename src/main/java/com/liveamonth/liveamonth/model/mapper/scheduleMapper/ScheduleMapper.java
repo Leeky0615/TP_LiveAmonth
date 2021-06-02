@@ -60,5 +60,5 @@ public interface ScheduleMapper {
 
     int getScheduleDurationPay(HashMap<String, Object> hash) throws Exception;
 
-    int getOtherScheduleCount() throws Exception;
+    int getOtherScheduleCount(HashMap<String, Object> filtersAndOrder) throws Exception;
 }

@@ -77,7 +77,7 @@ public class SignController {
         // 인기 REVIEW
         model.addAttribute(POPULAR_REVIEW_LIST.getText(), reviewService.getMainPopularReviewList(1));
         // 인기 SCHEDULE
-        model.addAttribute(FITERED_OTHER_SCHEDULE_LIST.getText(), scheduleService.getMainOtherScheduleList());
+        model.addAttribute(FITERED_OTHER_SCHEDULE_LIST.getText(), scheduleService.getMainOtherScheduleList(1));
         // MainCitySlide.jsp 사용
         model.addAttribute(RANDOM_CITY_INTRO_LIST.getText(), cityService.getRandomCityInfoListByCategory(INTRO.name()));
         // CityInfoGrid.jsp 사용
@@ -174,6 +174,7 @@ public class SignController {
         }
         signService.updateNaverUser(userVO);
         request.setAttribute("Message", "회원 가입 성공");
+
         session.setAttribute(USER_VO.getText(),userVO);
         return RESULT_NEW_NAVER_MEMBER.getPath();
     }
@@ -269,7 +270,8 @@ public class SignController {
         //회원, 비회원 체크
         if (naverID != null && !"null".equals(naverID)) {
             //session 변경해서 로그인 상태로 만들기
-            session.setAttribute(USER_VO.getText(),naverUser);
+            UserVO userVO = signService.getNaverUser(naverID);
+            session.setAttribute(USER_VO.getText(),userVO);
             return "redirect:/";
         } else {
             session.setAttribute(NAVER_USER.getText(), naverUser);

@@ -85,10 +85,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<resultMap type = "java.util.HashMap" id="scheduleFilterAndOrder">
 		<id column="NO" property="NO"/>
-			<result column="scheduleNO" property="scheduleNO"/>
+		<id column="scheduleNO" property="scheduleNO"/>
+		<association property="scheduleVO" javaType="ScheduleVO">
+			<id column="scheduleNO" property="scheduleNO"/>
 			<result column="scheduleSubject" property="scheduleSubject"/>
 			<result column="scheduleViewCount" property="scheduleViewCount"/>
-			<result column="scheduleLikeCount" property="scheduleLikeCount"/>
+		</association>
+		<association property="scheduleLikeVO" javaType="ScheduleLikeVO">
+			<id column="scheduleNO" property="scheduleNO"/>
+			<result column="scheduleLikeCount" property="scheduleLikeUserNO"/>
+		</association>
 		<association property="userVO" javaType="UserVO">
 			<id column="userNO" property="userNO"/>
 			<result column="userNickname" property="userNickname"/>
@@ -114,8 +120,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="userSexFilter==true">
 			and userSex = #{userSex}
 		</if>
-		<if test="schedulePlaceFilter==true">
-			and cityName = ${cityName}
+		<if test="cityNameFilter==true">
+			and cityName = '${cityName}'
 		</if>
 		) as a
 		left join(select scheduleLike.scheduleNO, count(scheduleLikeUserNO) as scheduleLikeCount
@@ -138,7 +144,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		limit #{startNO}, #{displayPage};
 	</select>
 
-	<select id="getOtherScheduleCount" resultType="int">
+	<select id="getOtherScheduleCount" parameterType="HashMap" resultType="int">
 		select count(a.scheduleNO) as Count
 		from (select schedule.scheduleNO, user.userNO, userNickname, scheduleSubject, userAge,userSex,city.cityNO, cityName,scheduleViewCount
 		from user, schedule, city
@@ -151,8 +157,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="userSexFilter==true">
 			and userSex = #{userSex}
 		</if>
-		<if test="schedulePlaceFilter==true">
-			and cityName = ${cityName}
+		<if test="cityNameFilter==true">
+			and cityName = '${cityName}'
 		</if>
 		) as a
 		left join(select scheduleLike.scheduleNO, count(scheduleLikeUserNO) as scheduleLikeCount

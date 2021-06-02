@@ -4,8 +4,16 @@
 <body>
 <div id="paging" class="col-lg-12">
     <div class="property-pagination">
+        <c:choose>
+        <c:when test="${param.action=='list'}">
+            <c:url var="url" value="otherScheduleList?action=list"/>
+        </c:when>
+        <c:otherwise>
+            <c:url var="url" value="otherScheduleList?action=filter&userAge=${param.userAge}&userSex=${param.userSex}&cityName=${param.cityName}&orderBy=${param.orderBy}"/>
+        </c:otherwise>
+        </c:choose>
         <c:if test="${param.prev}">
-            <a href="otherScheduleList?action=list&selectedPage=${param.beginPage-1}"><-</a>
+            <a href="${url}&selectedPage=${param.beginPage-1}"><-</a>
         </c:if>
         <c:forEach begin="${param.beginPage}" end="${param.endPage}" step="1" var="index">
             <c:choose>
@@ -13,12 +21,12 @@
                     <a id="selectPage">${index}</a>
                 </c:when>
                 <c:otherwise>
-                    <a href="otherScheduleList?action=list&selectedPage=${index}">${index}</a>
+                    <a href="${url}&selectedPage=${index}">${index}</a>
                 </c:otherwise>
             </c:choose>
         </c:forEach>
         <c:if test="${param.next}">
-            <a href="otherScheduleList?action=list&selectedPage=${param.endPage+1}">-></a>
+            <a href="${url}&selectedPage=${param.endPage+1}">-></a>
         </c:if>
     </div>
 </div>

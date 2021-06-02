@@ -123,19 +123,24 @@
                             <c:forEach var="schedule" items="${otherScheduleList}" varStatus="status">
                                 <tr>
                                     <td width="40%" height="300px">
-                                        <a href="/otherSchedule?userNO=${schedule.userVO.userNO}&scheduleNO=${schedule.scheduleNO}">
-                                            <c:out value="${schedule.scheduleSubject}"/>
+                                        <a href="/otherSchedule?userNO=${schedule.userVO.userNO}&scheduleNO=${schedule.scheduleVO.scheduleNO}">
+                                            <c:out value="${schedule.scheduleVO.scheduleSubject}"/>
                                             <c:set var = "todayInformation" value = "${CalendarDTOTodayInformationList.get(i)}" scope = "request"/>
                                             <c:set var = "dateList" value = "${CalendarDTODateList.get(i)}" scope = "request"/>
-                                            <jsp:include page="SmallSizeOfOtherSchedule.jsp" flush="true"/>
+                                            <jsp:include page="SmallSizeOfOtherSchedule.jsp">
+                                                <jsp:param name="userAge" value="${userAge}"/>
+                                                <jsp:param name="userSex" value="${userSex}"/>
+                                                <jsp:param name="cityName" value="${cityName}"/>
+                                                <jsp:param name="orderBy" value="${orderBy}"/>
+                                            </jsp:include>
                                         </a>
                                     </td>
                                     <td>${schedule.cityVO.cityName}</td>
                                     <td>${schedule.userVO.userNickname}</td>
                                     <td>${schedule.userVO.getUserSexToString()}</td>
                                     <td>${schedule.userVO.getUserRealAge()}세</td>
-                                    <td>${schedule.scheduleViewCount}</td>
-                                    <td>${schedule.scheduleLikeCount}</td>
+                                    <td>${schedule.scheduleVO.scheduleViewCount}</td>
+                                    <td>${schedule.scheduleLikeVO.scheduleLikeUserNO}</td>
                                 </tr>
                                 <c:set var="i" value="${i + 1}" />
                             </c:forEach>
@@ -148,7 +153,16 @@
                         </div>
                     </c:if>
                 </div>
+                <c:choose>
+                <c:when test="${userSex == -1}&&${userAge == -1}&&${cityName == -1}">
+                    <c:set var="action" value="list"></c:set>
+                </c:when>
+                <c:otherwise>
+                    <c:set var="action" value="filter"></c:set>
+                </c:otherwise>
+                </c:choose>
                 <jsp:include page="PagingForOtherScheduleList.jsp">
+                    <jsp:param value="${action}" name ="action"/>
                     <jsp:param value="${paging.page}" name="page"/>
                     <jsp:param value="${paging.beginPage}" name="beginPage"/>
                     <jsp:param value="${paging.endPage}" name="endPage"/>

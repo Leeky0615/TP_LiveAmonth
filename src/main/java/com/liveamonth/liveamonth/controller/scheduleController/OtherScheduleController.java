@@ -1,7 +1,6 @@
 package com.liveamonth.liveamonth.controller.scheduleController;
 
 
-
 import com.liveamonth.liveamonth.entity.dto.CalendarDTO;
 import com.liveamonth.liveamonth.entity.dto.PagingDTO;
 import com.liveamonth.liveamonth.entity.vo.ScheduleLikeVO;
@@ -21,22 +20,19 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 import static com.liveamonth.liveamonth.constants.ControllerPathConstants.ESchedulePath.*;
 import static com.liveamonth.liveamonth.constants.EntityConstants.ESchedule.SCHEDULE_NO;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EScheduleReply.SCHEDULE_REPLY_NO;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.USER_VO;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EAlertMessage.*;
+import static com.liveamonth.liveamonth.constants.LogicConstants.EOtherScheduleMessage.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EPaging.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleAttributes.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleFilterAndOrders;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleFilterAndOrders.SCHEDULE_FO_CITY_NAME;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleFilterAndOrders.SCHEDULE_FO_ORDER;
-import static com.liveamonth.liveamonth.constants.LogicConstants.EOtherScheduleMessage.*;
 
 @Controller
 public class OtherScheduleController {
@@ -47,7 +43,7 @@ public class OtherScheduleController {
 
     private int checkOption(String option) {
         if (option != null) {
-            if (!"null".equals(option)) {
+            if (!"null".equals(option)&&!"".equals(option)) {
                 return Integer.parseInt(option);
             }
         }
@@ -69,7 +65,7 @@ public class OtherScheduleController {
         return requestList;
     }
 
-    private List<HashMap<String, Object>> makeOtherScheduleList(HttpServletRequest request, String action, int selectPage) throws Exception {
+    private HashMap<String, Object>  makeFiltersAndOrder(HttpServletRequest request, String action, int selectPage) throws Exception {
         HashMap<String, Object> filtersAndOrder = new HashMap<>();
         // action = list : 초기 헤더메뉴 클릭시
         if (action.equals(SCHEDULE_LIST.getText())) { // 기본값
@@ -77,6 +73,7 @@ public class OtherScheduleController {
                 if (eFO == SCHEDULE_FO_ORDER)
                     filtersAndOrder.put(eFO.getText(), ORDER_BY_NEW.getText());//("orderBy","orderVubByNew)
                 else filtersAndOrder.put(eFO.getText() + "Filter", false);
+                //결과: orderBy: orderbyNew, sexFilter: false, ageFilter: false, place: false
             }
         } else if (action.equals(SCHEDULE_FILTER.getText())) {// action = filter : OtherSchedule 페이지에서 필터 및 정렬 수행시
             // Hashmap에 필터/정렬 Object를 담는다.
@@ -101,14 +98,12 @@ public class OtherScheduleController {
                             filtersAndOrder.put(eFO.getText(), option);
                         }
                     }
-
-                    // optionStatus를 HashMap에 저장 (attribute 값 : userSexFilter, userAgeFilter, schedulePlaceFilter)
+                    // optionStatus를 HashMap에 저장 (attribute 값 : userSexFilter, userAgeFilter, cityNameFilter)
                     filtersAndOrder.put(eFO.getText() + "Filter", optionStatus);
-
                 }
             }
         }
-        return scheduleService.getOtherScheduleList(filtersAndOrder, selectPage);
+        return filtersAndOrder;
     }
 
     @RequestMapping("/otherScheduleList")
@@ -119,11 +114,10 @@ public class OtherScheduleController {
             System.out.println("selectPage " + selectPage);
         }
 
-        List<HashMap<String, Object>> otherScheduleList = this.makeOtherScheduleList(request, request.getParameter(SCHEDULE_ACTION.getText()), selectPage);
-
+        HashMap<String, Object> filtersAndOrder = this.makeFiltersAndOrder(request, request.getParameter(SCHEDULE_ACTION.getText()), selectPage);
+        List<HashMap<String, Object>> otherScheduleList = scheduleService.getOtherScheduleList(filtersAndOrder, selectPage);
+        PagingDTO paging = scheduleService.showOtherScheduleListPaging(filtersAndOrder, selectPage);
         HashMap<String, Object> requestList = makeRequestList(request);
-
-        PagingDTO paging = scheduleService.showOtherScheduleListPaging(selectPage);
 
         List<CalendarDTO> CalendarDTOList = new ArrayList<>();
         List<List<CalendarDTO>> CalendarDTODateList = new ArrayList<>();

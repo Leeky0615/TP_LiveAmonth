@@ -120,16 +120,23 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     //otherList
     @Override
-	public ArrayList<HashMap<String, Object>> getOtherScheduleList(HashMap<String, Object> filtersAndOrder, int Page) throws Exception{
-        int startNum = (Page-1)*15;
+	public ArrayList<HashMap<String, Object>> getOtherScheduleList(HashMap<String, Object> filtersAndOrder, int selectedPage) throws Exception{
+        int startNum = (selectedPage-1)*15;
         filtersAndOrder.put(START_NO.getText(), startNum);
         filtersAndOrder.put(DISPLAY_PAGE.getText(), STATIC_DISPLAY_PAGE_NUM.getText());
 
-        System.out.println( filtersAndOrder.get(START_NO.getText()));
-        System.out.println(filtersAndOrder.get(DISPLAY_PAGE.getText()));
-
         return scheduleMapper.getOtherScheduleList(filtersAndOrder);
 	}
+
+    @Override
+    public PagingDTO showOtherScheduleListPaging(HashMap<String, Object> filtersAndOrder, int selectedPage) throws Exception {
+        PagingDTO paging = new PagingDTO();
+        paging.setPage(selectedPage);
+        paging.setTotalCount(scheduleMapper.getOtherScheduleCount(filtersAndOrder));
+        return paging;
+    }
+
+
 
     @Override
     public ArrayList<ScheduleVO> getScheduleList(int userNO) throws Exception {
@@ -233,14 +240,6 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public PagingDTO showOtherScheduleListPaging(int selectPage) throws Exception {
-        PagingDTO paging = new PagingDTO();
-        paging.setPage(selectPage);
-        paging.setTotalCount(scheduleMapper.getOtherScheduleCount());
-        return paging;
-    }
-
-    @Override
     public void increaseScheduleViewCount(int scheduleNO) {
         scheduleMapper.increaseScheduleViewCount(scheduleNO);
     }
@@ -256,8 +255,12 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public List<HashMap<String, Object>> getMainOtherScheduleList() throws Exception  {
+    public List<HashMap<String, Object>> getMainOtherScheduleList(int selectedPage) throws Exception  {
         HashMap<String, Object> filtersAndOrder = new HashMap<>();
+        int startNum = (selectedPage-1)*15;
+        filtersAndOrder.put(START_NO.getText(), startNum);
+        filtersAndOrder.put(DISPLAY_PAGE.getText(), STATIC_DISPLAY_PAGE_NUM.getText());
+
         for (LogicConstants.EScheduleFilterAndOrders eFO : LogicConstants.EScheduleFilterAndOrders.values()) {
             if (eFO == SCHEDULE_FO_ORDER)
                 filtersAndOrder.put(eFO.getText(), "orderByLiked");//("orderBy","orderVubByNew)

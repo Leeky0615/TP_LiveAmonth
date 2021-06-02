@@ -178,4 +178,9 @@ public class SignServiceImpl implements SignService {
         this.signMapper.updateNaverUser(userVO);
     }
 
+    @Override
+    public UserVO getNaverUser(String naverID) throws Exception {
+        return this.signMapper.getNaverUser(naverID);
+    }
+
 }
