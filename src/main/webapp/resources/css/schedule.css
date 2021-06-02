@@ -6,8 +6,9 @@
 	.addButton{
 	text-align: center;
 	}
+
 		.day{
-			width:100px; 
+			width:100px;
 			height:30px;
 			font-weight: bold;
 			font-size:15px;
@@ -75,7 +76,7 @@
 			vertical-align: top;
 		}
 		.calendar_body .sat_day .sat{
-			color: #529dbc; 
+			color: #529dbc;
 			font-weight: bold;
 			font-size: 15px;
 			padding-left: 3px;
@@ -89,7 +90,7 @@
 			vertical-align: top;
 		}
 		.calendar_body .sun_day .sun{
-			color: red; 
+			color: red;
 			font-weight: bold;
 			font-size: 15px;
 			padding-left: 3px;
@@ -115,14 +116,14 @@
 		.schdule_add_button{
 			float:right;
 		}
-		
+
 		.link-2 a:before {
   content: '';
   border-bottom: solid 1px #5CAAEF;
   position: absolute;
   bottom: 0; left: 0;
   width: 100%;
-  
+
   opacity: 0;
 }
 

@@ -1,30 +1,20 @@
 package com.liveamonth.liveamonth.model.service.signService;
 
-import java.io.PrintWriter;
-import java.util.HashMap;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
-import org.springframework.mail.MailSender;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import com.liveamonth.liveamonth.entity.vo.OneToOneAskVO;
 import com.liveamonth.liveamonth.entity.vo.UserVO;
 import com.liveamonth.liveamonth.model.mapper.signMapper.SignMapper;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailSender;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
-
-import static com.liveamonth.liveamonth.constants.LogicConstants.EReviewImage.S3_UPLOAD_FOLDER;
 
 
 @Service
@@ -145,11 +135,11 @@ public class SignServiceImpl implements SignService {
 
             //성별 선택 안한 경우
             if(stringGender != null && !"null".equals(stringGender)){
-                 if(stringGender.equals("M")){
+                if(stringGender.equals("M")){
                     gender = false;
                 }else{
-                  gender = true;
-              }
+                    gender = true;
+                }
             }else{
                 gender = null;
             }
@@ -165,9 +155,9 @@ public class SignServiceImpl implements SignService {
             }else{
                 naverUserVO.setUserAge(Integer.parseInt(birthyear));
             }
-        } else {  // 에러 발생
-            br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
-        }
+            } else {  // 에러 발생
+                 br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+            }
         br.close();
         return naverUserVO;
     }
@@ -185,6 +175,11 @@ public class SignServiceImpl implements SignService {
     @Override
     public void updateNaverUser(UserVO userVO) throws Exception {
         this.signMapper.updateNaverUser(userVO);
+    }
+
+    @Override
+    public UserVO getNaverUser(String naverID) throws Exception {
+        return this.signMapper.getNaverUser(naverID);
     }
 
 }

@@ -28,5 +28,6 @@ public interface SignService {
     int setNewNaverMember(UserVO newNaverUser) throws Exception;
 
     void updateNaverUser(UserVO userVO) throws Exception;
-    
+
+    UserVO getNaverUser(String naverID) throws Exception;
 }

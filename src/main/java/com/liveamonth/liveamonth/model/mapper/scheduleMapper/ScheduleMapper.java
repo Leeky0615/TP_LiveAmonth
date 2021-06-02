@@ -71,4 +71,6 @@ public interface ScheduleMapper {
     ScheduleReplyVO getScheduleReply(int scheduleReplyNO) throws Exception;
 
     public int getScheduleWriterNO(int scheduleNO) throws Exception;
+
+    int getOtherScheduleCount(HashMap<String, Object> filtersAndOrder) throws Exception;
 }

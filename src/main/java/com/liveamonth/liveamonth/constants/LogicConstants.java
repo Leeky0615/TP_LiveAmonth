@@ -36,9 +36,6 @@ public class LogicConstants {
     }
 
 
-
-
-
     public enum EScheduleAttributes{
         SELECTED_SCHEDULE_NO("selectedScheduleNO"),
         MESSAGE("message"),

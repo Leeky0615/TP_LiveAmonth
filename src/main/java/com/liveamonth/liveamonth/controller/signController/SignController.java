@@ -18,27 +18,26 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URL;
-import java.net.URLEncoder;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.math.BigInteger;
 import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
-import static com.liveamonth.liveamonth.constants.ControllerPathConstants.ETemplatePath.MAIN;
 import static com.liveamonth.liveamonth.constants.ControllerPathConstants.ESignPath.*;
+import static com.liveamonth.liveamonth.constants.ControllerPathConstants.ETemplatePath.MAIN;
 import static com.liveamonth.liveamonth.constants.EntityConstants.CityInfoCategory.INTRO;
 import static com.liveamonth.liveamonth.constants.EntityConstants.ESignUp.EMAIL;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.*;
-import static com.liveamonth.liveamonth.constants.LogicConstants.ECityInfoAttributes.*;
-import static com.liveamonth.liveamonth.constants.LogicConstants.EMyPageAttributes.*;
-import static com.liveamonth.liveamonth.constants.LogicConstants.EMyPageAttributes.MANAGE_SCHEDULE_CATEGORY;
-import static com.liveamonth.liveamonth.constants.LogicConstants.EPaging.PAIGING;
-import static com.liveamonth.liveamonth.constants.LogicConstants.EPaging.SELECTED_PAGE;
+import static com.liveamonth.liveamonth.constants.LogicConstants.ECityInfoAttributes.CITY_INTRO_LIST;
+import static com.liveamonth.liveamonth.constants.LogicConstants.ECityInfoAttributes.RANDOM_CITY_INTRO_LIST;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EReview.POPULAR_REVIEW_LIST;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EReviewAttribute.REVIEW_LIST;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleAttributes.FITERED_OTHER_SCHEDULE_LIST;
@@ -88,7 +87,7 @@ public class SignController {
         // 인기 REVIEW
         model.addAttribute(POPULAR_REVIEW_LIST.getText(), reviewService.getMainPopularReviewList(1));
         // 인기 SCHEDULE
-        model.addAttribute(FITERED_OTHER_SCHEDULE_LIST.getText(), scheduleService.getMainOtherScheduleList());
+        model.addAttribute(FITERED_OTHER_SCHEDULE_LIST.getText(), scheduleService.getMainOtherScheduleList(1));
         // MainCitySlide.jsp 사용
         model.addAttribute(RANDOM_CITY_INTRO_LIST.getText(), cityService.getRandomCityInfoListByCategory(INTRO.name()));
         // CityInfoGrid.jsp 사용
@@ -143,7 +142,7 @@ public class SignController {
     @RequestMapping("/naverSignUp")
     public String naverSignUp(Model model) throws Exception {
         model.addAttribute(EMAIL.getText(), EEmail.values());
-        return "signView/NaverSignUp";
+        return NAVER_SIGN_UP.getPath();
     }
 
     @ResponseBody
@@ -192,7 +191,7 @@ public class SignController {
     }
 
     @RequestMapping("/resultMentNaverSignUp")
-    private String resultMentNaverSignUp(@ModelAttribute UserVO userVO, HttpServletRequest request) throws Exception {
+    private String resultMentNaverSignUp(@ModelAttribute UserVO userVO, HttpServletRequest request, HttpSession session) throws Exception {
         //email을 갖고 있는 경우와 아닌 경우
         if(!userVO.getUserEmail().contains("@")){
             String userEmail = request.getParameter(USER_EMAIL.getText());
@@ -200,10 +199,11 @@ public class SignController {
             userVO.setUserEmail(userEmail + AT.getText() + email);
         }
         signService.updateNaverUser(userVO);
+        request.setAttribute("Message", "회원 가입 성공");
 
-        return "signView/ResultMentSignUp";
+        session.setAttribute(USER_VO.getText(),userVO);
+        return RESULT_NEW_NAVER_MEMBER.getPath();
     }
-
     @RequestMapping(value = "/resultMentFindID", method = RequestMethod.POST)
     public String findID(@RequestParam("userName")
                                  String userName, @RequestParam("userEmail") String userEmail, Model model) throws Exception {
@@ -229,7 +229,7 @@ public class SignController {
     @RequestMapping("/findPW")
     private String findPW() throws Exception {
         return FIND_PW.getPath();
-        
+
     }
 
 
@@ -297,18 +297,38 @@ public class SignController {
         //회원, 비회원 체크
         if (naverID != null && !"null".equals(naverID)) {
             //session 변경해서 로그인 상태로 만들기
-            session.setAttribute("userVO",naverUser);
-            model.addAttribute(RANDOM_CITY_INTRO_LIST.getText(), cityService.getRandomCityInfoListByCategory(INTRO.name()));
-            model.addAttribute(CITY_INTRO_LIST.getText(), cityService.getCityInfoListByCategory(INTRO.name()));
-            return "Main";
+            UserVO userVO = signService.getNaverUser(naverID);
+            session.setAttribute(USER_VO.getText(),userVO);
+            return "redirect:/";
         } else {
-            session.setAttribute("naverUser", naverUser);
-            return "signView/NewNaverMember";
+            session.setAttribute(NAVER_USER.getText(), naverUser);
+            return NEW_NAVER_MEMBER.getPath();
         }
     }
 
-    @RequestMapping("/NaverTest")
-    private String NaverTest(Model model) throws Exception {
-        return "signView/NaverTest";
+    @RequestMapping("/newNaverMember")
+    private String newNaverMember(HttpSession session, HttpServletRequest request, Model model) throws Exception {
+        UserVO newNaverUser = (UserVO)session.getAttribute(NAVER_USER.getText());
+        boolean flag = true;
+
+        if(newNaverUser.getUserSex() == null || newNaverUser.getUserEmail() == null || newNaverUser.getUserName() == null||
+                newNaverUser.getUserNickname() == null || newNaverUser.getUserAge() == 0){
+            flag = false;
+        }
+
+        if(session.getAttribute(USER_VO.getText()) == null && signService.setNewNaverMember(newNaverUser)==1){
+            //필수항목 다 동의 한 경우
+            if(flag){
+//                session.setAttribute(USER_VO.getText(),newNaverUser);
+                request.setAttribute("Message", "회원 가입 성공");
+            }else{ //필수 항목 하나라도 동의 안한 경우
+                return "redirect:naverSignUp";
+            }
+        }else{
+            request.setAttribute("Message", "회원 가입 실패");
+        }
+
+        return RESULT_NEW_NAVER_MEMBER.getPath();
     }
+
 }

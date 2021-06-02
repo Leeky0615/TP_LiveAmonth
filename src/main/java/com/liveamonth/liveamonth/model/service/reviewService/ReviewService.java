@@ -57,6 +57,4 @@ public interface ReviewService {
     public String orderByCategoryReview(String orderBy,String clickPage,String dateDescAsc, String likeDescAsc, String viewDescAsc);
 
 
-
-
 }

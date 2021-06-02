@@ -83,6 +83,29 @@ function checkValue() {
     }
 };
 
+function unvisibleIDandPW(){
+    document.getElementById("userIDBlock").style.display="none";
+    document.getElementById("userPasswordBlock").style.display="none";
+    document.getElementById("userPasswordCheckBlock").style.display="none";
+    $("#submit").removeAttr("disabled");
+};
+function unvisibleUserName(){
+    document.getElementById("userNameBlock").style.display="none";
+};
+function unvisibleUserNickname(){
+    document.getElementById("userNicknameBlock").style.display="none";
+};
+function unvisibleUserAge(){
+    document.getElementById("userAgeBlock").style.display="none";
+};
+function unvisibleUserSex(){
+    document.getElementById("userSexBlock").style.display="none";
+};
+function unvisibleUserEmail(){
+    document.getElementById("userEmailBlock").style.display="none";
+    document.getElementById("emailBlock").style.display="none";
+};
+
 function maxLengthCheck(object) {
     if (object.value.length > object.maxLength) {
         object.value = object.value.slice(0, object.maxLength);

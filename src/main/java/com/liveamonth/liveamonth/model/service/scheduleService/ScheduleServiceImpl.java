@@ -122,9 +122,22 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     //otherList
     @Override
-	public ArrayList<HashMap<String, Object>> getOtherScheduleList(HashMap<String, Object> filtersAndOrder) throws Exception{
-		return scheduleMapper.getOtherScheduleList(filtersAndOrder);
+	public ArrayList<HashMap<String, Object>> getOtherScheduleList(HashMap<String, Object> filtersAndOrder, int selectedPage) throws Exception{
+        int startNum = (selectedPage-1)*15;
+        filtersAndOrder.put(START_NO.getText(), startNum);
+        filtersAndOrder.put(DISPLAY_PAGE.getText(), STATIC_DISPLAY_PAGE_NUM.getText());
+
+        return scheduleMapper.getOtherScheduleList(filtersAndOrder);
 	}
+
+    @Override
+    public PagingDTO showOtherScheduleListPaging(HashMap<String, Object> filtersAndOrder, int selectedPage) throws Exception {
+        PagingDTO paging = new PagingDTO();
+        paging.setPage(selectedPage);
+        paging.setTotalCount(scheduleMapper.getOtherScheduleCount(filtersAndOrder));
+        return paging;
+    }
+
 
 
     @Override
@@ -259,8 +272,12 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public List<HashMap<String, Object>> getMainOtherScheduleList() throws Exception  {
+    public List<HashMap<String, Object>> getMainOtherScheduleList(int selectedPage) throws Exception  {
         HashMap<String, Object> filtersAndOrder = new HashMap<>();
+        int startNum = (selectedPage-1)*15;
+        filtersAndOrder.put(START_NO.getText(), startNum);
+        filtersAndOrder.put(DISPLAY_PAGE.getText(), STATIC_DISPLAY_PAGE_NUM.getText());
+
         for (LogicConstants.EScheduleFilterAndOrders eFO : LogicConstants.EScheduleFilterAndOrders.values()) {
             if (eFO == SCHEDULE_FO_ORDER)
                 filtersAndOrder.put(eFO.getText(), "orderByLiked");//("orderBy","orderVubByNew)

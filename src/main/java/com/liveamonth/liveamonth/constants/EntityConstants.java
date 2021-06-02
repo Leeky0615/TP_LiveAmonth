@@ -325,7 +325,8 @@ public class EntityConstants {
         USER_NICKNAME("userNickname"),
         USER_AGE("userAge"),
         USER_SEX("userSex"),
-        USER_EMAIL("userEmail");
+        USER_EMAIL("userEmail"),
+        NAVER_USER("naverUser");
         private String text;
 
         private EUser(String text) {

@@ -56,7 +56,10 @@ public class ControllerPathConstants {
         RESULT_MENT_FIND_PW("ResultMentFindPW"),
         RESULT_MENT_SIGN_UP("ResultMentSignUp"),
         SIGN_IN("SignIn"),
-        SIGN_UP("SignUp");
+        SIGN_UP("SignUp"),
+        NAVER_SIGN_UP("NaverSignUp"),
+        NEW_NAVER_MEMBER("NewNaverMember"),
+        RESULT_NEW_NAVER_MEMBER("ResultNewNaverMember");
         private String path;
         private ESignPath(String path) {this.path = path;}
         public String getPath() {return "signView/"+ this.path;}

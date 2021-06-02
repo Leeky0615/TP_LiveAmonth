@@ -37,7 +37,6 @@ import static com.liveamonth.liveamonth.constants.LogicConstants.EReviewAttribut
 import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleAttributes.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleFilterAndOrders.SCHEDULE_FO_CITY_NAME;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleFilterAndOrders.SCHEDULE_FO_ORDER;
-
 @Controller
 public class MainController {
     @Autowired
@@ -58,7 +57,7 @@ public class MainController {
                 filtersAndOrder.put(eFO.getText(), "orderByLiked");//("orderBy","orderVubByNew)
             else filtersAndOrder.put(eFO.getText() + "Filter", false);
         }
-        List<HashMap<String, Object>> otherScheduleList = scheduleService.getOtherScheduleList(filtersAndOrder);
+        List<HashMap<String, Object>> otherScheduleList = scheduleService.getOtherScheduleList(filtersAndOrder, 1);
         model.addAttribute(FITERED_OTHER_SCHEDULE_LIST.getText(), otherScheduleList);
         // MainCitySlide.jsp 사용
         model.addAttribute(RANDOM_CITY_INTRO_LIST.getText(), cityService.getRandomCityInfoListByCategory(INTRO.name()));

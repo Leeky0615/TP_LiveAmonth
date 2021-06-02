@@ -31,7 +31,9 @@ public interface ScheduleService {
 
     boolean deleteSchedule(int scheduleNO) throws Exception;
 
-    List<HashMap<String, Object>> getOtherScheduleList(HashMap<String, Object> filtersAndOrder) throws Exception;
+    List<HashMap<String, Object>> getOtherScheduleList(HashMap<String, Object> filtersAndOrder, int selectPage) throws Exception;
+
+    PagingDTO showOtherScheduleListPaging(HashMap<String, Object> filtersAndOrder, int selectPage) throws Exception;
 
     ArrayList<HashMap<String, Object>> getScheduleReplyList(int scheduleNO, int page) throws Exception;
 
@@ -53,11 +55,12 @@ public interface ScheduleService {
 
     int getScheduleDurationPay(String schedulePayStartDay, String schedulePayFinishDay, int scheduleNO) throws Exception;
 
-    List<HashMap<String, Object>> getMainOtherScheduleList() throws Exception;
-
     ArrayList<HashMap<String, Object>> getMyScheduleList(int selectPage, int userNO, String manageScheduleCategory)throws Exception;
 
     PagingDTO showMySchedulePaging(int selectPage, String manageScheduleCategory, int userNO)throws Exception;
 
     void deleteScheduleList(int[] scheduleNO_or_scheduleReplyNOList, String manageScheduleCategory)throws Exception;
+    List<HashMap<String, Object>> getMainOtherScheduleList(int selectPage) throws Exception;
+
+
 }
