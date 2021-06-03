@@ -78,7 +78,7 @@ public class LogicConstants {
     public enum EScheduleFilterAndOrders{
         SCHEDULE_FO_SEX("userSex"),
         SCHEDULE_FO_AGE("userAge"),
-        SCHEDULE_FO_CITY_NAME("cityName"),
+        SCHEDULE_FO_CITY_NO("cityNO"),
         SCHEDULE_FO_ORDER("orderBy");
         private String text;
         private EScheduleFilterAndOrders(String text) {this.text = text;}

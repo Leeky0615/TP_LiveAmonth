@@ -31,7 +31,7 @@ import static com.liveamonth.liveamonth.constants.LogicConstants.EOtherScheduleM
 import static com.liveamonth.liveamonth.constants.LogicConstants.EPaging.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleAttributes.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleFilterAndOrders;
-import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleFilterAndOrders.SCHEDULE_FO_CITY_NAME;
+import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleFilterAndOrders.SCHEDULE_FO_CITY_NO;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleFilterAndOrders.SCHEDULE_FO_ORDER;
 
 @Controller
@@ -64,38 +64,21 @@ public class OtherScheduleController {
     }
     private HashMap<String, Object>  makeFiltersAndOrder(HttpServletRequest request, String action) throws Exception {
         HashMap<String, Object> filtersAndOrder = new HashMap<>();
-        // action = list : 초기 헤더메뉴 클릭시
-        if (action.equals(SCHEDULE_LIST.getText())) { // 기본값
+        if (action.equals(SCHEDULE_LIST.getText())) {
             for (EScheduleFilterAndOrders eFO : EScheduleFilterAndOrders.values()) {
-                if (eFO == SCHEDULE_FO_ORDER)
-                    filtersAndOrder.put(eFO.getText(), ORDER_BY_NEW.getText());//("orderBy","orderVubByNew)
+                if (eFO == SCHEDULE_FO_ORDER) filtersAndOrder.put(eFO.getText(), ORDER_BY_NEW.getText());
                 else filtersAndOrder.put(eFO.getText() + "Filter", false);
-                //결과: orderBy: orderbyNew, sexFilter: false, ageFilter: false, place: false
             }
-        } else if (action.equals(SCHEDULE_FILTER.getText())) {// action = filter : OtherSchedule 페이지에서 필터 및 정렬 수행시
-            // Hashmap에 필터/정렬 Object를 담는다.
-            for (EScheduleFilterAndOrders eFO : EScheduleFilterAndOrders.values()) { // {userSex, userAge, schedulePlace, orderBy, userSexFilter}
-                if (eFO == SCHEDULE_FO_ORDER) {
-                    // orderBy인 경우 View에서 OrderBy의 value를 가져옴. {"orderByLiked" | "orderByNew" | "orderByView"}
-                    filtersAndOrder.put(eFO.getText(), request.getParameter(SCHEDULE_FO_ORDER.getText()));
-                } else {
-                    // 나머지 경우는 받아온 parameter에 대해 int로 변환(CheckOption() -> null(기본값)인 경우 -1 return)
-                    //null
+        } else if (action.equals(SCHEDULE_FILTER.getText())) {
+            for (EScheduleFilterAndOrders eFO : EScheduleFilterAndOrders.values()) {
+                if (eFO == SCHEDULE_FO_ORDER) filtersAndOrder.put(eFO.getText(), request.getParameter(SCHEDULE_FO_ORDER.getText()));
+                else {
                     int option = this.checkOption(request.getParameter(eFO.getText()));
-                    //int option = this.checkOption(String.valueOf(request.getParameter(eFO.getText())));
-                    // filter 설정 유무 -> 기본 : default
                     boolean optionStatus = false;
                     if (option != -1) {
-                        optionStatus = true; // option이 null(-1)이 아니면 true
-                        if (eFO == SCHEDULE_FO_CITY_NAME) {
-                            //schedulePlace는 HashMap에 값을 String으로 넣어 줘야하므로 CityNameList에서 option(int)에 해당하는 인덱스 값을 넣어줌.
-                            filtersAndOrder.put(eFO.getText(), cityService.getCityNameList().get(option));
-                        } else {
-                            // 나머지 경우는 그냥 option(int)를 넣어줌
-                            filtersAndOrder.put(eFO.getText(), option);
-                        }
+                        optionStatus = true;
+                        filtersAndOrder.put(eFO.getText(), option);
                     }
-                    // optionStatus를 HashMap에 저장 (attribute 값 : userSexFilter, userAgeFilter, cityNameFilter)
                     filtersAndOrder.put(eFO.getText() + "Filter", optionStatus);
                 }
             }

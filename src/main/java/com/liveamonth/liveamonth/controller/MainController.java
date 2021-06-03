@@ -1,12 +1,9 @@
 package com.liveamonth.liveamonth.controller;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import com.liveamonth.liveamonth.constants.ControllerPathConstants;
 import com.liveamonth.liveamonth.constants.LogicConstants;
 import com.liveamonth.liveamonth.entity.dto.PagingDTO;
-import com.liveamonth.liveamonth.entity.vo.CityInfoVO;
 import com.liveamonth.liveamonth.entity.vo.UserVO;
 import com.liveamonth.liveamonth.model.service.cityInfoService.CityService;
 import com.liveamonth.liveamonth.model.service.reviewService.ReviewService;
@@ -14,16 +11,12 @@ import com.liveamonth.liveamonth.model.service.scheduleService.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-import static com.liveamonth.liveamonth.constants.ControllerPathConstants.*;
-import static com.liveamonth.liveamonth.constants.ControllerPathConstants.EMyPagePath.MANAGE_SCHEDULE;
 import static com.liveamonth.liveamonth.constants.ControllerPathConstants.ETemplatePath.*;
 import static com.liveamonth.liveamonth.constants.EntityConstants.CityInfoCategory.INTRO;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.USER_VO;
@@ -31,11 +24,9 @@ import static com.liveamonth.liveamonth.constants.LogicConstants.ECityInfoAttrib
 import static com.liveamonth.liveamonth.constants.LogicConstants.EMyPageAttributes.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EMyPageAttributes.MANAGE_SCHEDULE_CATEGORY;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EPaging.PAIGING;
-import static com.liveamonth.liveamonth.constants.LogicConstants.EPaging.SELECTED_PAGE;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EReview.POPULAR_REVIEW_LIST;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EReviewAttribute.REVIEW_LIST;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleAttributes.*;
-import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleFilterAndOrders.SCHEDULE_FO_CITY_NAME;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleFilterAndOrders.SCHEDULE_FO_ORDER;
 @Controller
 public class MainController {

@@ -21,7 +21,7 @@
                         <c:when test="${requestData.key eq 'userAge'}">
                             <c:set var="userAge" value="${requestData.value}"/>
                         </c:when>
-                        <c:when test="${requestData.key eq 'cityName'}">
+                        <c:when test="${requestData.key eq 'cityNO'}">
                             <c:set var="index" value="${requestData.value}"/>
                         </c:when>
                         <c:when test="${requestData.key eq 'orderBy'}">
@@ -59,7 +59,7 @@
                             <div class="col-lg-2">
                                 <div class="pd-title">
                                     <p>장소</p>
-                                    <select name="cityName" id="cityName" class="sm-width">
+                                    <select name="cityNO" id="cityNO" class="sm-width">
                                         <option value="null" <c:if test="${index == -1}"> selected </c:if>>기본</option>
                                         <c:forEach var="schedulePlace" items="${schedulePlaceList}" varStatus="status">
                                             <option value="${status.index}" <c:if

@@ -69,8 +69,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="userSexFilter==true">
 			and userSex = #{userSex}
 		</if>
-		<if test="schedulePlaceFilter==true">
-			and cityName = ${cityName}
+		<if test="cityNOFilter==true">
+			and city.cityNO = ${cityNO}+1
 		</if>
 			  ) as a
 		left join(
@@ -128,8 +128,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="userSexFilter==true">
 			and userSex = #{userSex}
 		</if>
-		<if test="schedulePlaceFilter==true">
-			and cityName = ${cityName}
+		<if test="cityNOFilter==true">
+			and city.cityNO = ${cityNO}+1
 		</if>
 	</select>
 
@@ -192,7 +192,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		scheduleReply ON schedule.scheduleNO = scheduleReply.scheduleNO
 		LEFT JOIN (select scheduleNO ,count(*)as scheduleLikeCount from scheduleLike group by scheduleNO) as
 		scheduleLike ON schedule.scheduleNO = scheduleLike.scheduleNO
-		LEFT JOIN ( select scheduleNO, scheduleReplyDesc,scheduleReply.userNO, userNickName,scheduleReplyNO from
+		LEFT JOIN ( select scheduleNO, scheduleReplyDesc, scheduleReply.userNO, userNickName,scheduleReplyNO from
 		scheduleReply,user
 		where scheduleReply.userNO = user.userNO) as scheduleReplyContent ON schedule.scheduleNO =
 		scheduleReplyContent.scheduleNO
