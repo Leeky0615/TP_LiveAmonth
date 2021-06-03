@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 import com.liveamonth.liveamonth.constants.EntityConstants.EEmail;
 import com.liveamonth.liveamonth.constants.LogicConstants;
 import com.liveamonth.liveamonth.constants.LogicConstants.ECityInfoAttributes;
+import com.liveamonth.liveamonth.constants.LogicConstants.EScheduleFilterAndOrders;
 import com.liveamonth.liveamonth.entity.dto.CalendarDTO;
 import com.liveamonth.liveamonth.entity.dto.PagingDTO;
 import com.liveamonth.liveamonth.entity.dto.S3UploaderDTO;
@@ -95,13 +96,12 @@ public class SignController {
         model.addAttribute(POPULAR_REVIEW_LIST.getText(), reviewService.getMainPopularReviewList(1));
         // 인기 SCHEDULE
         HashMap<String, Object> filtersAndOrder = new HashMap<>();
-        for (LogicConstants.EScheduleFilterAndOrders eFO : LogicConstants.EScheduleFilterAndOrders.values()) {
+        for (EScheduleFilterAndOrders eFO : EScheduleFilterAndOrders.values()) {
             if (eFO == SCHEDULE_FO_ORDER) filtersAndOrder.put(eFO.getText(), "orderByLiked");
             else filtersAndOrder.put(eFO.getText() + "Filter", false);
         }
         List<HashMap<String, Object>> otherScheduleList = scheduleService.getOtherScheduleList(filtersAndOrder, 1);
         model.addAttribute(FITERED_OTHER_SCHEDULE_LIST.getText(), otherScheduleList);
-
         // 달력 표시
         List<CalendarDTO> CalendarDTOList = new ArrayList<>();
         List<List<CalendarDTO>> CalendarDTODateList = new ArrayList<>();
@@ -127,7 +127,7 @@ public class SignController {
         PagingDTO schedudlePaging = scheduleService.showMySchedulePaging(1,MANAGE_SCHEDULE_CATEGORY.getText(),userVO.getUserNO());
         model.addAttribute(PAIGING.getText(), schedudlePaging);
         ArrayList<HashMap<String, Object>> scheduleList = scheduleService.getMyScheduleList(1, userVO.getUserNO(),MANAGE_SCHEDULE_CATEGORY.getText());
-        model.addAttribute( MY_SCHEDULE_LIST.getText(), scheduleList);
+        model.addAttribute(MY_SCHEDULE_LIST.getText(), scheduleList);
         model.addAttribute(MANAGE_SCHEDULE_CATEGORY.getText(), MANAGE_SCHEDULE_CATEGORY.getText());
         // 내 게시글
         PagingDTO reviewPaging = reviewService.showMyReviewPaging(1,MANAGE_REVIEW_CATEGORY.getText(),userVO.getUserNO());
@@ -153,8 +153,8 @@ public class SignController {
             model.addAttribute(FIRST_IN.getText(), false);
             return SIGN_IN.getPath();
         } else {
-            session.setAttribute(USER_VO.getText(), userVO);
             this.setMainPageAttributes(model,calendarDTO);
+            session.setAttribute(USER_VO.getText(), userVO);
             this.setMainPageManageContents(model, userVO);
             return MAIN.getPath();
         }

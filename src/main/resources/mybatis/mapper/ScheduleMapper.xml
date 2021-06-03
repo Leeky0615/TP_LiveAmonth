@@ -132,7 +132,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			and city.cityNO = ${cityNO}+1
 		</if>
 	</select>
-
+	<select id="getManyContentsMonth" parameterType="int" resultType="String">
+		select MONTH(scheduleContentDate)-1
+		from scheduleContent
+		where scheduleNO=#{scheduleNO}
+		group by MONTH(scheduleContentDate)
+		order by count(scheduleContentDate) desc limit 1;
+	</select>
+	<select id="getManyContentsYear" parameterType="int" resultType="String">
+		select YEAR(scheduleContentDate)
+		from scheduleContent
+		where scheduleNO=#{scheduleNO}
+		group by YEAR(scheduleContentDate)
+		order by count(scheduleContentDate) desc limit 1;
+	</select>
 	<select id="getScheduleReplyCount" parameterType="int" resultType="int">
 		select count(scheduleReplyNO) as count from scheduleReply where scheduleNO = #{scheduleNO};
 	</select>

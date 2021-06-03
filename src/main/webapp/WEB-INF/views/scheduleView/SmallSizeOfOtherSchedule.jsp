@@ -1,3 +1,5 @@
+<%@ page import="com.liveamonth.liveamonth.constants.LogicConstants" %>
+<%@ page import="com.liveamonth.liveamonth.constants.EntityConstants" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ page contentType="text/html; charset=utf-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -8,12 +10,11 @@
 <link href="resources/css/smallSchedule.css" rel="stylesheet" type="text/css">
 <%--<script src="resources/js/evo-calendar.js"></script>--%>
 <%--<link href="resources/css/evo-calendar.royal-navy.css" rel="stylesheet" type="text/css">--%>
-
 <div class="royal-navy p-3">
     <table class="calendar_body p-2">
         <tbody>
         <tr>
-            <th colspan="7">June</th>
+            <th colspan="7">${monthList[todayInformation.searchMonth-1]}</th>
         </tr>
         <tr class="calendar-header">
             <td class="calendar-header-day">Sun</td>
@@ -45,12 +46,12 @@
                 </c:otherwise>
                 </c:choose>
                 <span class="contents pl-1">${dateList.date}</span>
-                <div class="scheduleContentsModal p-3" id="${listIndex}_${dateList.date}_modal">
-                    <div class="form-group mb-4 mt-2">
-                        <label class="scheduleContentLabel mb-0" style="padding: 0"><h5>컨텐츠 제목</h5></label>
-                        <c:forEach var="scheduleList" items="${dateList.scheduleDataArray}">
+                <div class="scheduleContentsModal" id="${listIndex}_${dateList.date}_modal">
+                    <div class="form-group mb-0">
+                        <label class="scheduleContentLabel m-0 pl-3">Contents Title</label>
+                        <c:forEach var="scheduleList" items="${dateList.scheduleDataArray}" varStatus="status">
                             <c:if test="${scheduleList.scheduleContentNO != null}">
-                                <label id="scheduleContentSubject" class="form-control mb-2" readonly>${scheduleList.scheduleContentSubject}</label>
+                                <label id="scheduleContentSubject" class="contents-label mt-1" readonly>#${status.index+1}. ${scheduleList.scheduleContentSubject}</label>
                                 <c:set value="true" var="scheduleStatus"/>
                             </c:if>
                         </c:forEach>

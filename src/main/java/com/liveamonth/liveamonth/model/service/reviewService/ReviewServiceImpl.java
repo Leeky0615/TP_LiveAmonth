@@ -128,7 +128,6 @@ public class ReviewServiceImpl implements ReviewService {
         PagingDTO paging = new PagingDTO();
         paging.setPage(selectPage);
         paging.setTotalCount(reviewMapper.getMyReviewListCount(myReviewAndPage));
-        System.out.println(paging.getTotalCount());
         return paging;
     }
 

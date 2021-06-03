@@ -1,6 +1,7 @@
 package com.liveamonth.liveamonth.controller.scheduleController;
 
 
+import com.liveamonth.liveamonth.constants.EntityConstants.Month;
 import com.liveamonth.liveamonth.entity.dto.CalendarDTO;
 import com.liveamonth.liveamonth.entity.dto.PagingDTO;
 import com.liveamonth.liveamonth.entity.vo.ScheduleLikeVO;
@@ -31,7 +32,6 @@ import static com.liveamonth.liveamonth.constants.LogicConstants.EOtherScheduleM
 import static com.liveamonth.liveamonth.constants.LogicConstants.EPaging.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleAttributes.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleFilterAndOrders;
-import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleFilterAndOrders.SCHEDULE_FO_CITY_NO;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleFilterAndOrders.SCHEDULE_FO_ORDER;
 
 @Controller
@@ -67,7 +67,7 @@ public class OtherScheduleController {
         if (action.equals(SCHEDULE_LIST.getText())) {
             for (EScheduleFilterAndOrders eFO : EScheduleFilterAndOrders.values()) {
                 if (eFO == SCHEDULE_FO_ORDER) filtersAndOrder.put(eFO.getText(), ORDER_BY_NEW.getText());
-                else filtersAndOrder.put(eFO.getText() + "Filter", false);
+                else filtersAndOrder.put(eFO.getText() + FILTER.getText(), false);
             }
         } else if (action.equals(SCHEDULE_FILTER.getText())) {
             for (EScheduleFilterAndOrders eFO : EScheduleFilterAndOrders.values()) {
@@ -79,7 +79,7 @@ public class OtherScheduleController {
                         optionStatus = true;
                         filtersAndOrder.put(eFO.getText(), option);
                     }
-                    filtersAndOrder.put(eFO.getText() + "Filter", optionStatus);
+                    filtersAndOrder.put(eFO.getText() + FILTER.getText(), optionStatus);
                 }
             }
         }
@@ -109,13 +109,15 @@ public class OtherScheduleController {
         List<HashMap<String, Integer>> CalendarDTOTodayInformationList = new ArrayList<>();
         for(HashMap<String, Object> otherSchedule : otherScheduleList){
             int scheduleNO = (int)otherSchedule.get(SCHEDULE_NO.getText());
+            calendarDTO = scheduleService.setManyContentsDate(scheduleNO,calendarDTO); // 컨텐츠가 많은 달을 가져옴
             CalendarDTO calendarDto = scheduleService.showCalendar(calendarDTO, scheduleNO);
             CalendarDTOList.add(calendarDto);
             CalendarDTODateList.add(calendarDto.getDateList());
             CalendarDTOTodayInformationList.add((HashMap)calendarDto.getTodayInformation());
         }
-        model.addAttribute("CalendarDTODateList", CalendarDTODateList); //날짜 데이터 배열 DATE_LIST
-        model.addAttribute("CalendarDTOTodayInformationList", CalendarDTOTodayInformationList); //TODAY_INFORMATION
+        model.addAttribute(MONTH_LIST.getText(), Month.values());
+        model.addAttribute(CALENDAR_DTO_DATE_LIST.getText(), CalendarDTODateList); //날짜 데이터 배열 DATE_LIST
+        model.addAttribute(CALENDAR_DTO_TODAY_INFORMATION_LIST.getText(), CalendarDTOTodayInformationList);
 
         // 필터 & 정렬 리스트
         HashMap<String, Object> requestList = makeRequestList(request);

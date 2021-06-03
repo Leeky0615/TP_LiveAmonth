@@ -2,6 +2,7 @@ package com.liveamonth.liveamonth.controller;
 
 import javax.servlet.http.HttpSession;
 
+import com.liveamonth.liveamonth.constants.EntityConstants.Month;
 import com.liveamonth.liveamonth.constants.LogicConstants;
 import com.liveamonth.liveamonth.entity.dto.CalendarDTO;
 import com.liveamonth.liveamonth.entity.dto.PagingDTO;
@@ -48,8 +49,8 @@ public class MainController {
         HashMap<String, Object> filtersAndOrder = new HashMap<>();
         for (LogicConstants.EScheduleFilterAndOrders eFO : LogicConstants.EScheduleFilterAndOrders.values()) {
             if (eFO == SCHEDULE_FO_ORDER)
-                filtersAndOrder.put(eFO.getText(), "orderByLiked");//("orderBy","orderVubByNew)
-            else filtersAndOrder.put(eFO.getText() + "Filter", false);
+                filtersAndOrder.put(eFO.getText(), ORDER_BY_LIKED.getText());//("orderBy","orderVubByNew)
+            else filtersAndOrder.put(eFO.getText() + FILTER.getText(), false);
         }
         List<HashMap<String, Object>> otherScheduleList = scheduleService.getOtherScheduleList(filtersAndOrder, 1);
         model.addAttribute(FITERED_OTHER_SCHEDULE_LIST.getText(), otherScheduleList);
@@ -60,19 +61,21 @@ public class MainController {
         List<HashMap<String, Integer>> CalendarDTOTodayInformationList = new ArrayList<>();
         for(HashMap<String, Object> otherSchedule : otherScheduleList){
             int scheduleNO = (int)otherSchedule.get(SCHEDULE_NO.getText());
+            calendarDTO = scheduleService.setManyContentsDate(scheduleNO,calendarDTO); // 컨텐츠가 많은 달을 가져옴
             CalendarDTO calendarDto = scheduleService.showCalendar(calendarDTO, scheduleNO);
             CalendarDTOList.add(calendarDto);
             CalendarDTODateList.add(calendarDto.getDateList());
             CalendarDTOTodayInformationList.add((HashMap)calendarDto.getTodayInformation());
         }
-        model.addAttribute("CalendarDTODateList", CalendarDTODateList); //날짜 데이터 배열 DATE_LIST
-        model.addAttribute("CalendarDTOTodayInformationList", CalendarDTOTodayInformationList);
+        model.addAttribute(MONTH_LIST.getText(), Month.values());
+        model.addAttribute(CALENDAR_DTO_DATE_LIST.getText(), CalendarDTODateList); //날짜 데이터 배열 DATE_LIST
+        model.addAttribute(CALENDAR_DTO_TODAY_INFORMATION_LIST.getText(), CalendarDTOTodayInformationList);
 
         // MainCitySlide.jsp 사용
         model.addAttribute(RANDOM_CITY_INTRO_LIST.getText(), cityService.getRandomCityInfoListByCategory(INTRO.name()));
         // CityInfoGrid.jsp 사용
-        model.addAttribute("currentMonthTempList",cityService.getAVGTempList());
-        model.addAttribute("cityTransportGradeList", cityService.getCityTransportGradeList());
+        model.addAttribute(CURRENT_MONTH_TEMP_LIST.getText(),cityService.getAVGTempList());
+        model.addAttribute(CITY_TRANSPORT_GRADE_LIST.getText(), cityService.getCityTransportGradeList());
         model.addAttribute(CITY_INTRO_LIST.getText(), cityService.getCityInfoListByCategory(INTRO.name()));
 
         UserVO userVO = (UserVO)session.getAttribute(USER_VO.getText());
@@ -81,7 +84,7 @@ public class MainController {
             PagingDTO schedudlePaging = scheduleService.showMySchedulePaging(1,MANAGE_SCHEDULE_CATEGORY.getText(),userVO.getUserNO());
             model.addAttribute(PAIGING.getText(), schedudlePaging);
             ArrayList<HashMap<String, Object>> scheduleList = scheduleService.getMyScheduleList(1, userVO.getUserNO(),MANAGE_SCHEDULE_CATEGORY.getText());
-            model.addAttribute( MY_SCHEDULE_LIST.getText(), scheduleList);
+            model.addAttribute(MY_SCHEDULE_LIST.getText(), scheduleList);
             model.addAttribute(MANAGE_SCHEDULE_CATEGORY.getText(), MANAGE_SCHEDULE_CATEGORY.getText());
             // 내 게시글
             PagingDTO reviewPaging = reviewService.showMyReviewPaging(1,MANAGE_REVIEW_CATEGORY.getText(),userVO.getUserNO());

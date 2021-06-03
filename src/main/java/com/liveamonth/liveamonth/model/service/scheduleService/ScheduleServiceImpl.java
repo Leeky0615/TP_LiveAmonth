@@ -123,7 +123,6 @@ public class ScheduleServiceImpl implements ScheduleService {
         int startNum = (selectedPage-1)*8;
         filtersAndOrder.put(START_NO.getText(), startNum);
         filtersAndOrder.put(DISPLAY_PAGE.getText(), SCHEDULE_DISPLAY_PAGE_NUM.getText());
-        System.out.println("filtersAndOrder = " + filtersAndOrder);
         return scheduleMapper.getOtherScheduleList(filtersAndOrder);
 	}
 
@@ -132,7 +131,6 @@ public class ScheduleServiceImpl implements ScheduleService {
         PagingDTO paging = new PagingDTO();
         paging.setDisplayRow(8);
         paging.setPage(selectedPage);
-        System.out.println("scheduleMapper.getOtherScheduleCount(filtersAndOrder) = " + scheduleMapper.getOtherScheduleCount(filtersAndOrder));
         paging.setTotalCount(scheduleMapper.getOtherScheduleCount(filtersAndOrder));
         return paging;
     }
@@ -312,4 +310,14 @@ public class ScheduleServiceImpl implements ScheduleService {
 
         scheduleMapper.deleteScheduleList(listAndCategory);
     }
+
+    @Override
+    public CalendarDTO setManyContentsDate(int scheduleNO,CalendarDTO calendarDTO){
+        String year = scheduleMapper.getManyContentsYear(scheduleNO);
+        if(year != null) calendarDTO.setYear(year);
+        String month = scheduleMapper.getManyContentsMonth(scheduleNO);
+        if(month != null) calendarDTO.setMonth(month);
+        return calendarDTO;
+    }
+
 }

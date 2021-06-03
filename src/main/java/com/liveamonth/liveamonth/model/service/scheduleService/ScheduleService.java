@@ -62,5 +62,5 @@ public interface ScheduleService {
     void deleteScheduleList(int[] scheduleNO_or_scheduleReplyNOList, String manageScheduleCategory)throws Exception;
     List<HashMap<String, Object>> getMainOtherScheduleList(int selectPage) throws Exception;
 
-
+    CalendarDTO setManyContentsDate(int scheduleNO,CalendarDTO calendarDTO);
 }

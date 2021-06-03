@@ -63,7 +63,7 @@
                                     <div class="tab-desc pl-3 pr-1">
                                         <div class="row">
                                             <c:choose>
-                                                <c:when test="${scheduleList.size() == 0}">
+                                                <c:when test="${myScheduleList.size() == 0}">
                                                     <div class="row justify-content-center">
                                                         <div class="col-md-6 text-center mb-5">
                                                             <h2 class="heading-section">작성하신 글이 없습니다.</h2>
@@ -85,20 +85,20 @@
                                                             </tr>
                                                             </thead>
                                                             <tbody style="font-size: 12px">
-                                                            <c:forEach var="scheduleList" end="5" items="${scheduleList}">
+                                                            <c:forEach var="mySchedule" end="5" items="${myScheduleList}">
                                                                 <tr>
-                                                                    <td style="width:5%">${scheduleList.scheduleNO}</td>
-                                                                   <input type="hidden" name="myScheduleCheckbox"value="${scheduleList.scheduleNO}">
+                                                                    <td style="width:5%">${mySchedule.scheduleNO}</td>
+                                                                   <input type="hidden" name="myScheduleCheckbox"value="${mySchedule.scheduleNO}">
                                                                     <td style="width:50%;"><a
-                                                                            href="otherSchedule?scheduleNO=${scheduleList.scheduleNO}">${scheduleList.scheduleSubject}</a>
+                                                                            href="otherSchedule?scheduleNO=${mySchedule.scheduleNO}">${mySchedule.scheduleSubject}</a>
                                                                         <span class="scheduleReplyCount">
-                                                                    <c:if test="${scheduleList.replyCount ne null}">
-                                                                        [${scheduleList.replyCount}]
+                                                                    <c:if test="${mySchedule.replyCount ne null}">
+                                                                        [${mySchedule.replyCount}]
                                                                     </c:if>
                                                                      </span>
                                                                     </td>
-                                                                    <td style="width:20%;padding-left: 25px">${scheduleList.scheduleLikeCount}</td>
-                                                                    <td style="width:15%">${scheduleList.scheduleViewCount}</td>
+                                                                    <td style="width:20%;padding-left: 25px">${mySchedule.scheduleLikeCount}</td>
+                                                                    <td style="width:15%">${mySchedule.scheduleViewCount}</td>
                                                                 </tr>
                                                             </c:forEach>
                                                             </tbody>

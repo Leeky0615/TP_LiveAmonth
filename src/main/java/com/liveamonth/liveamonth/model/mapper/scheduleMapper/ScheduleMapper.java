@@ -73,4 +73,8 @@ public interface ScheduleMapper {
     int getScheduleWriterNO(int scheduleNO) throws Exception;
 
     int getOtherScheduleCount(HashMap<String, Object> filtersAndOrder) throws Exception;
+
+    String getManyContentsYear(int scheduleNO);
+
+    String getManyContentsMonth(int scheduleNO);
 }

@@ -43,7 +43,9 @@ public class LogicConstants {
         SCHEDULE_ACTION("action"),
         SCHEDULE_LIST("list"),
         SCHEDULE_FILTER("filter"),
+        FILTER("Filter"),
         ORDER_BY_NEW("orderByNew"),
+        ORDER_BY_LIKED("orderByLiked"),
         MODIFY_SCHEDULE_CONTENT_SUBJECT("modifyScheduleContentSubject"),
         MODIFY_SCHEDULE_CONTENT_DESC("modifyScheduleContentDesc"),
         MODIFY_SCHEDULE_CONTENT_COST("modifyScheduleContentCost"),
@@ -57,6 +59,9 @@ public class LogicConstants {
         OTHER_SCHEDULE_NO("otherScheduleNO"),
         OTHER_USER_NO("otherScheduleUserNO"),
         SCHEDULE_MENU("scheduleMenu"),
+        MONTH_LIST("monthList"),
+        CALENDAR_DTO_DATE_LIST("CalendarDTODateList"),
+        CALENDAR_DTO_TODAY_INFORMATION_LIST("CalendarDTOTodayInformationList"),
         OTHER_SCHEDULE_AND_LIKE_COUNT("otherScheduleAndLikeCount");
         private String text;
         private EScheduleAttributes(String text) {this.text = text;}
@@ -90,7 +95,7 @@ public class LogicConstants {
         PAGE("page"),
         TITLE("title"),
         TEXT("text"),
-        MY_SCHEDULE_LIST("scheduleList"),
+        MY_SCHEDULE_LIST("myScheduleList"),
         MANAGE_REVIEW_CATEGORY("manageReviewCategory"),
         MY_REVIEW_CHECK_BOX("myReviewCheckbox"),
         MANAGE_SCHEDULE_CATEGORY("manageScheduleCategory"),
@@ -134,9 +139,8 @@ public class LogicConstants {
         CITY_TRANSPORT_LIST("cityTransportList"),
         CITY_FOOD_LIST("cityFoodList"),
         CURRENT_MONTH_TEMP_LIST("currentMonthTempList"),
-        CITY_TRANSPORT_GRADE_LIST("currentMonthTempList"),
+        CITY_TRANSPORT_GRADE_LIST("cityTransportGradeList"),
         CITY_NAME_LIST("cityNameList");
-
         private String text;
         private ECityInfoAttributes(String text) {this.text = text;}
         public String getText() {return this.text;}

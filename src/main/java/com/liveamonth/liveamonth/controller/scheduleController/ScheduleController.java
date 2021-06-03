@@ -118,10 +118,7 @@ public class ScheduleController {
             calendarDto = scheduleService.showCalendar(calendarDTO, scheduleNO);
             model.addAttribute(DATE_LIST.getText(), calendarDto.getDateList());
             calendarDto.setDate("2021-");
-            System.out.println("calendarDto = " + calendarDto);
-            System.out.println("calendarDto.getDateList() = " + calendarDto.getDateList());
             model.addAttribute(TODAY_INFORMATION.getText(), calendarDto.getTodayInformation());
-            System.out.println("calendarDto.getTodayInformation() = " + calendarDto.getTodayInformation());
         } catch (Exception e) {
             model.addAttribute(MESSAGE.getText(), "스케줄 조회에 실패하셨습니다.");
             e.printStackTrace();
@@ -145,7 +142,6 @@ public class ScheduleController {
         objects.put(CITY_NO.getText(), request.getParameter(CITY_NO.getText()));
         objects.put(SCHEDULE_VIEW_COUNT.getText(), 0); //addSchedule에만 필요
         objects.put(USER_NO.getText(), userNO); // addSchedule에만 필요
-        System.out.println("objects = " + objects);
         return objects;
     }
 

@@ -60,7 +60,7 @@ public class CalendarDTO {
         Map<String, Integer> beforeAfterCalendar = beforeAfterCalendar(searchYear,searchMonth);
 
         //날짜 관련
-        System.out.println("search_month : " + searchMonth);
+//        System.out.println("search_month : " + searchMonth);
         // 캘린더 함수 end
         todayData.put("start", start);
         todayData.put("startDay", startDay);
