@@ -19,17 +19,23 @@
                 <!-- Tab Contents -->
                 <div class="tab-content">
                     <%--다른사람 스케줄--%>
-                    <div class="tab-pane active" id="tabs-1" role="tabpanel">
-                        <div class="tab-desc">
-                            <div class="row">
+                    <div class="tab-pane active" id="tabs-1" role="tabpanel" >
+                        <div class="tab-desc" style="overflow: visible">
+                            <div class="row" style="overflow: visible">
                                 <c:if test="${otherScheduleList != null}">
                                     <c:forEach var="scheduleContent" end="2" items="${otherScheduleList}"
                                                varStatus="status">
-                                        <div class="blog-item">
-                                            <div class="bi-pic">
-                                                <img src="resources/img/scheduleImg.png" alt="">
+                                        <div class="blog-item pl-0 pt-0" style="overflow: visible">
+                                            <div class="pc-table m-0" style="width: 35%;float: left;">
+                                                <a href="otherSchedule?userNO=${scheduleContent.userVO.userNO}&scheduleNO=${scheduleContent.scheduleNO}">
+                                                    <c:out value="${scheduleContent.scheduleVO.scheduleSubject}"/>
+                                                    <c:set var = "todayInformation" value = "${CalendarDTOTodayInformationList.get(status.index)}" scope = "request"/>
+                                                    <c:set var = "dateList" value = "${CalendarDTODateList.get(status.index)}" scope = "request"/>
+                                                    <c:set var = "listIndex" value = "${status.index+1}" scope = "request"/>
+                                                    <jsp:include page="/WEB-INF/views/scheduleView/SmallSizeOfOtherSchedule.jsp"/>
+                                                </a>
                                             </div>
-                                            <div class="bi-text">
+                                            <div class="bi-text pt-3">
                                                 <h5><a href="/otherSchedule?userNO=${scheduleContent.userVO.userNO}&scheduleNO=${scheduleContent.scheduleNO}">Title
                                                     : ${scheduleContent.scheduleSubject}</a></h5>
                                                 <ul>

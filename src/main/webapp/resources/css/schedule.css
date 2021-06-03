@@ -73,11 +73,12 @@
 			height:120px;
 			background-color:#EFEFEF;
 			text-align:left;
+			color: #529dbc;
+
 			vertical-align: top;
 		}
 		.calendar_body .sat_day .sat{
 			color: #529dbc;
-			font-weight: bold;
 			font-size: 15px;
 			padding-left: 3px;
 			padding-top: 3px;
@@ -91,7 +92,6 @@
 		}
 		.calendar_body .sun_day .sun{
 			color: red;
-			font-weight: bold;
 			font-size: 15px;
 			padding-left: 3px;
 			padding-top: 3px;

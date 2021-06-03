@@ -130,7 +130,9 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public PagingDTO showOtherScheduleListPaging(HashMap<String, Object> filtersAndOrder, int selectedPage) throws Exception {
         PagingDTO paging = new PagingDTO();
+        paging.setDisplayRow(8);
         paging.setPage(selectedPage);
+        System.out.println("scheduleMapper.getOtherScheduleCount(filtersAndOrder) = " + scheduleMapper.getOtherScheduleCount(filtersAndOrder));
         paging.setTotalCount(scheduleMapper.getOtherScheduleCount(filtersAndOrder));
         return paging;
     }

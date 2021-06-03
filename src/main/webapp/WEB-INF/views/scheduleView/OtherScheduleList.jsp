@@ -118,15 +118,15 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <c:set var ="i" value = "0"/>
                         <c:if test="${otherScheduleList != null}">
                             <c:forEach var="schedule" items="${otherScheduleList}" varStatus="status">
                                 <tr>
-                                    <td>
+                                    <td style="width: 30%">
                                         <a href="otherSchedule?userNO=${schedule.userVO.userNO}&scheduleNO=${schedule.scheduleNO}">
                                             <c:out value="${schedule.scheduleVO.scheduleSubject}"/>
-                                            <c:set var = "todayInformation" value = "${CalendarDTOTodayInformationList.get(i)}" scope = "request"/>
-                                            <c:set var = "dateList" value = "${CalendarDTODateList.get(i)}" scope = "request"/>
+                                            <c:set var = "todayInformation" value = "${CalendarDTOTodayInformationList.get(status.index)}" scope = "request"/>
+                                            <c:set var = "dateList" value = "${CalendarDTODateList.get(status.index)}" scope = "request"/>
+                                            <c:set var = "listIndex" value = "${status.index+1}" scope = "request"/>
                                             <jsp:include page="SmallSizeOfOtherSchedule.jsp">
                                                 <jsp:param name="userAge" value="${userAge}"/>
                                                 <jsp:param name="userSex" value="${userSex}"/>
@@ -142,7 +142,7 @@
                                     <td>${schedule.scheduleViewCount}</td>
                                     <td>${schedule.scheduleLikeCount}</td>
                                 </tr>
-                                <c:set var="i" value="${i + 1}" />
+
                             </c:forEach>
                         </c:if>
                         </tbody>

@@ -2,86 +2,86 @@
 <%@ page contentType="text/html; charset=utf-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <%--<link href="resources/css/schedule.css" rel="stylesheet" type="text/css">--%>
-<%--<link href="resources/css/smallSchedule.css" rel="stylesheet" type="text/css">--%>
-<script src="resources/js/evo-calendar.js"></script>
-<link href="resources/css/evo-calendar.royal-navy.css" rel="stylesheet" type="text/css">
-<div class="royal-navy">
-    <div class="calendar-inner">
-        <table class="calendar-body">
-            <tbody>
-            <tr>
-                <th colspan="7">June</th>
-            </tr>
-            <tr class="calendar-header">
-                <td class="calendar-header-day --weekend">Sun</td>
-                <td class="calendar-header-day">Mon</td>
-                <td class="calendar-header-day">Tue</td>
-                <td class="calendar-header-day">Wed</td>
-                <td class="calendar-header-day">Thu</td>
-                <td class="calendar-header-day">Fri</td>
-                <td class="calendar-header-day --weekend">Sat</td>
-            </tr>
-            <c:forEach var="dateList" items="${dateList}" varStatus="dateStatus">
-            <c:choose>
-            <c:when test="${dateList.value=='today'}">
-            <c:if test="${dateStatus.index%7==0}">
-            <tr>
-                </c:if>
-                <td class="today">
-                    <div class="day"></div>
-                    </c:when>
-                    <c:when test="${dateStatus.index%7==6}">
-                <td class="sat_day ">
-                    <div class="day"></div>
-                    </c:when>
-                    <c:when test="${dateStatus.index%7==0}">
-            </tr>
-            <tr>
-                <td class="calendar-day --weekend">
-                    <div class="day">
-                        </c:when>
-                        <c:otherwise>
-                <td class="normal_day">
-                    <div class="day"></div>
-                    </c:otherwise>
-                    </c:choose>
-                        ${dateList.date}
-                    <div>
-                        <c:forEach var="scheduleList"
-                                   items="${dateList.scheduleDataArray}"
-                                   varStatus="scheduleDataArrayStatus">
-                            <div class="hoverScheduleSubject">
-                                <span class="day"> ${scheduleList.scheduleContentSubject} </span>
-                            </div>
+<link href="resources/css/smallSchedule.css" rel="stylesheet" type="text/css">
+<%--<script src="resources/js/evo-calendar.js"></script>--%>
+<%--<link href="resources/css/evo-calendar.royal-navy.css" rel="stylesheet" type="text/css">--%>
+
+<div class="royal-navy p-3">
+    <table class="calendar_body p-2">
+        <tbody>
+        <tr>
+            <th colspan="7">June</th>
+        </tr>
+        <tr class="calendar-header">
+            <td class="calendar-header-day">Sun</td>
+            <td class="calendar-header-day">Mon</td>
+            <td class="calendar-header-day">Tue</td>
+            <td class="calendar-header-day">Wed</td>
+            <td class="calendar-header-day">Thu</td>
+            <td class="calendar-header-day">Fri</td>
+            <td class="calendar-header-day">Sat</td>
+        </tr>
+        <c:forEach var="dateList" items="${dateList}" varStatus="dateStatus">
+        <c:choose>
+        <c:when test="${dateList.value=='today'}">
+        <c:if test="${dateStatus.index%7==0}">
+        <tr>
+            </c:if>
+            <td id="${listIndex}_${dateList.date}" class="today">
+                </c:when>
+                <c:when test="${dateStatus.index%7==0}">
+        </tr>
+        <tr>
+            <td id="${listIndex}_${dateList.date}" class="sun_day">
+                </c:when>
+                <c:when test="${dateStatus.index%7==6}">
+            <td id="${listIndex}_${dateList.date}" class="sat_day">
+                </c:when>
+                <c:otherwise>
+            <td id="${listIndex}_${dateList.date}" class="normal_day">
+                </c:otherwise>
+                </c:choose>
+                <span class="contents pl-1">${dateList.date}</span>
+                <div class="scheduleContentsModal p-3" id="${listIndex}_${dateList.date}_modal">
+                    <div class="form-group mb-4 mt-2">
+                        <label class="scheduleContentLabel mb-0" style="padding: 0"><h5>컨텐츠 제목</h5></label>
+                        <c:forEach var="scheduleList" items="${dateList.scheduleDataArray}">
+                            <c:if test="${scheduleList.scheduleContentNO != null}">
+                                <label id="scheduleContentSubject" class="form-control mb-2" readonly>${scheduleList.scheduleContentSubject}</label>
+                                <c:set value="true" var="scheduleStatus"/>
+                            </c:if>
                         </c:forEach>
                     </div>
-                    </c:forEach>
-            </tbody>
-        </table>
-    </div>
+                </div>
+                <c:if test="${scheduleStatus == true}">
+                <script>
+                    $('.contents').parent('td#${listIndex}_${dateList.date}').css('background-color', '#00C89E');
+                    $('.contents').parent('td#${listIndex}_${dateList.date}').css('font-weight', 'bold');
+                    $('.contents').parent('td#${listIndex}_${dateList.date}').css('color', '#e1edea');
+                    $('.contents').parent('td#${listIndex}_${dateList.date}').attr("name", 'Contents');
+                    $('td#${listIndex}_${dateList.date}').hover(function (e) {
+                        $('td#${listIndex}_${dateList.date}').css('color', '#00C89E');
+                        $('td#${listIndex}_${dateList.date}').css('background-color', '#e1edea');
+                        $("#${listIndex}_${dateList.date}_modal").css('left', e.offsetX+20);
+                        $("#${listIndex}_${dateList.date}_modal").css('top', e.offsetY+5);
+                        $("#${listIndex}_${dateList.date}_modal").css('display', 'block');
+                    }, function (e) {
+                        $('td#${listIndex}_${dateList.date}').css('color', '#e1edea');
+                        $('td#${listIndex}_${dateList.date}').css('background-color', '#00C89E');
+                        $("#${listIndex}_${dateList.date}_modal").css('display', 'none');
+                    });
+                </script>
+                    <c:set value="false" var="scheduleStatus"/>
+                </c:if>
+                </c:forEach>
+        </tbody>
+    </table>
 </div>
-<div class="calendar-events">
-    <div class="event-header"><p>June 2, 2021</p></div>
-    <div class="event-list">
-        <div class="event-container" role="button" data-event-index="in8bha4">
-            <div class="event-icon">
-                <div class="event-bullet-holiday"></div>
-            </div>
-            <div class="event-info"><p class="event-title">Holiday #2</p>
-                <p class="event-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></div>
-        </div>
-        <div class="event-container" role="button" data-event-index="in8bha4">
-            <div class="event-icon">
-                <div class="event-bullet-event"></div>
-            </div>
-            <div class="event-info"><p class="event-title">Event #2</p></div>
-        </div>
-    </div>
-</div>
-<span id="eventListToggler" role="button" aria-pressed="" title="Close event list"><button class="icon-button"><span
-        class="chevron-arrow-right"></span></button></span>
+
+
 <%--    <form name="calendarFrm" id="calendarFrm" action="otherSchedule">--%>
 <%--        <div class="calendar">--%>
 <%--            <!--날짜 네비게이션  -->--%>

@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 import com.liveamonth.liveamonth.constants.EntityConstants.EEmail;
 import com.liveamonth.liveamonth.constants.LogicConstants;
 import com.liveamonth.liveamonth.constants.LogicConstants.ECityInfoAttributes;
+import com.liveamonth.liveamonth.entity.dto.CalendarDTO;
 import com.liveamonth.liveamonth.entity.dto.PagingDTO;
 import com.liveamonth.liveamonth.entity.dto.S3UploaderDTO;
 import com.liveamonth.liveamonth.entity.vo.UserVO;
@@ -32,10 +33,12 @@ import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 import static com.liveamonth.liveamonth.constants.ControllerPathConstants.ESignPath.*;
 import static com.liveamonth.liveamonth.constants.ControllerPathConstants.ETemplatePath.MAIN;
 import static com.liveamonth.liveamonth.constants.EntityConstants.CityInfoCategory.INTRO;
+import static com.liveamonth.liveamonth.constants.EntityConstants.ESchedule.SCHEDULE_NO;
 import static com.liveamonth.liveamonth.constants.EntityConstants.ESignUp.EMAIL;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.ECityInfoAttributes.*;
@@ -44,6 +47,7 @@ import static com.liveamonth.liveamonth.constants.LogicConstants.EPaging.PAIGING
 import static com.liveamonth.liveamonth.constants.LogicConstants.EReview.POPULAR_REVIEW_LIST;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EReviewAttribute.REVIEW_LIST;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleAttributes.FITERED_OTHER_SCHEDULE_LIST;
+import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleFilterAndOrders.SCHEDULE_FO_ORDER;
 import static com.liveamonth.liveamonth.constants.LogicConstants.ESignAttributes.AT;
 import static com.liveamonth.liveamonth.constants.LogicConstants.ESignAttributes.FIRST_IN;
 
@@ -86,11 +90,31 @@ public class SignController {
         return SIGN_IN.getPath();
     }
 
-    private void setMainPageAttributes(Model model) throws Exception {
+    private void setMainPageAttributes(Model model,CalendarDTO calendarDTO) throws Exception {
         // 인기 REVIEW
         model.addAttribute(POPULAR_REVIEW_LIST.getText(), reviewService.getMainPopularReviewList(1));
         // 인기 SCHEDULE
-        model.addAttribute(FITERED_OTHER_SCHEDULE_LIST.getText(), scheduleService.getMainOtherScheduleList(1));
+        HashMap<String, Object> filtersAndOrder = new HashMap<>();
+        for (LogicConstants.EScheduleFilterAndOrders eFO : LogicConstants.EScheduleFilterAndOrders.values()) {
+            if (eFO == SCHEDULE_FO_ORDER) filtersAndOrder.put(eFO.getText(), "orderByLiked");
+            else filtersAndOrder.put(eFO.getText() + "Filter", false);
+        }
+        List<HashMap<String, Object>> otherScheduleList = scheduleService.getOtherScheduleList(filtersAndOrder, 1);
+        model.addAttribute(FITERED_OTHER_SCHEDULE_LIST.getText(), otherScheduleList);
+
+        // 달력 표시
+        List<CalendarDTO> CalendarDTOList = new ArrayList<>();
+        List<List<CalendarDTO>> CalendarDTODateList = new ArrayList<>();
+        List<HashMap<String, Integer>> CalendarDTOTodayInformationList = new ArrayList<>();
+        for(HashMap<String, Object> otherSchedule : otherScheduleList){
+            int scheduleNO = (int)otherSchedule.get(SCHEDULE_NO.getText());
+            CalendarDTO calendarDto = scheduleService.showCalendar(calendarDTO, scheduleNO);
+            CalendarDTOList.add(calendarDto);
+            CalendarDTODateList.add(calendarDto.getDateList());
+            CalendarDTOTodayInformationList.add((HashMap)calendarDto.getTodayInformation());
+        }
+        model.addAttribute("CalendarDTODateList", CalendarDTODateList); //날짜 데이터 배열 DATE_LIST
+        model.addAttribute("CalendarDTOTodayInformationList", CalendarDTOTodayInformationList);
         // MainCitySlide.jsp 사용
         model.addAttribute(RANDOM_CITY_INTRO_LIST.getText(), cityService.getRandomCityInfoListByCategory(INTRO.name()));
         // CityInfoGrid.jsp 사용
@@ -100,8 +124,8 @@ public class SignController {
     }
     private void setMainPageManageContents(Model model, UserVO userVO) throws Exception{
         // 내 스케줄
-        PagingDTO scheduklePaging = scheduleService.showMySchedulePaging(1,MANAGE_SCHEDULE_CATEGORY.getText(),userVO.getUserNO());
-        model.addAttribute(PAIGING.getText(), scheduklePaging);
+        PagingDTO schedudlePaging = scheduleService.showMySchedulePaging(1,MANAGE_SCHEDULE_CATEGORY.getText(),userVO.getUserNO());
+        model.addAttribute(PAIGING.getText(), schedudlePaging);
         ArrayList<HashMap<String, Object>> scheduleList = scheduleService.getMyScheduleList(1, userVO.getUserNO(),MANAGE_SCHEDULE_CATEGORY.getText());
         model.addAttribute( MY_SCHEDULE_LIST.getText(), scheduleList);
         model.addAttribute(MANAGE_SCHEDULE_CATEGORY.getText(), MANAGE_SCHEDULE_CATEGORY.getText());
@@ -113,14 +137,14 @@ public class SignController {
         model.addAttribute(MANAGE_REVIEW_CATEGORY.getText(), MANAGE_REVIEW_CATEGORY.getText());
     }
     @RequestMapping("/logout")
-    private String logout(HttpSession session, Model model) throws Exception {
+    private String logout(HttpSession session, Model model,CalendarDTO calendarDTO) throws Exception {
         session.invalidate();
-        this.setMainPageAttributes(model);
+        this.setMainPageAttributes(model, calendarDTO);
         return MAIN.getPath();
     }
 
     @RequestMapping("/checkSign")
-    public String checkSign(Model model, HttpServletRequest request, HttpSession session) throws Exception {
+    public String checkSign(Model model, HttpServletRequest request, HttpSession session,CalendarDTO calendarDTO) throws Exception {
         String userID = request.getParameter(USER_ID.getText());
         String userPassword = request.getParameter(USER_PASSWORD.getText());
         UserVO userVO = signService.checkSign(userID, userPassword);
@@ -130,7 +154,7 @@ public class SignController {
             return SIGN_IN.getPath();
         } else {
             session.setAttribute(USER_VO.getText(), userVO);
-            this.setMainPageAttributes(model);
+            this.setMainPageAttributes(model,calendarDTO);
             this.setMainPageManageContents(model, userVO);
             return MAIN.getPath();
         }
