@@ -808,7 +808,7 @@ ol {
 
 .more-option .card .card-body {
     padding: 0;
-    padding-top: 30px;
+    /*padding-top: 30px;*/
 }
 
 .more-option .card .card-body .mo-list .ml-column {

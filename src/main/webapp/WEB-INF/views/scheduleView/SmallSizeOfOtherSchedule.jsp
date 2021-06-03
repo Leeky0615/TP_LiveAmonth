@@ -6,10 +6,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<%--<link href="resources/css/schedule.css" rel="stylesheet" type="text/css">--%>
 <link href="resources/css/smallSchedule.css" rel="stylesheet" type="text/css">
-<%--<script src="resources/js/evo-calendar.js"></script>--%>
-<%--<link href="resources/css/evo-calendar.royal-navy.css" rel="stylesheet" type="text/css">--%>
 <div class="royal-navy p-3">
     <table class="calendar_body p-2">
         <tbody>
