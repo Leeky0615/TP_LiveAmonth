@@ -52,20 +52,17 @@ public class OtherScheduleController {
 
     private HashMap<String, Object> makeRequestList(HttpServletRequest request) {
         HashMap<String, Object> requestList = new HashMap<>();
-
         for (EScheduleFilterAndOrders eFO : EScheduleFilterAndOrders.values()) {
             if (eFO == SCHEDULE_FO_ORDER) {
                 requestList.put(eFO.getText(), request.getParameter(eFO.getText()));
             } else {
                 int option = this.checkOption(request.getParameter(eFO.getText()));
-
                 requestList.put(eFO.getText(), option);
             }
         }
         return requestList;
     }
-
-    private HashMap<String, Object>  makeFiltersAndOrder(HttpServletRequest request, String action, int selectPage) throws Exception {
+    private HashMap<String, Object>  makeFiltersAndOrder(HttpServletRequest request, String action) throws Exception {
         HashMap<String, Object> filtersAndOrder = new HashMap<>();
         // action = list : 초기 헤더메뉴 클릭시
         if (action.equals(SCHEDULE_LIST.getText())) { // 기본값
@@ -108,48 +105,47 @@ public class OtherScheduleController {
 
     @RequestMapping("/otherScheduleList")
     public String otherScheduleList(Model model, HttpServletRequest request, CalendarDTO calendarDTO) throws Exception {
+        // 페이지 선택
         int selectPage = 1;
         if (request.getParameter(SELECTED_PAGE.getText()) != null) {
             selectPage = Integer.parseInt(request.getParameter(SELECTED_PAGE.getText()));
-            System.out.println("selectPage " + selectPage);
         }
-
-        HashMap<String, Object> filtersAndOrder = this.makeFiltersAndOrder(request, request.getParameter(SCHEDULE_ACTION.getText()), selectPage);
+        // Request를 가지고 필터&오더 만들기
+        HashMap<String, Object> filtersAndOrder = this.makeFiltersAndOrder(request, request.getParameter(SCHEDULE_ACTION.getText()));
+        // 페이지와 필터&오더를 보내 스케줄 리스트 받기
         List<HashMap<String, Object>> otherScheduleList = scheduleService.getOtherScheduleList(filtersAndOrder, selectPage);
-        PagingDTO paging = scheduleService.showOtherScheduleListPaging(filtersAndOrder, selectPage);
-        HashMap<String, Object> requestList = makeRequestList(request);
+        model.addAttribute(FITERED_OTHER_SCHEDULE_LIST.getText(), otherScheduleList);
 
+        // 리스트 밑에 페이지 표시나오게 하는 부분
+        PagingDTO paging = scheduleService.showOtherScheduleListPaging(filtersAndOrder, selectPage);
+        model.addAttribute(PAIGING.getText(), paging);
+
+        // 달력 표시
         List<CalendarDTO> CalendarDTOList = new ArrayList<>();
         List<List<CalendarDTO>> CalendarDTODateList = new ArrayList<>();
         List<HashMap<String, Integer>> CalendarDTOTodayInformationList = new ArrayList<>();
-
         for(HashMap<String, Object> otherSchedule : otherScheduleList){
-            int scheduleNO = (int)otherSchedule.get("scheduleNO");
+            int scheduleNO = (int)otherSchedule.get(SCHEDULE_NO.getText());
             CalendarDTO calendarDto = scheduleService.showCalendar(calendarDTO, scheduleNO);
             CalendarDTOList.add(calendarDto);
             CalendarDTODateList.add(calendarDto.getDateList());
             CalendarDTOTodayInformationList.add((HashMap)calendarDto.getTodayInformation());
         }
-
-        model.addAttribute(FITERED_OTHER_SCHEDULE_LIST.getText(), otherScheduleList);
-        model.addAttribute(SCHEDULE_PLACE_LIST.getText(), cityService.getCityNameList());
-        model.addAttribute(REQUEST_LIST.getText(), requestList);
-
         model.addAttribute("CalendarDTODateList", CalendarDTODateList); //날짜 데이터 배열 DATE_LIST
         model.addAttribute("CalendarDTOTodayInformationList", CalendarDTOTodayInformationList); //TODAY_INFORMATION
 
-        model.addAttribute(PAIGING.getText(), paging);
-
+        // 필터 & 정렬 리스트
+        HashMap<String, Object> requestList = makeRequestList(request);
+        model.addAttribute(REQUEST_LIST.getText(), requestList);
+        model.addAttribute(SCHEDULE_PLACE_LIST.getText(), cityService.getCityNameList());
         return OTHER_SCHEDULE_LIST.getPath();
     }
 
     @RequestMapping("otherSchedule")
-    public String otherSchedule(Model model, HttpServletRequest request, CalendarDTO calendarDTO, RedirectAttributes rttr){
+    public String otherSchedule(Model model, HttpServletRequest request, CalendarDTO calendarDTO){
         HttpSession session = request.getSession();
         UserVO session_UserVO = (UserVO) session.getAttribute(USER_VO.getText());
-
         int scheduleNO = Integer.parseInt(request.getParameter(SCHEDULE_NO.getText()));
-
         model.addAttribute(SCHEDULE_NO.getText(), scheduleNO);
 
         int selectPage = 1;

@@ -93,7 +93,6 @@ public class ScheduleController {
         ArrayList<ScheduleVO> scheduleVOList;
         try {
             scheduleVOList = scheduleService.getScheduleList(userNO);
-            //System.out.println(scheduleVOList.get(0).getCityVO().getCityName());
             model.addAttribute(SCHEDULE_VO_LIST.getText(), scheduleVOList);
             if (scheduleVOList.isEmpty()) {
                 model.addAttribute(MESSAGE.getText(), "아직 캘린더를 생성하지 않으셨습니다. 캘린더를 추가해주세요.");
@@ -118,7 +117,11 @@ public class ScheduleController {
         try {
             calendarDto = scheduleService.showCalendar(calendarDTO, scheduleNO);
             model.addAttribute(DATE_LIST.getText(), calendarDto.getDateList());
+            calendarDto.setDate("2021-");
+            System.out.println("calendarDto = " + calendarDto);
+            System.out.println("calendarDto.getDateList() = " + calendarDto.getDateList());
             model.addAttribute(TODAY_INFORMATION.getText(), calendarDto.getTodayInformation());
+            System.out.println("calendarDto.getTodayInformation() = " + calendarDto.getTodayInformation());
         } catch (Exception e) {
             model.addAttribute(MESSAGE.getText(), "스케줄 조회에 실패하셨습니다.");
             e.printStackTrace();

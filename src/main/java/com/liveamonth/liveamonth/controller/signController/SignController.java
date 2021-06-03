@@ -4,6 +4,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.liveamonth.liveamonth.constants.EntityConstants.EEmail;
+import com.liveamonth.liveamonth.constants.LogicConstants;
+import com.liveamonth.liveamonth.constants.LogicConstants.ECityInfoAttributes;
 import com.liveamonth.liveamonth.entity.dto.PagingDTO;
 import com.liveamonth.liveamonth.entity.dto.S3UploaderDTO;
 import com.liveamonth.liveamonth.entity.vo.UserVO;
@@ -36,8 +38,9 @@ import static com.liveamonth.liveamonth.constants.ControllerPathConstants.ETempl
 import static com.liveamonth.liveamonth.constants.EntityConstants.CityInfoCategory.INTRO;
 import static com.liveamonth.liveamonth.constants.EntityConstants.ESignUp.EMAIL;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.*;
-import static com.liveamonth.liveamonth.constants.LogicConstants.ECityInfoAttributes.CITY_INTRO_LIST;
-import static com.liveamonth.liveamonth.constants.LogicConstants.ECityInfoAttributes.RANDOM_CITY_INTRO_LIST;
+import static com.liveamonth.liveamonth.constants.LogicConstants.ECityInfoAttributes.*;
+import static com.liveamonth.liveamonth.constants.LogicConstants.EMyPageAttributes.*;
+import static com.liveamonth.liveamonth.constants.LogicConstants.EPaging.PAIGING;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EReview.POPULAR_REVIEW_LIST;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EReviewAttribute.REVIEW_LIST;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleAttributes.FITERED_OTHER_SCHEDULE_LIST;
@@ -91,7 +94,7 @@ public class SignController {
         // MainCitySlide.jsp 사용
         model.addAttribute(RANDOM_CITY_INTRO_LIST.getText(), cityService.getRandomCityInfoListByCategory(INTRO.name()));
         // CityInfoGrid.jsp 사용
-        model.addAttribute(CURRENT_MONTH_TEMP_LIST.getText(),cityService.getAVGTempList());
+        model.addAttribute(ECityInfoAttributes.CURRENT_MONTH_TEMP_LIST.getText(),cityService.getAVGTempList());
         model.addAttribute(CITY_TRANSPORT_GRADE_LIST.getText(), cityService.getCityTransportGradeList());
         model.addAttribute(CITY_INTRO_LIST.getText(), cityService.getCityInfoListByCategory(INTRO.name()));
     }

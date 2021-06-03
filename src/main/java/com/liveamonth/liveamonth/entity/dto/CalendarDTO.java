@@ -106,7 +106,6 @@ public class CalendarDTO {
     }
 
     // 스케줄 사용시 사용될 생성자
-
     public CalendarDTO(String year, String month, String date, String value, ScheduleContentVO[] scheduleDataArray) {
         if ((month != null && month != "") && (date != null && date != "")) {
             this.year = year;
@@ -170,9 +169,7 @@ public class CalendarDTO {
 		this.scheduleDataArray = scheduleDataArray;
 	}
 
-	public Map<String, Integer> getTodayInformation() {
-		return todayInformation;
-	}
+	public Map<String, Integer> getTodayInformation() {return todayInformation;}
 	public void setTodayInformation(Map<String, Integer> todayInformation) {
 		this.todayInformation = todayInformation;
 	}

@@ -67,6 +67,7 @@ public class LogicConstants {
         FIRST_SCHEDULEREPLY_NO(501),
         FIRST_SCHEDULE_NO(200),
         STATIC_DISPLAY_PAGE_NUM(15),
+        SCHEDULE_DISPLAY_PAGE_NUM(8),
         FIRST_SCHEDULECONTENT_NO(301);
         private int text;
         private EScheduleStaticInt(int text) {this.text = text;}

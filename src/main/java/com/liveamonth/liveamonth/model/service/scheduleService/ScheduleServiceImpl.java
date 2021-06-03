@@ -19,8 +19,7 @@ import static com.liveamonth.liveamonth.constants.EntityConstants.EPage.DISPLAY_
 import static com.liveamonth.liveamonth.constants.EntityConstants.ESchedule.SCHEDULE_NO;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EPaging.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleFilterAndOrders.SCHEDULE_FO_ORDER;
-import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleStaticInt.FIRST_SCHEDULECONTENT_NO;
-import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleStaticInt.STATIC_DISPLAY_PAGE_NUM;
+import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleStaticInt.*;
 
 
 @Service
@@ -93,9 +92,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 
         //달력 빈 곳 빈 데이터로 삽입
         int index = 7 - calendarDTO.getDateList().size() % 7;
-
         if (calendarDTO.getDateList().size() % 7 != 0) {
-
             for (int i = 0; i < index; i++) {
                 calendarData = new CalendarDTO(null, null, null, null, null);
                 calendarDTO.getDateList().add(calendarData);
@@ -123,10 +120,10 @@ public class ScheduleServiceImpl implements ScheduleService {
     //otherList
     @Override
 	public ArrayList<HashMap<String, Object>> getOtherScheduleList(HashMap<String, Object> filtersAndOrder, int selectedPage) throws Exception{
-        int startNum = (selectedPage-1)*15;
+        int startNum = (selectedPage-1)*8;
         filtersAndOrder.put(START_NO.getText(), startNum);
-        filtersAndOrder.put(DISPLAY_PAGE.getText(), STATIC_DISPLAY_PAGE_NUM.getText());
-
+        filtersAndOrder.put(DISPLAY_PAGE.getText(), SCHEDULE_DISPLAY_PAGE_NUM.getText());
+        System.out.println("filtersAndOrder = " + filtersAndOrder);
         return scheduleMapper.getOtherScheduleList(filtersAndOrder);
 	}
 
@@ -138,8 +135,6 @@ public class ScheduleServiceImpl implements ScheduleService {
         return paging;
     }
 
-
-
     @Override
     public ArrayList<ScheduleVO> getScheduleList(int userNO) throws Exception {
         return scheduleMapper.getScheduleList(userNO);
@@ -148,7 +143,6 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public void deleteScheduleContent(int scheduleContentNO) throws Exception {
         scheduleMapper.deleteScheduleContent(scheduleContentNO);
-
     }
 
     @Override

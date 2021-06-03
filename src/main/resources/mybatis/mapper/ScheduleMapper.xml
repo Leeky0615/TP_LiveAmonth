@@ -40,7 +40,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<resultMap type = "java.util.HashMap" id="scheduleFilterAndOrder">
-		<id column="scheduleNO" property="scheduleNO"/>
+		<result column="scheduleNO" property="scheduleNO"/>
 		<result column="scheduleSubject" property="scheduleSubject"/>
 		<result column="scheduleViewCount" property="scheduleViewCount"/>
 		<result column="scheduleLikeCount" property="scheduleLikeCount"/>
@@ -55,39 +55,43 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<result column="cityName" property="cityName"/>
 		</association>
 	</resultMap>
- 	<select id="getOtherScheduleList" parameterType="HashMap" resultMap="scheduleFilterAndOrder">
+ 	<select id="getOtherScheduleList" parameterType="java.util.HashMap" resultMap="scheduleFilterAndOrder">
 		select a.*, IF(isnull(scheduleLikeCount), 0, scheduleLikeCount) as scheduleLikeCount
-		from (select schedule.scheduleNO, user.userNO, userNickname, scheduleSubject, userAge,userSex,city.cityNO, cityName,scheduleViewCount
-				from user, schedule, city
-				where schedule.userNO = user.userNO
-				and schedule.cityNO = city.cityNO
-		  		and schedule.scheduleStatus = true
-				<if test="userAgeFilter==true">
-					and userAge between Year(curdate())-#{userAge}-9 and Year(curdate())-#{userAge}
-				</if>
-				<if test="userSexFilter==true">
-					and userSex = #{userSex}
-				</if>
-				<if test="schedulePlaceFilter==true">
-					and cityName = ${cityName}
-				</if>
-		    	) as a
-		left join(select scheduleLike.scheduleNO, count(scheduleLikeUserNO) as scheduleLikeCount
-				from schedule, scheduleLike
-				where schedule.scheduleNO = scheduleLike.scheduleNO
-				group by scheduleLike.scheduleNO) as b
+		from (
+		    select schedule.scheduleNO, scheduleViewCount, scheduleSubject, user.userNO, userNickname, userAge,userSex, city.cityNO, cityName
+			from schedule, user, city
+		    where schedule.userNO = user.userNO
+		    and schedule.cityNO = city.cityNO
+			and schedule.scheduleStatus = true
+		<if test="userAgeFilter==true">
+			and userAge between Year(curdate())-#{userAge}-9 and Year(curdate())-#{userAge}
+		</if>
+		<if test="userSexFilter==true">
+			and userSex = #{userSex}
+		</if>
+		<if test="schedulePlaceFilter==true">
+			and cityName = ${cityName}
+		</if>
+			  ) as a
+		left join(
+			select scheduleLike.scheduleNO, count(scheduleLikeUserNO) as scheduleLikeCount
+			from schedule, scheduleLike
+			where schedule.scheduleNO = scheduleLike.scheduleNO
+			group by scheduleLike.scheduleNO
+			) as b
 		ON a.scheduleNO = b.scheduleNO
 		<choose>
 			<when test="orderBy == 'orderByView'">
-				ORDER BY scheduleViewCount desc;
+				ORDER BY scheduleViewCount desc
 			</when>
 			<when test="orderBy == 'orderByLiked'">
-				ORDER BY scheduleLikeCount desc;
+				ORDER BY scheduleLikeCount desc
 			</when>
 			<otherwise>
-				ORDER BY scheduleNO desc;
+				ORDER BY scheduleNO desc
 			</otherwise>
 		</choose>
+		limit #{startNO}, #{displayPage};
 	</select>
 
 	<resultMap type = "java.util.HashMap" id="scheduleReplyAndNickname">
@@ -112,12 +116,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		   	(select @rownum:=#{startNO})TMP
 		limit #{startNO}, #{displayPage};
 	</select>
+	<select id="getOtherScheduleCount" parameterType="java.util.HashMap" resultType="int">
+		select count(schedule.scheduleNO)
+		from schedule
+		left join user on schedule.userNO = user.userNO
+		left join city on schedule.cityNO = city.cityNO
+		where schedule.scheduleStatus = true
+		<if test="userAgeFilter==true">
+			and userAge between Year(curdate())-#{userAge}-9 and Year(curdate())-#{userAge}
+		</if>
+		<if test="userSexFilter==true">
+			and userSex = #{userSex}
+		</if>
+		<if test="schedulePlaceFilter==true">
+			and cityName = ${cityName}
+		</if>
+	</select>
 
 	<select id="getScheduleReplyCount" parameterType="int" resultType="int">
 		select count(scheduleReplyNO) as count from scheduleReply where scheduleNO = #{scheduleNO};
 	</select>
 
-	<select id="getScheduleLikeStatus" parameterType="com.liveamonth.liveamonth.entity.vo.ScheduleLikeVO" resultType="int">
+	<select id="getScheduleLikeStatus" parameterType="ScheduleLikeVO" resultType="int">
 		select EXISTS (select * from scheduleLike where scheduleNO = #{scheduleNO} and scheduleLikeUserNO =  #{scheduleLikeUserNO}) as success;
 	</select>
 

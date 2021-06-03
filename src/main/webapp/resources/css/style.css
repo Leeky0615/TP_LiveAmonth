@@ -2612,12 +2612,12 @@ ol {
     background: #f7f7f7;
 }
 
-.pc-table table tbody tr td {
-    font-size: 14px;
-    color: #636363;
-    font-weight: 500;
-    padding: 20px 0;
-}
+/*.pc-table table tbody tr td {*/
+/*    font-size: 14px;*/
+/*    color: #636363;*/
+/*    font-weight: 500;*/
+/*    padding: 20px 0;*/
+/*}*/
 
 .pc-table table tbody tr td.p-type {
     color: #111111;

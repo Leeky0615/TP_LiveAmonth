@@ -122,8 +122,8 @@
                         <c:if test="${otherScheduleList != null}">
                             <c:forEach var="schedule" items="${otherScheduleList}" varStatus="status">
                                 <tr>
-                                    <td width="40%" height="300px">
-                                        <a href="/otherSchedule?userNO=${schedule.userVO.userNO}&scheduleNO=${schedule.scheduleVO.scheduleNO}">
+                                    <td>
+                                        <a href="otherSchedule?userNO=${schedule.userVO.userNO}&scheduleNO=${schedule.scheduleNO}">
                                             <c:out value="${schedule.scheduleVO.scheduleSubject}"/>
                                             <c:set var = "todayInformation" value = "${CalendarDTOTodayInformationList.get(i)}" scope = "request"/>
                                             <c:set var = "dateList" value = "${CalendarDTODateList.get(i)}" scope = "request"/>
@@ -139,8 +139,8 @@
                                     <td>${schedule.userVO.userNickname}</td>
                                     <td>${schedule.userVO.getUserSexToString()}</td>
                                     <td>${schedule.userVO.getUserRealAge()}세</td>
-                                    <td>${schedule.scheduleVO.scheduleViewCount}</td>
-                                    <td>${schedule.scheduleLikeVO.scheduleLikeUserNO}</td>
+                                    <td>${schedule.scheduleViewCount}</td>
+                                    <td>${schedule.scheduleLikeCount}</td>
                                 </tr>
                                 <c:set var="i" value="${i + 1}" />
                             </c:forEach>
