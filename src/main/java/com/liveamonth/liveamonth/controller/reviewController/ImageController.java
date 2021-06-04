@@ -23,14 +23,11 @@ public class ImageController {
 
     @PostMapping(value="/uploadSummernoteImageFile", produces = "application/json")
     @ResponseBody
-    public JsonObject uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile) {
-
+    public JsonObject uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile){
         JsonObject jsonObject = new JsonObject();
         try {
             String savedFileName = s3Uploader.upload(S3_UPLOAD_FOLDER.getText(), multipartFile.getOriginalFilename(), multipartFile.getBytes());
             jsonObject.addProperty(TEMP_IMAGE_URL.getText(), TEMP_IMAGE_PATH.getText()+savedFileName);
-        } catch (IOException e) {
-            System.err.println(REVIEWIMG_UPLOAD_FAIL_MESSAGE.getText() + e);
         } catch (Exception e) {
             System.err.println(REVIEWIMG_UPLOAD_FAIL_MESSAGE.getText() + e);
         }

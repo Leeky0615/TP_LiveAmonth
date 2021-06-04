@@ -1,7 +1,6 @@
 package com.liveamonth.liveamonth.controller.signController;
 
 import com.liveamonth.liveamonth.constants.EntityConstants.EEmail;
-import com.liveamonth.liveamonth.controller.MainController;
 import com.liveamonth.liveamonth.controller.SuperController;
 import com.liveamonth.liveamonth.entity.dto.CalendarDTO;
 import com.liveamonth.liveamonth.entity.vo.UserVO;
@@ -158,27 +157,10 @@ public class SignController extends SuperController {
                                  String userName, @RequestParam("userEmail") String userEmail, Model model) throws Exception {
         model.addAttribute(USER_ID.getText(), signService.findID(userName, userEmail));
 
-        if (signService.findID(userName, userEmail) == null)
-            this.firstIn = false;
+        if (signService.findID(userName, userEmail) == null) this.firstIn = false;
         model.addAttribute(FIRST_IN.getText(), this.firstIn);
 
         return RESULT_MENT_FIND_ID.getPath();
-    }
-
-
-    @RequestMapping("/findID")
-    private String findID(Model model) throws Exception {
-
-        this.firstIn = true;
-        model.addAttribute(FIRST_IN.getText(), this.firstIn);
-        return FIND_ID.getPath();
-    }
-
-
-    @RequestMapping("/findPW")
-    private String findPW() throws Exception {
-        return FIND_PW.getPath();
-
     }
 
     @RequestMapping(value = "/ResultMentFindPW", method = RequestMethod.POST)

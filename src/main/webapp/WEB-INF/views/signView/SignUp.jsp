@@ -95,7 +95,7 @@
                             </div>
 
                             <%--출생년도--%>
-                            <div class="form-group mb-5">
+                            <div class="form-group mb-5" style="margin-top: 100px">
                                 <label class="label mt-3 mb-0" for="userAge"><h5>BIRTH</h5></label>
                                 <input type="number" class="int form-control" id="userAge"
                                        min="1900" max="2021" maxlength="4" placeholder="생년(4자)" onpaste="return false;"

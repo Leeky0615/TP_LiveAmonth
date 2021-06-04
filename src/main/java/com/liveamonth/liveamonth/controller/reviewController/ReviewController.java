@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.Locale;
 
 import static com.liveamonth.liveamonth.constants.ControllerPathConstants.EReviewPath.*;
+import static com.liveamonth.liveamonth.constants.ControllerPathConstants.ETemplatePath.REVIEW;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EReview.REVIEW_NO;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EReview.REVIEW_VO;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EReviewCategoryName;
@@ -47,7 +48,7 @@ public class ReviewController extends SuperController {
         model.addAttribute(FREE_REVIEW_LIST.getText(), freeReviewList);
         model.addAttribute(POPULAR_REVIEW_LIST.getText(), popularReviewList);
         model.addAttribute(REVIEW_CATEGORY_LIST.getText(), EReviewCategoryName.values());
-        return "Review";
+        return REVIEW.getPath();
     }
 
     @GetMapping("/categoryReviewPage")
@@ -143,7 +144,7 @@ public class ReviewController extends SuperController {
         UserVO session_UserVO = (UserVO) session.getAttribute(USER_VO.getText());
         reviewVO.setUserNO(session_UserVO.getUserNO());
 
-        int reviewNO = 0;
+        int reviewNO;
         try {
             reviewNO = reviewService.addReview(reviewVO);
         } catch (Exception e) {
@@ -181,12 +182,12 @@ public class ReviewController extends SuperController {
     }
 
     @GetMapping("getReview")
-    public String getReview(Model model, HttpServletRequest request, RedirectAttributes rttr) {
+    public String getReview(Model model, HttpServletRequest request) {
         int reviewNO = Integer.parseInt(String.valueOf(request.getParameter(REVIEW_NO.getText())));
         HttpSession session = request.getSession();
         UserVO session_UserVO = (UserVO) session.getAttribute(USER_VO.getText());
 
-        ReviewVO reviewVO = null;
+        ReviewVO reviewVO;
         try {
             reviewVO = reviewService.getReviewVO(reviewNO);
             model.addAttribute(REVIEW_VO.getText(), reviewVO);
@@ -211,7 +212,7 @@ public class ReviewController extends SuperController {
             return DEFAULT_REVIEW_PAGE.getPath();
         }
 
-        PagingDTO paging = null;
+        PagingDTO paging;
         try {
             paging = reviewService.showPaging(selectPage, reviewNO);
             model.addAttribute(PAIGING.getText(), paging);

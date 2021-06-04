@@ -17,8 +17,8 @@ public class EntityConstants {
      */
     public enum ESignUp {
         EMAIL("email");
-        private String text;
-        private ESignUp(String text) {
+        private final String text;
+        ESignUp(String text) {
             this.text = text;
         }
         public String getText() {
@@ -34,30 +34,10 @@ public class EntityConstants {
         CITY_VO_LIST("cityVOList"),
         CITY_NO("cityNO"),
         CITY_NAME("cityName");
-        private String text;
-
-        private ECity(String text) {
+        private final String text;
+        ECity(String text) {
             this.text = text;
         }
-
-        public String getText() {
-            return this.text;
-        }
-    }
-
-    public enum ECityInfo {
-        CITY_INFO_VO("cityInfoVO"),
-        CITY_INFO_VO_LIST("cityInfoVOList"),
-        CITY_INFO_NO("cityInfoNO"),
-        CITY_INFO_CATEGORY("cityInfoCategory"),
-        CITY_INFO_DESC("cityInfoDesc"),
-        CITY_INFO_IMAGE("cityInfoImage");
-        private String text;
-
-        private ECityInfo(String text) {
-            this.text = text;
-        }
-
         public String getText() {
             return this.text;
         }
@@ -67,37 +47,17 @@ public class EntityConstants {
         INTRO("Intro", "intro/"),
         FOOD("Food", "food/"),
         VIEW("View", "view/");
-        private String text;
-        private String path;
-
-        private CityInfoCategory(String text, String path) {
+        private final String text;
+        private final String path;
+        CityInfoCategory(String text, String path) {
             this.text = text;
             this.path = path;
         }
-
         public String getText() {
             return this.text;
         }
-
         public String getPath() {
             return this.path;
-        }
-    }
-
-    public enum ECityTransport {
-        CITY_TRANSPORT_VO("cityTransportVO"),
-        CITY_TRANSPOR_VO_LIST("cityTransportVOList"),
-        CITY_TRANSPOR_NO("cityTransportNO"),
-        CITY_TRANSPOR_CATEGORY("cityTransportCategory"),
-        CITY_TRANSPOR_DESC("cityTransportCount");
-        private String text;
-
-        private ECityTransport(String text) {
-            this.text = text;
-        }
-
-        public String getText() {
-            return this.text;
         }
     }
 
@@ -108,35 +68,16 @@ public class EntityConstants {
         BUS_TERMINAL("버스 터미널",3),
         TRAIN("기차역",2),
         AIRPORT("공항",1);
-        private String nameKR;
-        private int score;
-        private CityTransportCategory(String nameKR,int score) {
+        private final String nameKR;
+        private final int score;
+        CityTransportCategory(String nameKR,int score) {
             this.nameKR = nameKR;
             this.score = score;
-        }
-        public String getNameKR() {
-            return this.nameKR;
         }
         public int getScore() {
             return this.score;
         }
-    }
-
-    public enum ECityWeather {
-        CITY_WEATHER_VO("cityTransportVO"),
-        CITY_WEATHER_VO_LIST("cityTransportVOList"),
-        CITY_WEATHER_NO("cityTransportNO"),
-        CITY_WEATHER_MONTH("cityWeatherMonth"),
-        CITY_WEATHER_MAX_TEMP("cityWeatherMaxTemp"),
-        CITY_WEATHER_MIN_TEMP("cityWeatherMinTemp"),
-        CITY_WEATHER_AVG_TEMP("cityWeatherAVGTemp");
-        private String text;
-        private ECityWeather(String text) {
-            this.text = text;
-        }
-        public String getText() {
-            return this.text;
-        }
+        public String getNameKR() {return this.nameKR;}
     }
 
     public enum Month {Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sept, Oct, Nov, Dec}
@@ -150,12 +91,10 @@ public class EntityConstants {
         REVIEW_REPLY_DESC("reviewReplyDesc"),
         REVIEW_REPLY_DATE("reviewReplyDate"),
         REVIEW_REPLY_REF_NO("reviewReplyRefNO");
-        private String text;
-
-        private EReviewReply(String text) {
+        private final String text;
+        EReviewReply(String text) {
             this.text = text;
         }
-
         public String getText() {
             return this.text;
         }
@@ -172,12 +111,10 @@ public class EntityConstants {
         REVIEW_DESC("reviewDesc"),
         REVIEW_DATE("reviewDate"),
         REVIEW_VIEW_COUNT("reviewViewCount");
-        private String text;
-
-        private EReview(String text) {
+        private final String text;
+        EReview(String text) {
             this.text = text;
         }
-
         public String getText() {
             return this.text;
         }
@@ -190,9 +127,8 @@ public class EntityConstants {
         ONE_MONTH("1개월"),
         SIX_MONTH("6개월"),
         ONE_YEAR("1년");
-
-        private String nameKR;
-        private EReviewSearchDate(String nameKR){this.nameKR = nameKR;}
+        private final String nameKR;
+        EReviewSearchDate(String nameKR){this.nameKR = nameKR;}
         public String getNameKR() {return this.nameKR;}
 
     }
@@ -202,13 +138,10 @@ public class EntityConstants {
         NICKNAME("글작성자"),
         REPLY_CONTENT("댓글내용"),
         REPLY_NICKNAME("댓글작성자");
-        private String nameKR;
-        private EReviewSearchDetail(String nameKR){this.nameKR = nameKR;}
+        private final String nameKR;
+        EReviewSearchDetail(String nameKR){this.nameKR = nameKR;}
         public String getNameKR() {return this.nameKR;}
-
     }
-
-
 
     public enum EReviewCategoryName{
         SEOUL_HOUSE_BOARD("서울ㅣ숙박시설"),
@@ -240,8 +173,8 @@ public class EntityConstants {
         JEJU_REVIEW_BOARD("제주ㅣ솔직후기"),
 
         FREE_BOARD("자유게시판");
-        private String nameKR;
-        private EReviewCategoryName(String nameKR){this.nameKR = nameKR;}
+        private final String nameKR;
+        EReviewCategoryName(String nameKR){this.nameKR = nameKR;}
         public String getNameKR() {return this.nameKR;}
     }
 
@@ -256,12 +189,10 @@ public class EntityConstants {
         SCHEDULE_CONTENT_DESC("scheduleContentDesc"),
         SCHEDULE_CONTENT_DATE("scheduleContentDate"),
         SCHEDULE_CONTENT_COST("scheduleContentCost");
-        private String text;
-
-        private EScheduleContent(String text) {
+        private final String text;
+        EScheduleContent(String text) {
             this.text = text;
         }
-
         public String getText() {
             return this.text;
         }
@@ -276,17 +207,14 @@ public class EntityConstants {
         SCHEDULE_REPLY_DESC("scheduleReplyDesc"),
         SCHEDULE_REPLY_DATE("scheduleReplyDate"),
         SCHEDULE_REPLY_REF_NO("scheduleReplyRefNO");
-        private String text;
-
-        private EScheduleReply(String text) {
+        private final String text;
+        EScheduleReply(String text) {
             this.text = text;
         }
-
         public String getText() {
             return this.text;
         }
     }
-
 
     /*
      * Schedule Table Constants
@@ -301,17 +229,14 @@ public class EntityConstants {
         SCHEDULE_PLACE("schedulePlace"),
         SCHEDULE_PAY_START_DAY("schedulePayStartDay"),
         SCHEDULE_PAY_FINISH_DAY("schedulePayFinishDay");
-        private String text;
-
-        private ESchedule(String text) {
+        private final String text;
+        ESchedule(String text) {
             this.text = text;
         }
-
         public String getText() {
             return this.text;
         }
     }
-
 
     /*
      * User Table Constants
@@ -327,17 +252,14 @@ public class EntityConstants {
         USER_SEX("userSex"),
         USER_EMAIL("userEmail"),
         NAVER_USER("naverUser");
-        private String text;
-
-        private EUser(String text) {
+        private final String text;
+        EUser(String text) {
             this.text = text;
         }
-
         public String getText() {
             return this.text;
         }
     }
-
 
     /*
      * OneToOneAsk Table Constants
@@ -347,12 +269,10 @@ public class EntityConstants {
         ONE_TO_ONE_ASK_VO("oneToOneAskVO"),
         ONE_TO_ONE_ASK_VO_LIST("oneToOneAskVOList"),
         ONE_TO_ONE_ASK_CATEGORY("oneToOneAskCategory");
-        private String text;
-
-        private EOneToOneAsk(String text) {
+        private final String text;
+        EOneToOneAsk(String text) {
             this.text = text;
         }
-
         public String getText() {
             return this.text;
         }
@@ -375,12 +295,10 @@ public class EntityConstants {
 
     public enum EPage {
         DISPLAY_PAGE("displayPage");
-        private String text;
-
-        private EPage(String text) {
+        private final String text;
+        EPage(String text) {
             this.text = text;
         }
-
         public String getText() {
             return text;
         }
@@ -392,12 +310,10 @@ public class EntityConstants {
         naver("naver.com"),
         google("gmail.com"),
         self("직접입력");
-        private String label;
-
+        private final String label;
         EEmail(String label) {
             this.label = label;
         }
-
         public String getLabel() {
             return label;
         }
@@ -410,9 +326,8 @@ public class EntityConstants {
         SCHEDULE_REPLY("scheduleReply"),
         REVIEW_REPLY_REF("reviewReplyRef"),
         SCHEDULE_REPLY_REF("scheduleReplyRef");
-
-        private String text;
-        private ENoticeType(String text) {
+        private final String text;
+        ENoticeType(String text) {
             this.text = text;
         }
         public String getText() {

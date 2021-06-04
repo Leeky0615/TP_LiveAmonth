@@ -1,11 +1,8 @@
 package com.liveamonth.liveamonth.controller.myPageController;
 
-import com.liveamonth.liveamonth.constants.ControllerPathConstants;
-import com.liveamonth.liveamonth.constants.LogicConstants;
 import com.liveamonth.liveamonth.constants.LogicConstants.EPageOptions;
 import com.liveamonth.liveamonth.controller.SuperController;
 import com.liveamonth.liveamonth.entity.dto.CalendarDTO;
-import com.liveamonth.liveamonth.entity.dto.PagingDTO;
 import com.liveamonth.liveamonth.entity.dto.S3UploaderDTO;
 import com.liveamonth.liveamonth.entity.vo.OneToOneAskVO;
 import com.liveamonth.liveamonth.entity.vo.UserVO;
@@ -21,29 +18,21 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 import static com.liveamonth.liveamonth.constants.ControllerPathConstants.EMyPagePath.*;
 import static com.liveamonth.liveamonth.constants.ControllerPathConstants.ETemplatePath.MY_PAGE;
-import static com.liveamonth.liveamonth.constants.EntityConstants.*;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EOneToOneAsk.*;
-import static com.liveamonth.liveamonth.constants.EntityConstants.ESchedule.SCHEDULE_NO;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.*;
 import static com.liveamonth.liveamonth.constants.EntityConstants.OneToOneAskCategory;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EMyPageAttributes.*;
-import static com.liveamonth.liveamonth.constants.LogicConstants.EMyPageAttributes.CHECK_USER;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EPageOptions.*;
-import static com.liveamonth.liveamonth.constants.LogicConstants.EPageOptions.PAGE_MODIFY;
-import static com.liveamonth.liveamonth.constants.LogicConstants.EPaging.PAIGING;
-import static com.liveamonth.liveamonth.constants.LogicConstants.EPaging.SELECTED_PAGE;
-import static com.liveamonth.liveamonth.constants.LogicConstants.EReview.POPULAR_REVIEW_LIST;
-import static com.liveamonth.liveamonth.constants.LogicConstants.EReviewAttribute.REVIEW_LIST;
-import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleAttributes.*;
-import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleFilterAndOrders.SCHEDULE_FO_ORDER;
-
-import java.util.ArrayList;
 
 
 @Controller
@@ -102,7 +91,7 @@ public class MyPageController extends SuperController {
     }
     // 회원정보 수정 : 비밀번호 재확인
     @RequestMapping("/reCheckPassword")
-    public String reCheckPassword(Model model, HttpSession session, @RequestParam("page") String page) throws Exception {
+    public String reCheckPassword(Model model, HttpSession session, @RequestParam("page") String page){
         model.addAttribute(USER_VO.getText(), session.getAttribute(USER_VO.getText()));
         model.addAttribute(CHECK_USER.getText(), true);
 
@@ -138,17 +127,16 @@ public class MyPageController extends SuperController {
     }
 
     private UserVO checkUserData(UserVO changeData, UserVO previousData) {
-        UserVO checkedUserData = changeData;
-        if (checkedUserData.getUserPassword().isEmpty()) {
-            checkedUserData.setUserPassword(previousData.getUserPassword());
+        if (changeData.getUserPassword().isEmpty()) {
+            changeData.setUserPassword(previousData.getUserPassword());
         }
-        if (checkedUserData.getUserNickname().isEmpty()) {
-            checkedUserData.setUserNickname(previousData.getUserNickname());
+        if (changeData.getUserNickname().isEmpty()) {
+            changeData.setUserNickname(previousData.getUserNickname());
         }
-        if (checkedUserData.getUserEmail().isEmpty()) {
-            checkedUserData.setUserEmail(previousData.getUserEmail());
+        if (changeData.getUserEmail().isEmpty()) {
+            changeData.setUserEmail(previousData.getUserEmail());
         }
-        return checkedUserData;
+        return changeData;
     }
 
     // 회원정보 수정 결과 페이지

@@ -12,9 +12,6 @@ import static com.liveamonth.liveamonth.constants.ControllerPathConstants.ETempl
 
 @Controller
 public class CustomerCenterController {
-    @Autowired
-    private CityService cityService;
-
     @RequestMapping(value = "/customerCenter")
     public String customerCenter(Model model){
         model.addAttribute("customerCenterMenus",ECustomerCenterPath.values());

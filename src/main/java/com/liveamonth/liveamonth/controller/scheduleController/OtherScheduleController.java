@@ -32,7 +32,8 @@ import static com.liveamonth.liveamonth.constants.EntityConstants.EScheduleReply
 import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.USER_VO;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EAlertMessage.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EOtherScheduleMessage.*;
-import static com.liveamonth.liveamonth.constants.LogicConstants.EPaging.*;
+import static com.liveamonth.liveamonth.constants.LogicConstants.EPaging.LIKE_STATUS;
+import static com.liveamonth.liveamonth.constants.LogicConstants.EPaging.PAIGING;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleAttributes.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleFilterAndOrders;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleFilterAndOrders.SCHEDULE_FO_ORDER;
@@ -81,7 +82,7 @@ public class OtherScheduleController extends SuperController {
             return REDIRECT_OTHER_SCHEDULELIST.getPath();
         }
 
-        CalendarDTO calendarDto = null;
+        CalendarDTO calendarDto;
         try {
             calendarDto = scheduleService.showCalendar(calendarDTO, scheduleNO);
             model.addAttribute(DATE_LIST.getText(), calendarDto.getDateList()); //날짜 데이터 배열
@@ -91,7 +92,7 @@ public class OtherScheduleController extends SuperController {
             return REDIRECT_OTHER_SCHEDULELIST.getPath();
         }
 
-        PagingDTO paging = null;
+        PagingDTO paging;
         try {
             paging = scheduleService.showPaging(selectPage, scheduleNO);
             model.addAttribute(PAIGING.getText(), paging);

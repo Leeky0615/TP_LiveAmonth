@@ -1,15 +1,14 @@
 package com.liveamonth.liveamonth.entity.dto;
 
+import com.liveamonth.liveamonth.entity.vo.ScheduleContentVO;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.liveamonth.liveamonth.entity.vo.ScheduleContentVO;
-import com.liveamonth.liveamonth.entity.vo.ScheduleVO;
-import lombok.Getter;
-import lombok.Setter;
 
 @Getter
 @Setter
