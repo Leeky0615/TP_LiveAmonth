@@ -2,8 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<script src="resources/js/signUp.js"></script>
-
 <div class="modal fade" id="addScheduleContentModal" role="dialog" aria-labelledby="addScheduleContentLabel"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -48,9 +46,8 @@
                     <div class="form-group mb-5">
                         <label class="label mb-0" style="display: block"><h5>금액</h5></label>
                         <input type="number" id="scheduleContentCost" name="scheduleContentCost"
-                               class="form-control mb-2" style="width: 90%;float: left"/><h5 class="pt-2 pr-2"
-                                                                                             style="float: right;">
-                        원</h5>
+                               class="form-control mb-2" style="width: 90%;float: left"/>
+                        <h5 class="pt-2 pr-2" style="float: right;">원</h5>
                     </div>
 
                     <div>
