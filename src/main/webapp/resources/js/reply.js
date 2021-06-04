@@ -68,9 +68,9 @@
             success:
                 function (data) {
                     if(data.likeStatus == 1){
-                        $("#like").attr('class','icon_heart dis-none');
+                        $("#ScheduleLike").attr('class','icon_heart dis-none');
                     } else if(data.likeStatus == 0){
-                        $("#like").attr('class','icon_heart_alt');
+                        $("#ScheduleLike").attr('class','icon_heart_alt');
                     }
                     $("#likeCount").html("&nbsp;"+data.likeCount);
 

@@ -50,11 +50,13 @@
                         <div class="tab-board">
                             <ul class="nav nav-tabs" role="tablist">
                                 <li class="user-service">
-                                    <a class="nav-link" data-toggle="tab" href="#profile-tabs-1" role="tab" style="font-size: 16px">My
+                                    <a class="nav-link" data-toggle="tab" href="#profile-tabs-1" role="tab"
+                                       style="font-size: 16px">My
                                         Schedule</a>
                                 </li>
-                                <li class="user-service"  style="font-size: 16px">
-                                    <a class="nav-link" data-toggle="tab" href="#profile-tabs-2" role="tab" style="font-size: 16px">My
+                                <li class="user-service" style="font-size: 16px">
+                                    <a class="nav-link" data-toggle="tab" href="#profile-tabs-2" role="tab"
+                                       style="font-size: 16px">My
                                         Review</a>
                                 </li>
                             </ul><!-- Tab panes -->
@@ -85,10 +87,12 @@
                                                             </tr>
                                                             </thead>
                                                             <tbody style="font-size: 12px">
-                                                            <c:forEach var="mySchedule" end="5" items="${myScheduleList}">
+                                                            <c:forEach var="mySchedule" end="5"
+                                                                       items="${myScheduleList}">
                                                                 <tr>
                                                                     <td style="width:5%">${mySchedule.scheduleNO}</td>
-                                                                   <input type="hidden" name="myScheduleCheckbox"value="${mySchedule.scheduleNO}">
+                                                                    <input type="hidden" name="myScheduleCheckbox"
+                                                                           value="${mySchedule.scheduleNO}">
                                                                     <td style="width:50%;"><a
                                                                             href="otherSchedule?scheduleNO=${mySchedule.scheduleNO}">${mySchedule.scheduleSubject}</a>
                                                                         <span class="scheduleReplyCount">
@@ -114,19 +118,18 @@
                                         <div class="row">
                                             <c:choose>
                                                 <c:when test="${reviewList.size() == 0}">
-                                                    <div class="row justify-content-center">
-                                                        <div class="col-md-6 text-center mb-5">
-                                                            <h2 class="heading-section">작성하신 글이 없습니다.</h2>
-                                                        </div>
+                                                    <div class="text-center mt-2 pr-2" style="width: 100%;">
+                                                        <h6 class="heading-section" style="font-size: 22px">작성하신 글이 없습니다.</h6>
                                                     </div>
                                                 </c:when>
                                                 <c:otherwise>
                                                     <div class="table table-hover mb-0">
-                                                        <input type="hidden" name="manageReviewCategory" id="manageReviewCategory"
+                                                        <input type="hidden" name="manageReviewCategory"
+                                                               id="manageReviewCategory"
                                                                value="${manageReviewCategory}">
-                                                        <table >
+                                                        <table>
                                                             <thead style="font-size: 10px;background-color:aliceblue">
-                                                            <tr >
+                                                            <tr>
                                                                 <th>NO</th>
                                                                 <th style=" text-align: center">제목</th>
                                                                 <th>좋아요</th>
@@ -137,7 +140,8 @@
                                                             <c:forEach var="reviewList" end="5" items="${reviewList}">
                                                                 <tr>
                                                                     <td style="width:5%">${reviewList.reviewNO}</td>
-                                                                    <input type="hidden" name="myScheduleCheckbox"value="${reviewList.reviewNO}">
+                                                                    <input type="hidden" name="myScheduleCheckbox"
+                                                                           value="${reviewList.reviewNO}">
                                                                     <td style="width:50%;"><a
                                                                             href="getReview?reviewNO=${reviewList.reviewNO}">${reviewList.reviewSubject}</a>
                                                                         <span class="reviewReplyCount">
