@@ -60,7 +60,6 @@ public class S3UploaderDTO {
             DeleteObjectRequest deleteObjectRequest = new DeleteObjectRequest(this.bucket, key);
             //Delete
             this.amazonS3Client.deleteObject(deleteObjectRequest);
-            System.out.println(String.format("[%s] deletion complete", key));
         } catch (AmazonServiceException e) {
             e.printStackTrace();
         } catch (SdkClientException e) {

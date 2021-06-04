@@ -213,10 +213,7 @@ public class MyPageController extends SuperController {
     @RequestMapping(value = "modifyUserImage")
     public String modifyUserImage(HttpSession session, @RequestParam("fileName") MultipartFile mFile, Model model) throws Exception {
         UserVO userVO = (UserVO) session.getAttribute(USER_VO.getText());
-        System.out.println("mFile = " + mFile.getOriginalFilename());
-        System.out.println("mFile = " + mFile);
         if(userVO.getUserImage() != null) s3Uploader.delete(IMAGE_DIR.getText()+userVO.getUserImage());
-
         String saveName = s3Uploader.uploadProfileImg(IMAGE_DIR.getText(), userVO.getUserID(), mFile.getOriginalFilename(), mFile.getBytes());
         myPageService.modifyUserImg(saveName,userVO.getUserID());
 
