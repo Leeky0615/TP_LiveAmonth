@@ -16,6 +16,7 @@ public class LogicConstants {
         COMPLETE_SCHEDULE_MODIFICATION("캘린더가 수정되었습니다."),
         FAIL_TO_MODIFY_SCHEDULE("캘린더 수정에 실패하였습니다."),
         COMPLETE_SCHEDULE_DELETION("캘린더가 삭제되었습니다.."),
+        COMPLETE_SCHEDULE_CONTENTS_DELETION("스케줄이 삭제되었습니다."),
         FAIL_TO_DELETE_SCHEDULE("캘린더 삭제에 실패하였습니다."),
 
         ADD_SCHEDULEREPLY("댓글 등록이 완료되었습니다."),

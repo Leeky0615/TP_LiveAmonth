@@ -61,8 +61,7 @@ public class ScheduleController {
     @RequestMapping(value = "deleteScheduleContent")
     public String deleteScheduleContent(RedirectAttributes rttr) throws Exception {
         scheduleService.deleteScheduleContent(scheduleContentNO);
-
-        rttr.addFlashAttribute(MESSAGE.getText(), COMPLETE_SCHEDULE_DELETION.getText());
+        rttr.addFlashAttribute(MESSAGE.getText(), COMPLETE_SCHEDULE_CONTENTS_DELETION.getText());
         return REDIRECT_SCHEDULE.getRedirectPath();
     }
 
