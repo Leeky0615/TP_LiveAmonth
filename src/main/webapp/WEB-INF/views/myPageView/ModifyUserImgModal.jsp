@@ -7,6 +7,10 @@
     response.setHeader("Pragma","no-cache");
     response.setDateHeader("Expires",0);
 %>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+    var $j351 = jQuery.noConflict();
+</script>
 <div class="modal fade" id="modifyScheduleContentModal" role="dialog"
      aria-labelledby="modifyUserImageLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -51,24 +55,24 @@
 <script>
     function readURL(input) {
         if (input.files && input.files[0]) {
-            var reader = new FileReader();
+            const reader = new FileReader();
             reader.onload = function (e) {
-                $('#imgArea').attr('src', e.target.result);
+                $j351('#imgArea').attr('src', e.target.result);
             }
             reader.readAsDataURL(input.files[0]);
         }
     }
 
-    $(":input[name='fileName']").change(function () {
-        if ($(":input[name='fileName']").val() == '') {
-            $('#imgArea').attr('src', '');
+    $j351(":input[name='fileName']").change(function () {
+        if ($j351(":input[name='fileName']").val() == '') {
+            $j351('#imgArea').attr('src', '');
         }
-        $('#imgViewArea').css({'display': ''});
+        $j351('#imgViewArea').css({'display': ''});
         readURL(this);
     });
 
     // 이미지 에러 시 미리보기영역 미노출
     function imgAreaError() {
-        $('#imgViewArea').css({'display': 'none'});
+        $j351('#imgViewArea').css({'display': 'none'});
     }
 </script>
