@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper 
+<!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
@@ -92,6 +92,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			</otherwise>
 		</choose>
 		limit #{startNO}, #{displayPage};
+	</select>
+ 	<select id="getPopularScheduleListForMain" resultMap="scheduleFilterAndOrder">
+		select a.*, IF(isnull(scheduleLikeCount), 0, scheduleLikeCount) as scheduleLikeCount
+		from (
+		    select schedule.scheduleNO, scheduleViewCount, scheduleSubject, user.userNO, userNickname, userAge,userSex, city.cityNO, cityName
+			from schedule, user, city
+		    where schedule.userNO = user.userNO
+		    and schedule.cityNO = city.cityNO
+			and schedule.scheduleStatus = true) as a
+		left join(
+			select scheduleLike.scheduleNO, count(scheduleLikeUserNO) as scheduleLikeCount
+			from schedule, scheduleLike
+			where schedule.scheduleNO = scheduleLike.scheduleNO
+			group by scheduleLike.scheduleNO
+			) as b
+		ON a.scheduleNO = b.scheduleNO
+		ORDER BY scheduleLikeCount desc
+		limit 0, 5;
 	</select>
 
 	<resultMap type = "java.util.HashMap" id="scheduleReplyAndNickname">
@@ -216,7 +234,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<otherwise>
 				where schedule.userNO = #{userNO}
 			</otherwise>
-
 		</choose>
 		group by schedule.scheduleNO
 		order by schedule.scheduleNO desc) as scheduleData,
@@ -232,7 +249,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="deleteScheduleContent" parameterType="int">
 		delete from scheduleContent where scheduleContentNO = #{scheduleContentNO}
 	</delete>
-	
+
 	<delete id="deleteSchedule" parameterType="int">
 		delete from schedule where scheduleNO = #{scheduleNO}
 	</delete>

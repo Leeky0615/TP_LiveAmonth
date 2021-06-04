@@ -2,6 +2,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%
+    response.setHeader("Cache-Control","no-cache");
+    response.setHeader("Pragma","no-cache");
+    response.setDateHeader("Expires",0);
+%>
 <div class="modal fade" id="modifyScheduleContentModal" role="dialog"
      aria-labelledby="modifyUserImageLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">

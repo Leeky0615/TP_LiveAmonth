@@ -1,19 +1,10 @@
 package com.liveamonth.liveamonth.controller.signController;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import com.liveamonth.liveamonth.constants.EntityConstants.EEmail;
-import com.liveamonth.liveamonth.constants.LogicConstants;
-import com.liveamonth.liveamonth.constants.LogicConstants.ECityInfoAttributes;
-import com.liveamonth.liveamonth.constants.LogicConstants.EScheduleFilterAndOrders;
+import com.liveamonth.liveamonth.controller.MainController;
+import com.liveamonth.liveamonth.controller.SuperController;
 import com.liveamonth.liveamonth.entity.dto.CalendarDTO;
-import com.liveamonth.liveamonth.entity.dto.PagingDTO;
-import com.liveamonth.liveamonth.entity.dto.S3UploaderDTO;
 import com.liveamonth.liveamonth.entity.vo.UserVO;
-import com.liveamonth.liveamonth.model.service.cityInfoService.CityService;
-import com.liveamonth.liveamonth.model.service.reviewService.ReviewService;
-import com.liveamonth.liveamonth.model.service.scheduleService.ScheduleService;
 import com.liveamonth.liveamonth.model.service.signService.SignService;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -31,44 +22,20 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.security.SecureRandom;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
 
 import static com.liveamonth.liveamonth.constants.ControllerPathConstants.ESignPath.*;
 import static com.liveamonth.liveamonth.constants.ControllerPathConstants.ETemplatePath.MAIN;
-import static com.liveamonth.liveamonth.constants.EntityConstants.CityInfoCategory.INTRO;
-import static com.liveamonth.liveamonth.constants.EntityConstants.ESchedule.SCHEDULE_NO;
 import static com.liveamonth.liveamonth.constants.EntityConstants.ESignUp.EMAIL;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.*;
-import static com.liveamonth.liveamonth.constants.LogicConstants.ECityInfoAttributes.*;
-import static com.liveamonth.liveamonth.constants.LogicConstants.EMyPageAttributes.*;
-import static com.liveamonth.liveamonth.constants.LogicConstants.EPaging.PAIGING;
-import static com.liveamonth.liveamonth.constants.LogicConstants.EReview.POPULAR_REVIEW_LIST;
-import static com.liveamonth.liveamonth.constants.LogicConstants.EReviewAttribute.REVIEW_LIST;
-import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleAttributes.FITERED_OTHER_SCHEDULE_LIST;
-import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleFilterAndOrders.SCHEDULE_FO_ORDER;
 import static com.liveamonth.liveamonth.constants.LogicConstants.ESignAttributes.AT;
 import static com.liveamonth.liveamonth.constants.LogicConstants.ESignAttributes.FIRST_IN;
 
 @Controller
-public class SignController {
+public class SignController extends SuperController {
     private boolean firstIn;
-    @Autowired
-    private S3UploaderDTO s3Uploader;
 
     @Autowired
     private SignService signService;
-
-    @Autowired
-    private CityService cityService;
-
-    @Autowired
-    private ReviewService reviewService;
-
-    @Autowired
-    private ScheduleService scheduleService;
 
     //naver login api에 접속
     @RequestMapping("/signIn")
@@ -91,55 +58,10 @@ public class SignController {
         return SIGN_IN.getPath();
     }
 
-    private void setMainPageAttributes(Model model,CalendarDTO calendarDTO) throws Exception {
-        // 인기 REVIEW
-        model.addAttribute(POPULAR_REVIEW_LIST.getText(), reviewService.getMainPopularReviewList(1));
-        // 인기 SCHEDULE
-        HashMap<String, Object> filtersAndOrder = new HashMap<>();
-        for (EScheduleFilterAndOrders eFO : EScheduleFilterAndOrders.values()) {
-            if (eFO == SCHEDULE_FO_ORDER) filtersAndOrder.put(eFO.getText(), "orderByLiked");
-            else filtersAndOrder.put(eFO.getText() + "Filter", false);
-        }
-        List<HashMap<String, Object>> otherScheduleList = scheduleService.getOtherScheduleList(filtersAndOrder, 1);
-        model.addAttribute(FITERED_OTHER_SCHEDULE_LIST.getText(), otherScheduleList);
-        // 달력 표시
-        List<CalendarDTO> CalendarDTOList = new ArrayList<>();
-        List<List<CalendarDTO>> CalendarDTODateList = new ArrayList<>();
-        List<HashMap<String, Integer>> CalendarDTOTodayInformationList = new ArrayList<>();
-        for(HashMap<String, Object> otherSchedule : otherScheduleList){
-            int scheduleNO = (int)otherSchedule.get(SCHEDULE_NO.getText());
-            CalendarDTO calendarDto = scheduleService.showCalendar(calendarDTO, scheduleNO);
-            CalendarDTOList.add(calendarDto);
-            CalendarDTODateList.add(calendarDto.getDateList());
-            CalendarDTOTodayInformationList.add((HashMap)calendarDto.getTodayInformation());
-        }
-        model.addAttribute("CalendarDTODateList", CalendarDTODateList); //날짜 데이터 배열 DATE_LIST
-        model.addAttribute("CalendarDTOTodayInformationList", CalendarDTOTodayInformationList);
-        // MainCitySlide.jsp 사용
-        model.addAttribute(RANDOM_CITY_INTRO_LIST.getText(), cityService.getRandomCityInfoListByCategory(INTRO.name()));
-        // CityInfoGrid.jsp 사용
-        model.addAttribute(ECityInfoAttributes.CURRENT_MONTH_TEMP_LIST.getText(),cityService.getAVGTempList());
-        model.addAttribute(CITY_TRANSPORT_GRADE_LIST.getText(), cityService.getCityTransportGradeList());
-        model.addAttribute(CITY_INTRO_LIST.getText(), cityService.getCityInfoListByCategory(INTRO.name()));
-    }
-    private void setMainPageManageContents(Model model, UserVO userVO) throws Exception{
-        // 내 스케줄
-        PagingDTO schedudlePaging = scheduleService.showMySchedulePaging(1,MANAGE_SCHEDULE_CATEGORY.getText(),userVO.getUserNO());
-        model.addAttribute(PAIGING.getText(), schedudlePaging);
-        ArrayList<HashMap<String, Object>> scheduleList = scheduleService.getMyScheduleList(1, userVO.getUserNO(),MANAGE_SCHEDULE_CATEGORY.getText());
-        model.addAttribute(MY_SCHEDULE_LIST.getText(), scheduleList);
-        model.addAttribute(MANAGE_SCHEDULE_CATEGORY.getText(), MANAGE_SCHEDULE_CATEGORY.getText());
-        // 내 게시글
-        PagingDTO reviewPaging = reviewService.showMyReviewPaging(1,MANAGE_REVIEW_CATEGORY.getText(),userVO.getUserNO());
-        model.addAttribute(PAIGING.getText(), reviewPaging);
-        ArrayList<HashMap<String, Object>> reviewList = reviewService.getMyReviewList(1, userVO.getUserNO(),MANAGE_REVIEW_CATEGORY.getText());
-        model.addAttribute(REVIEW_LIST.getText(), reviewList);
-        model.addAttribute(MANAGE_REVIEW_CATEGORY.getText(), MANAGE_REVIEW_CATEGORY.getText());
-    }
     @RequestMapping("/logout")
     private String logout(HttpSession session, Model model,CalendarDTO calendarDTO) throws Exception {
         session.invalidate();
-        this.setMainPageAttributes(model, calendarDTO);
+        super.setMainPageAttributes(model, calendarDTO);
         return MAIN.getPath();
     }
 
@@ -153,9 +75,9 @@ public class SignController {
             model.addAttribute(FIRST_IN.getText(), false);
             return SIGN_IN.getPath();
         } else {
-            this.setMainPageAttributes(model,calendarDTO);
+            super.setMainPageAttributes(model,calendarDTO);
             session.setAttribute(USER_VO.getText(), userVO);
-            this.setMainPageManageContents(model, userVO);
+            super.setMainSideBarAttributes(model, userVO);
             return MAIN.getPath();
         }
     }
@@ -258,7 +180,6 @@ public class SignController {
         return FIND_PW.getPath();
 
     }
-
 
     @RequestMapping(value = "/ResultMentFindPW", method = RequestMethod.POST)
     public String findPW(@RequestParam("userID")

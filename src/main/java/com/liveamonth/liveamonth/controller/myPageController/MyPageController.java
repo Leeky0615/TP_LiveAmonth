@@ -3,6 +3,8 @@ package com.liveamonth.liveamonth.controller.myPageController;
 import com.liveamonth.liveamonth.constants.ControllerPathConstants;
 import com.liveamonth.liveamonth.constants.LogicConstants;
 import com.liveamonth.liveamonth.constants.LogicConstants.EPageOptions;
+import com.liveamonth.liveamonth.controller.SuperController;
+import com.liveamonth.liveamonth.entity.dto.CalendarDTO;
 import com.liveamonth.liveamonth.entity.dto.PagingDTO;
 import com.liveamonth.liveamonth.entity.dto.S3UploaderDTO;
 import com.liveamonth.liveamonth.entity.vo.OneToOneAskVO;
@@ -27,6 +29,7 @@ import static com.liveamonth.liveamonth.constants.ControllerPathConstants.EMyPag
 import static com.liveamonth.liveamonth.constants.ControllerPathConstants.ETemplatePath.MY_PAGE;
 import static com.liveamonth.liveamonth.constants.EntityConstants.*;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EOneToOneAsk.*;
+import static com.liveamonth.liveamonth.constants.EntityConstants.ESchedule.SCHEDULE_NO;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.*;
 import static com.liveamonth.liveamonth.constants.EntityConstants.OneToOneAskCategory;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EMyPageAttributes.*;
@@ -44,7 +47,7 @@ import java.util.ArrayList;
 
 
 @Controller
-public class MyPageController {
+public class MyPageController extends SuperController {
     @Autowired
     private MyPageService myPageService;
     @Autowired
@@ -210,7 +213,10 @@ public class MyPageController {
     @RequestMapping(value = "modifyUserImage")
     public String modifyUserImage(HttpSession session, @RequestParam("fileName") MultipartFile mFile, Model model) throws Exception {
         UserVO userVO = (UserVO) session.getAttribute(USER_VO.getText());
+        System.out.println("mFile = " + mFile.getOriginalFilename());
+        System.out.println("mFile = " + mFile);
         if(userVO.getUserImage() != null) s3Uploader.delete(IMAGE_DIR.getText()+userVO.getUserImage());
+
         String saveName = s3Uploader.uploadProfileImg(IMAGE_DIR.getText(), userVO.getUserID(), mFile.getOriginalFilename(), mFile.getBytes());
         myPageService.modifyUserImg(saveName,userVO.getUserID());
 
@@ -231,20 +237,14 @@ public class MyPageController {
             reviewService.deleteReviewList(reviewNO_OR_reviewReplyNOList,manageReviewCategory);
         }
 
-        int selectPage = 1;
-        if (request.getParameter(SELECTED_PAGE.getText()) != null) {
-            selectPage = Integer.parseInt(request.getParameter(SELECTED_PAGE.getText()));
-        }
-        PagingDTO paging = reviewService.showMyReviewPaging(selectPage,manageReviewCategory,userVO.getUserNO());
-        model.addAttribute(PAIGING.getText(), paging);
-        ArrayList<HashMap<String, Object>> reviewList = reviewService.getMyReviewList(selectPage, userVO.getUserNO(),manageReviewCategory);
-        model.addAttribute(REVIEW_LIST.getText(), reviewList);
-        model.addAttribute(MANAGE_REVIEW_CATEGORY.getText(), manageReviewCategory);
+        // set myReviewList & Paging
+        this.setMyReviewListPaging(model, this.getSelectePage(request), userVO.getUserNO(),manageReviewCategory);
+
         return MANAGE_REVIEW.getPath();
     }
 
     @GetMapping("/manageSchedule")
-    public String manageSchedule(Model model, HttpSession session,HttpServletRequest request) throws Exception{
+    public String manageSchedule(Model model, HttpSession session,HttpServletRequest request,CalendarDTO calendarDTO) throws Exception{
         UserVO userVO = (UserVO)session.getAttribute(USER_VO.getText());
         String manageScheduleCategory = String.valueOf(request.getParameter(MANAGE_SCHEDULE_CATEGORY.getText()));
         String[] myScheduleCheckbox=request.getParameterValues(MY_SCHEDULE_CHECK_BOX.getText());
@@ -254,15 +254,12 @@ public class MyPageController {
             scheduleService.deleteScheduleList(scheduleNO_OR_scheduleReplyNOList,manageScheduleCategory);
         }
 
-        int selectPage = 1;
-        if (request.getParameter(SELECTED_PAGE.getText()) != null) {
-            selectPage = Integer.parseInt(request.getParameter(SELECTED_PAGE.getText()));
-        }
-        PagingDTO paging = scheduleService.showMySchedulePaging(selectPage,manageScheduleCategory,userVO.getUserNO());
-        model.addAttribute(PAIGING.getText(), paging);
-        ArrayList<HashMap<String, Object>> scheduleList = scheduleService.getMyScheduleList(selectPage, userVO.getUserNO(),manageScheduleCategory);
-        model.addAttribute( MY_SCHEDULE_LIST.getText(), scheduleList);
-        model.addAttribute(MANAGE_SCHEDULE_CATEGORY.getText(), manageScheduleCategory);
+        // set myScheduleList & Paging
+        List<HashMap<String, Object>> myScheduleList = this.setMyScheduleListPaging(model,this.getSelectePage(request),userVO.getUserNO(),manageScheduleCategory);
+
+        // Set CalendarDTO
+        this.setCalendarDTOForScheduleList(model, myScheduleList, calendarDTO);
+
         return MANAGE_SCHEDULE.getPath();
     }
 

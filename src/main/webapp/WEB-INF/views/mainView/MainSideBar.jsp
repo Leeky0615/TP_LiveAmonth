@@ -117,7 +117,7 @@
                                     <div class="tab-desc pl-3 pr-1">
                                         <div class="row">
                                             <c:choose>
-                                                <c:when test="${reviewList.size() == 0}">
+                                                <c:when test="${myReviewList.size() == 0}">
                                                     <div class="text-center mt-2 pr-2" style="width: 100%;">
                                                         <h6 class="heading-section" style="font-size: 22px">작성하신 글이 없습니다.</h6>
                                                     </div>
@@ -137,21 +137,21 @@
                                                             </tr>
                                                             </thead>
                                                             <tbody style="font-size: 12px">
-                                                            <c:forEach var="reviewList" end="5" items="${reviewList}">
+                                                            <c:forEach var="myReview" end="5" items="${myReviewList}">
                                                                 <tr>
-                                                                    <td style="width:5%">${reviewList.reviewNO}</td>
+                                                                    <td style="width:5%">${myReview.reviewNO}</td>
                                                                     <input type="hidden" name="myScheduleCheckbox"
-                                                                           value="${reviewList.reviewNO}">
+                                                                           value="${myReview.reviewNO}">
                                                                     <td style="width:50%;"><a
                                                                             href="getReview?reviewNO=${reviewList.reviewNO}">${reviewList.reviewSubject}</a>
                                                                         <span class="reviewReplyCount">
-                                                                        <c:if test="${reviewList.replyCount ne null}">
-                                                                            [${reviewList.replyCount}]
+                                                                        <c:if test="${myReview.replyCount ne null}">
+                                                                            [${myReview.replyCount}]
                                                                         </c:if>
                                                                         </span>
                                                                     </td>
-                                                                    <td style="width:20%;padding-left: 25px">${reviewList.reviewLikeCount}</td>
-                                                                    <td style="width:15%">${reviewList.reviewViewCount}</td>
+                                                                    <td style="width:20%;padding-left: 25px">${myReview.reviewLikeCount}</td>
+                                                                    <td style="width:15%">${myReview.reviewViewCount}</td>
                                                                 </tr>
                                                             </c:forEach>
                                                             </tbody>
@@ -161,7 +161,6 @@
                                             </c:choose>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>

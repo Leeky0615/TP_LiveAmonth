@@ -8,56 +8,35 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 @Repository
 @Mapper
 public interface ReviewMapper {
-    public ArrayList<HashMap<String, Object>> getDefaultReviewList(String category) throws Exception;
-
-    public ArrayList<HashMap<String, Object>> getCategoryReviewList(HashMap<String, Object> CategoryAndPage) throws Exception;
-
-    public ArrayList<HashMap<String, Object>> getSearchReviewList(HashMap<String, Object> searchAndPage) throws Exception;
-    public ArrayList<HashMap<String, Object>> getMainPopularReviewList(HashMap<String, Integer> page) throws Exception;
-
-
-    public ReviewVO getReviewVO(int reviewNO) throws Exception;
-
-    public int addReview(ReviewVO reviewVO) throws Exception;
-
-    public ArrayList<HashMap<String, Object>> getReviewReplyList(HashMap<String, Integer> reviewNOAndPage) throws Exception;
-
-    public void increaseReviewViewCount(int reviewNO) throws Exception;
-
-    public int getReviewLikeCount(int reviewNO) throws Exception;
-
-    public int getReviewListCount(String category) throws Exception;
-
-    public int getReviewLikeStatus(ReviewLikeVO reviewLikeVO);
-
-    public void addReviewLike(ReviewLikeVO reviewLikeVO) throws Exception;
-
-    public void deleteReviewLike(ReviewLikeVO reviewLikeVO) throws Exception;
-
-    public int getReviewReplyCount(int reviewNO) throws Exception;
-
-    public int addReviewReply(ReviewReplyVO reviewReplyVO) throws Exception;
-
-    public void modifyReviewReply(ReviewReplyVO reviewReplyVO) throws Exception;
-
-    public void deleteReviewReply(int reviewReplyNO) throws Exception;
-
-    public void deleteReview(int reviewNO) throws Exception;
-
-    public void deleteReviewList(HashMap<String, Object> listAndCategory)throws Exception;
-
-    public void modifyReview(ReviewVO reviewVO) throws Exception;
-
-    public int getSearchReviewListCount(HashMap<String, Object> searchAndPage) throws Exception;
-
-    public ArrayList<HashMap<String, Object>> getMyReviewList(HashMap<String, Object> myReviewAndPage)throws Exception;
-
-    public int getMyReviewListCount(HashMap<String, Object> myReviewAndPage) throws Exception;
-    public ReviewReplyVO getReviewReply(int reviewReplyNO) throws Exception;
-
-    public int getReviewWriterNO(int reviewNO) throws Exception;
+    // for MainPage
+    List<HashMap<String, Object>> getPopularReviewListForMain() throws Exception;
+    ArrayList<HashMap<String, Object>> getDefaultReviewList(String category) throws Exception;
+    ArrayList<HashMap<String, Object>> getCategoryReviewList(HashMap<String, Object> CategoryAndPage) throws Exception;
+    ArrayList<HashMap<String, Object>> getSearchReviewList(HashMap<String, Object> searchAndPage) throws Exception;
+    ReviewVO getReviewVO(int reviewNO) throws Exception;
+    int addReview(ReviewVO reviewVO) throws Exception;
+    ArrayList<HashMap<String, Object>> getReviewReplyList(HashMap<String, Integer> reviewNOAndPage) throws Exception;
+    void increaseReviewViewCount(int reviewNO) throws Exception;
+    int getReviewLikeCount(int reviewNO) throws Exception;
+    int getReviewListCount(String category) throws Exception;
+    int getReviewLikeStatus(ReviewLikeVO reviewLikeVO);
+    void addReviewLike(ReviewLikeVO reviewLikeVO) throws Exception;
+    void deleteReviewLike(ReviewLikeVO reviewLikeVO) throws Exception;
+    int getReviewReplyCount(int reviewNO) throws Exception;
+    int addReviewReply(ReviewReplyVO reviewReplyVO) throws Exception;
+    void modifyReviewReply(ReviewReplyVO reviewReplyVO) throws Exception;
+    void deleteReviewReply(int reviewReplyNO) throws Exception;
+    void deleteReview(int reviewNO) throws Exception;
+    void deleteReviewList(HashMap<String, Object> listAndCategory)throws Exception;
+    void modifyReview(ReviewVO reviewVO) throws Exception;
+    int getSearchReviewListCount(HashMap<String, Object> searchAndPage) throws Exception;
+    ArrayList<HashMap<String, Object>> getMyReviewList(HashMap<String, Object> myReviewAndPage)throws Exception;
+    int getMyReviewListCount(HashMap<String, Object> myReviewAndPage) throws Exception;
+    ReviewReplyVO getReviewReply(int reviewReplyNO) throws Exception;
+    int getReviewWriterNO(int reviewNO) throws Exception;
 }

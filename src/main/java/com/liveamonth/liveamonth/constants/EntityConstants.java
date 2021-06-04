@@ -271,11 +271,11 @@ public class EntityConstants {
      * ScheduleReply Table Constants
      */
     public enum EScheduleReply {
-        SCHEDULE_REPLY_VO("reviewReplyVO"),
-        SCHEDULE_REPLY_NO("reviewReplyNO"),
-        SCHEDULE_REPLY_DESC("reviewReplyDesc"),
-        SCHEDULE_REPLY_DATE("reviewReplyDate"),
-        SCHEDULE_REPLY_REF_NO("reviewReplyRefNO");
+        SCHEDULE_REPLY_VO("scheduleReplyNO"),
+        SCHEDULE_REPLY_NO("scheduleReplyNO"),
+        SCHEDULE_REPLY_DESC("scheduleReplyDesc"),
+        SCHEDULE_REPLY_DATE("scheduleReplyDate"),
+        SCHEDULE_REPLY_REF_NO("scheduleReplyRefNO");
         private String text;
 
         private EScheduleReply(String text) {

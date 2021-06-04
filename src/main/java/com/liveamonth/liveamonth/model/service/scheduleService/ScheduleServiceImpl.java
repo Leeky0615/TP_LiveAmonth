@@ -1,6 +1,7 @@
 package com.liveamonth.liveamonth.model.service.scheduleService;
 
 
+import com.liveamonth.liveamonth.constants.EntityConstants;
 import com.liveamonth.liveamonth.constants.LogicConstants;
 import com.liveamonth.liveamonth.entity.dto.CalendarDTO;
 import com.liveamonth.liveamonth.entity.dto.PagingDTO;
@@ -15,9 +16,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 
+import static com.liveamonth.liveamonth.constants.EntityConstants.*;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EPage.DISPLAY_PAGE;
 import static com.liveamonth.liveamonth.constants.EntityConstants.ESchedule.SCHEDULE_NO;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EPaging.*;
+import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleAttributes.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleFilterAndOrders.SCHEDULE_FO_ORDER;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleStaticInt.*;
 
@@ -29,6 +32,11 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Autowired
     private NoticeService noticeService;
+
+    @Override
+    public List<HashMap<String, Object>> getPopularScheduleListForMain() throws Exception {
+        return scheduleMapper.getPopularScheduleListForMain();
+    }
 
     @Override
     public CalendarDTO showCalendar(CalendarDTO calendarDTO, int scheduleNO) throws Exception {
@@ -318,6 +326,26 @@ public class ScheduleServiceImpl implements ScheduleService {
         String month = scheduleMapper.getManyContentsMonth(scheduleNO);
         if(month != null) calendarDTO.setMonth(month);
         return calendarDTO;
+    }
+
+    @Override
+    public HashMap<String, Object>  setCalendarDTOForScheduleList(List<HashMap<String, Object>> scheduleList, CalendarDTO calendarDTO) throws Exception{
+        HashMap<String, Object> result = new HashMap<>();
+        List<CalendarDTO> calendarDTOList = new ArrayList<>();
+        List<List<CalendarDTO>> calendarDTODateList = new ArrayList<>();
+        List<HashMap<String, Integer>> calendarDTOTodayInformationList = new ArrayList<>();
+        for(HashMap<String, Object> schedule : scheduleList){
+            int scheduleNO = (int)schedule.get(SCHEDULE_NO.getText());
+            calendarDTO = this.setManyContentsDate(scheduleNO,calendarDTO); // 컨텐츠가 많은 달을 가져옴
+            CalendarDTO calendarDto = this.showCalendar(calendarDTO, scheduleNO);
+            calendarDTOList.add(calendarDto);
+            calendarDTODateList.add(calendarDto.getDateList());
+            calendarDTOTodayInformationList.add((HashMap)calendarDto.getTodayInformation());
+        }
+        result.put(MONTH_LIST.getText(), Month.values());
+        result.put(CALENDAR_DTO_DATE_LIST.getText(), calendarDTODateList);
+        result.put(CALENDAR_DTO_TODAY_INFORMATION_LIST.getText(), calendarDTOTodayInformationList);
+        return result;
     }
 
 }
