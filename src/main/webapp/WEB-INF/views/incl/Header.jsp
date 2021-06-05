@@ -50,26 +50,31 @@
                                             writeDropDwon(noticeMap);
                                         },
                                     error:
-                                        function (request, status, error) {}
+                                        function (request, status, error) {
+                                        }
                                 });
                             }
                             $(function () {
                                 timer = setInterval(function () {
-                                    $.ajax({
-                                        url: "getAllNotice",
-                                        type: "GET",
-                                        data: {userNO: ${userVO.userNO}},
-                                        success:
-                                            function (noticeMap) {
-                                                writeDropDwon(noticeMap);
-                                            },
-                                        error:
-                                            function (request, status, error) {}
-                                    });
+                                    if ($(":focus").attr("id") != "alertsDropdown") {
+                                        $.ajax({
+                                            url: "getAllNotice",
+                                            type: "GET",
+                                            data: {userNO: ${userVO.userNO}},
+                                            success:
+                                                function (noticeMap) {
+                                                    writeDropDwon(noticeMap);
+                                                },
+                                            error:
+                                                function (request, status, error) {
+                                                }
+                                        });
+                                    }
                                 }, 1000);
                             });
+
                             $(document).ready(function () {
-                                $("#alertsDropdown").blur(function () {
+                                $(".dropdown").on("hidden.bs.dropdown", function () {
                                     $.ajax({
                                         url: "updateReadStatus",
                                         type: "POST",
@@ -84,12 +89,14 @@
                                                         writeDropDwon(noticeMap);
                                                     },
                                                 error:
-                                                    function (request, status, error) {}
+                                                    function (request, status, error) {
+                                                    }
                                             });
                                         },
-                                        error: function (request, status, error) {}
+                                        error: function (request, status, error) {
+                                        }
                                     });
-                                });
+                                })
                             });
 
                         </script>
@@ -128,7 +135,7 @@
                 <div class="col-lg-9">
                     <nav class="nav-menu">
                         <ul>
-                            <li class="active"><a href="cityInfo?cityName=all">CITY</a>
+                            <li><a href="cityInfo?cityName=all">CITY</a>
                                 <ul class="dropdown">
                                     <li><a href="cityInfo?cityName=서울">서울</a></li>
                                     <li><a href="cityInfo?cityName=강릉">강릉</a></li>
@@ -138,15 +145,15 @@
                                     <li><a href="cityInfo?cityName=제주">제주</a></li>
                                 </ul>
                             </li>
-                            <li class="active"><a href="schedule">Schedule</a>
+                            <li><a href="schedule">Schedule</a>
                                 <ul class="dropdown">
                                     <li><a href="schedule">내 스케줄 보기</a></li>
                                     <li><a href="otherScheduleList?action=list">다른 사람 스케줄 보기</a></li>
                                 </ul>
                             </li>
-                            <li class="active"><a href="review">Review</a></li>
-                            <li class="active"><a href="myPage">MyPage</a></li>
-                            <li class="active"><a href="customerCenter">Customer Center</a>
+                            <li><a href="review">Review</a></li>
+                            <li><a href="myPage">MyPage</a></li>
+                            <li><a href="customerCenter">Customer Center</a>
                                 <ul class="dropdown">
                                     <li><a href="selectedCustomerCenterMenu?menu=Faq">FAQ</a></li>
                                     <li><a href="selectedCustomerCenterMenu?menu=PersonalTerms">개인정보 처리방침</a></li>

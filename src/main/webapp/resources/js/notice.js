@@ -6,6 +6,8 @@
         }
 
         var htmls = "<h6 class=\"dropdown-header\"> Notice Center </h6>";
+        htmls += "<div class = \"customClassForDropDown\">";
+
         for (var i = 0; i < noticeMap.noticeList.length; i++) {
 
             var url = "";
@@ -63,5 +65,6 @@
             htmls += "</div>";
             htmls += "</a>";
         }
+        htmls += "</div>";
         $("#noticeDropdown").html(htmls);
     }

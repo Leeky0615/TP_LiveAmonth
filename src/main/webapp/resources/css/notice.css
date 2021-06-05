@@ -471,3 +471,7 @@ a.text-dark:hover, a.text-dark:focus {
     font-size: 1.5em;
 }
 
+.customClassForDropDown {
+    height: 450px;
+    overflow-x: auto;-webkit-transform:translateZ(0)
+}
