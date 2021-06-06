@@ -181,7 +181,7 @@ public class SignController extends SuperController {
 
         String code = request.getParameter("code");
         String state = request.getParameter("state");
-        String redirectURI = URLEncoder.encode("http://localhost:8080/Naver", "UTF-8");
+        String redirectURI = URLEncoder.encode("http://tpliveamonth-env.eba-296xyabm.ap-northeast-2.elasticbeanstalk.com/Naver", "UTF-8");
         String access_token = "";
 
         StringBuffer apiURL = new StringBuffer();
