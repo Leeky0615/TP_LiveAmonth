@@ -147,7 +147,7 @@ public class SignController extends SuperController {
             userVO.setUserEmail(userEmail + AT.getText() + email);
         }
         signService.updateNaverUser(userVO);
-        request.setAttribute("Message", "회원 가입 성공");
+        request.setAttribute("Message", "회원가입 성공");
 
         session.setAttribute(USER_VO.getText(),userVO);
         return RESULT_NEW_NAVER_MEMBER.getPath();
