@@ -149,6 +149,8 @@ public class LogicConstants {
     }
 
     public enum ESignAttributes{
+        SUCCESS_SIGN_UP_MESSAGE("회원 가입 성공"),
+        FAIL_SIGN_UP_MESSAGE("회원 가입 실패"),
         FIRST_IN("firstIn"),
         AT("@");
         private final String text;

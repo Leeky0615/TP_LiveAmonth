@@ -1,6 +1,8 @@
 package com.liveamonth.liveamonth.controller.signController;
 
+import com.liveamonth.liveamonth.constants.ControllerPathConstants;
 import com.liveamonth.liveamonth.constants.EntityConstants.EEmail;
+import com.liveamonth.liveamonth.constants.LogicConstants;
 import com.liveamonth.liveamonth.controller.SuperController;
 import com.liveamonth.liveamonth.entity.dto.CalendarDTO;
 import com.liveamonth.liveamonth.entity.vo.UserVO;
@@ -26,8 +28,8 @@ import static com.liveamonth.liveamonth.constants.ControllerPathConstants.ESignP
 import static com.liveamonth.liveamonth.constants.ControllerPathConstants.ETemplatePath.MAIN;
 import static com.liveamonth.liveamonth.constants.EntityConstants.ESignUp.EMAIL;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.*;
-import static com.liveamonth.liveamonth.constants.LogicConstants.ESignAttributes.AT;
-import static com.liveamonth.liveamonth.constants.LogicConstants.ESignAttributes.FIRST_IN;
+import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleAttributes.MESSAGE;
+import static com.liveamonth.liveamonth.constants.LogicConstants.ESignAttributes.*;
 
 @Controller
 public class SignController extends SuperController {
@@ -82,13 +84,13 @@ public class SignController extends SuperController {
     }
 
     @RequestMapping("/signUp")
-    public String SignUpPage(Model model) throws Exception {
+    public String SignUpPage(Model model){
         model.addAttribute(EMAIL.getText(), EEmail.values());
         return SIGN_UP.getPath();
     }
 
     @RequestMapping("/naverSignUp")
-    public String naverSignUp(Model model) throws Exception {
+    public String naverSignUp(Model model){
         model.addAttribute(EMAIL.getText(), EEmail.values());
         return NAVER_SIGN_UP.getPath();
     }
@@ -147,7 +149,7 @@ public class SignController extends SuperController {
             userVO.setUserEmail(userEmail + AT.getText() + email);
         }
         signService.updateNaverUser(userVO);
-        request.setAttribute("Message", "회원가입 성공");
+        request.setAttribute(MESSAGE.getText(), SUCCESS_SIGN_UP_MESSAGE.getText());
 
         session.setAttribute(USER_VO.getText(),userVO);
         return RESULT_NEW_NAVER_MEMBER.getPath();
@@ -175,13 +177,13 @@ public class SignController extends SuperController {
     }
 
     @RequestMapping("/naverLogin")
-    private String naverLogin(HttpSession session, HttpServletRequest request, Model model) throws Exception {
+    private String naverLogin(HttpSession session, HttpServletRequest request) throws Exception {
         String clientId = "mS20tLuLdThxAjEEr_yP";//애플리케이션 클라이언트 아이디값";
         String clientSecret = "CA3T9EN7Wo";//애플리케이션 클라이언트 시크릿값";
 
         String code = request.getParameter("code");
         String state = request.getParameter("state");
-        String redirectURI = URLEncoder.encode("http://tpliveamonth-env.eba-296xyabm.ap-northeast-2.elasticbeanstalk.com/Naver", "UTF-8");
+        String redirectURI = URLEncoder.encode("http://localhost:8080/Naver", "UTF-8");
         String access_token = "";
 
         StringBuffer apiURL = new StringBuffer();
@@ -229,7 +231,7 @@ public class SignController extends SuperController {
             //session 변경해서 로그인 상태로 만들기
             UserVO userVO = signService.getNaverUser(naverID);
             session.setAttribute(USER_VO.getText(),userVO);
-            return "redirect:/";
+            return REDIRECT_MAIN.getRedirectPath();
         } else {
             session.setAttribute(NAVER_USER.getText(), naverUser);
             return NEW_NAVER_MEMBER.getPath();
@@ -237,7 +239,7 @@ public class SignController extends SuperController {
     }
 
     @RequestMapping("/newNaverMember")
-    private String newNaverMember(HttpSession session, HttpServletRequest request, Model model) throws Exception {
+    private String newNaverMember(HttpSession session, HttpServletRequest request) throws Exception {
         UserVO newNaverUser = (UserVO)session.getAttribute(NAVER_USER.getText());
         boolean flag = true;
 
@@ -250,12 +252,12 @@ public class SignController extends SuperController {
             //필수항목 다 동의 한 경우
             if(flag){
 //                session.setAttribute(USER_VO.getText(),newNaverUser);
-                request.setAttribute("Message", "회원 가입 성공");
+                request.setAttribute(MESSAGE.getText(), SUCCESS_SIGN_UP_MESSAGE.getText());
             }else{ //필수 항목 하나라도 동의 안한 경우
-                return "redirect:naverSignUp";
+                return REDIRECT_NAVER_SIGN_UP.getRedirectPath();
             }
         }else{
-            request.setAttribute("Message", "회원 가입 실패");
+            request.setAttribute(MESSAGE.getText(), FAIL_SIGN_UP_MESSAGE.getText());
         }
 
         return RESULT_NEW_NAVER_MEMBER.getPath();

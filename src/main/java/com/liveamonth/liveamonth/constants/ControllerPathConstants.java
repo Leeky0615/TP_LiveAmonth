@@ -57,12 +57,15 @@ public class ControllerPathConstants {
         RESULT_MENT_SIGN_UP("ResultMentSignUp"),
         SIGN_IN("SignIn"),
         SIGN_UP("SignUp"),
+        REDIRECT_NAVER_SIGN_UP("redirect:naverSignUp"),
         NAVER_SIGN_UP("NaverSignUp"),
+        REDIRECT_MAIN("redirect:/"),
         NEW_NAVER_MEMBER("NewNaverMember"),
         RESULT_NEW_NAVER_MEMBER("ResultNewNaverMember");
         private final String path;
         ESignPath(String path) {this.path = path;}
         public String getPath() {return "signView/"+ this.path;}
+        public String getRedirectPath() {return this.path;}
     }
 
     /*
