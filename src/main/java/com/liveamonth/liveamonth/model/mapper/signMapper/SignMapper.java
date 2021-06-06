@@ -32,4 +32,4 @@ public interface SignMapper {
     void updateNaverUser(UserVO userVO) throws Exception;
 
     UserVO getNaverUser(String naverID) throws Exception;
-}
+} 

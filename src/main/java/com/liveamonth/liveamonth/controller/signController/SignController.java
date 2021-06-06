@@ -58,7 +58,6 @@ public class SignController extends SuperController {
 
         return SIGN_IN.getPath();
     }
-
     @RequestMapping("/logout")
     private String logout(HttpSession session, Model model,CalendarDTO calendarDTO) throws Exception {
         session.invalidate();

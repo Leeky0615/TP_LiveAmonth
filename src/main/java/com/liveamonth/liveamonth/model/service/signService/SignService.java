@@ -30,4 +30,4 @@ public interface SignService {
     void updateNaverUser(UserVO userVO) throws Exception;
 
     UserVO getNaverUser(String naverID) throws Exception;
-}
+} 
