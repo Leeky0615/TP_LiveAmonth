@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import static com.liveamonth.liveamonth.constants.EntityConstants.EPage.DISPLAY_PAGE;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EReview.REVIEW_NO;
@@ -27,12 +28,8 @@ public class ReviewServiceImpl implements ReviewService {
     private NoticeService noticeService;
 
     @Override
-    public ArrayList<HashMap<String, Object>> getMainPopularReviewList(int selectPage) throws Exception {
-        int startNum = (selectPage-1)*15;
-        HashMap<String, Integer> page = new HashMap<String, Integer>();
-        page.put(START_NO.getText(), startNum);
-        page.put(DISPLAY_PAGE.getText(), STATIC_DISPLAY_PAGE_NUM.getText());
-        return reviewMapper.getMainPopularReviewList(page);
+    public List<HashMap<String, Object>> getPopularReviewListForMain() throws Exception {
+        return reviewMapper.getPopularReviewListForMain();
     }
     @Override
     public ArrayList<HashMap<String, Object>> getDefaultReviewList(String category) throws Exception {

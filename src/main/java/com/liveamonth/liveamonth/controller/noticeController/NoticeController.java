@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.HashMap;
 
 import static com.liveamonth.liveamonth.constants.EntityConstants.ImageURL;
+import static com.liveamonth.liveamonth.constants.LogicConstants.ENotice.*;
 
 @Controller
 public class NoticeController {
@@ -20,13 +21,13 @@ public class NoticeController {
     @ResponseBody
     @RequestMapping(value = "/getAllNotice", method = RequestMethod.GET)
     public HashMap<String, Object> getAllNotice(int userNO){
-        HashMap<String, Object> noticeMap = new HashMap<String, Object>();
+        HashMap<String, Object> noticeMap = new HashMap<>();
         try {
-            noticeMap.put("noticeList", this.noticeService.getAllNotice(userNO));
-            noticeMap.put("noticeCount", this.noticeService.getNoticeCount(userNO));
-            noticeMap.put("imgURL", ImageURL+"user/");
+            noticeMap.put(NOTICE_LIST.getText(), this.noticeService.getAllNotice(userNO));
+            noticeMap.put(NOTICE_COUNT.getText(), this.noticeService.getNoticeCount(userNO));
+            noticeMap.put(IMG_URL.getText(), ImageURL+USER_DIR.getText());
         } catch (Exception e) {
-            System.err.println("noticeList불러오기 실패 : " + e);
+            System.err.println(NOTICE_ERROR_MESSAGE.getText() + e);
         }
         return noticeMap;
     }

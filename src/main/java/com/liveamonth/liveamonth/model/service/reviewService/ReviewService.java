@@ -7,9 +7,10 @@ import com.liveamonth.liveamonth.entity.vo.ReviewVO;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public interface ReviewService {
-    ArrayList<HashMap<String, Object>> getMainPopularReviewList(int selectPage) throws Exception;
+    List<HashMap<String, Object>> getPopularReviewListForMain() throws Exception;
 
     ArrayList<HashMap<String, Object>> getDefaultReviewList(String category) throws Exception;
 

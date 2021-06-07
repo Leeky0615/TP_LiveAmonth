@@ -23,7 +23,7 @@
                         <div class="tab-desc" style="overflow: visible">
                             <div class="row" style="overflow: visible">
                                 <c:if test="${otherScheduleList != null}">
-                                    <c:forEach var="scheduleContent" end="2" items="${otherScheduleList}"
+                                    <c:forEach var="scheduleContent" items="${otherScheduleList}"
                                                varStatus="status">
                                         <div class="blog-item pl-0 pt-0" style="overflow: visible">
                                             <div class="pc-table m-0" style="width: 32%;float: left;">
@@ -65,7 +65,7 @@
                     <div class="tab-pane" id="tabs-2" role="tabpanel">
                         <div class="tab-desc">
                             <div class="row">
-                                <c:forEach var="reviewVO" end="3" items="${popularReviewList}"
+                                <c:forEach var="reviewVO" items="${popularReviewList}"
                                            varStatus="status">
                                     <div class="blog-item">
                                         <div class="pr-pic">

@@ -18,8 +18,8 @@ public class ControllerPathConstants {
         CITY("City"),
         REVIEW("Review"),
         CUSTOMER_CENTER("CustomerCenter");
-        private String path;
-        private ETemplatePath(String path) {this.path = path;}
+        private final String path;
+        ETemplatePath(String path) {this.path = path;}
         public String getPath() {return this.path;}
     }
 
@@ -40,8 +40,8 @@ public class ControllerPathConstants {
     	RESULT_MENT_DELETE_ONE_TO_ONE_ASK("ResultMentDeleteOneToOneAsk"),
         MANAGE_REVIEW("ManageReview"),
         MANAGE_SCHEDULE("ManageSchedule");
-        private String path;
-        private EMyPagePath(String path) {this.path = path;}
+        private final String path;
+        EMyPagePath(String path) {this.path = path;}
         public String getPath() {return "myPageView/"+this.path;}
         public String getText() {return this.path;}
     }
@@ -60,8 +60,8 @@ public class ControllerPathConstants {
         NAVER_SIGN_UP("NaverSignUp"),
         NEW_NAVER_MEMBER("NewNaverMember"),
         RESULT_NEW_NAVER_MEMBER("ResultNewNaverMember");
-        private String path;
-        private ESignPath(String path) {this.path = path;}
+        private final String path;
+        ESignPath(String path) {this.path = path;}
         public String getPath() {return "signView/"+ this.path;}
     }
 
@@ -71,8 +71,8 @@ public class ControllerPathConstants {
     public enum ECityInfoPath {
         CITY_INFO_GRID("CityInfoGrid"),
         CITY_INFO("CityInfo");
-        private String path;
-        private ECityInfoPath(String path) {this.path = path;}
+        private final String path;
+        ECityInfoPath(String path) {this.path = path;}
         public String getPath() {return "cityInfoView/"+this.path;}
     }
 
@@ -86,8 +86,8 @@ public class ControllerPathConstants {
         CATEGORY_REVIEW_PAGE("CategoryReviewPage"),
         SEARCH_REVIEW_PAGE("SearchReviewPage"),
         REDIRECT_REVIEW_CONTENT("redirect:getReview");
-        private String path;
-        private EReviewPath(String path) {this.path = path;}
+        private final String path;
+        EReviewPath(String path) {this.path = path;}
         public String getPath() {return "reviewView/"+this.path;}
         public String getRedirectPath() {return this.path;}
     }
@@ -101,17 +101,14 @@ public class ControllerPathConstants {
         SCHEDULE("Schedule"),
         REDIRECT_OTHER_SCHEDULELIST("redirect:otherScheduleList"),
         REDIRECT_SCHEDULE("redirect:schedule"),
-        REDIRECT_OTHER_SCHEDULE("redirect:otherSchedule?"),
-        PARAM_USER_NO("userNO="),
-        PARAM_SCHEDULE_NO("&scheduleNO=");
-        private String path;
-        private ESchedulePath(String path) {this.path = path;}
+        REDIRECT_OTHER_SCHEDULE("redirect:otherSchedule?");
+        private final String path;
+        ESchedulePath(String path) {this.path = path;}
         public String getPath() {return "scheduleView/"+this.path;}
         public String getRedirectPath() {return this.path;}
-//        public String getOtherSchedulePath(String userNO, String scheduleNO) {
-//            return this.path+"userNO="+userNO
-//                +"&scheduleNO="+scheduleNO;}
-
+        public String getOtherSchedulePath(int userNO, int scheduleNO) {
+            return this.path+"userNO="+userNO
+                +"&scheduleNO="+scheduleNO;}
     }
 
     /*
@@ -124,7 +121,7 @@ public class ControllerPathConstants {
         NOTICE("Notice","공지사항");
         private String path;
         private String menuName;
-        private ECustomerCenterPath(String path,String menuName) {
+        ECustomerCenterPath(String path,String menuName) {
             this.path = path;
             this.menuName = menuName;
         }

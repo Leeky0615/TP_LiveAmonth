@@ -1,6 +1,7 @@
 package com.liveamonth.liveamonth.controller.reviewController;
 
 import com.liveamonth.liveamonth.constants.EntityConstants;
+import com.liveamonth.liveamonth.controller.SuperController;
 import com.liveamonth.liveamonth.entity.dto.PagingDTO;
 import com.liveamonth.liveamonth.entity.vo.ReviewLikeVO;
 import com.liveamonth.liveamonth.entity.vo.ReviewVO;
@@ -21,36 +22,33 @@ import java.util.HashMap;
 import java.util.Locale;
 
 import static com.liveamonth.liveamonth.constants.ControllerPathConstants.EReviewPath.*;
+import static com.liveamonth.liveamonth.constants.ControllerPathConstants.ETemplatePath.REVIEW;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EReview.REVIEW_NO;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EReview.REVIEW_VO;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EReviewCategoryName;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.USER_VO;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EPaging.*;
-import static com.liveamonth.liveamonth.constants.LogicConstants.EReview.*;
-import static com.liveamonth.liveamonth.constants.LogicConstants.EReviewAttribute.ALL_REVIEW_LIST;
-import static com.liveamonth.liveamonth.constants.LogicConstants.EReviewAttribute.FREE_REVIEW_LIST;
-import static com.liveamonth.liveamonth.constants.LogicConstants.EReviewAttribute.POPULAR_REVIEW_LIST;
+import static com.liveamonth.liveamonth.constants.LogicConstants.EReview.REVIEW_LIKE_COUNT;
+import static com.liveamonth.liveamonth.constants.LogicConstants.EReview.REVIEW_REPLY_LIST;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EReviewAttribute.REVIEW_CATEGORY_LIST;
-import static com.liveamonth.liveamonth.constants.LogicConstants.EReviewMessage.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EReviewAttribute.*;
+import static com.liveamonth.liveamonth.constants.LogicConstants.EReviewMessage.*;
 
 @Controller
-public class ReviewController {
+public class ReviewController extends SuperController {
     @Autowired
     private ReviewService reviewService;
 
     @GetMapping("/review")
     public String showDefauleReviewPage(Model model) throws Exception {
-
         ArrayList<HashMap<String, Object>> allReviewList = reviewService.getDefaultReviewList(ALL.getText());
         ArrayList<HashMap<String, Object>> freeReviewList = reviewService.getDefaultReviewList(FREE.getText());
         ArrayList<HashMap<String, Object>> popularReviewList = reviewService.getDefaultReviewList(POPULAR.getText());
         model.addAttribute(ALL_REVIEW_LIST.getText(), allReviewList);
         model.addAttribute(FREE_REVIEW_LIST.getText(), freeReviewList);
         model.addAttribute(POPULAR_REVIEW_LIST.getText(), popularReviewList);
-
         model.addAttribute(REVIEW_CATEGORY_LIST.getText(), EReviewCategoryName.values());
-        return "Review";
+        return REVIEW.getPath();
     }
 
     @GetMapping("/categoryReviewPage")
@@ -77,17 +75,14 @@ public class ReviewController {
             default:
                 break;
         }
-        int selectPage = 1;
-        if (request.getParameter(SELECTED_PAGE.getText()) != null) {
-            selectPage = Integer.parseInt(request.getParameter(SELECTED_PAGE.getText()));
-        }
+        int selectPage = super.getSelectePage(request);
         ArrayList<HashMap<String, Object>> reviewList = reviewService.getCategoryReviewList(category, selectPage,orderBy,descAsc);
         PagingDTO paging = reviewService.showPaging(selectPage, category);
         model.addAttribute(SELECT_PAGE.getText(),selectPage);
         model.addAttribute(ORDER_BY.getText(),orderBy);
         model.addAttribute(DATE_DESC_ASC.getText(),dateDescAsc);
         model.addAttribute(LIKE_DESC_ASC.getText(),likeDescAsc);
-        model.addAttribute( VIEW_DESC_ASC.getText(),viewDescAsc);
+        model.addAttribute(VIEW_DESC_ASC.getText(),viewDescAsc);
         model.addAttribute(PAIGING.getText(), paging);
         model.addAttribute(REVIEW_LIST.getText(), reviewList);
         model.addAttribute(CATEGORY.getText(), category);
@@ -105,11 +100,7 @@ public class ReviewController {
         String searchCategory = String.valueOf(request.getParameter(SEARCH_CATEGORY.getText()));
         String searchDetail = String.valueOf(request.getParameter(SEARCH_DETAIL.getText()));
 
-
-        int selectPage = 1;
-        if (request.getParameter(SELECTED_PAGE.getText()) != null) {
-            selectPage = Integer.parseInt(request.getParameter(SELECTED_PAGE.getText()));
-        }
+        int selectPage = super.getSelectePage(request);
         PagingDTO paging = reviewService.showSearchPaging(selectPage, search,searchDate,searchCategory,searchDetail);
         ArrayList<HashMap<String, Object>> reviewList = reviewService.getSearchReviewList(selectPage, search,searchDate,searchCategory,searchDetail);
         model.addAttribute(REVIEW_LIST.getText(), reviewList);
@@ -118,7 +109,6 @@ public class ReviewController {
         model.addAttribute(REVIEW_SEARCH_DATE.getText(), EntityConstants.EReviewSearchDate.values());
         model.addAttribute(REVIEW_SEARCH_DETAIL.getText(), EntityConstants.EReviewSearchDetail.values());
         model.addAttribute(PAIGING.getText(), paging);
-
         model.addAttribute(SELECTED_DATE.getText(),searchDate);
         model.addAttribute(SELECTED_CATEGORY.getText(),searchCategory);
         model.addAttribute(SELECTED_DETAIL.getText(),searchDetail);
@@ -154,7 +144,7 @@ public class ReviewController {
         UserVO session_UserVO = (UserVO) session.getAttribute(USER_VO.getText());
         reviewVO.setUserNO(session_UserVO.getUserNO());
 
-        int reviewNO = 0;
+        int reviewNO;
         try {
             reviewNO = reviewService.addReview(reviewVO);
         } catch (Exception e) {
@@ -192,12 +182,12 @@ public class ReviewController {
     }
 
     @GetMapping("getReview")
-    public String getReview(Model model, HttpServletRequest request, RedirectAttributes rttr) {
+    public String getReview(Model model, HttpServletRequest request) {
         int reviewNO = Integer.parseInt(String.valueOf(request.getParameter(REVIEW_NO.getText())));
         HttpSession session = request.getSession();
         UserVO session_UserVO = (UserVO) session.getAttribute(USER_VO.getText());
 
-        ReviewVO reviewVO = null;
+        ReviewVO reviewVO;
         try {
             reviewVO = reviewService.getReviewVO(reviewNO);
             model.addAttribute(REVIEW_VO.getText(), reviewVO);
@@ -213,11 +203,7 @@ public class ReviewController {
             return DEFAULT_REVIEW_PAGE.getPath();
         }
 
-        int selectPage = 1;
-        if (request.getParameter(SELECTED_PAGE.getText()) != null) {
-            selectPage = Integer.parseInt(request.getParameter(SELECTED_PAGE.getText()));
-        }
-
+        int selectPage = super.getSelectePage(request);
         try {
             ArrayList<HashMap<String, Object>> reviewReplyList = reviewService.getReviewReplyList(reviewNO, selectPage);
             model.addAttribute(REVIEW_REPLY_LIST.getText(), reviewReplyList);
@@ -226,7 +212,7 @@ public class ReviewController {
             return DEFAULT_REVIEW_PAGE.getPath();
         }
 
-        PagingDTO paging = null;
+        PagingDTO paging;
         try {
             paging = reviewService.showPaging(selectPage, reviewNO);
             model.addAttribute(PAIGING.getText(), paging);

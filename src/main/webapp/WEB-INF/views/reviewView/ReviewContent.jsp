@@ -61,24 +61,6 @@
         </div>
     </div>
 </section>
-<%--<section class="blog-details-section spad">--%>
-<%--    <div class="container">--%>
-<%--        <div class="container bootdey likeDiv">--%>
-<%--            <span class="likeSpan"> 좋아요&nbsp;&nbsp; </span>--%>
-<%--            <a href="#" class="heart-icon" onclick="updateReviewLike(); return false; ">--%>
-<%--                <c:choose>--%>
-<%--                    <c:when test="${likeStatus == 1}">--%>
-<%--                        <span id="like" class="icon_heart dis-none"></span>--%>
-<%--                    </c:when>--%>
-<%--                    <c:otherwise>--%>
-<%--                        <span id="like" class="icon_heart_alt"></span>--%>
-<%--                    </c:otherwise>--%>
-<%--                </c:choose>--%>
-<%--            </a>--%>
-<%--            <span id="likeCount" class="likeSpan" style="margin-right: 20px;"> &nbsp;${reviewLikeCount} </span>--%>
-<%--        </div>--%>
-<%--    </div>--%>
-<%--</section>--%>
 <section class="blog-details-section spad">
     <div class="container bootdey">
         <div class="col-lg-7">
@@ -109,8 +91,6 @@
                                                  src="${reviewReplyMap.userVO.getUserImageURL()}">
                                         </c:otherwise>
                                     </c:choose>
-<%--                                    <img class="img-circle img-sm" alt="Profile Picture"--%>
-<%--                                         src="https://blog.kakaocdn.net/dn/c3vWTf/btqUuNfnDsf/VQMbJlQW4ywjeI8cUE91OK/img.jpg"></a>--%>
                                 <div class="media-body">
                                     <c:choose>
                                         <c:when test="${reviewReplyMap.reviewReplyVO.reviewReplyRefNO == 0}">

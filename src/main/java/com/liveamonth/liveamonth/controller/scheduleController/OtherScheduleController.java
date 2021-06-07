@@ -1,7 +1,7 @@
 package com.liveamonth.liveamonth.controller.scheduleController;
 
 
-import com.liveamonth.liveamonth.constants.EntityConstants.Month;
+import com.liveamonth.liveamonth.controller.SuperController;
 import com.liveamonth.liveamonth.entity.dto.CalendarDTO;
 import com.liveamonth.liveamonth.entity.dto.PagingDTO;
 import com.liveamonth.liveamonth.entity.vo.ScheduleLikeVO;
@@ -21,105 +21,46 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 
 import static com.liveamonth.liveamonth.constants.ControllerPathConstants.ESchedulePath.*;
-import static com.liveamonth.liveamonth.constants.EntityConstants.ESchedule.*;
+import static com.liveamonth.liveamonth.constants.EntityConstants.ESchedule.SCHEDULE_NO;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EScheduleReply.SCHEDULE_REPLY_NO;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.USER_VO;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EAlertMessage.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EOtherScheduleMessage.*;
-import static com.liveamonth.liveamonth.constants.LogicConstants.EPaging.*;
+import static com.liveamonth.liveamonth.constants.LogicConstants.EPaging.LIKE_STATUS;
+import static com.liveamonth.liveamonth.constants.LogicConstants.EPaging.PAIGING;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleAttributes.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleFilterAndOrders;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleFilterAndOrders.SCHEDULE_FO_ORDER;
 
 @Controller
-public class OtherScheduleController {
+public class OtherScheduleController extends SuperController {
     @Autowired
     private ScheduleService scheduleService;
     @Autowired
     private CityService cityService;
 
-    private int checkOption(String option) {
-        if (option != null) {
-            if (!"null".equals(option)&&!"".equals(option)) {
-                return Integer.parseInt(option);
-            }
-        }
-        return -1;
-    }
-
-    private HashMap<String, Object> makeRequestList(HttpServletRequest request) {
-        HashMap<String, Object> requestList = new HashMap<>();
-        for (EScheduleFilterAndOrders eFO : EScheduleFilterAndOrders.values()) {
-            if (eFO == SCHEDULE_FO_ORDER) {
-                requestList.put(eFO.getText(), request.getParameter(eFO.getText()));
-            } else {
-                int option = this.checkOption(request.getParameter(eFO.getText()));
-                requestList.put(eFO.getText(), option);
-            }
-        }
-        return requestList;
-    }
-    private HashMap<String, Object>  makeFiltersAndOrder(HttpServletRequest request, String action) throws Exception {
-        HashMap<String, Object> filtersAndOrder = new HashMap<>();
-        if (action.equals(SCHEDULE_LIST.getText())) {
-            for (EScheduleFilterAndOrders eFO : EScheduleFilterAndOrders.values()) {
-                if (eFO == SCHEDULE_FO_ORDER) filtersAndOrder.put(eFO.getText(), ORDER_BY_NEW.getText());
-                else filtersAndOrder.put(eFO.getText() + FILTER.getText(), false);
-            }
-        } else if (action.equals(SCHEDULE_FILTER.getText())) {
-            for (EScheduleFilterAndOrders eFO : EScheduleFilterAndOrders.values()) {
-                if (eFO == SCHEDULE_FO_ORDER) filtersAndOrder.put(eFO.getText(), request.getParameter(SCHEDULE_FO_ORDER.getText()));
-                else {
-                    int option = this.checkOption(request.getParameter(eFO.getText()));
-                    boolean optionStatus = false;
-                    if (option != -1) {
-                        optionStatus = true;
-                        filtersAndOrder.put(eFO.getText(), option);
-                    }
-                    filtersAndOrder.put(eFO.getText() + FILTER.getText(), optionStatus);
-                }
-            }
-        }
-        return filtersAndOrder;
-    }
-
     @RequestMapping("/otherScheduleList")
     public String otherScheduleList(Model model, HttpServletRequest request, CalendarDTO calendarDTO) throws Exception {
-        // 페이지 선택
-        int selectPage = 1;
-        if (request.getParameter(SELECTED_PAGE.getText()) != null) {
-            selectPage = Integer.parseInt(request.getParameter(SELECTED_PAGE.getText()));
-        }
-        // Request를 가지고 필터&오더 만들기
+        // set filters&orders
         HashMap<String, Object> filtersAndOrder = this.makeFiltersAndOrder(request, request.getParameter(SCHEDULE_ACTION.getText()));
-        // 페이지와 필터&오더를 보내 스케줄 리스트 받기
-        List<HashMap<String, Object>> otherScheduleList = scheduleService.getOtherScheduleList(filtersAndOrder, selectPage);
-        model.addAttribute(FITERED_OTHER_SCHEDULE_LIST.getText(), otherScheduleList);
 
-        // 리스트 밑에 페이지 표시나오게 하는 부분
+        // paging
+        int selectPage = super.getSelectePage(request);
         PagingDTO paging = scheduleService.showOtherScheduleListPaging(filtersAndOrder, selectPage);
         model.addAttribute(PAIGING.getText(), paging);
 
-        // 달력 표시
-        List<CalendarDTO> CalendarDTOList = new ArrayList<>();
-        List<List<CalendarDTO>> CalendarDTODateList = new ArrayList<>();
-        List<HashMap<String, Integer>> CalendarDTOTodayInformationList = new ArrayList<>();
-        for(HashMap<String, Object> otherSchedule : otherScheduleList){
-            int scheduleNO = (int)otherSchedule.get(SCHEDULE_NO.getText());
-            calendarDTO = scheduleService.setManyContentsDate(scheduleNO,calendarDTO); // 컨텐츠가 많은 달을 가져옴
-            CalendarDTO calendarDto = scheduleService.showCalendar(calendarDTO, scheduleNO);
-            CalendarDTOList.add(calendarDto);
-            CalendarDTODateList.add(calendarDto.getDateList());
-            CalendarDTOTodayInformationList.add((HashMap)calendarDto.getTodayInformation());
-        }
-        model.addAttribute(MONTH_LIST.getText(), Month.values());
-        model.addAttribute(CALENDAR_DTO_DATE_LIST.getText(), CalendarDTODateList); //날짜 데이터 배열 DATE_LIST
-        model.addAttribute(CALENDAR_DTO_TODAY_INFORMATION_LIST.getText(), CalendarDTOTodayInformationList);
+        // set otherScheduleList & calendarDTO
+        List<HashMap<String, Object>> otherScheduleList = scheduleService.getOtherScheduleList(filtersAndOrder, selectPage);
+        model.addAttribute(FITERED_OTHER_SCHEDULE_LIST.getText(), otherScheduleList);
+        this.setCalendarDTOForScheduleList(model,otherScheduleList,calendarDTO);
 
-        // 필터 & 정렬 리스트
+        // add requestList
         HashMap<String, Object> requestList = makeRequestList(request);
         model.addAttribute(REQUEST_LIST.getText(), requestList);
         model.addAttribute(SCHEDULE_PLACE_LIST.getText(), cityService.getCityNameList());
@@ -133,11 +74,7 @@ public class OtherScheduleController {
         int scheduleNO = Integer.parseInt(request.getParameter(SCHEDULE_NO.getText()));
         model.addAttribute(SCHEDULE_NO.getText(), scheduleNO);
 
-        int selectPage = 1;
-        if (request.getParameter(SELECTED_PAGE.getText()) != null) {
-            selectPage = Integer.parseInt(request.getParameter(SELECTED_PAGE.getText()));
-        }
-
+        int selectPage = super.getSelectePage(request);
         try {
             scheduleService.increaseScheduleViewCount(scheduleNO);
         } catch (Exception e) {
@@ -145,7 +82,7 @@ public class OtherScheduleController {
             return REDIRECT_OTHER_SCHEDULELIST.getPath();
         }
 
-        CalendarDTO calendarDto = null;
+        CalendarDTO calendarDto;
         try {
             calendarDto = scheduleService.showCalendar(calendarDTO, scheduleNO);
             model.addAttribute(DATE_LIST.getText(), calendarDto.getDateList()); //날짜 데이터 배열
@@ -155,7 +92,7 @@ public class OtherScheduleController {
             return REDIRECT_OTHER_SCHEDULELIST.getPath();
         }
 
-        PagingDTO paging = null;
+        PagingDTO paging;
         try {
             paging = scheduleService.showPaging(selectPage, scheduleNO);
             model.addAttribute(PAIGING.getText(), paging);
@@ -196,8 +133,7 @@ public class OtherScheduleController {
     }
 
     @RequestMapping(value = "addScheduleReply")
-    public String addScheduleReply(HttpServletRequest request, ScheduleReplyVO scheduleReplyVO, RedirectAttributes rttr){
-        HttpSession session = request.getSession();
+    public String addScheduleReply(HttpSession session, ScheduleReplyVO scheduleReplyVO, RedirectAttributes rttr){
         UserVO session_UserVO = (UserVO) session.getAttribute(USER_VO.getText());
         int userNO = session_UserVO.getUserNO();
 
@@ -258,5 +194,50 @@ public class OtherScheduleController {
             e.printStackTrace();
         }
         return null;
+    }
+
+    // Inner Method
+    private int checkOption(String option) {
+        if (option != null) {
+            if (!"null".equals(option)&&!"".equals(option)) {
+                return Integer.parseInt(option);
+            }
+        }
+        return -1;
+    }
+    private HashMap<String, Object> makeRequestList(HttpServletRequest request) {
+        HashMap<String, Object> requestList = new HashMap<>();
+        for (EScheduleFilterAndOrders eFO : EScheduleFilterAndOrders.values()) {
+            if (eFO == SCHEDULE_FO_ORDER) {
+                requestList.put(eFO.getText(), request.getParameter(eFO.getText()));
+            } else {
+                int option = this.checkOption(request.getParameter(eFO.getText()));
+                requestList.put(eFO.getText(), option);
+            }
+        }
+        return requestList;
+    }
+    private HashMap<String, Object>  makeFiltersAndOrder(HttpServletRequest request, String action){
+        HashMap<String, Object> filtersAndOrder = new HashMap<>();
+        if (action.equals(SCHEDULE_LIST.getText())) {
+            for (EScheduleFilterAndOrders eFO : EScheduleFilterAndOrders.values()) {
+                if (eFO == SCHEDULE_FO_ORDER) filtersAndOrder.put(eFO.getText(), ORDER_BY_NEW.getText());
+                else filtersAndOrder.put(eFO.getText() + FILTER.getText(), false);
+            }
+        } else if (action.equals(SCHEDULE_FILTER.getText())) {
+            for (EScheduleFilterAndOrders eFO : EScheduleFilterAndOrders.values()) {
+                if (eFO == SCHEDULE_FO_ORDER) filtersAndOrder.put(eFO.getText(), request.getParameter(SCHEDULE_FO_ORDER.getText()));
+                else {
+                    int option = this.checkOption(request.getParameter(eFO.getText()));
+                    boolean optionStatus = false;
+                    if (option != -1) {
+                        optionStatus = true;
+                        filtersAndOrder.put(eFO.getText(), option);
+                    }
+                    filtersAndOrder.put(eFO.getText() + FILTER.getText(), optionStatus);
+                }
+            }
+        }
+        return filtersAndOrder;
     }
 }

@@ -23,16 +23,16 @@
     </div>
 </div>
 <form id="deleteMyReviewForm" action="manageReview">
-<c:choose>
-    <c:when test="${reviewList.size() == 0}">
-        <div class="row justify-content-center">
-            <div class="col-md-6 text-center mb-5">
-                <h2 class="heading-section">작성하신 글이 없습니다.</h2>
+    <c:choose>
+        <c:when test="${myReviewList.size() == 0}">
+            <div class="row justify-content-center">
+                <div class="col-md-6 text-center mb-5">
+                    <h2 class="heading-section">작성하신 글이 없습니다.</h2>
+                </div>
             </div>
-        </div>
-    </c:when>
-    <c:otherwise>
-        <div class="table table-hover">
+        </c:when>
+        <c:otherwise>
+            <div class="table table-hover">
                 <input type="hidden" name="manageReviewCategory" id="manageReviewCategory"
                        value="${manageReviewCategory}">
                 <table>
@@ -47,54 +47,50 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <c:forEach var="reviewList" items="${reviewList}">
+                    <c:forEach var="myReview" items="${myReviewList}">
                         <tr>
                             <td style="width:10%">${reviewList.reviewNO}</td>
                             <c:choose>
                                 <c:when test="${manageReviewCategory eq 'writeReviewReply'}">
                                     <td><input type="checkbox" name="myReviewCheckbox"
-                                               value="${reviewList.reviewReplyNO}"></td>
+                                               value="${myReview.reviewReplyNO}"></td>
                                 </c:when>
                                 <c:otherwise>
                                     <td><input type="checkbox" name="myReviewCheckbox"
-                                               value="${reviewList.reviewNO}"></td>
+                                               value="${myReview.reviewNO}"></td>
                                 </c:otherwise>
                             </c:choose>
                             <td style="width:35%"><a
-                                    href="getReview?reviewNO=${reviewList.reviewNO}">${reviewList.reviewSubject}</a>
+                                    href="getReview?reviewNO=${myReview.reviewNO}">${myReview.reviewSubject}</a>
                                 <span class="reviewReplyCount">
-                        <c:if test="${reviewList.replyCount ne null}">
-                            [${reviewList.replyCount}]
+                        <c:if test="${myReview.replyCount ne null}">
+                            [${myReview.replyCount}]
                         </c:if>
                     </span>
                             </td>
-                            <td style="width:15%">${reviewList.reviewDate}</td>
-                            <td style="width:15%">${reviewList.reviewLikeCount}</td>
-                            <td style="width:15%">${reviewList.reviewViewCount}</td>
+                            <td style="width:15%">${myReview.reviewDate}</td>
+                            <td style="width:15%">${myReview.reviewLikeCount}</td>
+                            <td style="width:15%">${myReview.reviewViewCount}</td>
                         </tr>
                     </c:forEach>
                     </tbody>
                 </table>
-            <input type='checkbox' name='myReviewCheckbox' value='reviewSelectAll' onclick='reviewSelectAll(this)'/> 전체선택
-        </div>
+                <input type='checkbox' name='myReviewCheckbox' value='reviewSelectAll' onclick='reviewSelectAll(this)'/>
+                전체선택
+            </div>
 
-                <jsp:include page="Paging.jsp">
-                    <jsp:param value="${manageReviewCategory}" name="manageReviewCategory"/>
-                    <jsp:param value="${paging.page}" name="page"/>
-                    <jsp:param value="${paging.beginPage}" name="beginPage"/>
-                    <jsp:param value="${paging.endPage}" name="endPage"/>
-                    <jsp:param value="${paging.prev}" name="prev"/>
-                    <jsp:param value="${paging.next}" name="next"/>
-                </jsp:include>
-    </c:otherwise>
-</c:choose>
+            <jsp:include page="Paging.jsp">
+                <jsp:param value="${manageReviewCategory}" name="manageReviewCategory"/>
+                <jsp:param value="${paging.page}" name="page"/>
+                <jsp:param value="${paging.beginPage}" name="beginPage"/>
+                <jsp:param value="${paging.endPage}" name="endPage"/>
+                <jsp:param value="${paging.prev}" name="prev"/>
+                <jsp:param value="${paging.next}" name="next"/>
+            </jsp:include>
+        </c:otherwise>
+    </c:choose>
 </form>
-<c:choose>
-    <c:when test="${scheduleList.size() == 0}">
-    </c:when>
-    <c:otherwise>
-<button type="button" class="btn btn-sm btn-primary pull-right" onclick="deleteMyReview();">글삭제</button>
-    </c:otherwise>
-</c:choose>
+<c:if test="${myReviewList.size() != 0}">
+    <button type="button" class="btn btn-sm btn-primary pull-right" onclick="deleteMyReview();">글삭제</button>
+</c:if>
 </body>
-</html>

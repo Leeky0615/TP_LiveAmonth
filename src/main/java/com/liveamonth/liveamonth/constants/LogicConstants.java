@@ -16,6 +16,7 @@ public class LogicConstants {
         COMPLETE_SCHEDULE_MODIFICATION("캘린더가 수정되었습니다."),
         FAIL_TO_MODIFY_SCHEDULE("캘린더 수정에 실패하였습니다."),
         COMPLETE_SCHEDULE_DELETION("캘린더가 삭제되었습니다.."),
+        COMPLETE_SCHEDULE_CONTENTS_DELETION("스케줄이 삭제되었습니다."),
         FAIL_TO_DELETE_SCHEDULE("캘린더 삭제에 실패하였습니다."),
 
         ADD_SCHEDULEREPLY("댓글 등록이 완료되었습니다."),
@@ -25,13 +26,14 @@ public class LogicConstants {
         COMPLETE_SCHEDULEREPLY_DELETION("댓글이 삭제되었습니다.."),
         FAIL_TO_DELETE_SCHEDULEREPLY("댓글 삭제에 실패하였습니다."),
 
-
-
+        ADD_CALENDAR_MESSAGE("아직 캘린더를 생성하지 않으셨습니다. 캘린더를 추가해주세요."),
+        FAIL_TO_SEARCH_CALENDER_LIST("캘린더 리스트 조회에 실패하셨습니다."),
+        FAIL_TO_SEARCH_SCHEDULE("스케줄 조회에 실패하셨습니다."),
         PLEASE_ADD_DURATION("기간을 설정해 주십시오."),
         WON("원");
 
-        private String text;
-        private EAlertMessage(String text) {this.text = text;}
+        private final String text;
+        EAlertMessage(String text) {this.text = text;}
         public String getText() {return this.text;}
     }
 
@@ -45,7 +47,6 @@ public class LogicConstants {
         SCHEDULE_FILTER("filter"),
         FILTER("Filter"),
         ORDER_BY_NEW("orderByNew"),
-        ORDER_BY_LIKED("orderByLiked"),
         MODIFY_SCHEDULE_CONTENT_SUBJECT("modifyScheduleContentSubject"),
         MODIFY_SCHEDULE_CONTENT_DESC("modifyScheduleContentDesc"),
         MODIFY_SCHEDULE_CONTENT_COST("modifyScheduleContentCost"),
@@ -63,8 +64,8 @@ public class LogicConstants {
         CALENDAR_DTO_DATE_LIST("CalendarDTODateList"),
         CALENDAR_DTO_TODAY_INFORMATION_LIST("CalendarDTOTodayInformationList"),
         OTHER_SCHEDULE_AND_LIKE_COUNT("otherScheduleAndLikeCount");
-        private String text;
-        private EScheduleAttributes(String text) {this.text = text;}
+        private final String text;
+        EScheduleAttributes(String text) {this.text = text;}
         public String getText() {return this.text;}
     }
 
@@ -74,8 +75,8 @@ public class LogicConstants {
         STATIC_DISPLAY_PAGE_NUM(15),
         SCHEDULE_DISPLAY_PAGE_NUM(8),
         FIRST_SCHEDULECONTENT_NO(301);
-        private int text;
-        private EScheduleStaticInt(int text) {this.text = text;}
+        private final int text;
+        EScheduleStaticInt(int text) {this.text = text;}
         public int getText(){return this.text;}
     }
 
@@ -85,8 +86,8 @@ public class LogicConstants {
         SCHEDULE_FO_AGE("userAge"),
         SCHEDULE_FO_CITY_NO("cityNO"),
         SCHEDULE_FO_ORDER("orderBy");
-        private String text;
-        private EScheduleFilterAndOrders(String text) {this.text = text;}
+        private final String text;
+        EScheduleFilterAndOrders(String text) {this.text = text;}
         public String getText() {return this.text;}
     }
     public enum EMyPageAttributes {
@@ -96,6 +97,7 @@ public class LogicConstants {
         TITLE("title"),
         TEXT("text"),
         MY_SCHEDULE_LIST("myScheduleList"),
+        MY_REVIEW_LIST("myReviewList"),
         MANAGE_REVIEW_CATEGORY("manageReviewCategory"),
         MY_REVIEW_CHECK_BOX("myReviewCheckbox"),
         MANAGE_SCHEDULE_CATEGORY("manageScheduleCategory"),
@@ -112,8 +114,8 @@ public class LogicConstants {
         TEXT_CHECK_DROP_USER("회원 해지시, 회원님의 정보는 삭제되며 복구 불가능합니다."),
         TEXT_RESULT_ONE_TO_ONE_ASK("문의내용을 확인한 뒤 신속한 답변드리겠습니다. 감사합니다."),
         TEXT_RESULT_DELETE_ONE_TO_ONE_ASK("고객님을 위해 항상 최선을 다하겠습니다. 감사합니다.");
-        private String text;
-        private EMyPageAttributes(String text) {this.text = text;}
+        private final String text;
+        EMyPageAttributes(String text) {this.text = text;}
         public String getText() {return this.text;}
     }
     public enum EPageOptions{
@@ -121,8 +123,8 @@ public class LogicConstants {
         PAGE_DROP_USER("dropUser"),
         PAGE_ONE_TO_ONE_ASK("oneToOneAsk"),
         PAGE_DELETE_ONE_TO_ONE_ASK("deleteOneToOneAsk");
-        private String text;
-        private EPageOptions(String text) {this.text = text;}
+        private final String text;
+        EPageOptions(String text) {this.text = text;}
         public String getText() {return this.text;}
     }
     public enum ECityInfoAttributes {
@@ -141,16 +143,16 @@ public class LogicConstants {
         CURRENT_MONTH_TEMP_LIST("currentMonthTempList"),
         CITY_TRANSPORT_GRADE_LIST("cityTransportGradeList"),
         CITY_NAME_LIST("cityNameList");
-        private String text;
-        private ECityInfoAttributes(String text) {this.text = text;}
+        private final String text;
+        ECityInfoAttributes(String text) {this.text = text;}
         public String getText() {return this.text;}
     }
 
     public enum ESignAttributes{
         FIRST_IN("firstIn"),
         AT("@");
-        private String text;
-        private ESignAttributes(String text){this.text = text;}
+        private final String text;
+        ESignAttributes(String text){this.text = text;}
         public String getText() {return this.text;}
     }
 
@@ -163,8 +165,8 @@ public class LogicConstants {
         START_NO("startNO"),
         PAIGING("paging");
 
-        private String text;
-        private EPaging(String text){this.text = text;}
+        private final String text;
+        EPaging(String text){this.text = text;}
         public String getText() {return this.text;}
     }
     public enum EReviewAttribute{
@@ -205,8 +207,8 @@ public class LogicConstants {
         SELECTED_DETAIL("selectedDetail");
 
 
-        private String text;
-        private EReviewAttribute(String text){this.text = text;}
+        private final String text;
+        EReviewAttribute(String text){this.text = text;}
         public String getText() {return this.text;}
     }
     public enum EReviewMessage {
@@ -230,8 +232,8 @@ public class LogicConstants {
         REVIEW_ADD_FAIL_MESSAGE("후기 등록 실패 : "),
         REVIEW_LOAD_FAIL_MESSAGE("후기 조회 실패 : ");
 
-        private String text;
-        private EReviewMessage(String text){this.text = text;}
+        private final String text;
+        EReviewMessage(String text){this.text = text;}
         public String getText() {return this.text;}
     }
 
@@ -252,8 +254,8 @@ public class LogicConstants {
         SCHEDULEREPLY_DELETE_FAIL_MESSAGE("스케줄 댓글 삭제 실패 : ");
 
 
-        private String text;
-        private EOtherScheduleMessage(String text) {this.text = text;}
+        private final String text;
+        EOtherScheduleMessage(String text) {this.text = text;}
         public String getText() {return this.text;}
     }
 
@@ -267,8 +269,8 @@ public class LogicConstants {
         TEMP_IMAGE_PATH("/summernoteImage/"),
         REAL_IMAGE_PATH("https://liveamonth-resources.s3.ap-northeast-2.amazonaws.com/img/reviewImg/");
 
-        private String text;
-        private EReviewImage(String text){this.text = text;}
+        private final String text;
+        EReviewImage(String text){this.text = text;}
         public String getText() {return this.text;}
     }
 
@@ -279,9 +281,21 @@ public class LogicConstants {
         POPULAR_REVIEW_LIST("popularReviewList"),
         FREE_REVIEW_LIST("freeReviewList");
 
-        private String text;
-        private EReview(String text){this.text = text;}
+        private final String text;
+        EReview(String text){this.text = text;}
         public String getText() {return this.text;}
     }
+    public enum ENotice{
+        NOTICE_ERROR_MESSAGE("noticeList 불러오기 실패 : "),
+        NOTICE_LIST("noticeList"),
+        NOTICE_COUNT("noticeCount"),
+        USER_DIR("user/"),
+        IMG_URL("imgURL");
+        private final String text;
+        ENotice(String text){this.text = text;}
+        public String getText() {return this.text;}
+    }
+
+
 
 }

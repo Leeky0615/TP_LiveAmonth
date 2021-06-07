@@ -72,7 +72,7 @@
                                                         <select name="userAge" id="userAge" class="sm-width">
 
                                                             <option value="null" <c:if
-                                                                    test="${userAge == -1}"> selected </c:if>>기본
+                                                                    test="${userAge == -1}"> selected </c:if>>모두ㄺ
                                                             </option>
                                                             <c:forEach var="age" begin="20" end="60" step="10">
                                                                 <option value="${age}" <c:if
@@ -91,7 +91,7 @@
                                                     <div class="selectbox">
                                                         <select name="userSex" id="userSex" class="sm-width">
                                                             <option value="null" <c:if
-                                                                    test="${userSex == -1}"> selected </c:if>>기본
+                                                                    test="${userSex == -1}"> selected </c:if>>모두
                                                             </option>
                                                             <option value="0" <c:if
                                                                     test="${userSex == 0}"> selected </c:if>>남성
@@ -109,7 +109,7 @@
                                                     <div class="selectbox">
                                                         <select name="cityNO" id="cityNO" class="sm-width">
                                                             <option value="null" <c:if
-                                                                    test="${index == -1}"> selected </c:if>>기본
+                                                                    test="${index == -1}"> selected </c:if>>모두
                                                             </option>
                                                             <c:forEach var="schedulePlace" items="${schedulePlaceList}"
                                                                        varStatus="status">
@@ -139,7 +139,7 @@
                     <table>
                         <thead>
                         <tr>
-                            <th class="type">스케줄(이미지, 제목)</th>
+                            <th class="type">스케줄</th>
                             <th class="type">장소</th>
                             <th class="type">닉네임</th>
                             <th class="type">성별</th>

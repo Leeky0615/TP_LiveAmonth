@@ -2,13 +2,18 @@
 			var addScheduleForm = document.addScheduleContent;
 			if (addScheduleForm.scheduleContentDate.value == ""
 					|| addScheduleForm.scheduleContentDate.value == null) {
-				alert("날짜를 입력해주세요.");
+				alert("날짜를 선택해주세요.");
 				addScheduleForm.scheduleContentDate.focus();
 				return false;
 			} else if (addScheduleForm.scheduleContentSubject.value == ""
 					|| addScheduleForm.scheduleContentSubject.value == null) {
 				alert("제목을 입력해주세요.");
 				addScheduleForm.scheduleContentSubject.focus();
+				return false;
+			}else if (addScheduleForm.scheduleContentCost.value == ""
+					|| addScheduleForm.scheduleContentCost.value == null) {
+				alert("금액을 입력해주세요.");
+				addScheduleForm.scheduleContentCost.focus();
 				return false;
 			}
 			addScheduleForm.submit();

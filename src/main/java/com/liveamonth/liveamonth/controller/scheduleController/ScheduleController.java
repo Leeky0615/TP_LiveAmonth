@@ -20,8 +20,7 @@ import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static com.liveamonth.liveamonth.constants.ControllerPathConstants.ESchedulePath.REDIRECT_SCHEDULE;
-import static com.liveamonth.liveamonth.constants.ControllerPathConstants.ESchedulePath.SCHEDULE;
+import static com.liveamonth.liveamonth.constants.ControllerPathConstants.ESchedulePath.*;
 import static com.liveamonth.liveamonth.constants.EntityConstants.ECity.CITY_NO;
 import static com.liveamonth.liveamonth.constants.EntityConstants.ESchedule.*;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EScheduleContent.SCHEDULE_CONTENT_NO;
@@ -46,7 +45,7 @@ public class ScheduleController {
         scheduleContentVO.setScheduleNO(Integer.parseInt(String.valueOf(session.getAttribute(SELECTED_SCHEDULE_NO.getText()))));
         int count = scheduleService.beforeScheduleAddSearch(scheduleContentVO);
 
-        String message = "";
+        String message;
         if (count >= 4) {
             message = MAXIMUM_SCHEDULE_CONTENT.getText();
         } else {
@@ -61,8 +60,7 @@ public class ScheduleController {
     @RequestMapping(value = "deleteScheduleContent")
     public String deleteScheduleContent(RedirectAttributes rttr) throws Exception {
         scheduleService.deleteScheduleContent(scheduleContentNO);
-
-        rttr.addFlashAttribute(MESSAGE.getText(), COMPLETE_SCHEDULE_DELETION.getText());
+        rttr.addFlashAttribute(MESSAGE.getText(), COMPLETE_SCHEDULE_CONTENTS_DELETION.getText());
         return REDIRECT_SCHEDULE.getRedirectPath();
     }
 
@@ -73,10 +71,10 @@ public class ScheduleController {
         int scheduleContentCost = Integer.parseInt(request.getParameter(MODIFY_SCHEDULE_CONTENT_COST.getText()));
         scheduleService.modifyScheduleContent(scheduleContentNO, scheduleContentSubject, scheduleContentDesc, scheduleContentCost);
         rttr.addFlashAttribute(MESSAGE.getText(), COMPLETE_SCHEDULE_MODIFICATION.getText());
-        if(request.getParameter("scheduleMenu") != null){
+        if(request.getParameter(SCHEDULE_MENU.getText()) != null){
             int scheduleNO = Integer.parseInt(String.valueOf(request.getParameter(OTHER_SCHEDULE_NO.getText())));
             int userNO = Integer.parseInt(String.valueOf(request.getParameter(OTHER_USER_NO.getText())));
-            return "redirect:otherSchedule?userNO="+userNO+"&scheduleNO="+scheduleNO;
+            return REDIRECT_OTHER_SCHEDULE.getOtherSchedulePath(userNO,scheduleNO);
         }else{
             return REDIRECT_SCHEDULE.getRedirectPath();
         }
@@ -95,10 +93,10 @@ public class ScheduleController {
             scheduleVOList = scheduleService.getScheduleList(userNO);
             model.addAttribute(SCHEDULE_VO_LIST.getText(), scheduleVOList);
             if (scheduleVOList.isEmpty()) {
-                model.addAttribute(MESSAGE.getText(), "아직 캘린더를 생성하지 않으셨습니다. 캘린더를 추가해주세요.");
+                model.addAttribute(MESSAGE.getText(), ADD_CALENDAR_MESSAGE.getText());
             }
         } catch (Exception e) {
-            model.addAttribute(MESSAGE.getText(), "캘린더 리스트 조회에 실패하셨습니다.");
+            model.addAttribute(MESSAGE.getText(), FAIL_TO_SEARCH_CALENDER_LIST.getText());
             e.printStackTrace();
             return ControllerPathConstants.ETemplatePath.MAIN.getPath();
         }
@@ -113,14 +111,14 @@ public class ScheduleController {
             }
         }
 
-        CalendarDTO calendarDto = null;
+        CalendarDTO calendarDto;
         try {
             calendarDto = scheduleService.showCalendar(calendarDTO, scheduleNO);
             model.addAttribute(DATE_LIST.getText(), calendarDto.getDateList());
             calendarDto.setDate("2021-");
             model.addAttribute(TODAY_INFORMATION.getText(), calendarDto.getTodayInformation());
         } catch (Exception e) {
-            model.addAttribute(MESSAGE.getText(), "스케줄 조회에 실패하셨습니다.");
+            model.addAttribute(MESSAGE.getText(), FAIL_TO_SEARCH_SCHEDULE.getText());
             e.printStackTrace();
         }
         return SCHEDULE.getPath();
@@ -161,7 +159,7 @@ public class ScheduleController {
     }
 
     @RequestMapping(value = "modifySchedule")
-    public String modifySchedule(HttpServletRequest request, ScheduleVO scheduleVO, RedirectAttributes rttr){
+    public String modifySchedule(HttpServletRequest request, RedirectAttributes rttr){
         HttpSession session = request.getSession();
         int scheduleNO = Integer.parseInt(String.valueOf(session.getAttribute(SELECTED_SCHEDULE_NO.getText())));
 
@@ -176,7 +174,7 @@ public class ScheduleController {
     }
 
     @RequestMapping(value = "deleteSchedule")
-    public String deleteSchedule(HttpServletRequest request, RedirectAttributes rttr) throws Exception {
+    public String deleteSchedule(HttpServletRequest request, RedirectAttributes rttr){
         HttpSession session = request.getSession();
         try {
             scheduleService.deleteSchedule(Integer.parseInt(String.valueOf(session.getAttribute(SELECTED_SCHEDULE_NO.getText()))));
@@ -190,12 +188,12 @@ public class ScheduleController {
 
     @ResponseBody
     @RequestMapping(value = "/showScheduleContentList", method = RequestMethod.POST)
-    public void showScheduleContentList(Model model, HttpServletRequest request, CalendarDTO calendarDTO) throws Exception {
+    public void showScheduleContentList(HttpServletRequest request) throws Exception {
         this.scheduleContentNO = Integer.parseInt(request.getParameter(SCHEDULE_CONTENT_NO.getText()));
     }
 
     @RequestMapping(value = "knowScheduleDurationPay")
-    public String knowScheduleDurationPay(HttpSession session, HttpServletRequest request, ScheduleVO scheduleVO, RedirectAttributes rttr) throws Exception {
+    public String knowScheduleDurationPay(HttpSession session, HttpServletRequest request, RedirectAttributes rttr) throws Exception {
         String path;
         int scheduleNO;
         String schedulePayStartDay =  request.getParameter(SCHEDULE_PAY_START_DAY.getText());
@@ -203,18 +201,18 @@ public class ScheduleController {
         if(request.getParameter(SCHEDULE_MENU.getText()) != null){
             scheduleNO = Integer.parseInt(String.valueOf(request.getParameter(OTHER_SCHEDULE_NO.getText())));
             int userNO = Integer.parseInt(String.valueOf(request.getParameter(OTHER_USER_NO.getText())));
-            path = "redirect:otherSchedule?userNO="+userNO+"&scheduleNO="+scheduleNO;
+            path = REDIRECT_OTHER_SCHEDULE.getOtherSchedulePath(userNO,scheduleNO);
         }else{
             scheduleNO = Integer.parseInt(String.valueOf(session.getAttribute(SELECTED_SCHEDULE_NO.getText())));
             path = REDIRECT_SCHEDULE.getRedirectPath();
         }
 
-        String message = "";
-        if(schedulePayStartDay == "" || schedulePayFinishDay ==""){
+        String message;
+        if(schedulePayStartDay.equals("") || schedulePayFinishDay.equals("")){
             message = PLEASE_ADD_DURATION.getText();
         }else{
            int scheduleDurationPay = scheduleService.getScheduleDurationPay(schedulePayStartDay,schedulePayFinishDay,scheduleNO);
-            message = String.valueOf(scheduleDurationPay) + WON.getText();
+            message = scheduleDurationPay + WON.getText();
         }
         rttr.addFlashAttribute(DURATION_PAY.getText(), message);
         return path;

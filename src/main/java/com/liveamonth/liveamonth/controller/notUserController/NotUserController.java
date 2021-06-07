@@ -1,18 +1,14 @@
 package com.liveamonth.liveamonth.controller.notUserController;
 
-import java.util.ArrayList;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
+import com.liveamonth.liveamonth.entity.vo.OneToOneAskVO;
+import com.liveamonth.liveamonth.model.service.notUserService.NotUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.liveamonth.liveamonth.entity.vo.OneToOneAskVO;
-import com.liveamonth.liveamonth.model.service.notUserService.NotUserService;
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 
 @Controller
 public class NotUserController {
@@ -22,7 +18,7 @@ public class NotUserController {
 	
 	
 	 @GetMapping("/oneToOneAskReply")
-	    public String oneToOneAskReply(Model model, HttpServletRequest request) throws Exception {
+	    public String oneToOneAskReply(Model model) throws Exception {
 		 ArrayList<OneToOneAskVO> oneToOneAskReplyVOList = notUserService.getOneToOneAskReplyVOList();
 	    	model.addAttribute("oneToOneAskReplyVOList",oneToOneAskReplyVOList);
 	        return "myPageView/OneToOneAskReply";
@@ -36,7 +32,7 @@ public class NotUserController {
 	 }
 
 	 @GetMapping("/resultMentOneToOneAskReply")
-	 public String resultMentOneToOneAskReply(Model model, HttpServletRequest request,OneToOneAskVO oneToOneAskVO) throws Exception {
+	 public String resultMentOneToOneAskReply(OneToOneAskVO oneToOneAskVO) throws Exception {
 		 notUserService.addOneToOneAskReply(oneToOneAskVO);
 		 notUserService.postOneToOneAskReplyFromEmail(oneToOneAskVO);
 		 return "myPageView/ResultMentOneToOneAskReply";

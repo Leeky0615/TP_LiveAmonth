@@ -3,10 +3,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
-<body>
 <link rel="stylesheet" href="resources/css/myPage.css" type="text/css">
 <script type="text/javascript" src="resources/js/myPage.js"></script>
-
 <body>
 <div class="container">
     <div class="row">
@@ -27,7 +25,7 @@
 </div>
 <form id="deleteMyScheduleForm" action="manageSchedule">
     <c:choose>
-        <c:when test="${scheduleList.size() == 0}">
+        <c:when test="${myScheduleList.size() == 0}">
             <div class="row justify-content-center">
                 <div class="col-md-6 text-center mb-5">
                     <h2 class="heading-section">작성하신 글이 없습니다.</h2>
@@ -36,7 +34,6 @@
         </c:when>
         <c:otherwise>
             <div class="table table-hover">
-
                 <input type="hidden" name="manageScheduleCategory" id="manageScheduleCategory"
                        value="${manageScheduleCategory}">
                 <table>
@@ -51,30 +48,39 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <c:forEach var="scheduleList" items="${scheduleList}">
+                    <c:forEach var="mySchedule" items="${myScheduleList}" varStatus="status">
                         <tr>
-                            <td style="width:10%">${scheduleList.scheduleNO}</td>
+                            <td style="width:10%">${mySchedule.scheduleNO}</td>
                             <c:choose>
                                 <c:when test="${manageScheduleCategory eq 'writeScheduleReply'}">
                                     <td><input type="checkbox" name="myScheduleCheckbox"
-                                               value="${scheduleList.scheduleReplyNO}"></td>
+                                               value="${mySchedule.scheduleReplyNO}"></td>
                                 </c:when>
                                 <c:otherwise>
                                     <td><input type="checkbox" name="myScheduleCheckbox"
-                                               value="${scheduleList.scheduleNO}"></td>
+                                               value="${mySchedule.scheduleNO}"></td>
                                 </c:otherwise>
                             </c:choose>
-                            <td><img src="resources/img/scheduleImg.png" alt=""></td>
-                            <td style="width:35%"><a
-                                    href="otherSchedule?scheduleNO=${scheduleList.scheduleNO}">${scheduleList.scheduleSubject}</a>
+                            <td>
+                                <div class="pc-table m-0" style="width: 35%;float: left;">
+                                    <a href="otherSchedule?scheduleNO=${mySchedule.scheduleNO}">
+                                        <c:set var = "todayInformation" value = "${CalendarDTOTodayInformationList.get(status.index)}" scope = "request"/>
+                                        <c:set var = "dateList" value = "${CalendarDTODateList.get(status.index)}" scope = "request"/>
+                                        <c:set var = "listIndex" value = "${status.index+1}" scope = "request"/>
+                                        <jsp:include page="/WEB-INF/views/scheduleView/SmallSizeOfOtherSchedule.jsp"/>
+                                    </a>
+                                </div>
+                            </td>
+                            <td style="width:35%">
+                                <a href="otherSchedule?scheduleNO=${mySchedule.scheduleNO}">${mySchedule.scheduleSubject}</a>
                                 <span class="scheduleReplyCount">
-                        <c:if test="${scheduleList.replyCount ne null}">
-                            [${scheduleList.replyCount}]
+                        <c:if test="${mySchedule.replyCount ne null}">
+                            [${mySchedule.replyCount}]
                         </c:if>
                     </span>
                             </td>
-                            <td style="width:15%">${scheduleList.scheduleLikeCount}</td>
-                            <td style="width:15%">${scheduleList.scheduleViewCount}</td>
+                            <td style="width:15%">${mySchedule.scheduleLikeCount}</td>
+                            <td style="width:15%">${mySchedule.scheduleViewCount}</td>
                         </tr>
                     </c:forEach>
                     </tbody>
@@ -94,13 +100,7 @@
     </c:choose>
     <button type="button" class="btn btn-sm btn-primary pull-right" onclick="deleteMySchedule();">글삭제</button>
 </form>
-<c:choose>
-<c:when test="${scheduleList.size() == 0}">
-</c:when>
-<c:otherwise>
-<input type='checkbox' name='myScheduleCheckbox' value='scheduleSelectAll' onclick='scheduleSelectAll(this)'/> 전체선택
-</c:otherwise>
-</c:choose>
-</body>
-</html>
+<c:if test="${myScheduleList.size() != 0}">
+    <input type='checkbox' name='myScheduleCheckbox' value='scheduleSelectAll' onclick='scheduleSelectAll(this)'/> 전체선택
+</c:if>
 </body>

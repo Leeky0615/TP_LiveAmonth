@@ -1,53 +1,3 @@
-$(".checkID").click(function () {
-    var query = {userID: $("#userID").val()};
-    $.ajax({
-        url: "checkID",
-        type: "post",
-        data: query,
-        success: function (data) {
-            if (data == 1) {
-                $(".result .msg").text("사용불가");
-                $(".result .msg").attr("style", "color:#f00");
-                $("#submit").attr("disabled", "disabled");
-            } else {
-                $(".result .msg").text("사용가능");
-                $(".result .msg").attr("style", "color:#00f");
-                $("#submit").removeAttr("disabled");
-            }
-        }
-    });  // ajax ��
-});
-$("#userID").keyup(function () {
-    $(".result .msg").text("중복확인을 해주세요");
-    $(".result .msg").attr("style", "color:#000");
-    $("#submit").attr("disabled", "disabled");
-});
-///////////////////////////////////////////////////////////
-$(".checkNickName").click(function () {
-    var query = {userNickname: $("#userNickname").val()};
-    $.ajax({
-        url: "checkNickName",
-        type: "post",
-        data: query,
-        success: function (data) {
-            if (data == 1) {
-                $(".nickNameResult .nickNameMsg").text("사용불가");
-                $(".nickNameResult .nickNameMsg").attr("style", "color:#f00");
-                $("#submit").attr("disabled", "disabled");
-            } else {
-                $(".nickNameResult .nickNameMsg").text("사용가능");
-                $(".nickNameResult .nickNameMsg").attr("style", "color:#00f");
-                $("#submit").removeAttr("disabled");
-            }
-        }
-    });  // ajax ��
-});
-$("#userNickname").keyup(function () {
-    $(".nickNameResult .nickNameMsg").text("중복확인을 해주세요");
-    $(".nickNameResult .nickNameMsg").attr("style", "color:#000");
-    $("#submit").attr("disabled", "disabled");
-});
-
 function checkValue() {
     if (!document.SignInfo.userSex.value) {
         alert("성별을 선택하세요.");
@@ -81,29 +31,6 @@ function checkValue() {
         alert("동의에 체크하세요.");
         return false;
     }
-};
-
-function unvisibleIDandPW(){
-    document.getElementById("userIDBlock").style.display="none";
-    document.getElementById("userPasswordBlock").style.display="none";
-    document.getElementById("userPasswordCheckBlock").style.display="none";
-    $("#submit").removeAttr("disabled");
-};
-function unvisibleUserName(){
-    document.getElementById("userNameBlock").style.display="none";
-};
-function unvisibleUserNickname(){
-    document.getElementById("userNicknameBlock").style.display="none";
-};
-function unvisibleUserAge(){
-    document.getElementById("userAgeBlock").style.display="none";
-};
-function unvisibleUserSex(){
-    document.getElementById("userSexBlock").style.display="none";
-};
-function unvisibleUserEmail(){
-    document.getElementById("userEmailBlock").style.display="none";
-    document.getElementById("emailBlock").style.display="none";
 };
 
 function maxLengthCheck(object) {

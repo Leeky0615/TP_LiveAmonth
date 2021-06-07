@@ -13,6 +13,9 @@ import java.util.List;
 
 
 public interface ScheduleService {
+    // for Main
+    List<HashMap<String, Object>> getPopularScheduleListForMain() throws Exception;
+
     CalendarDTO showCalendar(CalendarDTO calendarDTO, int scheduleNO) throws Exception;
 
     int beforeScheduleAddSearch(ScheduleContentVO scheduleContentVO) throws Exception;
@@ -63,4 +66,8 @@ public interface ScheduleService {
     List<HashMap<String, Object>> getMainOtherScheduleList(int selectPage) throws Exception;
 
     CalendarDTO setManyContentsDate(int scheduleNO,CalendarDTO calendarDTO);
+
+    HashMap<String, Object> setCalendarDTOForScheduleList(List<HashMap<String, Object>> otherScheduleList,CalendarDTO calendarDTO) throws Exception;
+
+
 }
