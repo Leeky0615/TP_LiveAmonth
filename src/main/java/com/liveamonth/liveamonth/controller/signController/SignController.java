@@ -26,7 +26,8 @@ import static com.liveamonth.liveamonth.constants.ControllerPathConstants.ESignP
 import static com.liveamonth.liveamonth.constants.ControllerPathConstants.ETemplatePath.MAIN;
 import static com.liveamonth.liveamonth.constants.EntityConstants.ESignUp.EMAIL;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.*;
-import static com.liveamonth.liveamonth.constants.EntityConstants.SITE_URL;
+import static com.liveamonth.liveamonth.constants.LogicConstants.ENaverApiUrl.*;
+import static com.liveamonth.liveamonth.constants.LogicConstants.ENaverLoginAttributes.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleAttributes.MESSAGE;
 import static com.liveamonth.liveamonth.constants.LogicConstants.ESignAttributes.*;
 
@@ -42,19 +43,16 @@ public class SignController extends SuperController {
     public String SignInPage(Model model, HttpSession session) throws Exception {
         this.firstIn = true;
 
-        String clientId = "mS20tLuLdThxAjEEr_yP";//애플리케이션 클라이언트 아이디값";
-        String redirectURI = URLEncoder.encode(SITE_URL+"naverLogin", "UTF-8");
-        SecureRandom random = new SecureRandom();
-        String state = new BigInteger(130, random).toString();
-        String apiURL = "https://nid.naver.com/oauth2.0/authorize?response_type=code";
-        apiURL += "&client_id=" + clientId;
-        apiURL += "&redirect_uri=" + redirectURI;
-        apiURL += "&state=" + state;
-        session.setAttribute("state", state);
+        StringBuffer apiURL = new StringBuffer();
+        apiURL.append(NAVER_API_URL.getText());
+        apiURL.append(NAVER_ADD_CLIENT_ID.getText() + NAVER_CLIENT_ID.getText());
+        apiURL.append(NAVER_ADD_REDIRECT_URI.getText() + URLEncoder.encode(NAVER_REDIRECT_URI.getText(), ENCODE_UTF_8.getText()));
+        String state = new BigInteger(130, new SecureRandom()).toString();
+        apiURL.append(NAVER_ADD_STATE.getText() + state);
 
+        session.setAttribute(STATE.getText(), state);
+        model.addAttribute(API_URL.getText(), apiURL);
         model.addAttribute(FIRST_IN.getText(), this.firstIn);
-        model.addAttribute("apiURL", apiURL);
-
         return SIGN_IN.getPath();
     }
     @RequestMapping("/logout")
@@ -137,7 +135,18 @@ public class SignController extends SuperController {
         signService.insertUser(userVO);
         return RESULT_MENT_SIGN_UP.getPath();
     }
+    @RequestMapping("/findID")
+    private String findID(Model model){
+        this.firstIn = true;
+        model.addAttribute(FIRST_IN.getText(), this.firstIn);
+        return FIND_ID.getPath();
+    }
 
+
+    @RequestMapping("/findPW")
+    private String findPW(){
+        return FIND_PW.getPath();
+    }
     @RequestMapping("/resultMentNaverSignUp")
     private String resultMentNaverSignUp(@ModelAttribute UserVO userVO, HttpServletRequest request, HttpSession session) throws Exception {
         //email을 갖고 있는 경우와 아닌 경우
@@ -153,7 +162,7 @@ public class SignController extends SuperController {
         return RESULT_NEW_NAVER_MEMBER.getPath();
     }
     @RequestMapping(value = "/resultMentFindID", method = RequestMethod.POST)
-    public String findID(@RequestParam("userName")
+    public String resultMentFindID(@RequestParam("userName")
                                  String userName, @RequestParam("userEmail") String userEmail, Model model) throws Exception {
         model.addAttribute(USER_ID.getText(), signService.findID(userName, userEmail));
 
@@ -164,7 +173,7 @@ public class SignController extends SuperController {
     }
 
     @RequestMapping(value = "/ResultMentFindPW", method = RequestMethod.POST)
-    public String findPW(@RequestParam("userID")
+    public String ResultMentFindPW(@RequestParam("userID")
                                  String userID, @RequestParam("userEmail") String userEmail, Model model) throws Exception {
         model.addAttribute(USER_PASSWORD.getText(), signService.findPW(userID, userEmail));
 
@@ -176,21 +185,15 @@ public class SignController extends SuperController {
 
     @RequestMapping("/naverLogin")
     private String naverLogin(HttpSession session, HttpServletRequest request) throws Exception {
-        String clientId = "mS20tLuLdThxAjEEr_yP";//애플리케이션 클라이언트 아이디값";
-        String clientSecret = "CA3T9EN7Wo";//애플리케이션 클라이언트 시크릿값";
-
-        String code = request.getParameter("code");
-        String state = request.getParameter("state");
-        String redirectURI = URLEncoder.encode(SITE_URL+"Naver", "UTF-8");
         String access_token = "";
 
         StringBuffer apiURL = new StringBuffer();
-        apiURL.append("https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&");
-        apiURL.append("client_id=" + clientId);
-        apiURL.append("&client_secret=" + clientSecret);
-        apiURL.append("&redirect_uri=" + redirectURI);
-        apiURL.append("&code=" + code);
-        apiURL.append("&state=" + state);
+        apiURL.append(NAVER_API_URL.getText());
+        apiURL.append(NAVER_ADD_CLIENT_ID.getText() + NAVER_CLIENT_ID.getText());
+        apiURL.append(NAVER_ADD_REDIRECT_URI.getText() + URLEncoder.encode(NAVER_REDIRECT_URI.getText(), ENCODE_UTF_8.getText()));
+        apiURL.append(NAVER_ADD_STATE.getText() + request.getParameter(STATE.getText()));
+        apiURL.append(NAVER_ADD_CLIENT_SECRET.getText() + NAVER_CLIENT_SECRET.getText());
+        apiURL.append(NAVER_ADD_CODE.getText() + request.getParameter(CODE.getText()));
 
         try {
             URL url = new URL(apiURL.toString());
@@ -214,8 +217,8 @@ public class SignController extends SuperController {
                 Object obj = parsing.parse(res.toString());
                 JSONObject jsonObj = (JSONObject) obj;
 
-                access_token = (String) jsonObj.get("access_token");
-                session.setAttribute("access_token", access_token);
+                access_token = (String) jsonObj.get(ACCESS_TOKEN.getText());
+                session.setAttribute(ACCESS_TOKEN.getText(), access_token);
             }
         } catch (Exception e) {
             System.out.println(e);

@@ -1,11 +1,41 @@
 package com.liveamonth.liveamonth.constants;
 
+import static com.liveamonth.liveamonth.constants.EntityConstants.SITE_URL;
+
 public class LogicConstants {
     /*
      * Controller 클래스에서 사용되는 Static & model.attribute 상수
      * -> VO와 관련된 Enum은 모두 EntityConstants로
      */
     public LogicConstants() {}
+
+    public enum ENaverApiUrl {
+        NAVER_API_URL("https://nid.naver.com/oauth2.0/authorize?response_type=code"),
+        NAVER_ADD_CLIENT_ID("&client_id="),
+        NAVER_CLIENT_ID("mS20tLuLdThxAjEEr_yP"),
+        NAVER_ADD_REDIRECT_URI("&redirect_uri"),
+        NAVER_REDIRECT_URI(SITE_URL+"naverLogin"),
+        NAVER_ADD_STATE("&state"),
+        NAVER_ADD_CLIENT_SECRET("&client_secret="),
+        NAVER_CLIENT_SECRET("CA3T9EN7Wo"),
+        NAVER_ADD_CODE("&code=");
+
+        private final String text;
+        ENaverApiUrl(String text) {this.text = text;}
+        public String getText() {return this.text;}
+    }
+    public enum ENaverLoginAttributes {
+        STATE("state"),
+        CODE("code"),
+        API_URL("apiURL"),
+        ACCESS_TOKEN("access_token"),
+        ENCODE_UTF_8("UTF-8");
+
+        private final String text;
+        ENaverLoginAttributes(String text) {this.text = text;}
+        public String getText() {return this.text;}
+    }
+
 
     public enum EAlertMessage{
         MAXIMUM_SCHEDULE_CONTENT("스케쥴은 최대 4개만 등록 가능합니다."),
