@@ -3471,6 +3471,7 @@ li .richText-btn[data-command=toggleCode] {
     border-top: none;
     margin-bottom: 0;
     margin-left: 15px;
+    margin-right: 15px;
     width: 780px;
 }
 
