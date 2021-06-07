@@ -26,7 +26,7 @@
                                     <c:forEach var="scheduleContent" items="${otherScheduleList}"
                                                varStatus="status">
                                         <div class="blog-item pl-0 pt-0" style="overflow: visible">
-                                            <div class="pc-table m-0" style="width: 35%;float: left;">
+                                            <div class="pc-table m-0" style="width: 32%;float: left;">
                                                 <a href="otherSchedule?userNO=${scheduleContent.userVO.userNO}&scheduleNO=${scheduleContent.scheduleNO}">
                                                     <c:out value="${scheduleContent.scheduleVO.scheduleSubject}"/>
                                                     <c:set var = "todayInformation" value = "${CalendarDTOTodayInformationList.get(status.index)}" scope = "request"/>
@@ -35,7 +35,7 @@
                                                     <jsp:include page="/WEB-INF/views/scheduleView/SmallSizeOfOtherSchedule.jsp"/>
                                                 </a>
                                             </div>
-                                            <div class="bi-text pt-3">
+                                            <div class="bi-text pt-4 pl-3">
                                                 <h5><a href="/otherSchedule?userNO=${scheduleContent.userVO.userNO}&scheduleNO=${scheduleContent.scheduleNO}">Title
                                                     : ${scheduleContent.scheduleSubject}</a></h5>
                                                 <ul>
@@ -47,7 +47,7 @@
                                                         <span>${scheduleContent.userVO.getUserSexToString()}</span>
                                                     </li>
                                                     <li>
-                                                        <i class="icon_like"></i><span>${scheduleContent.scheduleLikeCount}</span>
+                                                        <i class="icon_like mr-1"></i><span>${scheduleContent.scheduleLikeCount}</span>
                                                     </li>
                                                 </ul>
                                                 <p>${scheduleContent.userVO.userNickname}님의 ${scheduleContent.cityVO.cityName}에서
@@ -80,10 +80,10 @@
                                                 <li><span>${reviewVO.reviewDate}</span>
                                                 </li>
                                                 <li>
-                                                    <i class="icon_like"></i><span>${reviewVO.reviewLikeCount}</span>
+                                                    <i class="icon_like mr-1"></i><span>${reviewVO.reviewLikeCount}</span>
                                                 </li>
                                                 <li>
-                                                    <i class="fa fa-eye"></i><span>${reviewVO.reviewViewCount}</span>
+                                                    <i class="fa fa-eye mr-1"></i><span>${reviewVO.reviewViewCount}</span>
                                                 </li>
                                             </ul>
                                             <p>${reviewVO.userVO.userNickname}님이 작성한 게시글입니다!!</p>

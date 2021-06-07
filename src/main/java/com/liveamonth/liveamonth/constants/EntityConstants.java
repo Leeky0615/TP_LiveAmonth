@@ -10,7 +10,8 @@ public class EntityConstants {
     public EntityConstants() {
     }
 
-    public static String ImageURL = "https://liveamonth-resources.s3.ap-northeast-2.amazonaws.com/img/";
+    public static String IMAGE_URL = "https://liveamonth-resources.s3.ap-northeast-2.amazonaws.com/img/";
+    public static String SITE_URL = "https://liveamonth-resources.s3.ap-northeast-2.amazonaws.com/";
 
     /*
      * sign Table Constants

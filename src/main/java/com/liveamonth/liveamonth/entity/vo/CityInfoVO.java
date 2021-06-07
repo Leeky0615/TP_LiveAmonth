@@ -1,7 +1,6 @@
 package com.liveamonth.liveamonth.entity.vo;
 
 import lombok.Data;
-import org.apache.ibatis.type.Alias;
 
 import static com.liveamonth.liveamonth.constants.EntityConstants.*;
 
@@ -46,7 +45,7 @@ public class CityInfoVO {
         String imageURL = "";
         for(CityInfoCategory category : CityInfoCategory.values()){
             if (category.name().equals(this.getCityInfoCategory())){
-                imageURL = ImageURL+category.getPath()+this.getCityInfoImage();
+                imageURL = IMAGE_URL +category.getPath()+this.getCityInfoImage();
             }
         }
         return imageURL;

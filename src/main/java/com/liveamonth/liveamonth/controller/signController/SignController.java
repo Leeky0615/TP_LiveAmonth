@@ -1,8 +1,6 @@
 package com.liveamonth.liveamonth.controller.signController;
 
-import com.liveamonth.liveamonth.constants.ControllerPathConstants;
 import com.liveamonth.liveamonth.constants.EntityConstants.EEmail;
-import com.liveamonth.liveamonth.constants.LogicConstants;
 import com.liveamonth.liveamonth.controller.SuperController;
 import com.liveamonth.liveamonth.entity.dto.CalendarDTO;
 import com.liveamonth.liveamonth.entity.vo.UserVO;
@@ -28,6 +26,7 @@ import static com.liveamonth.liveamonth.constants.ControllerPathConstants.ESignP
 import static com.liveamonth.liveamonth.constants.ControllerPathConstants.ETemplatePath.MAIN;
 import static com.liveamonth.liveamonth.constants.EntityConstants.ESignUp.EMAIL;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.*;
+import static com.liveamonth.liveamonth.constants.EntityConstants.SITE_URL;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleAttributes.MESSAGE;
 import static com.liveamonth.liveamonth.constants.LogicConstants.ESignAttributes.*;
 
@@ -44,7 +43,7 @@ public class SignController extends SuperController {
         this.firstIn = true;
 
         String clientId = "mS20tLuLdThxAjEEr_yP";//애플리케이션 클라이언트 아이디값";
-        String redirectURI = URLEncoder.encode("http://localhost:8080/naverLogin", "UTF-8");
+        String redirectURI = URLEncoder.encode(SITE_URL+"naverLogin", "UTF-8");
         SecureRandom random = new SecureRandom();
         String state = new BigInteger(130, random).toString();
         String apiURL = "https://nid.naver.com/oauth2.0/authorize?response_type=code";
@@ -182,7 +181,7 @@ public class SignController extends SuperController {
 
         String code = request.getParameter("code");
         String state = request.getParameter("state");
-        String redirectURI = URLEncoder.encode("http://localhost:8080/Naver", "UTF-8");
+        String redirectURI = URLEncoder.encode(SITE_URL+"Naver", "UTF-8");
         String access_token = "";
 
         StringBuffer apiURL = new StringBuffer();

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
 
-import static com.liveamonth.liveamonth.constants.EntityConstants.ImageURL;
+import static com.liveamonth.liveamonth.constants.EntityConstants.IMAGE_URL;
 import static com.liveamonth.liveamonth.constants.LogicConstants.ENotice.*;
 
 @Controller
@@ -25,7 +25,7 @@ public class NoticeController {
         try {
             noticeMap.put(NOTICE_LIST.getText(), this.noticeService.getAllNotice(userNO));
             noticeMap.put(NOTICE_COUNT.getText(), this.noticeService.getNoticeCount(userNO));
-            noticeMap.put(IMG_URL.getText(), ImageURL+USER_DIR.getText());
+            noticeMap.put(IMG_URL.getText(), IMAGE_URL +USER_DIR.getText());
         } catch (Exception e) {
             System.err.println(NOTICE_ERROR_MESSAGE.getText() + e);
         }

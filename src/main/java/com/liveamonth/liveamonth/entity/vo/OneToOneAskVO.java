@@ -91,6 +91,6 @@ public class OneToOneAskVO {
 
     // Get URL
     public String getOneToOneAskImageURL(){
-        return ImageURL+"onetooneask/"+this.getOneToOneAskImage();
+        return IMAGE_URL +"onetooneask/"+this.getOneToOneAskImage();
     }
 }

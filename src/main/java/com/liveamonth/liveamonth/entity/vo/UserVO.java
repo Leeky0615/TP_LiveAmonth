@@ -4,7 +4,7 @@ import lombok.Data;
 
 import java.util.Calendar;
 
-import static com.liveamonth.liveamonth.constants.EntityConstants.ImageURL;
+import static com.liveamonth.liveamonth.constants.EntityConstants.IMAGE_URL;
 
 @Data
 public class UserVO {
@@ -72,7 +72,7 @@ public class UserVO {
 
 	// Get URL
 	public String getUserImageURL(){
-		return ImageURL+"user/"+this.getUserImage();
+		return IMAGE_URL +"user/"+this.getUserImage();
 	}
 }
 
