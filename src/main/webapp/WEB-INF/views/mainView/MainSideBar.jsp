@@ -66,10 +66,8 @@
                                         <div class="row">
                                             <c:choose>
                                                 <c:when test="${myScheduleList.size() == 0}">
-                                                    <div class="row justify-content-center">
-                                                        <div class="col-md-6 text-center mb-5">
-                                                            <h2 class="heading-section">작성하신 글이 없습니다.</h2>
-                                                        </div>
+                                                    <div class="text-center mt-2 pr-2" style="width: 100%;">
+                                                        <h6 class="heading-section" style="font-size: 22px">작성하신 글이 없습니다.</h6>
                                                     </div>
                                                 </c:when>
                                                 <c:otherwise>
