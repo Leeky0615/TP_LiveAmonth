@@ -190,10 +190,10 @@ public class SignController extends SuperController {
         StringBuffer apiURL = new StringBuffer();
         apiURL.append(NAVER_API_URL.getText());
         apiURL.append(NAVER_ADD_CLIENT_ID.getText() + NAVER_CLIENT_ID.getText());
-        apiURL.append(NAVER_ADD_REDIRECT_URI.getText() + URLEncoder.encode(NAVER_REDIRECT_URI.getText(), ENCODE_UTF_8.getText()));
-        apiURL.append(NAVER_ADD_STATE.getText() + request.getParameter(STATE.getText()));
         apiURL.append(NAVER_ADD_CLIENT_SECRET.getText() + NAVER_CLIENT_SECRET.getText());
+        apiURL.append(NAVER_ADD_REDIRECT_URI.getText() + URLEncoder.encode(NAVER_REDIRECT_URI.getText(), ENCODE_UTF_8.getText()));
         apiURL.append(NAVER_ADD_CODE.getText() + request.getParameter(CODE.getText()));
+        apiURL.append(NAVER_ADD_STATE.getText() + request.getParameter(STATE.getText()));
 
         try {
             URL url = new URL(apiURL.toString());
