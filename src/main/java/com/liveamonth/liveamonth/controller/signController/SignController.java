@@ -42,7 +42,18 @@ public class SignController extends SuperController {
     @RequestMapping("/signIn")
     public String SignInPage(Model model, HttpSession session) throws Exception {
         this.firstIn = true;
-
+//        String clientId = "mS20tLuLdThxAjEEr_yP";//애플리케이션 클라이언트 아이디값";
+//        String redirectURI = URLEncoder.encode("http://localhost:8080/naverLogin", "UTF-8");
+//        SecureRandom random = new SecureRandom();
+//        String state = new BigInteger(130, random).toString();
+//        String apiURL = "https://nid.naver.com/oauth2.0/authorize?response_type=code";
+//        apiURL += "&client_id=" + clientId;
+//        apiURL += "&redirect_uri=" + redirectURI;
+//        apiURL += "&state=" + state;
+//        session.setAttribute("state", state);
+//
+//        model.addAttribute(FIRST_IN.getText(), this.firstIn);
+//        model.addAttribute("apiURL", apiURL);
         StringBuffer apiURL = new StringBuffer();
         apiURL.append(NAVER_API_URL.getText());
         apiURL.append(NAVER_ADD_CLIENT_ID.getText() + NAVER_CLIENT_ID.getText());
@@ -53,6 +64,7 @@ public class SignController extends SuperController {
         session.setAttribute(STATE.getText(), state);
         model.addAttribute(API_URL.getText(), apiURL);
         model.addAttribute(FIRST_IN.getText(), this.firstIn);
+        System.out.println("apiURL = " + apiURL);
         return SIGN_IN.getPath();
     }
     @RequestMapping("/logout")

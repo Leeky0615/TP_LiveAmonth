@@ -13,9 +13,9 @@ public class LogicConstants {
         NAVER_API_URL("https://nid.naver.com/oauth2.0/authorize?response_type=code"),
         NAVER_ADD_CLIENT_ID("&client_id="),
         NAVER_CLIENT_ID("mS20tLuLdThxAjEEr_yP"),
-        NAVER_ADD_REDIRECT_URI("&redirect_uri"),
+        NAVER_ADD_REDIRECT_URI("&redirect_uri="),
         NAVER_REDIRECT_URI(SITE_URL+"naverLogin"),
-        NAVER_ADD_STATE("&state"),
+        NAVER_ADD_STATE("&state="),
         NAVER_ADD_CLIENT_SECRET("&client_secret="),
         NAVER_CLIENT_SECRET("CA3T9EN7Wo"),
         NAVER_ADD_CODE("&code=");
