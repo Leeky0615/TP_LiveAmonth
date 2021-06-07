@@ -1,37 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<script>
-<%  boolean firstIn = (boolean)request.getAttribute("firstIn"); %>
-    $(function () {
-        $("#loginBtn").click(function () {
-            location.href = 'signIn';
-        })
-    })
-</script>
 <section class="ftco-section">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-6 text-center mb-5">
-                <h2 class="heading-section">임시비밀번호 발급결과</h2>
+                <h2 class="heading-section">비밀번호 찾기 발급결과</h2>
             </div>
         </div>
-
         <form action="/resultMentFindPW" method="post">
             <div class="row justify-content-center">
                 <div class="col-md-7 col-lg-5">
-
                     <div class="d-flex">
-
-                    </div>
-                    <div class="form-group mt-3">
+                        <div class="w-100">
+                            <h5 class="mb-4">회원님의 이메일로 임시비밀번호가 발급되었습니다.</h5>
+                        </div>
                     </div>
                     <div class="form-group">
-                        <button type="button" onclick="history.go(-2);"
-                                class="form-control btn btn-primary rounded submit px-3">Login
-                        </button>
+                        <a href="signIn" type="button" class="form-control btn btn-primary rounded submit px-3">로그인 하러가기</a>
                     </div>
-                                                            		            <%if(firstIn == false){%>
-		             <p class="text-center" style="color:#ff0000">가입하지 않은 아이디이거나, 잘못된 이메일입니다.</p>
-		            <% }%>
                 </div>
             </div>
         </form>

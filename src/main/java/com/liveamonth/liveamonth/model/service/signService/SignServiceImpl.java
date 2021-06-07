@@ -5,23 +5,27 @@ import com.liveamonth.liveamonth.model.mapper.signMapper.SignMapper;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailException;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.mail.internet.MimeMessage;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
 
+import static com.liveamonth.liveamonth.constants.EntityConstants.SITE_URL;
+
 
 @Service
 public class SignServiceImpl implements SignService {
-
 	@Autowired
-	private MailSender mailsender;
+	private SendMailService sendMailService;
 
     @Autowired
     private SignMapper signMapper;
@@ -53,43 +57,28 @@ public class SignServiceImpl implements SignService {
 
 
     @Override
-    public String findID( String userName, String userEmail) throws Exception {
-        HashMap<String, Object> hash = new HashMap<String, Object>();
-        hash.put("userName", userName);
-        hash.put("userEmail", userEmail);
-        return signMapper.findID(hash);
+    public String findID(String userName, String userEmail) throws Exception {
+        String foundUserID = signMapper.findID(userName, userEmail);
+        if(foundUserID !=null) return foundUserID;
+        else return null;
     }
 
 
   @Override 
-  public String findPW(String userID, String userEmail) throws Exception {
-      HashMap<String, Object> hash = new HashMap<String, Object>();
-      hash.put("userID", userID);
-      hash.put("userEmail", userEmail);
-
-      String pw = "";
-		for (int i = 0; i < 8; i++) {
-			pw += (char) ((Math.random() * 26) + 97);
-		}
-
-		SimpleMailMessage message = new SimpleMailMessage();
-	      message.setTo(userEmail);
-	      //message.setFrom();
-	      message.setSubject("임시 비밀번호입니다.");
-	      message.setText(pw);
-
-
-	      mailsender.send(message);
-	      return signMapper.findPW(hash);
-	}
-
-
-  @Transactional
-	public String updatePW(String userID, String userEmail) throws Exception {
-	      HashMap<String, Object> hash = new HashMap<String, Object>();
-	      hash.put("userID", userID);
-	      hash.put("userEmail", userEmail);
-		return signMapper.updatePW(hash);
+  public boolean findPW(String userID, String userName, String userEmail) throws Exception {
+      String foundState = signMapper.findPW(userID, userName, userEmail);
+      if(foundState == null) return false;
+      else{
+          String pw = "";
+          for (int i = 0; i < 8; i++) {
+              pw += (char) ((Math.random() * 26) + 97);
+          }
+          UserVO userVO = signMapper.searchUserById(userID);
+          userVO.setUserPassword(pw);
+          sendMailService.sendMail(userVO);
+          signMapper.updatePW(userID, pw);
+          return true;
+      }
 	}
 
     @Override

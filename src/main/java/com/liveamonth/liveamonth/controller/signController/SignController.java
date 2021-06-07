@@ -33,7 +33,6 @@ import static com.liveamonth.liveamonth.constants.LogicConstants.ESignAttributes
 
 @Controller
 public class SignController extends SuperController {
-    private boolean firstIn;
 
     @Autowired
     private SignService signService;
@@ -41,20 +40,6 @@ public class SignController extends SuperController {
     //naver login api에 접속
     @RequestMapping("/signIn")
     public String SignInPage(Model model, HttpSession session) throws Exception {
-        this.firstIn = true;
-//        String clientId = "mS20tLuLdThxAjEEr_yP";//애플리케이션 클라이언트 아이디값";
-//        String redirectURI = URLEncoder.encode("http://localhost:8080/naverLogin", "UTF-8");
-//        SecureRandom random = new SecureRandom();
-//        String state = new BigInteger(130, random).toString();
-//        String apiURL = "https://nid.naver.com/oauth2.0/authorize?response_type=code";
-//        apiURL += "&client_id=" + clientId;
-//        apiURL += "&redirect_uri=" + redirectURI;
-//        apiURL += "&state=" + state;
-//        session.setAttribute("state", state);
-//
-//        model.addAttribute(FIRST_IN.getText(), this.firstIn);
-//        model.addAttribute("apiURL", apiURL);
-
         StringBuffer apiURL = new StringBuffer();
         apiURL.append(NAVER_SIGN_IN_API_URL.getText());
         apiURL.append(NAVER_ADD_CLIENT_ID.getText() + NAVER_CLIENT_ID.getText());
@@ -64,7 +49,7 @@ public class SignController extends SuperController {
 
         session.setAttribute(STATE.getText(), state);
         model.addAttribute(API_URL.getText(), apiURL);
-        model.addAttribute(FIRST_IN.getText(), this.firstIn);
+        model.addAttribute(FIRST_IN.getText(), true);
         return SIGN_IN.getPath();
     }
     @RequestMapping("/logout")
@@ -152,55 +137,44 @@ public class SignController extends SuperController {
     // 아이디 비밀번호 찾기
     @RequestMapping("/findID")
     private String findID(Model model){
-        this.firstIn = true;
-        model.addAttribute(FIRST_IN.getText(), this.firstIn);
+        model.addAttribute(FIRST_IN.getText(), true);
         return FIND_ID.getPath();
     }
     @RequestMapping("/findPW")
-    private String findPW(){
+    private String findPW(Model model){
+        model.addAttribute(FIRST_IN.getText(), true);
         return FIND_PW.getPath();
     }
     @RequestMapping(value = "/resultMentFindID", method = RequestMethod.POST)
-    public String resultMentFindID(@RequestParam("userName")
-                                 String userName, @RequestParam("userEmail") String userEmail, Model model) throws Exception {
-        model.addAttribute(USER_ID.getText(), signService.findID(userName, userEmail));
-
-        if (signService.findID(userName, userEmail) == null) this.firstIn = false;
-        model.addAttribute(FIRST_IN.getText(), this.firstIn);
-
-        return RESULT_MENT_FIND_ID.getPath();
+    public String resultMentFindID(@RequestParam("userName") String userName,
+                                   @RequestParam("userEmail") String userEmail, Model model) throws Exception {
+        String foundUserID = signService.findID(userName, userEmail);
+        if (foundUserID != null) {
+            model.addAttribute(FIRST_IN.getText(), true);
+            model.addAttribute(USER_ID.getText(), foundUserID);
+            return RESULT_MENT_FIND_ID.getPath();
+        }else {
+            model.addAttribute(FIRST_IN.getText(), false);
+            return FIND_ID.getPath();
+        }
     }
 
     @RequestMapping(value = "/ResultMentFindPW", method = RequestMethod.POST)
-    public String ResultMentFindPW(@RequestParam("userID")
-                                 String userID, @RequestParam("userEmail") String userEmail, Model model) throws Exception {
-        model.addAttribute(USER_PASSWORD.getText(), signService.findPW(userID, userEmail));
-
-        if (signService.findPW(userID, userEmail) == null)
-            this.firstIn = false;
-        model.addAttribute(FIRST_IN.getText(), this.firstIn);
-        return RESULT_MENT_FIND_PW.getPath();
+    public String ResultMentFindPW(@RequestParam("userID") String userID,
+                                   @RequestParam("userName") String userName,
+                                   @RequestParam("userEmail") String userEmail,
+                                   Model model) throws Exception {
+        if (!signService.findPW(userID, userName,userEmail)){
+            model.addAttribute(FIRST_IN.getText(), false);
+            return FIND_PW.getPath();
+        }else{
+            model.addAttribute(FIRST_IN.getText(), true);
+            return RESULT_MENT_FIND_PW.getPath();
+        }
     }
 
     @RequestMapping("/naverLogin")
     private String naverLogin(HttpSession session, HttpServletRequest request) throws Exception {
-
-//        String clientId = "mS20tLuLdThxAjEEr_yP";//애플리케이션 클라이언트 아이디값";
-//        String clientSecret = "CA3T9EN7Wo";//애플리케이션 클라이언트 시크릿값";
-//
-//        String code = request.getParameter("code");
-//        String state = request.getParameter("state");
-//        String redirectURI = URLEncoder.encode("http://localhost:8080/Naver", "UTF-8");
-//        String access_token = "";
-//
-//        StringBuffer apiURL = new StringBuffer();
-//        apiURL.append("https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&");
-//        apiURL.append("client_id=" + clientId);
-//        apiURL.append("&client_secret=" + clientSecret);
-//        apiURL.append("&redirect_uri=" + redirectURI);
-//        apiURL.append("&code=" + code);
-//        apiURL.append("&state=" + state);
-
         String access_token = "";
         StringBuffer apiURL = new StringBuffer();
         apiURL.append(NAVER_LOGIN_API_URL.getText());

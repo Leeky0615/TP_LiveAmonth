@@ -19,6 +19,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from user where userID = #{naverID}
 	</select>
 
+	<select id="searchUserById" parameterType="String" resultType="UserVO">
+		select * from user where userID = #{userID}
+	</select>
+
 	<select id="checkSign" parameterType="HashMap" resultType="UserVO">
 		select * from user where userID = #{userID} and userPassword =
 		#{userPassword}
@@ -50,14 +54,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
  	<!-- PWFind -->
-		<select id="findPW" parameterType="HashMap" resultType="String">
-		select userPassword from user where userID = #{userID} and userEmail = #{userEmail}
+	<select id="findPW" parameterType="String" resultType="String">
+		select userPassword from user where userID = #{userID} and userName = #{userName} and userEmail = #{userEmail}
 	</select>
 
 
 	<!-- 비밀번호 변경 -->
-	<update id="updatePW" parameterType="HashMap" >
-		update user set userPassword = #{userPassword} where userID = #{userID} and userEmail = #{userEmail}
+	<update id="updatePW" parameterType="String">
+		update user set userPassword = #{password} where userID = #{userID}
 	</update>
 
 

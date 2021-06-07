@@ -17,11 +17,11 @@ public interface SignMapper {
 
     UserVO checkSign(HashMap<String, Object> hash) throws Exception;
 
-    String findID(HashMap<String, Object> hash) throws Exception;
+    String findID(String userName, String userEmail) throws Exception;
 
-    String findPW(HashMap<String, Object> hash) throws Exception;
+    String findPW(String userID, String userName, String userEmail) throws Exception;
 
-    String updatePW(HashMap<String, Object> hash) throws Exception;
+    void updatePW(String userID, String password) throws Exception;
 
     String checkEmail(String userEmail)  throws Exception;
 
@@ -32,4 +32,6 @@ public interface SignMapper {
     void updateNaverUser(UserVO userVO) throws Exception;
 
     UserVO getNaverUser(String naverID) throws Exception;
+
+    UserVO searchUserById(String userID);
 } 
