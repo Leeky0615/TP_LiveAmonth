@@ -10,7 +10,8 @@ public class LogicConstants {
     public LogicConstants() {}
 
     public enum ENaverApiUrl {
-        NAVER_API_URL("https://nid.naver.com/oauth2.0/authorize?response_type=code"),
+        NAVER_SIGN_IN_API_URL("https://nid.naver.com/oauth2.0/authorize?response_type=code"),
+        NAVER_LOGIN_API_URL("https://nid.naver.com/oauth2.0/token?grant_type=authorization_code"),
         NAVER_ADD_CLIENT_ID("&client_id="),
         NAVER_CLIENT_ID("mS20tLuLdThxAjEEr_yP"),
         NAVER_ADD_REDIRECT_URI("&redirect_uri="),

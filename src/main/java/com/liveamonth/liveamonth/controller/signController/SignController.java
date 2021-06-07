@@ -54,8 +54,9 @@ public class SignController extends SuperController {
 //
 //        model.addAttribute(FIRST_IN.getText(), this.firstIn);
 //        model.addAttribute("apiURL", apiURL);
+
         StringBuffer apiURL = new StringBuffer();
-        apiURL.append(NAVER_API_URL.getText());
+        apiURL.append(NAVER_SIGN_IN_API_URL.getText());
         apiURL.append(NAVER_ADD_CLIENT_ID.getText() + NAVER_CLIENT_ID.getText());
         apiURL.append(NAVER_ADD_REDIRECT_URI.getText() + URLEncoder.encode(NAVER_REDIRECT_URI.getText(), ENCODE_UTF_8.getText()));
         String state = new BigInteger(130, new SecureRandom()).toString();
@@ -64,7 +65,6 @@ public class SignController extends SuperController {
         session.setAttribute(STATE.getText(), state);
         model.addAttribute(API_URL.getText(), apiURL);
         model.addAttribute(FIRST_IN.getText(), this.firstIn);
-        System.out.println("apiURL = " + apiURL);
         return SIGN_IN.getPath();
     }
     @RequestMapping("/logout")
@@ -103,6 +103,7 @@ public class SignController extends SuperController {
         return NAVER_SIGN_UP.getPath();
     }
 
+    // 회원가입 진행 Check
     @ResponseBody
     @PostMapping(value = "/checkID")
     public int postCheckID(HttpServletRequest request) throws Exception {
@@ -147,31 +148,17 @@ public class SignController extends SuperController {
         signService.insertUser(userVO);
         return RESULT_MENT_SIGN_UP.getPath();
     }
+
+    // 아이디 비밀번호 찾기
     @RequestMapping("/findID")
     private String findID(Model model){
         this.firstIn = true;
         model.addAttribute(FIRST_IN.getText(), this.firstIn);
         return FIND_ID.getPath();
     }
-
-
     @RequestMapping("/findPW")
     private String findPW(){
         return FIND_PW.getPath();
-    }
-    @RequestMapping("/resultMentNaverSignUp")
-    private String resultMentNaverSignUp(@ModelAttribute UserVO userVO, HttpServletRequest request, HttpSession session) throws Exception {
-        //email을 갖고 있는 경우와 아닌 경우
-        if(!userVO.getUserEmail().contains("@")){
-            String userEmail = request.getParameter(USER_EMAIL.getText());
-            String email = request.getParameter(EMAIL.getText());
-            userVO.setUserEmail(userEmail + AT.getText() + email);
-        }
-        signService.updateNaverUser(userVO);
-        request.setAttribute(MESSAGE.getText(), SUCCESS_SIGN_UP_MESSAGE.getText());
-
-        session.setAttribute(USER_VO.getText(),userVO);
-        return RESULT_NEW_NAVER_MEMBER.getPath();
     }
     @RequestMapping(value = "/resultMentFindID", method = RequestMethod.POST)
     public String resultMentFindID(@RequestParam("userName")
@@ -197,10 +184,26 @@ public class SignController extends SuperController {
 
     @RequestMapping("/naverLogin")
     private String naverLogin(HttpSession session, HttpServletRequest request) throws Exception {
-        String access_token = "";
 
+//        String clientId = "mS20tLuLdThxAjEEr_yP";//애플리케이션 클라이언트 아이디값";
+//        String clientSecret = "CA3T9EN7Wo";//애플리케이션 클라이언트 시크릿값";
+//
+//        String code = request.getParameter("code");
+//        String state = request.getParameter("state");
+//        String redirectURI = URLEncoder.encode("http://localhost:8080/Naver", "UTF-8");
+//        String access_token = "";
+//
+//        StringBuffer apiURL = new StringBuffer();
+//        apiURL.append("https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&");
+//        apiURL.append("client_id=" + clientId);
+//        apiURL.append("&client_secret=" + clientSecret);
+//        apiURL.append("&redirect_uri=" + redirectURI);
+//        apiURL.append("&code=" + code);
+//        apiURL.append("&state=" + state);
+
+        String access_token = "";
         StringBuffer apiURL = new StringBuffer();
-        apiURL.append(NAVER_API_URL.getText());
+        apiURL.append(NAVER_LOGIN_API_URL.getText());
         apiURL.append(NAVER_ADD_CLIENT_ID.getText() + NAVER_CLIENT_ID.getText());
         apiURL.append(NAVER_ADD_CLIENT_SECRET.getText() + NAVER_CLIENT_SECRET.getText());
         apiURL.append(NAVER_ADD_REDIRECT_URI.getText() + URLEncoder.encode(NAVER_REDIRECT_URI.getText(), ENCODE_UTF_8.getText()));
@@ -250,7 +253,20 @@ public class SignController extends SuperController {
             return NEW_NAVER_MEMBER.getPath();
         }
     }
+    @RequestMapping("/resultMentNaverSignUp")
+    private String resultMentNaverSignUp(@ModelAttribute UserVO userVO, HttpServletRequest request, HttpSession session) throws Exception {
+        //email을 갖고 있는 경우와 아닌 경우
+        if(!userVO.getUserEmail().contains("@")){
+            String userEmail = request.getParameter(USER_EMAIL.getText());
+            String email = request.getParameter(EMAIL.getText());
+            userVO.setUserEmail(userEmail + AT.getText() + email);
+        }
+        signService.updateNaverUser(userVO);
+        request.setAttribute(MESSAGE.getText(), SUCCESS_SIGN_UP_MESSAGE.getText());
 
+        session.setAttribute(USER_VO.getText(),userVO);
+        return RESULT_NEW_NAVER_MEMBER.getPath();
+    }
     @RequestMapping("/newNaverMember")
     private String newNaverMember(HttpSession session, HttpServletRequest request) throws Exception {
         UserVO newNaverUser = (UserVO)session.getAttribute(NAVER_USER.getText());
@@ -264,7 +280,7 @@ public class SignController extends SuperController {
         if(session.getAttribute(USER_VO.getText()) == null && signService.setNewNaverMember(newNaverUser)==1){
             //필수항목 다 동의 한 경우
             if(flag){
-//                session.setAttribute(USER_VO.getText(),newNaverUser);
+                //session.setAttribute(USER_VO.getText(),newNaverUser);
                 request.setAttribute(MESSAGE.getText(), SUCCESS_SIGN_UP_MESSAGE.getText());
             }else{ //필수 항목 하나라도 동의 안한 경우
                 return REDIRECT_NAVER_SIGN_UP.getRedirectPath();

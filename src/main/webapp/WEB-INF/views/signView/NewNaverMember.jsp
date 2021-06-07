@@ -1,10 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
          pageEncoding="utf-8" %>
 
-<html>
-<head>
-</head>
-<body>
 <section class="contact-form-section spad">
     <div class="container">
         <div class="row">
@@ -20,7 +16,3 @@
         </div>
     </div>
 </section>
-
-
-</body>
-</html>
