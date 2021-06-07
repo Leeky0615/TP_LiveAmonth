@@ -6,6 +6,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import javax.activation.FileDataSource;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
@@ -22,7 +23,8 @@ public class MimeMessageService implements SendMailService {
         try {
             MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
             messageHelper.setSubject("[한달살기에서 알려드립니다]고객님의 임시 비밀번호가 발급되었습니다.");
-            String htmlContent = "안녕하세요. "+userVO.getUserName()+" 고객님<br><br>"
+            String htmlContent = "<img src=\"https://liveamonth-resources.s3.ap-northeast-2.amazonaws.com/img/logo/logo.png\"><br><br>"
+                    +"안녕하세요. "+userVO.getUserName()+" 고객님<br><br>"
                     + "<h4>요청하신 임시 비밀번호는 다음과 같습니다.<br>"
                     + "임시비밀번호 : " + userVO.getUserPassword()+"<br>"
                     + "<a href=\"" + SITE_URL + "signIn\">로그인 하러가기</a></h4><br>"
