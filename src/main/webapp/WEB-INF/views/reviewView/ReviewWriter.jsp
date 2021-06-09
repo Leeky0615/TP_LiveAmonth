@@ -33,8 +33,7 @@
                             <div class="search-form-content">
                                 <div class="filter-form">
                                     <div id = "reviewCategoryDiv">
-                                        <select class="sm-width"  id = "reviewCategory" name = "reviewCategory">
-                                            <option id = "disabledOption" value="" selected disabled hidden>==선택==</option>
+                                        <select class="sm-width2"  id = "reviewCategory" name = "reviewCategory">
                                             <c:forEach var="reviewCategory" items="${reviewCategoryList}">
                                                 <option value="${reviewCategory}">${reviewCategory.nameKR}</option>
                                             </c:forEach>
@@ -46,6 +45,8 @@
                                 </div>
                             </div>
                         </div>
+                        <br>
+                        <br>
                         <div class="pf-title">
                             <h4>Title</h4>
                             <input type="text" id = "reviewSubject" name = "reviewSubject" placeholder="제목을 입력해주세요"

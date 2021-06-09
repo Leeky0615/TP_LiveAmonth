@@ -69,5 +69,5 @@ public interface ScheduleService {
 
     HashMap<String, Object> setCalendarDTOForScheduleList(List<HashMap<String, Object>> otherScheduleList,CalendarDTO calendarDTO) throws Exception;
 
-
+    public CalendarDTO otherCalendar(CalendarDTO calendarDTO, int scheduleNO) throws Exception;
 }

@@ -84,7 +84,11 @@ public class OtherScheduleController extends SuperController {
 
         CalendarDTO calendarDto;
         try {
-            calendarDto = scheduleService.showCalendar(calendarDTO, scheduleNO);
+            if(calendarDTO.getDate().equals("") && calendarDTO.getMonth().equals("")) {
+                calendarDto = scheduleService.otherCalendar(calendarDTO, scheduleNO);
+            } else {
+                calendarDto = scheduleService.showCalendar(calendarDTO, scheduleNO);
+            }
             model.addAttribute(DATE_LIST.getText(), calendarDto.getDateList()); //날짜 데이터 배열
             model.addAttribute(TODAY_INFORMATION.getText(), calendarDto.getTodayInformation());
         } catch (Exception e) {

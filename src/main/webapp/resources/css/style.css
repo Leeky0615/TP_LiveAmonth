@@ -660,6 +660,10 @@ ol {
     width: calc(314%);
 }
 
+.search-form-content .filter-form .sm-width2 {
+    width: calc(33.33%);
+}
+
 .search-form-content .filter-form .nice-select {
     clear: none;
     margin-right: 20px;

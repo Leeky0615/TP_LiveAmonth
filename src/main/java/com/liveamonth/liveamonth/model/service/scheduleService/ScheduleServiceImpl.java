@@ -1,7 +1,6 @@
 package com.liveamonth.liveamonth.model.service.scheduleService;
 
 
-import com.liveamonth.liveamonth.constants.EntityConstants;
 import com.liveamonth.liveamonth.constants.LogicConstants;
 import com.liveamonth.liveamonth.entity.dto.CalendarDTO;
 import com.liveamonth.liveamonth.entity.dto.PagingDTO;
@@ -14,11 +13,14 @@ import com.liveamonth.liveamonth.model.service.noticeService.NoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
 
-import static com.liveamonth.liveamonth.constants.EntityConstants.*;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EPage.DISPLAY_PAGE;
 import static com.liveamonth.liveamonth.constants.EntityConstants.ESchedule.SCHEDULE_NO;
+import static com.liveamonth.liveamonth.constants.EntityConstants.Month;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EPaging.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleAttributes.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleFilterAndOrders.SCHEDULE_FO_ORDER;
@@ -36,6 +38,14 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public List<HashMap<String, Object>> getPopularScheduleListForMain() throws Exception {
         return scheduleMapper.getPopularScheduleListForMain();
+    }
+
+    @Override
+    public CalendarDTO otherCalendar(CalendarDTO calendarDTO, int scheduleNO) throws Exception {
+        calendarDTO = this.setManyContentsDate(scheduleNO,calendarDTO); // 컨텐츠가 많은 달을 가져옴
+        CalendarDTO calendarDto = this.showCalendar(calendarDTO, scheduleNO);
+        return calendarDto;
+
     }
 
     @Override
@@ -320,11 +330,19 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public CalendarDTO setManyContentsDate(int scheduleNO,CalendarDTO calendarDTO){
+    public CalendarDTO setManyContentsDate(int scheduleNO, CalendarDTO calendarDTO) {
         String year = scheduleMapper.getManyContentsYear(scheduleNO);
-        if(year != null) calendarDTO.setYear(year);
+        if (year != null) {
+            calendarDTO.setYear(year);
+        } else {
+            calendarDTO.setYear("");
+        }
         String month = scheduleMapper.getManyContentsMonth(scheduleNO);
-        if(month != null) calendarDTO.setMonth(month);
+        if (month != null) {
+            calendarDTO.setMonth(month);
+        } else {
+            calendarDTO.setMonth("");
+        }
         return calendarDTO;
     }
 
