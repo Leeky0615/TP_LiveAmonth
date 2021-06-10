@@ -31,7 +31,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <insert id = "addOneToOneAsk" parameterType="OneToOneAskVO">
     	insert into oneToOneAsk 
-    	values(#{oneToOneAskNO}, #{oneToOneAskCategory}, #{oneToOneAskSubject}, #{oneToOneAskDesc}, #{oneToOneAskDate},
+    	values(#{oneToOneAskNO}, #{oneToOneAskCategory}, #{oneToOneAskSubject}, #{oneToOneAskDesc}, CONVERT_TZ(#{oneToOneAskDate},'+00:00','+09:00'),
     	      #{oneToOneAskImage},#{oneToOneAskUserEmail}, #{oneToOneAskReply}, #{userNO});
     </insert>
     

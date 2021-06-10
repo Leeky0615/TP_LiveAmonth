@@ -288,11 +288,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 
 	<insert id="addScheduleContent" parameterType="ScheduleContentVO">
-		insert into scheduleContent values (#{scheduleContentNO}, #{scheduleContentSubject}, #{scheduleContentDesc}, #{scheduleContentDate}, #{scheduleContentCost}, #{scheduleNO})
+		insert into scheduleContent values (#{scheduleContentNO}, #{scheduleContentSubject}, #{scheduleContentDesc}, CONVERT_TZ(#{scheduleContentDate},'+00:00','+09:00'), #{scheduleContentCost}, #{scheduleNO})
 	</insert>
 
 	<insert id="addScheduleReplyVO" parameterType="ScheduleReplyVO" useGeneratedKeys="true" keyProperty="scheduleReplyNO">
-		insert into scheduleReply values (#{scheduleReplyNO}, #{scheduleReplyDesc}, #{scheduleReplyDate},
+		insert into scheduleReply values (#{scheduleReplyNO}, #{scheduleReplyDesc}, CONVERT_TZ(#{scheduleReplyDate},'+00:00','+09:00'),
 		<choose>
 			<when test = "scheduleReplyRefNO == 0">
 				null
@@ -336,7 +336,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<choose>
 			<when test="manageScheduleCategory == 'writeScheduleReply'">
 				count(scheduleReplyNO) as count from scheduleReply where userNO = ${userNO}
-
 			</when>
 			<otherwise>
 				count(scheduleNO) as count from schedule where userNO = ${userNO}

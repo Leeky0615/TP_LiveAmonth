@@ -13,7 +13,6 @@ public class ReviewVO {
     private String reviewDesc;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:MM:SS") 
-
     private String reviewDate;
     private int reviewViewCount;
 

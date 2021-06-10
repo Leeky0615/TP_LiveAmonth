@@ -99,7 +99,17 @@
                                                                     </c:if>
                                                                      </span>
                                                                     </td>
-                                                                    <td style="width:20%;padding-left: 25px">${mySchedule.scheduleLikeCount}</td>
+                                                                    <td style="width:20%;padding-left: 25px">
+                                                                        <c:set var="scheduleLikeCount" value="${mySchedule.scheduleLikeCount}"/>
+                                                                        <c:choose>
+                                                                            <c:when test="${scheduleLikeCount != null}">
+                                                                                ${scheduleLikeCount}
+                                                                            </c:when>
+                                                                            <c:otherwise>
+                                                                                0
+                                                                            </c:otherwise>
+                                                                        </c:choose>
+                                                                    </td>
                                                                     <td style="width:15%">${mySchedule.scheduleViewCount}</td>
                                                                 </tr>
                                                             </c:forEach>
@@ -141,14 +151,24 @@
                                                                     <input type="hidden" name="myScheduleCheckbox"
                                                                            value="${myReview.reviewNO}">
                                                                     <td style="width:50%;"><a
-                                                                            href="getReview?reviewNO=${reviewList.reviewNO}">${reviewList.reviewSubject}</a>
+                                                                            href="getReview?reviewNO=${myReview.reviewNO}">${myReview.reviewSubject}</a>
                                                                         <span class="reviewReplyCount">
                                                                         <c:if test="${myReview.replyCount ne null}">
                                                                             [${myReview.replyCount}]
                                                                         </c:if>
                                                                         </span>
                                                                     </td>
-                                                                    <td style="width:20%;padding-left: 25px">${myReview.reviewLikeCount}</td>
+                                                                    <td style="width:20%;padding-left: 25px">
+                                                                        <c:set var="reviewLikeCount" value="${myReview.reviewLikeCount}"/>
+                                                                        <c:choose>
+                                                                            <c:when test="${reviewLikeCount != null}">
+                                                                                ${reviewLikeCount}
+                                                                            </c:when>
+                                                                            <c:otherwise>
+                                                                                0
+                                                                            </c:otherwise>
+                                                                        </c:choose>
+                                                                    </td>
                                                                     <td style="width:15%">${myReview.reviewViewCount}</td>
                                                                 </tr>
                                                             </c:forEach>

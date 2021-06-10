@@ -53,7 +53,7 @@
     </update>
 
     <insert id="addNotice" parameterType="NoticeVO" useGeneratedKeys="true" keyProperty="noticeNO">
-        INSERT INTO notice values(#{noticeNO}, #{noticeDate}, #{userNO},#{senderVO.userNO},#{readStatus})
+        INSERT INTO notice values(#{noticeNO}, CONVERT_TZ(#{noticeDate},'+00:00','+09:00'), #{userNO},#{senderVO.userNO},#{readStatus})
     </insert>
 
     <insert id="addRRNotice" parameterType="java.util.HashMap">

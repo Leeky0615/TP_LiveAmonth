@@ -33,7 +33,7 @@
                             <div class="search-form-content">
                                 <div class="filter-form">
                                     <div id = "reviewCategoryDiv">
-                                        <select class="sm-width2"  id = "reviewCategory" name = "reviewCategory">
+                                        <select class="sm-width2"  id ="reviewCategory" name = "reviewCategory">
                                             <c:forEach var="reviewCategory" items="${reviewCategoryList}">
                                                 <option value="${reviewCategory}">${reviewCategory.nameKR}</option>
                                             </c:forEach>

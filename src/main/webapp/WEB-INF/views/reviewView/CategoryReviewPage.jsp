@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <link rel="stylesheet" href="resources/css/review.css" type="text/css">
 <script type="text/javascript" src="resources/js/review.js"></script>
@@ -46,8 +47,18 @@
                     </span>
                         </td>
                         <td style="width:10%">${reviewList.userNickName}</td>
-                        <td style="width:15%">${reviewList.reviewDate}</td>
-                        <td style="width:15%">${reviewList.reviewLikeCount}</td>
+                        <td style="width:15%"><fmt:formatDate value="${reviewList.reviewDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+                        <td style="width:15%">
+                            <c:set var="reviewLikeCount" value="${reviewList.reviewLikeCount}"/>
+                            <c:choose>
+                                <c:when test="${reviewLikeCount != null}">
+                                    ${reviewLikeCount}
+                                </c:when>
+                                <c:otherwise>
+                                    0
+                                </c:otherwise>
+                            </c:choose>
+                        </td>
                         <td style="width:15%">${reviewList.reviewViewCount}</td>
                     </tr>
                 </c:forEach>

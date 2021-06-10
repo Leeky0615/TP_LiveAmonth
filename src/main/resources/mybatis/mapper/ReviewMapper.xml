@@ -338,7 +338,7 @@
 
     <insert id="addReview" parameterType="ReviewVO" useGeneratedKeys="true" keyProperty="reviewNO">
         insert into review
-        values (#{reviewNO}, #{reviewCategory}, #{reviewSubject}, #{reviewDesc}, #{reviewDate}, #{reviewViewCount},
+        values (#{reviewNO}, #{reviewCategory}, #{reviewSubject}, #{reviewDesc}, CONVERT_TZ(#{reviewDate},'+00:00','+09:00'), #{reviewViewCount},
                 #{userNO})
     </insert>
 
@@ -348,7 +348,7 @@
     </insert>
 
     <insert id="addReviewReply" parameterType="ReviewReplyVO" useGeneratedKeys="true" keyProperty="reviewReplyNO">
-        insert into reviewReply values(#{reviewReplyNO}, #{reviewReplyDesc}, #{reviewReplyDate},
+        insert into reviewReply values(#{reviewReplyNO}, #{reviewReplyDesc}, CONVERT_TZ(#{reviewReplyDate},'+00:00','+09:00'),
         <choose>
             <when test="reviewReplyRefNO == 0">
                 null

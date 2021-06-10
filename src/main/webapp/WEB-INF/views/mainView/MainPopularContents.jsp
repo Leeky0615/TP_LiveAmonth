@@ -36,8 +36,7 @@
                                                 </a>
                                             </div>
                                             <div class="bi-text pt-4 pl-3">
-                                                <h5><a href="/otherSchedule?userNO=${scheduleContent.userVO.userNO}&scheduleNO=${scheduleContent.scheduleNO}">Title
-                                                    : ${scheduleContent.scheduleSubject}</a></h5>
+                                                <h5><a href="/otherSchedule?userNO=${scheduleContent.userVO.userNO}&scheduleNO=${scheduleContent.scheduleNO}">${scheduleContent.scheduleSubject}</a></h5>
                                                 <ul>
                                                     <li>by <span>${scheduleContent.userVO.userNickname}</span>
                                                     </li>
@@ -72,12 +71,11 @@
                                             <img src="${reviewVO.userVO.getUserImageURL()}" alt="">
                                         </div>
                                         <div class="bi-text">
-                                            <h5><a href="getReview?reviewNO=${reviewVO.reviewNO}">Title
-                                                : ${reviewVO.reviewSubject}</a></h5>
+                                            <h5><a href="getReview?reviewNO=${reviewVO.reviewNO}">${reviewVO.reviewSubject}</a></h5>
                                             <ul>
                                                 <li>by <span>${reviewVO.userVO.userNickname}</span>
                                                 </li>
-                                                <li><span>${reviewVO.reviewDate}</span>
+                                                <li><span><fmt:formatDate value="${reviewVO.reviewDate}" pattern="yyyy-MM-dd HH:mm:ss"/></span>
                                                 </li>
                                                 <li>
                                                     <i class="icon_like mr-1"></i><span>${reviewVO.reviewLikeCount}</span>

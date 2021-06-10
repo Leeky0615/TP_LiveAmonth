@@ -1,7 +1,7 @@
 create table user
 (
     userNO       int not null auto_increment,
-    userID       varchar(20),
+    userID       varchar(100),
     userPassword varchar(20),
     userName     varchar(20),
     userNickname varchar(20),
@@ -154,4 +154,51 @@ create table cityWeather
     cityNo             int,
     primary key (cityWeatherNO),
     foreign key (cityNO) references city (cityNO) on delete cascade
+);
+
+create table notice
+(
+    noticeNO int not null auto_increment,
+    noticeDate datetime,
+    userNO int,
+    senderNO int,
+    readStatus boolean,
+    primary key(noticeNO),
+    foreign key (senderNO) references user (userNO)
+);
+
+create table RRNotice
+(
+    noticeNO int not null,
+    reviewReplyNO int,
+    primary key(noticeNO),
+    foreign key (noticeNO) references notice(noticeNO),
+    foreign key (reviewReplyNO) references reviewReply(reviewReplyNO)
+);
+
+create table RLNotice
+(
+    noticeNO int not null,
+    reviewNO int,
+    primary key(noticeNO),
+    foreign key (noticeNO) references notice(noticeNO),
+    foreign key (reviewNO) references review(reviewNO)
+);
+
+create table SRNotice
+(
+    noticeNO int not null,
+    scheduleReplyNO int,
+    primary key(noticeNO),
+    foreign key (noticeNO) references notice(noticeNO),
+    foreign key (scheduleReplyNO) references scheduleReply(scheduleReplyNO)
+);
+
+create table SLNotice
+(
+    noticeNO int not null,
+    scheduleNO int,
+    primary key(noticeNO),
+    foreign key (noticeNO) references notice(noticeNO),
+    foreign key (scheduleNO) references schedule(scheduleNO)
 );
