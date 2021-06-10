@@ -19,8 +19,10 @@ import java.util.HashMap;
 import java.util.List;
 
 import static com.liveamonth.liveamonth.constants.EntityConstants.EPage.DISPLAY_PAGE;
-import static com.liveamonth.liveamonth.constants.EntityConstants.ESchedule.SCHEDULE_NO;
+import static com.liveamonth.liveamonth.constants.EntityConstants.ESchedule.*;
+import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.USER_NO;
 import static com.liveamonth.liveamonth.constants.EntityConstants.Month;
+import static com.liveamonth.liveamonth.constants.LogicConstants.EMyPageAttributes.MANAGE_SCHEDULE_CATEGORY;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EPaging.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleAttributes.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleFilterAndOrders.SCHEDULE_FO_ORDER;
@@ -276,9 +278,9 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public int getScheduleDurationPay(String schedulePayStartDay, String schedulePayFinishDay, int scheduleNO) throws Exception {
         HashMap<String, Object> hash = new HashMap<String, Object>();
-        hash.put("schedulePayStartDay", schedulePayStartDay);
-        hash.put("schedulePayFinishDay", schedulePayFinishDay);
-        hash.put("scheduleNO", scheduleNO);
+        hash.put(SCHEDULE_PAY_START_DAY.getText(), schedulePayStartDay);
+        hash.put(SCHEDULE_PAY_FINISH_DAY.getText(), schedulePayFinishDay);
+        hash.put(SCHEDULE_NO.getText(), scheduleNO);
 
         return scheduleMapper.getScheduleDurationPay(hash);
     }
@@ -292,8 +294,8 @@ public class ScheduleServiceImpl implements ScheduleService {
 
         for (LogicConstants.EScheduleFilterAndOrders eFO : LogicConstants.EScheduleFilterAndOrders.values()) {
             if (eFO == SCHEDULE_FO_ORDER)
-                filtersAndOrder.put(eFO.getText(), "orderByLiked");//("orderBy","orderVubByNew)
-            else filtersAndOrder.put(eFO.getText() + "Filter", false);
+                filtersAndOrder.put(eFO.getText(), ORDER_BY_LIKE.getText());
+            else filtersAndOrder.put(eFO.getText() + FILTER.getText(), false);
         }
         return scheduleMapper.getOtherScheduleList(filtersAndOrder);
     }
@@ -302,8 +304,8 @@ public class ScheduleServiceImpl implements ScheduleService {
     public ArrayList<HashMap<String, Object>> getMyScheduleList(int selectPage, int userNO, String manageScheduleCategory) throws Exception {
         int startNum = (selectPage-1)*15;
         HashMap<String, Object> myScheduleAndPage = new HashMap<String, Object>();
-        myScheduleAndPage.put("userNO", userNO);
-        myScheduleAndPage.put("manageScheduleCategory", manageScheduleCategory);
+        myScheduleAndPage.put(USER_NO.getText(), userNO);
+        myScheduleAndPage.put(MANAGE_SCHEDULE_CATEGORY.getText(), manageScheduleCategory);
         myScheduleAndPage.put(START_NO.getText(), startNum);
         myScheduleAndPage.put(DISPLAY_PAGE.getText(), STATIC_DISPLAY_PAGE_NUM.getText());
         return scheduleMapper.getMyScheduleList(myScheduleAndPage);
@@ -312,8 +314,8 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public PagingDTO showMySchedulePaging(int selectPage, String manageScheduleCategory, int userNO) throws Exception {
         HashMap<String, Object> myScheduleAndPage = new HashMap<String, Object>();
-        myScheduleAndPage.put("manageScheduleCategory",manageScheduleCategory);
-        myScheduleAndPage.put("userNO",userNO);
+        myScheduleAndPage.put(USER_NO.getText(), userNO);
+        myScheduleAndPage.put(MANAGE_SCHEDULE_CATEGORY.getText(), manageScheduleCategory);
         PagingDTO paging = new PagingDTO();
         paging.setPage(selectPage);
         paging.setTotalCount(scheduleMapper.getMyScheduleListCount(myScheduleAndPage));
@@ -323,9 +325,8 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public void deleteScheduleList(int[] scheduleNO_OR_scheduleReplyNOList, String manageScheduleCategory) throws Exception {
         HashMap<String, Object> listAndCategory = new HashMap<String, Object>();
-        listAndCategory.put("scheduleNO_OR_scheduleReplyNOList", scheduleNO_OR_scheduleReplyNOList);
-        listAndCategory.put("manageScheduleCategory",manageScheduleCategory);
-
+        listAndCategory.put(SCHEDULE_NO_OR_REPLY_NO_LIST.getText(), scheduleNO_OR_scheduleReplyNOList);
+        listAndCategory.put(MANAGE_SCHEDULE_CATEGORY.getText(),manageScheduleCategory);
         scheduleMapper.deleteScheduleList(listAndCategory);
     }
 

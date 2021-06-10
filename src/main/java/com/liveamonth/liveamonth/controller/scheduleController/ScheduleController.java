@@ -86,7 +86,7 @@ public class ScheduleController {
         UserVO session_UserVO = (UserVO) session.getAttribute(USER_VO.getText());
         int userNO = session_UserVO.getUserNO();
 
-        model.addAttribute(SCHEDULE_PLACE_LIST.getText(), cityService.getCityNameList());
+        model.addAttribute(SCHEDULE_PLACE_LIST.getText(), cityService.getCityInfoNameList());
 
         ArrayList<ScheduleVO> scheduleVOList;
         try {

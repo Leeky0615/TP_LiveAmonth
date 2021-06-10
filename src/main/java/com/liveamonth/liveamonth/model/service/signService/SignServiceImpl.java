@@ -19,6 +19,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
 
+import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.USER_ID;
+import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.USER_PASSWORD;
 import static com.liveamonth.liveamonth.constants.EntityConstants.SITE_URL;
 
 
@@ -48,10 +50,9 @@ public class SignServiceImpl implements SignService {
     @Override
     public UserVO checkSign(String userID, String userPassword) throws Exception {
         HashMap<String, Object> hash = new HashMap<String, Object>();
-        hash.put("userID", userID);
-        hash.put("userPassword", userPassword);
+        hash.put(USER_ID.getText(), userID);
+        hash.put(USER_PASSWORD.getText(), userPassword);
         UserVO userVO = signMapper.checkSign(hash);
-
         return userVO;
     }
 
@@ -83,7 +84,6 @@ public class SignServiceImpl implements SignService {
 
     @Override
     public String checkEmail(String userEmail) throws Exception {
-        System.out.println(signMapper.checkEmail(userEmail));
         return signMapper.checkEmail(userEmail);
     }
 

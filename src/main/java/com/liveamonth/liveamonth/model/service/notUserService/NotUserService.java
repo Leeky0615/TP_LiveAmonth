@@ -1,20 +1,16 @@
 package com.liveamonth.liveamonth.model.service.notUserService;
 
-import java.util.ArrayList;
-
 import com.liveamonth.liveamonth.entity.vo.OneToOneAskVO;
+
+import java.util.ArrayList;
 
 public interface NotUserService {
 
-	public ArrayList<OneToOneAskVO> getOneToOneAskReplyVOList() throws Exception;
+	ArrayList<OneToOneAskVO> getOneToOneAskReplyVOList() throws Exception;
 
-	public void addOneToOneAskReply(OneToOneAskVO oneToOneAskVO) throws Exception;
+	void addOneToOneAskReply(OneToOneAskVO oneToOneAskVO) throws Exception;
 	
-	public void postOneToOneAskReplyFromEmail(OneToOneAskVO oneToOneAskVO); //unused throws Exception
+	void postOneToOneAskReplyFromEmail(OneToOneAskVO oneToOneAskVO); //unused throws Exception
 
-	public OneToOneAskVO findOneToOneAskVO(int oneToOneAskNO) throws Exception;
-
-	
-
-
+	OneToOneAskVO findOneToOneAskVO(int oneToOneAskNO) throws Exception;
 }

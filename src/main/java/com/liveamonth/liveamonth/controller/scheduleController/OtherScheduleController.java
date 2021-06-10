@@ -63,7 +63,7 @@ public class OtherScheduleController extends SuperController {
         // add requestList
         HashMap<String, Object> requestList = makeRequestList(request);
         model.addAttribute(REQUEST_LIST.getText(), requestList);
-        model.addAttribute(SCHEDULE_PLACE_LIST.getText(), cityService.getCityNameList());
+        model.addAttribute(SCHEDULE_PLACE_LIST.getText(), cityService.getCityInfoNameList());
         return OTHER_SCHEDULE_LIST.getPath();
     }
 

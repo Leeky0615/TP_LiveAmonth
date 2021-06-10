@@ -23,23 +23,4 @@ public class CityWeatherVO {
 
 		this.cityVO = null;
 	}
-
-	// Getter & Setter
-	public int getCityWeatherNO() {return cityWeatherNO;}
-	public void setCityWeatherNO(int cityWeatherNO) {this.cityWeatherNO = cityWeatherNO;}
-
-	public int getCityWeatherMonth() {return cityWeatherMonth;}
-	public void setCityWeatherMonth(int cityWeatherMonth) {this.cityWeatherMonth = cityWeatherMonth;}
-
-	public float getCityWeatherMaxTemp() {return cityWeatherMaxTemp;}
-	public void setCityWeatherMaxTemp(float cityWeatherMaxTemp) {this.cityWeatherMaxTemp = cityWeatherMaxTemp;}
-
-	public float getCityWeatherMinTemp() {return cityWeatherMinTemp;}
-	public void setCityWeatherMinTemp(float cityWeatherMinTemp) {this.cityWeatherMinTemp = cityWeatherMinTemp;}
-
-	public float getCityWeatherAVGTemp() {return cityWeatherAVGTemp;}
-	public void setCityWeatherAVGTemp(float cityWeatherAVGTemp) {this.cityWeatherAVGTemp = cityWeatherAVGTemp;}
-
-	public CityVO getCityVO() {return cityVO;}
-	public void setCityVO(CityVO cityVO) {this.cityVO = cityVO;}
 }

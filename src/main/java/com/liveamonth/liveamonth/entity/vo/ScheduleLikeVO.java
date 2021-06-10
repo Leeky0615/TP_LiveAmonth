@@ -16,10 +16,4 @@ public class ScheduleLikeVO {
 		this.scheduleNO = 0;
 	}
 
-	// Getter & Setter
-	public int getScheduleNO() {return scheduleNO;}
-	public void setScheduleNO(int scheduleNO) {this.scheduleNO = scheduleNO;}
-
-	public int getScheduleLikeUserNO() {return scheduleLikeUserNO;}
-	public void setScheduleLikeUserNO(int scheduleLikeUserNO) {this.scheduleLikeUserNO = scheduleLikeUserNO;}
 }

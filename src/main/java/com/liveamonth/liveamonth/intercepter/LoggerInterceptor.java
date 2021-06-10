@@ -4,10 +4,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.liveamonth.liveamonth.entity.vo.UserVO;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
+
+import static com.liveamonth.liveamonth.constants.ControllerPathConstants.ESignPath.SIGN_IN;
+import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.USER_VO;
 
 @Component
 public class LoggerInterceptor implements HandlerInterceptor {
@@ -17,12 +21,8 @@ public class LoggerInterceptor implements HandlerInterceptor {
             throws Exception {
         HttpSession session = request.getSession(false);
 
-        if(session.getAttribute("userVO") != null) {
-            return true;
-        }else {
-        	response.sendRedirect("signIn");
-        	return false;
-        }
+        if(session.getAttribute(USER_VO.getText()) != null) return true;
+        else response.sendRedirect(SIGN_IN.getRedirectPath()); return false;
     }
 
     @Override

@@ -1,21 +1,18 @@
 package com.liveamonth.liveamonth.model.service.notUserService;
 
 
-import java.util.ArrayList;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.mail.MailSender;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
-
 import com.liveamonth.liveamonth.entity.vo.OneToOneAskVO;
 import com.liveamonth.liveamonth.model.mapper.notUserMapper.NotUserMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailSender;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 
 
 @Service
 public class NotUserServiceImpl implements NotUserService{
-
 	@Autowired
 	private MailSender mailsender;
 	@Autowired
@@ -39,7 +36,6 @@ public class NotUserServiceImpl implements NotUserService{
 		
 	}
 
-	
 	@Override
 	public void postOneToOneAskReplyFromEmail(OneToOneAskVO oneToOneAskVO) {//unused throws exception
 		SimpleMailMessage message = new SimpleMailMessage();
@@ -50,6 +46,5 @@ public class NotUserServiceImpl implements NotUserService{
         
         //밑에 문장 주석풀면 메일전송감.
         mailsender.send(message);
-		
 	}
 }

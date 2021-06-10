@@ -13,9 +13,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
        WHERE userID=#{userID}
     </update>
 
-    <select id="getOtherScheduleUserInfo" parameterType = "int" resultType="UserVO">
-   		  select * from user where userNO = #{userNO}
-    </select>
+    <update id="modifyUserImg" parameterType="String">
+        UPDATE user SET userImage=#{saveName} WHERE userID=#{userID}
+    </update>
+
+    <delete id="dropUser" parameterType="String">
+        delete from user where userID = #{userID}
+    </delete>
 
     <select id = "getOneToOneAskVOList" parameterType = "int" resultType="OneToOneAskVO">
     	select * from oneToOneAsk where userNO = #{userNO};
@@ -35,16 +39,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     	      #{oneToOneAskImage},#{oneToOneAskUserEmail}, #{oneToOneAskReply}, #{userNO});
     </insert>
     
-    <!-- delete -->
-	<delete id="dropUser" parameterType="String">
-		delete from user where userID = #{userID}
-	</delete>
-	
 	<delete id="deleteOneToOneAsk" parameterType="int">
 		delete from oneToOneAsk where oneToOneAskNO = #{oneToOneAskNO}
 	</delete>
 
-    <update id="modifyUserImg" parameterType="String">
-        UPDATE user SET userImage=#{saveName} WHERE userID=#{userID}
-    </update>
+
 </mapper>

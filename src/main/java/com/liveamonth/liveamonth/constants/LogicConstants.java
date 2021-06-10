@@ -9,118 +9,43 @@ public class LogicConstants {
      */
     public LogicConstants() {}
 
-    public enum ENaverApiUrl {
-        NAVER_SIGN_IN_API_URL("https://nid.naver.com/oauth2.0/authorize?response_type=code"),
-        NAVER_LOGIN_API_URL("https://nid.naver.com/oauth2.0/token?grant_type=authorization_code"),
-        NAVER_ADD_CLIENT_ID("&client_id="),
-        NAVER_CLIENT_ID("mS20tLuLdThxAjEEr_yP"),
-        NAVER_ADD_REDIRECT_URI("&redirect_uri="),
-        NAVER_REDIRECT_URI(SITE_URL+"naverLogin"),
-        NAVER_ADD_STATE("&state="),
-        NAVER_ADD_CLIENT_SECRET("&client_secret="),
-        NAVER_CLIENT_SECRET("CA3T9EN7Wo"),
-        NAVER_ADD_CODE("&code=");
-
+    /*
+     *  CityController Logic Constants
+     */
+    public enum ECityInfoAttributes {
+        ALL("all"),
+        PAGE("page"),
+        CITY_NAME("cityName"),
+        SELECTED_CITY_NAME("selectedCityName"),
+        CITY_INTRO("cityIntro"),
+        CITY_INTRO_LIST("cityIntroList"),
+        RANDOM_CITY_INTRO_LIST("randomCityIntroList"),
+        SELECTED_CITY_INFOS("selectedCityInfos"),
+        CITY_VIEW_LIST("cityViewList"),
+        CITY_WEATHER_LIST("cityWeatherList"),
+        CITY_TRANSPORT_LIST("cityTransportList"),
+        CITY_FOOD_LIST("cityFoodList"),
+        CURRENT_MONTH_TEMP_LIST("currentMonthTempList"),
+        CITY_TRANSPORT_GRADE_LIST("cityTransportGradeList"),
+        CITY_NAME_LIST("cityNameList");
         private final String text;
-        ENaverApiUrl(String text) {this.text = text;}
-        public String getText() {return this.text;}
-    }
-    public enum ENaverLoginAttributes {
-        STATE("state"),
-        CODE("code"),
-        API_URL("apiURL"),
-        ACCESS_TOKEN("access_token"),
-        ENCODE_UTF_8("UTF-8");
-
-        private final String text;
-        ENaverLoginAttributes(String text) {this.text = text;}
+        ECityInfoAttributes(String text) {this.text = text;}
         public String getText() {return this.text;}
     }
 
-
-    public enum EAlertMessage{
-        MAXIMUM_SCHEDULE_CONTENT("스케쥴은 최대 4개만 등록 가능합니다."),
-        ADD_SCHEDULE_CONTENT("스케줄이 등록되었습니다"),
-
-        ADD_SCHEDULE("캘린더가 추가되었습니다"),
-        FAIL_TO_ADD_SCHEDULE("캘린더 추가에 실패하였습니다."),
-        COMPLETE_SCHEDULE_MODIFICATION("캘린더가 수정되었습니다."),
-        FAIL_TO_MODIFY_SCHEDULE("캘린더 수정에 실패하였습니다."),
-        COMPLETE_SCHEDULE_DELETION("캘린더가 삭제되었습니다.."),
-        COMPLETE_SCHEDULE_CONTENTS_DELETION("스케줄이 삭제되었습니다."),
-        FAIL_TO_DELETE_SCHEDULE("캘린더 삭제에 실패하였습니다."),
-
-        ADD_SCHEDULEREPLY("댓글 등록이 완료되었습니다."),
-        FAIL_TO_ADD_SCHEDULEREPLY("댓글 등록에 실패하였습니다."),
-        COMPLETE_SCHEDULEREPLY_MODIFICATION("댓글이 수정되었습니다."),
-        FAIL_TO_MODIFY_SCHEDULEREPLY("댓글 수정에 실패하였습니다."),
-        COMPLETE_SCHEDULEREPLY_DELETION("댓글이 삭제되었습니다.."),
-        FAIL_TO_DELETE_SCHEDULEREPLY("댓글 삭제에 실패하였습니다."),
-
-        ADD_CALENDAR_MESSAGE("아직 캘린더를 생성하지 않으셨습니다. 캘린더를 추가해주세요."),
-        FAIL_TO_SEARCH_CALENDER_LIST("캘린더 리스트 조회에 실패하셨습니다."),
-        FAIL_TO_SEARCH_SCHEDULE("스케줄 조회에 실패하셨습니다."),
-        PLEASE_ADD_DURATION("기간을 설정해 주십시오."),
-        WON("원");
-
+    /*
+     *  CustomerCenterController Logic Constants
+     */
+    public enum ECustomerCenterAttributes {
+        CUSTOMER_CENTER_MENUS("customerCenterMenus");
         private final String text;
-        EAlertMessage(String text) {this.text = text;}
+        ECustomerCenterAttributes(String text) {this.text = text;}
         public String getText() {return this.text;}
     }
 
-
-    public enum EScheduleAttributes{
-        SELECTED_SCHEDULE_NO("selectedScheduleNO"),
-        MESSAGE("message"),
-        SCHEDULE_PLACE_LIST("schedulePlaceList"),
-        SCHEDULE_ACTION("action"),
-        SCHEDULE_LIST("list"),
-        SCHEDULE_FILTER("filter"),
-        FILTER("Filter"),
-        ORDER_BY_NEW("orderByNew"),
-        MODIFY_SCHEDULE_CONTENT_SUBJECT("modifyScheduleContentSubject"),
-        MODIFY_SCHEDULE_CONTENT_DESC("modifyScheduleContentDesc"),
-        MODIFY_SCHEDULE_CONTENT_COST("modifyScheduleContentCost"),
-        DATE_LIST("dateList"),
-        TODAY_INFORMATION("todayInformation"),
-        SCHEDULEREPLY_VO_LIST("scheduleVOReplyList"),
-        SELECT_SCHEDULE("selectSchedule"),
-        FITERED_OTHER_SCHEDULE_LIST("otherScheduleList"),
-        REQUEST_LIST("requestList"),
-        DURATION_PAY("durationPayMsg"),
-        OTHER_SCHEDULE_NO("otherScheduleNO"),
-        OTHER_USER_NO("otherScheduleUserNO"),
-        SCHEDULE_MENU("scheduleMenu"),
-        MONTH_LIST("monthList"),
-        CALENDAR_DTO_DATE_LIST("CalendarDTODateList"),
-        CALENDAR_DTO_TODAY_INFORMATION_LIST("CalendarDTOTodayInformationList"),
-        OTHER_SCHEDULE_AND_LIKE_COUNT("otherScheduleAndLikeCount");
-        private final String text;
-        EScheduleAttributes(String text) {this.text = text;}
-        public String getText() {return this.text;}
-    }
-
-    public enum EScheduleStaticInt {
-        FIRST_SCHEDULEREPLY_NO(501),
-        FIRST_SCHEDULE_NO(200),
-        STATIC_DISPLAY_PAGE_NUM(15),
-        SCHEDULE_DISPLAY_PAGE_NUM(8),
-        FIRST_SCHEDULECONTENT_NO(301);
-        private final int text;
-        EScheduleStaticInt(int text) {this.text = text;}
-        public int getText(){return this.text;}
-    }
-
-
-    public enum EScheduleFilterAndOrders{
-        SCHEDULE_FO_SEX("userSex"),
-        SCHEDULE_FO_AGE("userAge"),
-        SCHEDULE_FO_CITY_NO("cityNO"),
-        SCHEDULE_FO_ORDER("orderBy");
-        private final String text;
-        EScheduleFilterAndOrders(String text) {this.text = text;}
-        public String getText() {return this.text;}
-    }
+    /*
+     *  MyPageController Logic Constants
+     */
     public enum EMyPageAttributes {
         IMAGE_DIR("img/user/"),
         CHECK_USER("checkUser"),
@@ -158,52 +83,27 @@ public class LogicConstants {
         EPageOptions(String text) {this.text = text;}
         public String getText() {return this.text;}
     }
-    public enum ECityInfoAttributes {
-        ALL("all"),
-        PAGE("page"),
-        CITY_NAME("cityName"),
-        SELECTED_CITY_NAME("selectedCityName"),
-        CITY_INTRO("cityIntro"),
-        CITY_INTRO_LIST("cityIntroList"),
-        RANDOM_CITY_INTRO_LIST("randomCityIntroList"),
-        SELECTED_CITY_INFOS("selectedCityInfos"),
-        CITY_VIEW_LIST("cityViewList"),
-        CITY_WEATHER_LIST("cityWeatherList"),
-        CITY_TRANSPORT_LIST("cityTransportList"),
-        CITY_FOOD_LIST("cityFoodList"),
-        CURRENT_MONTH_TEMP_LIST("currentMonthTempList"),
-        CITY_TRANSPORT_GRADE_LIST("cityTransportGradeList"),
-        CITY_NAME_LIST("cityNameList");
+
+    /*
+     *  NoticeController Logic Constants
+     */
+    public enum ENotice{
+        NOTICE_ERROR_MESSAGE("noticeList 불러오기 실패 : "),
+        NOTICE_LIST("noticeList"),
+        NOTICE_COUNT("noticeCount"),
+        USER_DIR("user/"),
+        IMG_URL("imgURL");
         private final String text;
-        ECityInfoAttributes(String text) {this.text = text;}
+        ENotice(String text){this.text = text;}
         public String getText() {return this.text;}
     }
 
-    public enum ESignAttributes{
-        SUCCESS_SIGN_UP_MESSAGE("회원 가입 성공"),
-        FAIL_SIGN_UP_MESSAGE("회원 가입 실패"),
-        FIRST_IN("firstIn"),
-        AT("@");
-        private final String text;
-        ESignAttributes(String text){this.text = text;}
-        public String getText() {return this.text;}
-    }
-
-
-
-    public enum EPaging{
-        SELECTED_PAGE("selectedPage"),
-        LIKE_STATUS("likeStatus"),
-        LIKE_COUNT("likeCount"),
-        START_NO("startNO"),
-        PAIGING("paging");
-
-        private final String text;
-        EPaging(String text){this.text = text;}
-        public String getText() {return this.text;}
-    }
+    /*
+     *  ReviewController Logic Constants
+     */
     public enum EReviewAttribute{
         REVIEW_TYPE_LIST("reviewTypeList"),
+        REVIEW_NO_OR_REPLY_NO_LIST("reviewNO_OR_reviewReplyNOList"),
         REVIEW_PLACE_LIST("reviewPlaceList"),
         REVIEW_CATEGORY_LIST("reviewCategoryList"),
         REVIEW_SEARCH_DATE("reviewSearchDate"),
@@ -219,7 +119,7 @@ public class LogicConstants {
         CATEGORY("category"),
         CLICK_PAGE("clickPage"),
         SELECT_PAGE("selectPage"),
-
+        DESC_ASC("descAsc"),
 
         ORDER_BY("orderBy"),
         DATE_ORDER_BY("dateOrderBy"),
@@ -237,9 +137,11 @@ public class LogicConstants {
 
         SELECTED_DATE("selectedDate"),
         SELECTED_CATEGORY("selectedCategory"),
-        SELECTED_DETAIL("selectedDetail");
+        SELECTED_DETAIL("selectedDetail"),
 
-
+        NULL("null"),
+        DESC("desc"),
+        ASC("asc");
         private final String text;
         EReviewAttribute(String text){this.text = text;}
         public String getText() {return this.text;}
@@ -269,8 +171,154 @@ public class LogicConstants {
         EReviewMessage(String text){this.text = text;}
         public String getText() {return this.text;}
     }
+    public enum EReviewImage{
+        FILE_CONVERT_ERROR_MESSAGE("error: MultipartFile -> File convert fail"),
+        FILE_DELETE_SUCCESS_MESSAGE("File delete success"),
+        FILE_DELETE_FAIL_MESSAGE("File delete fail"),
+        RESPONSECODE("responseCode"),
+        TEMP_IMAGE_URL("url"),
+        S3_UPLOAD_FOLDER("img/reviewImg"),
+        TEMP_IMAGE_PATH("/summernoteImage/"),
+        REAL_IMAGE_PATH("https://liveamonth-resources.s3.ap-northeast-2.amazonaws.com/img/reviewImg/");
 
+        private final String text;
+        EReviewImage(String text){this.text = text;}
+        public String getText() {return this.text;}
+    }
+    public enum EReview{
+        REVIEW_LIKE_COUNT("reviewLikeCount"),
+        REVIEW_REPLY_LIST("reviewReplyList"),
+        ALL_REVIEW_LIST("AllReviewList"),
+        POPULAR_REVIEW_LIST("popularReviewList"),
+        FREE_REVIEW_LIST("freeReviewList");
 
+        private final String text;
+        EReview(String text){this.text = text;}
+        public String getText() {return this.text;}
+    }
+
+    /*
+     *  SignController Logic Constants
+     */
+    public enum ENaverApiUrl {
+        NAVER_SIGN_IN_API_URL("https://nid.naver.com/oauth2.0/authorize?response_type=code"),
+        NAVER_LOGIN_API_URL("https://nid.naver.com/oauth2.0/token?grant_type=authorization_code"),
+        NAVER_ADD_CLIENT_ID("&client_id="),
+        NAVER_CLIENT_ID("mS20tLuLdThxAjEEr_yP"),
+        NAVER_ADD_REDIRECT_URI("&redirect_uri="),
+        NAVER_REDIRECT_URI(SITE_URL+"naverLogin"),
+        NAVER_ADD_STATE("&state="),
+        NAVER_ADD_CLIENT_SECRET("&client_secret="),
+        NAVER_CLIENT_SECRET("CA3T9EN7Wo"),
+        NAVER_ADD_CODE("&code=");
+
+        private final String text;
+        ENaverApiUrl(String text) {this.text = text;}
+        public String getText() {return this.text;}
+    }
+    public enum ENaverLoginAttributes {
+        STATE("state"),
+        CODE("code"),
+        API_URL("apiURL"),
+        ACCESS_TOKEN("access_token"),
+        ENCODE_UTF_8("UTF-8");
+
+        private final String text;
+        ENaverLoginAttributes(String text) {this.text = text;}
+        public String getText() {return this.text;}
+    }
+    public enum ESignAttributes{
+        SUCCESS_SIGN_UP_MESSAGE("회원 가입 성공"),
+        FAIL_SIGN_UP_MESSAGE("회원 가입 실패"),
+        FIRST_IN("firstIn"),
+        AT("@");
+        private final String text;
+        ESignAttributes(String text){this.text = text;}
+        public String getText() {return this.text;}
+    }
+
+    /*
+     *  Schedule Controller Logic Constants
+     */
+    public enum EScheduleAttributes{
+        SELECTED_SCHEDULE_NO("selectedScheduleNO"),
+        SCHEDULE_NO_OR_REPLY_NO_LIST("scheduleNO_OR_scheduleReplyNOList"),
+        MESSAGE("message"),
+        SCHEDULE_PLACE_LIST("schedulePlaceList"),
+        SCHEDULE_ACTION("action"),
+        SCHEDULE_LIST("list"),
+        SCHEDULE_FILTER("filter"),
+        FILTER("Filter"),
+        ORDER_BY_NEW("orderByNew"),
+        ORDER_BY_LIKE("orderByLike"),
+        MODIFY_SCHEDULE_CONTENT_SUBJECT("modifyScheduleContentSubject"),
+        MODIFY_SCHEDULE_CONTENT_DESC("modifyScheduleContentDesc"),
+        MODIFY_SCHEDULE_CONTENT_COST("modifyScheduleContentCost"),
+        DATE_LIST("dateList"),
+        TODAY_INFORMATION("todayInformation"),
+        SCHEDULEREPLY_VO_LIST("scheduleVOReplyList"),
+        SELECT_SCHEDULE("selectSchedule"),
+        FITERED_OTHER_SCHEDULE_LIST("otherScheduleList"),
+        REQUEST_LIST("requestList"),
+        DURATION_PAY("durationPayMsg"),
+        OTHER_SCHEDULE_NO("otherScheduleNO"),
+        OTHER_USER_NO("otherScheduleUserNO"),
+        SCHEDULE_MENU("scheduleMenu"),
+        MONTH_LIST("monthList"),
+        CALENDAR_DTO_DATE_LIST("CalendarDTODateList"),
+        CALENDAR_DTO_TODAY_INFORMATION_LIST("CalendarDTOTodayInformationList"),
+        OTHER_SCHEDULE_AND_LIKE_COUNT("otherScheduleAndLikeCount");
+        private final String text;
+        EScheduleAttributes(String text) {this.text = text;}
+        public String getText() {return this.text;}
+    }
+    public enum EAlertMessage{
+        MAXIMUM_SCHEDULE_CONTENT("스케쥴은 최대 4개만 등록 가능합니다."),
+        ADD_SCHEDULE_CONTENT("스케줄이 등록되었습니다"),
+
+        ADD_SCHEDULE("캘린더가 추가되었습니다"),
+        FAIL_TO_ADD_SCHEDULE("캘린더 추가에 실패하였습니다."),
+        COMPLETE_SCHEDULE_MODIFICATION("캘린더가 수정되었습니다."),
+        FAIL_TO_MODIFY_SCHEDULE("캘린더 수정에 실패하였습니다."),
+        COMPLETE_SCHEDULE_DELETION("캘린더가 삭제되었습니다.."),
+        COMPLETE_SCHEDULE_CONTENTS_DELETION("스케줄이 삭제되었습니다."),
+        FAIL_TO_DELETE_SCHEDULE("캘린더 삭제에 실패하였습니다."),
+
+        ADD_SCHEDULEREPLY("댓글 등록이 완료되었습니다."),
+        FAIL_TO_ADD_SCHEDULEREPLY("댓글 등록에 실패하였습니다."),
+        COMPLETE_SCHEDULEREPLY_MODIFICATION("댓글이 수정되었습니다."),
+        FAIL_TO_MODIFY_SCHEDULEREPLY("댓글 수정에 실패하였습니다."),
+        COMPLETE_SCHEDULEREPLY_DELETION("댓글이 삭제되었습니다.."),
+        FAIL_TO_DELETE_SCHEDULEREPLY("댓글 삭제에 실패하였습니다."),
+
+        ADD_CALENDAR_MESSAGE("아직 캘린더를 생성하지 않으셨습니다. 캘린더를 추가해주세요."),
+        FAIL_TO_SEARCH_CALENDER_LIST("캘린더 리스트 조회에 실패하셨습니다."),
+        FAIL_TO_SEARCH_SCHEDULE("스케줄 조회에 실패하셨습니다."),
+        PLEASE_ADD_DURATION("기간을 설정해 주십시오."),
+        WON("원");
+        private final String text;
+        EAlertMessage(String text) {this.text = text;}
+        public String getText() {return this.text;}
+    }
+    public enum EScheduleStaticInt {
+        FIRST_SCHEDULEREPLY_NO(501),
+        FIRST_SCHEDULE_NO(200),
+        STATIC_DISPLAY_PAGE_NUM(15),
+        SCHEDULE_DISPLAY_PAGE_NUM(8),
+        FIRST_SCHEDULECONTENT_NO(301);
+        private final int text;
+        EScheduleStaticInt(int text) {this.text = text;}
+        public int getText(){return this.text;}
+    }
+    public enum EScheduleFilterAndOrders{
+        SCHEDULE_FO_SEX("userSex"),
+        SCHEDULE_FO_AGE("userAge"),
+        SCHEDULE_FO_CITY_NO("cityNO"),
+        SCHEDULE_FO_ORDER("orderBy");
+        private final String text;
+        EScheduleFilterAndOrders(String text) {this.text = text;}
+        public String getText() {return this.text;}
+    }
     public enum EOtherScheduleMessage{
         SCHEDULE_LOAD_FAIL_MESSAGE("후기 조회 실패 : "),
 
@@ -292,42 +340,28 @@ public class LogicConstants {
         public String getText() {return this.text;}
     }
 
-    public enum EReviewImage{
-        FILE_CONVERT_ERROR_MESSAGE("error: MultipartFile -> File convert fail"),
-        FILE_DELETE_SUCCESS_MESSAGE("File delete success"),
-        FILE_DELETE_FAIL_MESSAGE("File delete fail"),
-        RESPONSECODE("responseCode"),
-        TEMP_IMAGE_URL("url"),
-        S3_UPLOAD_FOLDER("img/reviewImg"),
-        TEMP_IMAGE_PATH("/summernoteImage/"),
-        REAL_IMAGE_PATH("https://liveamonth-resources.s3.ap-northeast-2.amazonaws.com/img/reviewImg/");
+    /*
+     * Paging 관련
+     */
+    public enum EPaging{
+        SELECTED_PAGE("selectedPage"),
+        LIKE_STATUS("likeStatus"),
+        LIKE_COUNT("likeCount"),
+        START_NO("startNO"),
+        PAIGING("paging");
 
         private final String text;
-        EReviewImage(String text){this.text = text;}
+        EPaging(String text){this.text = text;}
         public String getText() {return this.text;}
     }
 
-    public enum EReview{
-        REVIEW_LIKE_COUNT("reviewLikeCount"),
-        REVIEW_REPLY_LIST("reviewReplyList"),
-        ALL_REVIEW_LIST("AllReviewList"),
-        POPULAR_REVIEW_LIST("popularReviewList"),
-        FREE_REVIEW_LIST("freeReviewList");
 
-        private final String text;
-        EReview(String text){this.text = text;}
-        public String getText() {return this.text;}
-    }
-    public enum ENotice{
-        NOTICE_ERROR_MESSAGE("noticeList 불러오기 실패 : "),
-        NOTICE_LIST("noticeList"),
-        NOTICE_COUNT("noticeCount"),
-        USER_DIR("user/"),
-        IMG_URL("imgURL");
-        private final String text;
-        ENotice(String text){this.text = text;}
-        public String getText() {return this.text;}
-    }
+
+
+
+
+
+
 
 
 

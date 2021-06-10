@@ -56,7 +56,7 @@ public class ReviewController extends SuperController {
         String category = String.valueOf(request.getParameter(CATEGORY.getText()));
         String clickPage = String.valueOf(request.getParameter( CLICK_PAGE.getText()));
         //정렬 기능
-        String orderBy = String.valueOf(request.getParameter( ORDER_BY.getText()));
+        String orderBy = String.valueOf(request.getParameter(ORDER_BY.getText()));
         String dateDescAsc =String.valueOf(request.getParameter( DATE_DESC_ASC.getText()));
         String likeDescAsc = String.valueOf(request.getParameter(LIKE_DESC_ASC.getText()));
         String viewDescAsc = String.valueOf(request.getParameter(VIEW_DESC_ASC.getText()));

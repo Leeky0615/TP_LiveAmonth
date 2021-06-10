@@ -63,7 +63,7 @@ public class CityServiceImpl implements CityService {
     }
 
     @Override
-    public List<String> getCityNameList() throws Exception {
+    public List<String> getCityInfoNameList() throws Exception {
         return cityMapper.getCityInfoNameList();
     }
     @Override

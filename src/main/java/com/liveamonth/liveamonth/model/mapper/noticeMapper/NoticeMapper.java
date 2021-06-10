@@ -10,20 +10,13 @@ import java.util.HashMap;
 @Repository
 @Mapper
 public interface NoticeMapper {
+    ArrayList<NoticeVO> getAllNotice(int UserNO) throws Exception;
+    int getNoticeCount(int userNO) throws Exception;
+    void updateReadStatus(int userNO) throws Exception;
+    int addNotice(NoticeVO notice) throws Exception;
 
-    public ArrayList<NoticeVO> getAllNotice(int UserNO) throws Exception;
-
-    public int getNoticeCount(int userNO) throws Exception;
-
-    public void updateReadStatus(int userNO) throws Exception;
-
-    public int addNotice(NoticeVO notice) throws Exception;
-
-    public void addRRNotice(HashMap<String, Integer> map) throws Exception;
-
-    public void addRLNotice(HashMap<String, Integer> map) throws Exception;
-
-    public void addSRNotice(HashMap<String, Integer> map) throws Exception;
-
-    public void addSLNotice(HashMap<String, Integer> map) throws Exception;
+    void addRRNotice(HashMap<String, Integer> map) throws Exception;
+    void addRLNotice(HashMap<String, Integer> map) throws Exception;
+    void addSRNotice(HashMap<String, Integer> map) throws Exception;
+    void addSLNotice(HashMap<String, Integer> map) throws Exception;
 }

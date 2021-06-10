@@ -28,23 +28,4 @@ public class ScheduleReplyVO {
         this.userNO = 0;
         this.scheduleNO = 0;
     }
-
-    // Getter & Setter
-	public int getScheduleReplyNO() {return scheduleReplyNO;}
-	public void setScheduleReplyNO(int scheduleReplyNO) {this.scheduleReplyNO = scheduleReplyNO;}
-
-	public String getScheduleReplyDesc() {return scheduleReplyDesc;}
-	public void setScheduleReplyDesc(String scheduleReplyDesc) {this.scheduleReplyDesc = scheduleReplyDesc;}
-
-	public String getScheduleReplyDate() {return scheduleReplyDate;}
-	public void setScheduleReplyDate(String scheduleReplyDate) {this.scheduleReplyDate = scheduleReplyDate;}
-
-	public int getScheduleReplyRefNO() {return scheduleReplyRefNO;}
-	public void setScheduleReplyRefNO(int scheduleReplyRefNO) {this.scheduleReplyRefNO = scheduleReplyRefNO;}
-
-	public int getUserNO() {return userNO;}
-	public void setUserNO(int userNO) {this.userNO = userNO;}
-
-	public int getScheduleNO() {return scheduleNO;}
-	public void setScheduleNO(int scheduleNO) {this.scheduleNO = scheduleNO;}
 }

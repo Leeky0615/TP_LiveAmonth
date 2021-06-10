@@ -224,7 +224,6 @@ public class MyPageController extends SuperController {
 
         // set myReviewList & Paging
         this.setMyReviewListPaging(model, this.getSelectePage(request), userVO.getUserNO(),manageReviewCategory);
-
         return MANAGE_REVIEW.getPath();
     }
 
@@ -238,10 +237,8 @@ public class MyPageController extends SuperController {
             int[] scheduleNO_OR_scheduleReplyNOList = Arrays.stream(myScheduleCheckbox).mapToInt(Integer::parseInt).toArray();
             scheduleService.deleteScheduleList(scheduleNO_OR_scheduleReplyNOList,manageScheduleCategory);
         }
-
         // set myScheduleList & Paging
         List<HashMap<String, Object>> myScheduleList = this.setMyScheduleListPaging(model,this.getSelectePage(request),userVO.getUserNO(),manageScheduleCategory);
-
         // Set CalendarDTO
         this.setCalendarDTOForScheduleList(model, myScheduleList, calendarDTO);
 

@@ -15,7 +15,10 @@ import java.util.List;
 
 import static com.liveamonth.liveamonth.constants.EntityConstants.EPage.DISPLAY_PAGE;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EReview.REVIEW_NO;
+import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.USER_NO;
+import static com.liveamonth.liveamonth.constants.LogicConstants.EMyPageAttributes.MANAGE_REVIEW_CATEGORY;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EPaging.*;
+import static com.liveamonth.liveamonth.constants.LogicConstants.EReviewAttribute.*;
 import static com.liveamonth.liveamonth.constants.LogicConstants.EScheduleStaticInt.STATIC_DISPLAY_PAGE_NUM;
 
 @Service
@@ -39,10 +42,10 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public ArrayList<HashMap<String, Object>> getCategoryReviewList(String category, int selectPage, String orderBy, String descAsc) throws Exception {
         int startNum = (selectPage-1)*15;
-        HashMap<String, Object> categoryAndPage = new HashMap<String, Object>();
-        categoryAndPage.put("category", category);
-        categoryAndPage.put("orderBy", orderBy);
-        categoryAndPage.put("descAsc", descAsc);
+        HashMap<String, Object> categoryAndPage = new HashMap<>();
+        categoryAndPage.put(CATEGORY.getText(), category);
+        categoryAndPage.put(ORDER_BY.getText(), orderBy);
+        categoryAndPage.put(DESC_ASC.getText(), descAsc);
         categoryAndPage.put(START_NO.getText(), startNum);
         categoryAndPage.put(DISPLAY_PAGE.getText(), STATIC_DISPLAY_PAGE_NUM.getText());
 
@@ -51,11 +54,11 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public ArrayList<HashMap<String, Object>> getSearchReviewList(int selectPage, String search,String searchDate, String searchCategory, String searchDetail) throws Exception {
         int startNum = (selectPage-1)*15;
-        HashMap<String, Object> searchAndPage = new HashMap<String, Object>();
-        searchAndPage.put("search",search);
-        searchAndPage.put("searchDate",searchDate);
-        searchAndPage.put("searchCategory",searchCategory);
-        searchAndPage.put("searchDetail",searchDetail);
+        HashMap<String, Object> searchAndPage = new HashMap<>();
+        searchAndPage.put(SEARCH.getText(),search);
+        searchAndPage.put(SEARCH_DATE.getText(),searchDate);
+        searchAndPage.put(SEARCH_CATEGORY.getText(),searchCategory);
+        searchAndPage.put(SEARCH_DETAIL.getText(),searchDetail);
         searchAndPage.put(START_NO.getText(), startNum);
         searchAndPage.put(DISPLAY_PAGE.getText(), STATIC_DISPLAY_PAGE_NUM.getText());
         return reviewMapper.getSearchReviewList(searchAndPage);
@@ -63,9 +66,9 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public ArrayList<HashMap<String, Object>> getMyReviewList(int selectPage, int userNO, String manageReviewCategory) throws Exception {
         int startNum = (selectPage-1)*15;
-        HashMap<String, Object> myReviewAndPage = new HashMap<String, Object>();
-        myReviewAndPage.put("userNO", userNO);
-        myReviewAndPage.put("manageReviewCategory", manageReviewCategory);
+        HashMap<String, Object> myReviewAndPage = new HashMap<>();
+        myReviewAndPage.put(USER_NO.getText(), userNO);
+        myReviewAndPage.put(MANAGE_REVIEW_CATEGORY.getText(), manageReviewCategory);
         myReviewAndPage.put(START_NO.getText(), startNum);
         myReviewAndPage.put(DISPLAY_PAGE.getText(), STATIC_DISPLAY_PAGE_NUM.getText());
         return reviewMapper.getMyReviewList(myReviewAndPage);
@@ -78,7 +81,7 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public int addReview(ReviewVO reviewVO) throws Exception {
-        long rowCount = reviewMapper.addReview(reviewVO);
+        reviewMapper.addReview(reviewVO);
         long reviewNO = reviewVO.getReviewNO();
         return (int)reviewNO;
     }
@@ -94,7 +97,7 @@ public class ReviewServiceImpl implements ReviewService {
     public PagingDTO showPaging(int selectPage,String category) throws Exception {
         PagingDTO paging = new PagingDTO();
         paging.setPage(selectPage);
-        if(category.equals("popular")){
+        if(category.equals(POPULAR.getText())){
             paging.setTotalCount(15);
         }else{
             paging.setTotalCount(reviewMapper.getReviewListCount(category));
@@ -105,11 +108,11 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public PagingDTO showSearchPaging(int selectPage, String search,String searchDate, String searchCategory, String searchDetail) throws Exception {
-        HashMap<String, Object> searchAndPage = new HashMap<String, Object>();
-        searchAndPage.put("search",search);
-        searchAndPage.put("searchDate",searchDate);
-        searchAndPage.put("searchCategory",searchCategory);
-        searchAndPage.put("searchDetail",searchDetail);
+        HashMap<String, Object> searchAndPage = new HashMap<>();
+        searchAndPage.put(SEARCH.getText(),search);
+        searchAndPage.put(SEARCH_DATE.getText(),searchDate);
+        searchAndPage.put(SEARCH_CATEGORY.getText(),searchCategory);
+        searchAndPage.put(SEARCH_DETAIL.getText(),searchDetail);
 
         PagingDTO paging = new PagingDTO();
         paging.setPage(selectPage);
@@ -119,9 +122,9 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public PagingDTO showMyReviewPaging(int selectPage, String manageReviewCategory,int userNO) throws Exception {
-        HashMap<String, Object> myReviewAndPage = new HashMap<String, Object>();
-        myReviewAndPage.put("manageReviewCategory",manageReviewCategory);
-        myReviewAndPage.put("userNO",userNO);
+        HashMap<String, Object> myReviewAndPage = new HashMap<>();
+        myReviewAndPage.put(MANAGE_REVIEW_CATEGORY.getText(),manageReviewCategory);
+        myReviewAndPage.put(USER_NO.getText(),userNO);
         PagingDTO paging = new PagingDTO();
         paging.setPage(selectPage);
         paging.setTotalCount(reviewMapper.getMyReviewListCount(myReviewAndPage));
@@ -131,14 +134,11 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public ArrayList<HashMap<String, Object>> getReviewReplyList(int reviewNO, int selectPage) throws Exception {
         int startNum = (selectPage-1)*15;
-        HashMap<String, Integer> reviewNOAndPage = new HashMap<String, Integer>();
+        HashMap<String, Integer> reviewNOAndPage = new HashMap<>();
         reviewNOAndPage.put(REVIEW_NO.getText(), reviewNO);
         reviewNOAndPage.put(START_NO.getText(), startNum);
         reviewNOAndPage.put(DISPLAY_PAGE.getText(), STATIC_DISPLAY_PAGE_NUM.getText());
-
-        ArrayList<HashMap<String, Object>> list = reviewMapper.getReviewReplyList(reviewNOAndPage);
-
-        return list;
+        return reviewMapper.getReviewReplyList(reviewNOAndPage);
     }
 
     @Override
@@ -147,7 +147,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     public HashMap<String, Integer> getReviewLikeCountAndStatus(ReviewLikeVO reviewLikeVO) throws Exception{
-        HashMap<String, Integer> countAndStatus = new HashMap<String, Integer>();
+        HashMap<String, Integer> countAndStatus = new HashMap<>();
 
         int likeStatus = reviewMapper.getReviewLikeStatus(reviewLikeVO);
         if(likeStatus == 0){
@@ -172,7 +172,7 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public void addReviewReply(ReviewReplyVO reviewReplyVO) throws Exception {
-        long rowCount = reviewMapper.addReviewReply(reviewReplyVO);
+        reviewMapper.addReviewReply(reviewReplyVO);
         long reviewReplyNO = reviewReplyVO.getReviewReplyNO();
         int userNO = reviewMapper.getReviewWriterNO(reviewReplyVO.getReviewNO());
         if(userNO != reviewReplyVO.getUserNO()) {
@@ -199,9 +199,9 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public void deleteReviewList(int[] reviewNO_OR_reviewReplyNOList,String manageReviewCategory) throws Exception {
-        HashMap<String, Object> listAndCategory = new HashMap<String, Object>();
-        listAndCategory.put("reviewNO_OR_reviewReplyNOList",reviewNO_OR_reviewReplyNOList);
-        listAndCategory.put("manageReviewCategory",manageReviewCategory);
+        HashMap<String, Object> listAndCategory = new HashMap<>();
+        listAndCategory.put(REVIEW_NO_OR_REPLY_NO_LIST.getText(),reviewNO_OR_reviewReplyNOList);
+        listAndCategory.put(MANAGE_REVIEW_CATEGORY.getText(),manageReviewCategory);
         reviewMapper.deleteReviewList(listAndCategory);
     }
 
@@ -216,31 +216,31 @@ public class ReviewServiceImpl implements ReviewService {
 
         switch (orderBy) {
             case "dateOrderBy":
-                if(clickPage.equals("null")) {
-                    if (dateDescAsc.equals("desc")) {
-                        dateDescAsc = "asc";
+                if(clickPage.equals(NULL.getText())) {
+                    if (dateDescAsc.equals(DESC.getText())) {
+                        dateDescAsc = ASC.getText();
                     } else {
-                        dateDescAsc = "desc";
+                        dateDescAsc = DESC.getText();
                     }
                 }
                 descAsc = dateDescAsc;
                 break;
             case "likeOrderBy":
-                if(clickPage.equals("null")) {
-                    if (likeDescAsc.equals("desc")) {
-                        likeDescAsc = "asc";
+                if(clickPage.equals(NULL.getText())) {
+                    if (likeDescAsc.equals(DESC.getText())) {
+                        likeDescAsc = ASC.getText();
                     } else {
-                        likeDescAsc = "desc";
+                        likeDescAsc = DESC.getText();
                     }
                 }
                 descAsc = likeDescAsc;
                 break;
             case "viewOrderBy":
-                if(clickPage.equals("null")) {
-                    if (viewDescAsc.equals("desc")) {
-                        viewDescAsc = "asc";
+                if(clickPage.equals(NULL.getText())) {
+                    if (viewDescAsc.equals(DESC.getText())) {
+                        viewDescAsc = ASC.getText();
                     } else {
-                        viewDescAsc = "desc";
+                        viewDescAsc = DESC.getText();
                     }
                 }
                 descAsc = viewDescAsc;

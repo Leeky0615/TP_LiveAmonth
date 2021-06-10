@@ -13,6 +13,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 
+import static com.liveamonth.liveamonth.constants.EntityConstants.ENoticeType.NOTICE_NO;
+import static com.liveamonth.liveamonth.constants.EntityConstants.EReview.REVIEW_NO;
+import static com.liveamonth.liveamonth.constants.EntityConstants.EReviewReply.REVIEW_REPLY_NO;
+import static com.liveamonth.liveamonth.constants.EntityConstants.ESchedule.SCHEDULE_NO;
+import static com.liveamonth.liveamonth.constants.EntityConstants.EScheduleReply.SCHEDULE_REPLY_NO;
+
 @Service
 public class NoticeServiceImpl implements NoticeService{
 
@@ -146,32 +152,32 @@ public class NoticeServiceImpl implements NoticeService{
     @Override
     public void addRRNotice(int noticeNO, int reviewReplyNO) throws Exception{
         HashMap<String, Integer> map = new HashMap<String, Integer>();
-        map.put("noticeNO", noticeNO);
-        map.put("reviewReplyNO", reviewReplyNO);
+        map.put(NOTICE_NO.getText(), noticeNO);
+        map.put(REVIEW_REPLY_NO.getText(), reviewReplyNO);
         this.noticeMapper.addRRNotice(map);
     }
 
     @Override
     public void addRLNotice(int noticeNO, int reviewNO) throws Exception{
         HashMap<String, Integer> map = new HashMap<String, Integer>();
-        map.put("noticeNO", noticeNO);
-        map.put("reviewNO", reviewNO);
+        map.put(NOTICE_NO.getText(), noticeNO);
+        map.put(REVIEW_NO.getText(), reviewNO);
         this.noticeMapper.addRLNotice(map);
     }
 
     @Override
     public void addSRNotice(int noticeNO, int scheduleReplyNO) throws Exception{
         HashMap<String, Integer> map = new HashMap<String, Integer>();
-        map.put("noticeNO", noticeNO);
-        map.put("scheduleReplyNO", scheduleReplyNO);
+        map.put(NOTICE_NO.getText(), noticeNO);
+        map.put(SCHEDULE_REPLY_NO.getText(), scheduleReplyNO);
         this.noticeMapper.addSRNotice(map);
     }
 
     @Override
     public void addSLNotice(int noticeNO, int scheduleNO) throws Exception{
         HashMap<String, Integer> map = new HashMap<String, Integer>();
-        map.put("noticeNO", noticeNO);
-        map.put("scheduleNO", scheduleNO);
+        map.put(NOTICE_NO.getText(), noticeNO);
+        map.put(SCHEDULE_NO.getText(), scheduleNO);
         this.noticeMapper.addSLNotice(map);
     }
 

@@ -35,60 +35,6 @@ public class OneToOneAskVO {
         this.userNO = 0;
     }
 
-    // Getter & Setter
-    public int getOneToOneAskNO() {
-        return oneToOneAskNO;
-    }
-    public void setOneToOneAskNO(int oneToOneAskNO) {
-        this.oneToOneAskNO = oneToOneAskNO;
-    }
-
-    public OneToOneAskCategory getOneToOneAskCategory() {return oneToOneAskCategory;}
-    public void setOneToOneAskCategory(OneToOneAskCategory oneToOneAskCategory) {this.oneToOneAskCategory = oneToOneAskCategory;}
-
-    public String getOneToOneAskImage() {return oneToOneAskImage;}
-    public void setOneToOneAskImage(String oneToOneAskImage) {this.oneToOneAskImage = oneToOneAskImage;}
-
-    public String getOneToOneAskSubject() {
-        return oneToOneAskSubject;
-    }
-    public void setOneToOneAskSubject(String oneToOneAskSubject) {
-        this.oneToOneAskSubject = oneToOneAskSubject;
-    }
-
-    public String getOneToOneAskDesc() {
-        return oneToOneAskDesc;
-    }
-    public void setOneToOneAskDesc(String oneToOneAskDesc) {
-        this.oneToOneAskDesc = oneToOneAskDesc;
-    }
-
-    public String getOneToOneAskDate() {
-        return oneToOneAskDate;
-    }
-    public void setOneToOneAskDate(String oneToOneAskDate) {
-        this.oneToOneAskDate = oneToOneAskDate;
-    }
-
-    public String getOneToOneAskUserEmail() {
-        return oneToOneAskUserEmail;
-    }
-    public void setOneToOneAskUserEmail(String oneToOneAskUserEmail) {this.oneToOneAskUserEmail = oneToOneAskUserEmail;}
-
-    public String getOneToOneAskReply() {
-        return oneToOneAskReply;
-    }
-    public void setOneToOneAskReply(String oneToOneAskReply) {
-        this.oneToOneAskReply = oneToOneAskReply;
-    }
-
-    public int getUserNO() {
-        return userNO;
-    }
-    public void setUserNO(int userNO) {
-        this.userNO = userNO;
-    }
-
     // Get URL
     public String getOneToOneAskImageURL(){
         return IMAGE_URL +"onetooneask/"+this.getOneToOneAskImage();

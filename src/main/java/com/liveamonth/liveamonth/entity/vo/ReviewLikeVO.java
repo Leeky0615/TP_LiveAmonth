@@ -15,11 +15,4 @@ public class ReviewLikeVO {
 
 		this.reviewLikeUserNO = 0;
 	}
-
-	// Getter & Setter
-	public int getReviewNO() {return reviewNO;}
-	public void setReviewNO(int reviewNO) {this.reviewNO = reviewNO;}
-
-	public int getReviewLikeUserNO() {return reviewLikeUserNO;}
-	public void setReviewLikeUserNO(int reviewLikeUserNO) {this.reviewLikeUserNO = reviewLikeUserNO;}
 }

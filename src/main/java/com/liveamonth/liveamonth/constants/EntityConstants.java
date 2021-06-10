@@ -14,20 +14,6 @@ public class EntityConstants {
     public static String SITE_URL = "http://tpliveamonth-env.eba-296xyabm.ap-northeast-2.elasticbeanstalk.com/";
 
     /*
-     * sign Table Constants
-     */
-    public enum ESignUp {
-        EMAIL("email");
-        private final String text;
-        ESignUp(String text) {
-            this.text = text;
-        }
-        public String getText() {
-            return this.text;
-        }
-    }
-
-    /*
      * City Table Constants
      */
     public enum ECity {
@@ -43,7 +29,6 @@ public class EntityConstants {
             return this.text;
         }
     }
-
     public enum CityInfoCategory {
         INTRO("Intro", "intro/"),
         FOOD("Food", "food/"),
@@ -57,11 +42,10 @@ public class EntityConstants {
         public String getText() {
             return this.text;
         }
-        public String getPath() {
+        public String getImgUrlPath() {
             return this.path;
         }
     }
-
     public enum CityTransportCategory {
         SUBWAY("지하철역",4),
         BUS("버스 노선",5),
@@ -80,7 +64,6 @@ public class EntityConstants {
         }
         public String getNameKR() {return this.nameKR;}
     }
-
     public enum Month {Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sept, Oct, Nov, Dec}
 
     /*
@@ -120,7 +103,6 @@ public class EntityConstants {
             return this.text;
         }
     }
-
     public enum EReviewSearchDate{
         TOTAL_DATE("전체기간"),
         ONE_DAY("1일"),
@@ -143,7 +125,6 @@ public class EntityConstants {
         EReviewSearchDetail(String nameKR){this.nameKR = nameKR;}
         public String getNameKR() {return this.nameKR;}
     }
-
     public enum EReviewCategoryName{
         SEOUL_HOUSE_BOARD("서울ㅣ숙박시설"),
         GANGNEUNG_HOUSE_BOARD("강릉ㅣ숙박시설"),
@@ -179,7 +160,6 @@ public class EntityConstants {
         public String getNameKR() {return this.nameKR;}
     }
 
-
     /*
      * ScheduleContent Table Constants
      */
@@ -203,7 +183,7 @@ public class EntityConstants {
      * ScheduleReply Table Constants
      */
     public enum EScheduleReply {
-        SCHEDULE_REPLY_VO("scheduleReplyNO"),
+        SCHEDULE_REPLY_VO("scheduleReplyVO"),
         SCHEDULE_REPLY_NO("scheduleReplyNO"),
         SCHEDULE_REPLY_DESC("scheduleReplyDesc"),
         SCHEDULE_REPLY_DATE("scheduleReplyDate"),
@@ -278,7 +258,6 @@ public class EntityConstants {
             return this.text;
         }
     }
-
     public enum OneToOneAskCategory {
         CATEGORY("카테고리"),
         CATEGORY1("카테고리1"),
@@ -294,6 +273,9 @@ public class EntityConstants {
         }
     }
 
+    /*
+     * Paging Constants
+     */
     public enum EPage {
         DISPLAY_PAGE("displayPage");
         private final String text;
@@ -305,7 +287,19 @@ public class EntityConstants {
         }
     }
 
-
+    /*
+     * sign Table Constants
+     */
+    public enum ESignUp {
+        EMAIL("email");
+        private final String text;
+        ESignUp(String text) {
+            this.text = text;
+        }
+        public String getText() {
+            return this.text;
+        }
+    }
     public enum EEmail {
         select("선택하세요"),
         naver("naver.com"),
@@ -320,7 +314,11 @@ public class EntityConstants {
         }
     }
 
+    /*
+    * Notice Constants
+    */
     public enum ENoticeType {
+        NOTICE_NO("noticeNO"),
         REVIEW_LIKE("reviewLike"),
         SCHEDULE_LIKE("scheduleLike"),
         REVIEW_REPLY("reviewReply"),
