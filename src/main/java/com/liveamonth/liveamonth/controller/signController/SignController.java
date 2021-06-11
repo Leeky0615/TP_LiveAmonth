@@ -243,7 +243,7 @@ public class SignController extends SuperController {
         return RESULT_NEW_NAVER_MEMBER.getPath();
     }
     @RequestMapping("/newNaverMember")
-    private String newNaverMember(HttpSession session, HttpServletRequest request,Model model) throws Exception {
+    private String newNaverMember(HttpSession session, HttpServletRequest request) throws Exception {
         UserVO newNaverUser = (UserVO)session.getAttribute(NAVER_USER.getText());
         boolean flag = true;
 
@@ -256,12 +256,12 @@ public class SignController extends SuperController {
             //필수항목 다 동의 한 경우
             if(flag){
                 session.setAttribute(USER_VO.getText(),newNaverUser);
-                model.addAttribute(MESSAGE.getText(), SUCCESS_SIGN_UP_MESSAGE.getText());
+                request.setAttribute(MESSAGE.getText(), SUCCESS_SIGN_UP_MESSAGE.getText());
             }else{ //필수 항목 하나라도 동의 안한 경우
                 return REDIRECT_NAVER_SIGN_UP.getRedirectPath();
             }
         }else{
-            model.addAttribute(MESSAGE.getText(), FAIL_SIGN_UP_MESSAGE.getText());
+            request.setAttribute(MESSAGE.getText(), FAIL_SIGN_UP_MESSAGE.getText());
         }
 
         return RESULT_NEW_NAVER_MEMBER.getPath();
