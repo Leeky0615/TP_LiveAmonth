@@ -18,7 +18,7 @@ public class CustomerCenterController {
     }
 
     @RequestMapping("selectedCustomerCenterMenu")
-    public String selectedCustomerCenterMenu(Model model,@RequestParam("menu") String menuName) throws Exception{
+    public String selectedCustomerCenterMenu(Model model,@RequestParam("menu") String menuName){
         String path = null;
         for(ECustomerCenterPath menu:ECustomerCenterPath.values()){
             if(menu.getText().equals(menuName)) path = menu.getPath();
