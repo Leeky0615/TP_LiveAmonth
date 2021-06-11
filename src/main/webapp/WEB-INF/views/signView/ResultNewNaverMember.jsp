@@ -14,6 +14,7 @@
                     <div class="cc-title">
                         <h1>${message}</h1>
                     </div>
+                    <a class="site-btn" href="/">메인으로</a>
                 </div>
             </div>
         </div>

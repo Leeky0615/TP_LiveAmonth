@@ -2,13 +2,14 @@
          pageEncoding="utf-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <body>
 <script src="resources/js/signUp.js"></script>
 
 <section class="ftco-section">
     <div class="container">
-        <form action=resultMentSignUp method="post" class="signup-form" name="SignInfo">
+        <form action=resultMentNaverSignUp method="post" class="signup-form" name="SignInfo" onsubmit="return checkValue()">
             <div class="row justify-content-center">
                 <div class="col-md-12 col-lg-12 col-xl-8">
                     <div class="login-wrap p-4 p-md-5">
@@ -50,22 +51,56 @@
 
                             <%--이메일--%>
                             <label class="label mb-0" for="userEmail"><h5>E-Mail</h5></label>
-                            <div class="form-group">
-                                <input type="text" id="userEmail" class="form-control result-email"
-                                       onpaste="return false;" name="userEmail" onfocus="this.value='';"
-                                       style="width: 44%;float: left" value="${naverUser.userEmail}">
-                                <h3 style="float: left;margin-left: 11px;margin-right: 11px">@</h3>
-                                <input type="text" id="email" name="email" class="form-control" readOnly="true"
-                                       style="width: 48%;float: left">
-                            </div>
-                            <div class="form-group" id="emailBlock">
-                                <select name="emailSelected" id="emailSelected" class="form-control"
-                                        onchange="email_change()">
-                                    <c:forEach var="email" items="${email}">
-                                        <option value="${email.label}">${email.label}</option>
-                                    </c:forEach>
-                                </select>
-                            </div>
+                            <c:choose>
+                                <c:when test="${naverUser.userEmail == null}">
+                                    <div class="form-group">
+                                        <input type="text" id="userEmail" class="form-control result-email"
+                                               onpaste="return false;" name="userEmail" onfocus="this.value='';"
+                                               style="width: 44%;float: left">
+                                        <h3 style="float: left;margin-left: 11px;margin-right: 11px">@</h3>
+                                        <input type="text" id="email" name="email" class="form-control" readOnly="true"
+                                               style="width: 48%;float: left">
+                                    </div>
+                                    <div class="form-group" id="emailBlock">
+                                        <select name="emailSelected" id="emailSelected" class="form-control"
+                                                onchange="email_change()">
+                                            <c:forEach var="email" items="${email}">
+                                                <option value="${email.label}">${email.label}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                </c:when>
+                                <c:when test="${naverUser.userEmail == ''}">
+                                    <div class="form-group">
+                                        <input type="text" id="userEmail" class="form-control result-email"
+                                               onpaste="return false;" name="userEmail" onfocus="this.value='';"
+                                               style="width: 44%;float: left">
+                                        <h3 style="float: left;margin-left: 11px;margin-right: 11px">1@</h3>
+                                        <input type="text" id="email" name="email" class="form-control" readOnly="true"
+                                               style="width: 48%;float: left">
+                                    </div>
+                                    <div class="form-group" id="emailBlock">
+                                        <select name="emailSelected" id="emailSelected" class="form-control"
+                                                onchange="email_change()">
+                                            <c:forEach var="email" items="${email}">
+                                                <option value="${email.label}">${email.label}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                </c:when>
+                                <c:otherwise>
+                                <div class="form-group">
+                                    <input type="text"class="form-control result-email"
+                                           onpaste="return false;" name="userEmail" onfocus="this.value='';"
+                                           value="${naverUser.userEmail}" >
+<%--                                    <h3 style="float: left;margin-left: 11px;margin-right: 11px">@</h3>--%>
+                                    <input type="text"  name="email" class="form-control" readOnly="true"
+                                           style="display: none">
+                                </div>
+                                <div class="form-group">
+                                </div>
+                                </c:otherwise>
+                            </c:choose>
 
                             <%--출생년도--%>
                             <div class="form-group mb-5" style="margin-top: 100px">
@@ -132,3 +167,29 @@
         <script> unvisibleUserEmail();</script>
     </c:if>
 
+<script>
+    $(".checkNickName").click(function () {
+        var query = {userNickname: $("#userNickname").val()};
+        $.ajax({
+            url: "checkNickName",
+            type: "post",
+            data: query,
+            success: function (data) {
+                if (data == 1) {
+                    $(".nickNameResult .nickNameMsg").text("사용불가");
+                    $(".nickNameResult .nickNameMsg").attr("style", "color:#f00");
+                    $("#submit").attr("disabled", "disabled");
+                } else {
+                    $(".nickNameResult .nickNameMsg").text("사용가능");
+                    $(".nickNameResult .nickNameMsg").attr("style", "color:#00f");
+                    $("#submit").removeAttr("disabled");
+                }
+            }
+        });  // ajax ��
+    });
+    $("#userNickname").keyup(function () {
+        $(".nickNameResult .nickNameMsg").text("중복확인을 해주세요");
+        $(".nickNameResult .nickNameMsg").attr("style", "color:#000");
+        $("#submit").attr("disabled", "disabled");
+    });
+</script>
