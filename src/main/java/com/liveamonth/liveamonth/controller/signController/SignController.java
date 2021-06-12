@@ -128,7 +128,6 @@ public class SignController extends SuperController {
     private String resultMentSignUp(@ModelAttribute UserVO userVO, HttpServletRequest request) throws Exception {
         String userEmail = request.getParameter(USER_EMAIL.getText());
         String email = request.getParameter(EMAIL.getText());
-
         userVO.setUserEmail(userEmail + AT.getText() + email);
 
         signService.insertUser(userVO);

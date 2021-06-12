@@ -34,7 +34,7 @@
                                 <input type="password" id="userPassword"
                                        class="form-control" placeholder="Password" onpaste="return false;"
                                        oncopy="return false;" onchange="checkPassword()"
-                                       name="toggle-password">
+                                       name="userPassword">
                                 <span id="showPassword" class="fa fa-fw fa-eye field-icon mt-3"></span>
                             </div>
 
