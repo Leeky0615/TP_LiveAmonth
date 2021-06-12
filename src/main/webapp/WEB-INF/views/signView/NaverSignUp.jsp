@@ -113,8 +113,7 @@
                             </div>
 
                             <div class="form-group">
-                                <button type="submit" id="submit" disabled="disabled"
-                                        class="form-control btn btn-primary rounded submit px-3">
+                                <button type="submit" id="submit" class="form-control btn btn-primary rounded submit px-3">
                                     Sign Up
                                 </button>
                             </div>
@@ -168,7 +167,7 @@
         $("input[name=userNickname]").val("${naverUser.userNickname}");
         $("input[name=userNickname]").attr("readonly",true);
     </c:if>
-    <c:if test="${naverUser.userAge != null}">
+    <c:if test="${naverUser.userAge != 0}">
         $("input[name=userAge]").val("${naverUser.userAge}");
         $("input[name=userAge]").attr("readonly",true);
     </c:if>
