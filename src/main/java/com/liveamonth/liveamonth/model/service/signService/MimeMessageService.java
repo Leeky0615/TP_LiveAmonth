@@ -51,7 +51,7 @@ public class MimeMessageService implements SendMailService {
             String htmlContent = "<img src=\"https://liveamonth-resources.s3.ap-northeast-2.amazonaws.com/img/logo/logo.png\"><br><br>"
                     +"안녕하세요. "+userVO.getUserName()+" 고객님<br><br>"
                     + "<h4>1:1 문의 답변이 완료되었습니다.<br><br>"
-                    + "문의 일시 : " + oneToOneAskVO.getOneToOneAskDate()+"<br>"
+                    + "문의 날짜 : " + oneToOneAskVO.getOneToOneAskDate()+"<br>"
                     + "문의 내용 : " + oneToOneAskVO.getOneToOneAskDesc()+"<br><br>"
                     + "답변 내용 : " + oneToOneAskVO.getOneToOneAskReply()+"<br></h4><br>"
                     + "<p>다른 문의사항이 있으시면 한달살기(TP.liveamonth@gamil.com)으로 문의해 주시기 바랍니다.</p><br>"
