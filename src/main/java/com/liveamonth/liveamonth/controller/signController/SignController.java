@@ -230,16 +230,21 @@ public class SignController extends SuperController {
     }
     @RequestMapping("/resultMentNaverSignUp")
     private String resultMentNaverSignUp(@ModelAttribute UserVO userVO, HttpServletRequest request, HttpSession session) throws Exception {
-        //email을 갖고 있는 경우와 아닌 경우
-        if(!userVO.getUserEmail().contains("@")){
-            String userEmail = request.getParameter(USER_EMAIL.getText());
-            String email = request.getParameter(EMAIL.getText());
-            userVO.setUserEmail(userEmail + AT.getText() + email);
-        }
-        signService.updateNaverUser(userVO);
-        request.setAttribute(MESSAGE.getText(), SUCCESS_SIGN_UP_MESSAGE.getText());
+        if(userVO.getUserSex() == null || userVO.getUserEmail() == null || userVO.getUserName() == null||
+                userVO.getUserNickname() == null || userVO.getUserAge() == 0){
+            request.setAttribute(MESSAGE.getText(), FAIL_SIGN_UP_MESSAGE.getText());
+        }else{
+            //email을 갖고 있는 경우와 아닌 경우
+            if(!userVO.getUserEmail().contains("@")){
+                String userEmail = request.getParameter(USER_EMAIL.getText());
+                String email = request.getParameter(EMAIL.getText());
+                userVO.setUserEmail(userEmail + AT.getText() + email);
+            }
+            signService.setNewNaverMember(userVO);
+            request.setAttribute(MESSAGE.getText(), SUCCESS_SIGN_UP_MESSAGE.getText());
 
-        session.setAttribute(USER_VO.getText(),userVO);
+            session.setAttribute(USER_VO.getText(),userVO);
+        }
         return RESULT_NEW_NAVER_MEMBER.getPath();
     }
     @RequestMapping("/newNaverMember")
@@ -252,10 +257,11 @@ public class SignController extends SuperController {
             flag = false;
         }
 
-        if(session.getAttribute(USER_VO.getText()) == null && signService.setNewNaverMember(newNaverUser)==1){
+        if(session.getAttribute(USER_VO.getText()) == null){
             //필수항목 다 동의 한 경우
             if(flag){
-                session.setAttribute(USER_VO.getText(),newNaverUser);
+                signService.setNewNaverMember(newNaverUser);
+                session.setAttribute(USER_VO.getText(), newNaverUser);
                 request.setAttribute(MESSAGE.getText(), SUCCESS_SIGN_UP_MESSAGE.getText());
             }else{ //필수 항목 하나라도 동의 안한 경우
                 return REDIRECT_NAVER_SIGN_UP.getRedirectPath();
