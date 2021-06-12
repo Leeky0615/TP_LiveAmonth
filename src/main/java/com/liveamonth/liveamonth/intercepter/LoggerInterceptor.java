@@ -22,7 +22,7 @@ public class LoggerInterceptor implements HandlerInterceptor {
         HttpSession session = request.getSession(false);
 
         if(session.getAttribute(USER_VO.getText()) != null) return true;
-        else response.sendRedirect(SIGN_IN.getRedirectPath()); return false;
+        else response.sendRedirect("signIn"); return false;
     }
 
     @Override
