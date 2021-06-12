@@ -4,7 +4,7 @@ function checkValue() {
         return false;
     }
     if (!document.SignInfo.userName.value) {
-        alert("이름을 선택하세요.");
+        alert("이름을 입력하세요.");
         return false;
     }
     if (!document.SignInfo.userNickName.value) {

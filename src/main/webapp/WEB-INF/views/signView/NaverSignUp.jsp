@@ -25,15 +25,14 @@
                             <div class="form-group mb-5">
                                 <label class="label mb-0" for="userName"><h5>NAME</h5></label> <input
                                     type="text" id="userName" class="form-control" onpaste="return false;"
-                                    placeholder="이름(한글만 입력가능)" value = "${naverUser.userName}"
-                                    name="userName" onkeypress="koreanCheck()">
+                                    placeholder="이름(한글만 입력가능)" name="userName" onkeypress="koreanCheck()">
                             </div>
 
                             <%-- 닉네임 --%>
                             <div class="form-group mb-4">
                                 <label class="label mb-0" for="userNickname"><h5>NICKNAME</h5></label>
                                 <input type="text" id="userNickname" class="form-control mb-1" placeholder="닉네임"
-                                       onpaste="return false;" name="userNickname" value="${naverUser.userNickname}">
+                                       onpaste="return false;" name="userNickname">
                                 <c:if test="${naverUser.userNickname == null}">
                                     <button type="button" class="checkNickName">중복확인</button>
                                     <p class="nickNameResult">
@@ -45,7 +44,7 @@
                             <div class="form-group mb-3" id="userSexBlock">
                                 <label class="label mb-0" for="userSex"><h5>GENDER</h5></label>
                                 <select name="userSex" id="userSex" class="form-control mb-4"
-                                        onpaste="return false;" value= "${naverUser.userSex}">
+                                        onpaste="return false;">
                                     <option value=0>남성</option>
                                     <option value=1>여성</option>
                                 </select>
@@ -75,8 +74,7 @@
                                 <c:otherwise>
                                 <div class="form-group">
                                     <input type="text"class="form-control result-email"
-                                           onpaste="return false;" name="userEmail" onfocus="this.value='';"
-                                           value="${naverUser.userEmail}" >
+                                           onpaste="return false;" name="userEmail" onfocus="this.value='';">
                                 </div>
                                 </c:otherwise>
                             </c:choose>
@@ -86,7 +84,7 @@
                                 <label class="label mt-3 mb-0" for="userAge"><h5>BIRTH</h5></label>
                                 <input type="number" class="int form-control" id="userAge"
                                        min="1900" max="2021" maxlength="4" placeholder="생년(4자)" onpaste="return false;"
-                                       name="userAge" oninput="maxLengthCheck(this)" value="${naverUser.userAge}">
+                                       name="userAge" oninput="maxLengthCheck(this)">
                             </div>
 
                             <div class="form-group mb-3">
@@ -137,7 +135,7 @@
             return false;
         }
         if (!document.SignInfo.userName.value) {
-            alert("이름을 선택하세요.");
+            alert("이름을 입력하세요.");
             return false;
         }
         if (!document.SignInfo.userNickname.value) {
@@ -159,18 +157,23 @@
     };
     <c:if test="${naverUser.userEmail != null}">
         $("input[name=userEmail]").attr("readonly",true);
+        $("input[name=userEmail]").val("${naverUser.userEmail}");
         $("#userAge").parent("div").attr("style","margin-top:-5px");
     </c:if>
     <c:if test="${naverUser.userName != null}">
+        $("input[name=userName]").val("${naverUser.userName}");
         $("input[name=userName]").attr("readonly",true);
     </c:if>
     <c:if test="${naverUser.userNickname != null}">
+        $("input[name=userNickname]").val("${naverUser.userNickname}");
         $("input[name=userNickname]").attr("readonly",true);
     </c:if>
     <c:if test="${naverUser.userAge != null}">
+        $("input[name=userAge]").val("${naverUser.userAge}");
         $("input[name=userAge]").attr("readonly",true);
     </c:if>
     <c:if test="${naverUser.userSex != null}">
+        $("input[name=userSex]").val("${naverUser.userSex}");
         $("select[name=userSex]").attr("disable",true);
     </c:if>
 
