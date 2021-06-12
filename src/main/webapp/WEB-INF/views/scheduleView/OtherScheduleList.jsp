@@ -72,7 +72,7 @@
                                                         <select name="userAge" id="userAge" class="sm-width">
 
                                                             <option value="null" <c:if
-                                                                    test="${userAge == -1}"> selected </c:if>>모두ㄺ
+                                                                    test="${userAge == -1}"> selected </c:if>>모두
                                                             </option>
                                                             <c:forEach var="age" begin="20" end="60" step="10">
                                                                 <option value="${age}" <c:if
