@@ -9,7 +9,7 @@
 
 <section class="ftco-section">
     <div class="container">
-        <form action=resultMentNaverSignUp method="post" class="signup-form" name="SignInfo" onsubmit="return checkValue()">
+        <form action=resultMentNaverSignUp method="post" class="signup-form" name="SignInfo" onsubmit="return naverLoginCheckValue()">
             <div class="row justify-content-center">
                 <div class="col-md-12 col-lg-12 col-xl-8">
                     <div class="login-wrap p-4 p-md-5">
@@ -34,16 +34,18 @@
                                 <label class="label mb-0" for="userNickname"><h5>NICKNAME</h5></label>
                                 <input type="text" id="userNickname" class="form-control mb-1" placeholder="닉네임"
                                        onpaste="return false;" name="userNickname" value="${naverUser.userNickname}">
-                                <button type="button" class="checkNickName">중복확인</button>
-                                <p class="nickNameResult">
-                                    <span class="nickNameMsg">중복확인을 해주세요.</span>
-                                </p>
+                                <c:if test="${naverUser.userNickname == null}">
+                                    <button type="button" class="checkNickName">중복확인</button>
+                                    <p class="nickNameResult">
+                                        <span class="nickNameMsg">중복확인을 해주세요.</span>
+                                    </p>
+                                </c:if>
                             </div>
                             <%--성별--%>
                             <div class="form-group mb-3" id="userSexBlock">
                                 <label class="label mb-0" for="userSex"><h5>GENDER</h5></label>
                                 <select name="userSex" id="userSex" class="form-control mb-4"
-                                        onpaste="return false;" value = "${naverUser.userSex}">
+                                        onpaste="return false;" value= "${naverUser.userSex}">
                                     <option value=0>남성</option>
                                     <option value=1>여성</option>
                                 </select>
@@ -129,6 +131,32 @@
 </html>
 
 <script>
+    function naverLoginCheckValue() {
+        if (!document.SignInfo.userSex.value) {
+            alert("성별을 선택하세요.");
+            return false;
+        }
+        if (!document.SignInfo.userName.value) {
+            alert("이름을 선택하세요.");
+            return false;
+        }
+        if (!document.SignInfo.userNickname.value) {
+            alert("닉네임을 입력하세요.");
+            return false;
+        }
+        if (!document.SignInfo.userEmail.value) {
+            alert("이메일을 입력하세요.");
+            return false;
+        }
+        if (!document.SignInfo.userAge.value) {
+            alert("출생일을 입력하세요.");
+            return false;
+        }
+        if (!document.SignInfo.agreeCheck.checked) {
+            alert("동의에 체크하세요.");
+            return false;
+        }
+    };
     <c:if test="${naverUser.userEmail != null}">
         $("input[name=userEmail]").attr("readonly",true);
         $("#userAge").parent("div").attr("style","margin-top:-5px");
@@ -143,7 +171,7 @@
         $("input[name=userAge]").attr("readonly",true);
     </c:if>
     <c:if test="${naverUser.userSex != null}">
-        $("input[name=userSex]").attr("readonly",true);
+        $("select[name=userSex]").attr("disable",true);
     </c:if>
 
     $(".checkNickName").click(function () {
