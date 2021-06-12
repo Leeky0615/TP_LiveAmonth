@@ -1,4 +1,4 @@
-package com.liveamonth.liveamonth.controller.cityInfoController;
+package com.liveamonth.liveamonth.controller.cityController;
 
 import com.liveamonth.liveamonth.model.service.cityInfoService.CityService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -36,10 +36,10 @@
                                         </div>
                                         <div class="info">
                                             <h3>${cityIntro.cityVO.cityName}</h3>
-                                                <p>
-                                                    ${currentMonthTempList[status.index].cityWeatherMonth}월 평균기온 : ${currentMonthTempList[status.index].cityWeatherAVGTemp}&#8451;
-                                                    <br><br>교통 등급 : ${cityTransportGradeList.get(cityIntro.cityVO.cityName)}
-                                                </p>
+                                            <p>
+                                                ${currentMonthTempList[status.index].cityWeatherMonth}월 평균기온 : ${currentMonthTempList[status.index].cityWeatherAVGTemp}&#8451;
+                                                <br><br>교통 등급 : ${cityTransportGradeList.get(cityIntro.cityVO.cityName)}
+                                            </p>
                                         </div>
                                     </a>
                                 </div>

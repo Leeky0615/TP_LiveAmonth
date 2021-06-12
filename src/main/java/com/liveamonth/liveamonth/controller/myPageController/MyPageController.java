@@ -238,9 +238,9 @@ public class MyPageController extends SuperController {
             scheduleService.deleteScheduleList(scheduleNO_OR_scheduleReplyNOList,manageScheduleCategory);
         }
         // set myScheduleList & Paging
-        List<HashMap<String, Object>> myScheduleList = this.setMyScheduleListPaging(model,this.getSelectePage(request),userVO.getUserNO(),manageScheduleCategory);
+        List<HashMap<String, Object>> myScheduleList = super.setMyScheduleListPaging(model,this.getSelectePage(request),userVO.getUserNO(),manageScheduleCategory);
         // Set CalendarDTO
-        this.setCalendarDTOForScheduleList(model, myScheduleList, calendarDTO);
+        super.setCalendarDTOForScheduleList(model, myScheduleList, calendarDTO);
 
         return MANAGE_SCHEDULE.getPath();
     }

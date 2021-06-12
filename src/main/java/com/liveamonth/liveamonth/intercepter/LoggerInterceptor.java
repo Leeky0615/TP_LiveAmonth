@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import static com.liveamonth.liveamonth.constants.ControllerPathConstants.ESignPath.SIGN_IN;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.USER_VO;
+import static com.liveamonth.liveamonth.constants.LogicConstants.ESignAttributes.LOG_SIGN_IN;
 
 @Component
 public class LoggerInterceptor implements HandlerInterceptor {
@@ -22,7 +23,7 @@ public class LoggerInterceptor implements HandlerInterceptor {
         HttpSession session = request.getSession(false);
 
         if(session.getAttribute(USER_VO.getText()) != null) return true;
-        else response.sendRedirect("signIn"); return false;
+        else response.sendRedirect(LOG_SIGN_IN.getText()); return false;
     }
 
     @Override

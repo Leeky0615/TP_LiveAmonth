@@ -18,7 +18,6 @@ import static com.liveamonth.liveamonth.constants.LogicConstants.EReviewMessage.
 @RequiredArgsConstructor
 @RestController
 public class ImageController {
-
     private final S3UploaderDTO s3Uploader;
 
     @PostMapping(value="/uploadSummernoteImageFile", produces = "application/json")
@@ -26,7 +25,9 @@ public class ImageController {
     public JsonObject uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile){
         JsonObject jsonObject = new JsonObject();
         try {
-            String savedFileName = s3Uploader.upload(S3_UPLOAD_FOLDER.getText(), multipartFile.getOriginalFilename(), multipartFile.getBytes());
+            String savedFileName = s3Uploader.upload(S3_UPLOAD_FOLDER.getText(),
+                                                        multipartFile.getOriginalFilename(),
+                                                        multipartFile.getBytes());
             jsonObject.addProperty(TEMP_IMAGE_URL.getText(), TEMP_IMAGE_PATH.getText()+savedFileName);
         } catch (Exception e) {
             System.err.println(REVIEWIMG_UPLOAD_FAIL_MESSAGE.getText() + e);

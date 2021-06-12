@@ -228,6 +228,7 @@ public class LogicConstants {
         public String getText() {return this.text;}
     }
     public enum ESignAttributes{
+        LOG_SIGN_IN("signIn"),
         SUCCESS_SIGN_UP_MESSAGE("회원 가입 성공"),
         FAIL_SIGN_UP_MESSAGE("회원 가입 실패"),
         FIRST_IN("firstIn"),
