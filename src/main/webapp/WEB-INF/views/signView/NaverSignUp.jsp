@@ -128,23 +128,24 @@
 </body>
 </html>
 
-    <c:if test = "${naverUser.userName != null}">
-        <script> unvisibleUserName();</script>
+<script>
+    <c:if test="${naverUser.userEmail != null}">
+        $("input[name=userEmail]").attr("readonly",true);
+        $("#userAge").parent("div").attr("style","margin-top:-5px");
     </c:if>
-    <c:if test = "${naverUser.userNickname != null}">
-        <script> unvisibleUserNickname();</script>
+    <c:if test="${naverUser.userName != null}">
+        $("input[name=userName]").attr("readonly",true);
     </c:if>
-    <c:if test = "${naverUser.userAge != 0}">
-        <script> unvisibleUserAge();</script>
+    <c:if test="${naverUser.userNickname != null}">
+        $("input[name=userNickname]").attr("readonly",true);
     </c:if>
-    <c:if test = "${naverUser.userSex != null}">
-        <script> unvisibleUserSex();</script>
+    <c:if test="${naverUser.userAge != null}">
+        $("input[name=userAge]").attr("readonly",true);
     </c:if>
-    <c:if test = "${naverUser.userEmail != null}">
-        <script> unvisibleUserEmail();</script>
+    <c:if test="${naverUser.userSex != null}">
+        $("input[name=userSex]").attr("readonly",true);
     </c:if>
 
-<script>
     $(".checkNickName").click(function () {
         var query = {userNickname: $("#userNickname").val()};
         $.ajax({

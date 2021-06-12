@@ -9,8 +9,8 @@
                     <div class="cc-title">
                         <h1>회원 가입을 진행할 수 있습니다.</h1>
                     </div>
-                    <a href="/">회원가입 취소 </a>&nbsp;&nbsp;
-                    <a href="/newNaverMember">회원가입 진행</a>
+                    <a class="site-btn" href="/">회원가입 취소 </a>&nbsp;&nbsp;
+                    <a class="site-btn" href="/newNaverMember">회원가입 진행</a>
                 </div>
             </div>
         </div>
