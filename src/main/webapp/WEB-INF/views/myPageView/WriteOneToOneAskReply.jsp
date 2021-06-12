@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <body>
-<section class="ftco-section">
+<section class="ftco-section pt-0">
     <div class="container">
         <form action="resultMentOneToOneAskReply" class="signup-form">
 			<input type="hidden" id="oneToOneAskUserEmail" name="oneToOneAskUserEmail" value="${oneToOneAskVO.oneToOneAskUserEmail}">
@@ -10,13 +10,7 @@
 			</div>
             <div class="row justify-content-center">
 					<div class="col-md-12 col-lg-10 col-xl-10">
-						<div class="login-wrap p-4 p-md-5">
-							<div
-								class="icon d-flex align-items-center justify-content-center">
-								<span class="fa fa-edit"></span>
-							</div>
-							<h3 class="text-center mb-4">문의글 답변하기</h3>
-
+						<div class="login-wrap">
 							<div class="form-group mb-3">
 									<label class="label" for="oneToOneAskNO">번호</label> <input type="text"
 										id="oneToOneAskNO" class="form-control" value="${oneToOneAskVO.oneToOneAskNO}"

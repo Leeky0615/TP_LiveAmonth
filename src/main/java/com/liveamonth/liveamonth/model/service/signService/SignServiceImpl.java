@@ -5,14 +5,8 @@ import com.liveamonth.liveamonth.model.mapper.signMapper.SignMapper;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.MailException;
-import org.springframework.mail.MailSender;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import javax.mail.internet.MimeMessage;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -21,7 +15,6 @@ import java.util.HashMap;
 
 import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.USER_ID;
 import static com.liveamonth.liveamonth.constants.EntityConstants.EUser.USER_PASSWORD;
-import static com.liveamonth.liveamonth.constants.EntityConstants.SITE_URL;
 
 
 @Service
@@ -76,7 +69,7 @@ public class SignServiceImpl implements SignService {
           }
           UserVO userVO = signMapper.searchUserById(userID);
           userVO.setUserPassword(pw);
-          sendMailService.sendMail(userVO);
+          sendMailService.sendPasswordByMail(userVO);
           signMapper.updatePW(userID, pw);
           return true;
       }
