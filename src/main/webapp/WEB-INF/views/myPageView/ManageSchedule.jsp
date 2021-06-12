@@ -79,7 +79,15 @@
                         </c:if>
                     </span>
                             </td>
-                            <td style="width:15%">${mySchedule.scheduleLikeCount}</td>
+                            <c:set var="scheduleLikeCount" value="${mySchedule.scheduleLikeCount}"/>
+                            <c:choose>
+                                <c:when test="${scheduleLikeCount != null}">
+                                    ${scheduleLikeCount}
+                                </c:when>
+                                <c:otherwise>
+                                    0
+                                </c:otherwise>
+                            </c:choose>
                             <td style="width:15%">${mySchedule.scheduleViewCount}</td>
                         </tr>
                     </c:forEach>
