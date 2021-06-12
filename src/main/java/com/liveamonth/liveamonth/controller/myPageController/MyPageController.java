@@ -146,22 +146,25 @@ public class MyPageController extends SuperController {
                              @ModelAttribute OneToOneAskVO oneToOneAskVO,
                              Model model, HttpSession session) throws Exception {
         UserVO session_UserVO = (UserVO) session.getAttribute(USER_VO.getText());
-        if(page.equals(PAGE_MODIFY.getText()) && userVO != null){
+        if(page.equals(PAGE_MODIFY.getText())){
             UserVO previousUser = myPageService.getUserInfo(userVO.getUserID());
             myPageService.modifyUserInfo(this.checkUserData(userVO, previousUser));
+            model.addAttribute(USER_VO.getText(), session.getAttribute(USER_VO.getText()));
             this.setPageAttr(model,PAGE_MODIFY,false);
         }else if(page.equals(PAGE_DROP_USER.getText())){
             this.setPageAttr(model,PAGE_DROP_USER,false);
             s3Uploader.delete(IMAGE_DIR.getText()+session_UserVO.getUserImage()); // 회원 탈퇴시 S3에 있는 이미지도 삭제
             myPageService.dropUser(session_UserVO.getUserID());
             session.invalidate();
-        }else if(page.equals(PAGE_ONE_TO_ONE_ASK.getText()) && oneToOneAskVO != null){
+        }else if(page.equals(PAGE_ONE_TO_ONE_ASK.getText())){
             myPageService.addOneToOneAsk(oneToOneAskVO, session_UserVO.getUserNO());
             this.setPageAttr(model,PAGE_ONE_TO_ONE_ASK,false);
-        }else if(page.equals(PAGE_DELETE_ONE_TO_ONE_ASK.getText()) && oneToOneAskVO != null){
+            model.addAttribute(USER_VO.getText(), session.getAttribute(USER_VO.getText()));
+        }else if(page.equals(PAGE_DELETE_ONE_TO_ONE_ASK.getText())){
             int oneToOneAskNO = oneToOneAskVO.getOneToOneAskNO();
             myPageService.deleteOneToOneAsk(oneToOneAskNO);
             this.setPageAttr(model,PAGE_DELETE_ONE_TO_ONE_ASK,false);
+            model.addAttribute(USER_VO.getText(), session.getAttribute(USER_VO.getText()));
         }
         return RESULT_MENT.getPath();
     }
@@ -188,14 +191,8 @@ public class MyPageController extends SuperController {
     @RequestMapping("/writeOneToOneAsk")
     private String writeOneToOneAsk(Model model){
         model.addAttribute(ONE_TO_ONE_ASK_CATEGORY.getText(), OneToOneAskCategory.values());
-        return Write_ONE_TO_ONE_ASK.getPath();
-    }
-
-    @RequestMapping("/deleteOneToOneAsk")
-    private String deleteOneToOneAsk(HttpServletRequest request) throws Exception {
-        int oneToOneAskNO = Integer.parseInt(request.getParameter(ONE_TO_ONE_ASK_NO.getText()));
-        myPageService.deleteOneToOneAsk(oneToOneAskNO);
-        return RESULT_MENT_DELETE_ONE_TO_ONE_ASK.getPath();
+        model.addAttribute(PAGE.getText(), PAGE_ONE_TO_ONE_ASK.getText());
+        return WRITE_ONE_TO_ONE_ASK.getPath();
     }
 
     @RequestMapping(value = "modifyUserImage")

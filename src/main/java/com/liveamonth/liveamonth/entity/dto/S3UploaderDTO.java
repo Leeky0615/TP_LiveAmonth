@@ -32,8 +32,9 @@ public class S3UploaderDTO {
     }
 
     public String uploadProfileImg(String dirName, String userID, String originalFilename, byte[] bytes){
+        UUID uid = UUID.randomUUID();
         String extension = FilenameUtils.getExtension(originalFilename);
-        String fileName = userID + "." + extension;
+        String fileName = uid.toString() + userID + "." + extension;
         String saveFileName = dirName + fileName; // S3에 저장된 파일 이름
         String uploadedFileName = (saveFileName).replace(File.separatorChar, '/');
         fileUpload(uploadedFileName, bytes);
