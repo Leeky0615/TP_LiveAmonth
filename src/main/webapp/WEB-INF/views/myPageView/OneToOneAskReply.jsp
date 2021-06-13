@@ -7,7 +7,7 @@
 	<table>
 		<thead>
 		<tr>
-			<th>번호 ${fn:length(oneToOneAskVOList)}</th>
+			<th>번호</th>
 			<th>카테고리</th>
 			<th>제목</th>
 			<th>날짜</th>

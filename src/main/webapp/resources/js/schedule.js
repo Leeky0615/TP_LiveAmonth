@@ -43,8 +43,9 @@
 			  	type : "post",
 			  	data : query,
 			  	success : function(data) {
+
 				  	$("#scheduleContentSubjectMessage").text(scheduleContentSubject);
-			    	$("#scheduleContentDescMessage").text(scheduleContentDesc);
+					$("#scheduleContentDescMessage").text(scheduleContentDesc);
 			    	$("#scheduleContentCostMessage").text(scheduleContentCost+"원");
 			    	$('#modifyScheduleContentSubject').val(scheduleContentSubject);
 			    	$('#modifyScheduleContentDesc').val(scheduleContentDesc);
