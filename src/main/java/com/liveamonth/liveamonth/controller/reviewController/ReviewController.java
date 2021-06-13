@@ -40,7 +40,11 @@ public class ReviewController extends SuperController {
     private ReviewService reviewService;
 
     @GetMapping("/review")
-    public String showDefauleReviewPage(Model model) throws Exception {
+    public String showDefaultReviewPage(Model model) throws Exception {
+        this.setDefaultReviewAttribute(model);
+        return REVIEW.getPath();
+    }
+    public void setDefaultReviewAttribute(Model model) throws Exception{
         ArrayList<HashMap<String, Object>> allReviewList = reviewService.getDefaultReviewList(ALL.getText());
         ArrayList<HashMap<String, Object>> freeReviewList = reviewService.getDefaultReviewList(FREE.getText());
         ArrayList<HashMap<String, Object>> popularReviewList = reviewService.getDefaultReviewList(POPULAR.getText());
@@ -48,9 +52,7 @@ public class ReviewController extends SuperController {
         model.addAttribute(FREE_REVIEW_LIST.getText(), freeReviewList);
         model.addAttribute(POPULAR_REVIEW_LIST.getText(), popularReviewList);
         model.addAttribute(REVIEW_CATEGORY_LIST.getText(), EReviewCategoryName.values());
-        return REVIEW.getPath();
     }
-
     @GetMapping("/categoryReviewPage")
     public String showCategoryReviewPage(Model model, HttpServletRequest request) throws Exception {
         String category = String.valueOf(request.getParameter(CATEGORY.getText()));
@@ -116,7 +118,7 @@ public class ReviewController extends SuperController {
     }
 
     @GetMapping("/reviewWrite")
-    public String reviewWrite(Model model, HttpServletRequest request) {
+    public String reviewWrite(Model model, HttpServletRequest request) throws Exception{
         int reviewNO;
         if (request.getParameter(REVIEW_NO.getText()) != null) {
             reviewNO = Integer.parseInt(request.getParameter(REVIEW_NO.getText()));
@@ -126,6 +128,7 @@ public class ReviewController extends SuperController {
                 model.addAttribute(REVIEW_VO.getText(), reviewVO);
             } catch (Exception e) {
                 System.err.println(REVIEW_LOAD_FAIL_MESSAGE.getText() + e);
+                this.setDefaultReviewAttribute(model);
                 return DEFAULT_REVIEW_PAGE.getPath();
             }
         }
@@ -134,7 +137,7 @@ public class ReviewController extends SuperController {
     }
 
     @RequestMapping(value = "addReview")
-    public String addReview(HttpServletRequest request, ReviewVO reviewVO, RedirectAttributes rttr) {
+    public String addReview(HttpServletRequest request, ReviewVO reviewVO, RedirectAttributes rttr, Model model) throws Exception{
         long systemTime = System.currentTimeMillis();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA);
         String dTime = formatter.format(systemTime);
@@ -149,6 +152,7 @@ public class ReviewController extends SuperController {
             reviewNO = reviewService.addReview(reviewVO);
         } catch (Exception e) {
             System.err.println(REVIEW_ADD_FAIL_MESSAGE.getText() + e);
+            this.setDefaultReviewAttribute(model);
             return DEFAULT_REVIEW_PAGE.getPath();
         }
         rttr.addAttribute(REVIEW_NO.getText(), reviewNO);
@@ -169,7 +173,7 @@ public class ReviewController extends SuperController {
     }
 
     @RequestMapping(value = "deleteReview")
-    public String deleteReview(HttpServletRequest request, RedirectAttributes rttr) {
+    public String deleteReview(HttpServletRequest request, RedirectAttributes rttr, Model model) throws Exception {
         int reviewNO = Integer.parseInt(String.valueOf(request.getParameter(REVIEW_NO.getText())));
         try {
             reviewService.deleteReview(reviewNO);
@@ -178,11 +182,12 @@ public class ReviewController extends SuperController {
             rttr.addAttribute(REVIEW_NO.getText(), reviewNO);
             return REDIRECT_REVIEW_CONTENT.getPath();
         }
+        this.setDefaultReviewAttribute(model);
         return DEFAULT_REVIEW_PAGE.getPath();
     }
 
     @GetMapping("getReview")
-    public String getReview(Model model, HttpServletRequest request) {
+    public String getReview(Model model, HttpServletRequest request) throws Exception{
         int reviewNO = Integer.parseInt(String.valueOf(request.getParameter(REVIEW_NO.getText())));
         HttpSession session = request.getSession();
         UserVO session_UserVO = (UserVO) session.getAttribute(USER_VO.getText());
@@ -193,6 +198,7 @@ public class ReviewController extends SuperController {
             model.addAttribute(REVIEW_VO.getText(), reviewVO);
         } catch (Exception e) {
             System.err.println(REVIEW_LOAD_FAIL_MESSAGE.getText() + e);
+            this.setDefaultReviewAttribute(model);
             return DEFAULT_REVIEW_PAGE.getPath();
         }
 
@@ -200,6 +206,7 @@ public class ReviewController extends SuperController {
             reviewService.increaseReviewViewCount(reviewNO);
         } catch (Exception e) {
             System.err.println(REVIEW_VIEWCOUNT_INCREASE_FAIL_MESSAGE.getText() + e);
+            this.setDefaultReviewAttribute(model);
             return DEFAULT_REVIEW_PAGE.getPath();
         }
 
@@ -209,6 +216,7 @@ public class ReviewController extends SuperController {
             model.addAttribute(REVIEW_REPLY_LIST.getText(), reviewReplyList);
         } catch (Exception e) {
             System.err.println(REVIEW_LOAD_FAIL_MESSAGE.getText() + e);
+            this.setDefaultReviewAttribute(model);
             return DEFAULT_REVIEW_PAGE.getPath();
         }
 
@@ -218,6 +226,7 @@ public class ReviewController extends SuperController {
             model.addAttribute(PAIGING.getText(), paging);
         } catch (Exception e) {
             System.err.println(REVIEWREPLY_PAGING_FAIL_MESSAGE.getText() + e);
+            this.setDefaultReviewAttribute(model);
             return DEFAULT_REVIEW_PAGE.getPath();
         }
 
@@ -226,6 +235,7 @@ public class ReviewController extends SuperController {
             model.addAttribute(REVIEW_LIKE_COUNT.getText(), likeCount);
         } catch (Exception e) {
             System.err.println(REVIEW_LIKECOUNT_LOAD_FAIL_MESSAGE.getText() + e);
+            this.setDefaultReviewAttribute(model);
             return DEFAULT_REVIEW_PAGE.getPath();
         }
 
@@ -238,6 +248,7 @@ public class ReviewController extends SuperController {
                 model.addAttribute(LIKE_STATUS.getText(), status);
             } catch (Exception e) {
                 System.err.println(REVIEW_LIKESTATUS_LOAD_FAIL_MESSAGE.getText() + e);
+                this.setDefaultReviewAttribute(model);
                 return DEFAULT_REVIEW_PAGE.getPath();
             }
         }
