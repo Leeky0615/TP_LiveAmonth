@@ -16,8 +16,7 @@
                         <form action="resultMent" class="cc-form" id="checkUserForm">
                             <input type="hidden" name="page" value="${page}">
                             <button type="submit" class="site-btn">확인</button>
-                            <button type="button" class="site-btn"
-                                    onclick=acyncMovePage("reCheckPassword?page=dropUser");>취소
+                            <button type="button" class="site-btn" href="reCheckPassword?page=dropUser">취소
                             </button>
                         </form>
                     </div>

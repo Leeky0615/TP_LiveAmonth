@@ -42,9 +42,9 @@
                         <th></th>
                         <th></th>
                         <th></th>
-                        <th>제목</th>
-                        <th>좋아요</th>
-                        <th>조회</th>
+                        <th style="text-align: center">제목</th>
+                        <th style="text-align: center">좋아요</th>
+                        <th style="text-align: center">조회</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -74,21 +74,21 @@
                             <td style="width:35%">
                                 <a href="otherSchedule?scheduleNO=${mySchedule.scheduleNO}">${mySchedule.scheduleSubject}</a>
                                 <span class="scheduleReplyCount">
-                        <c:if test="${mySchedule.replyCount ne null}">
-                            [${mySchedule.replyCount}]
-                        </c:if>
-                    </span>
+                                    <c:if test="${mySchedule.replyCount ne null}">
+                                        [${mySchedule.replyCount}]
+                                    </c:if>
+                                </span>
                             </td>
                             <c:set var="scheduleLikeCount" value="${mySchedule.scheduleLikeCount}"/>
                             <c:choose>
                                 <c:when test="${scheduleLikeCount != null}">
-                                    ${scheduleLikeCount}
+                                    <td style="width:15%;text-align: center">${scheduleLikeCount}</td>
                                 </c:when>
                                 <c:otherwise>
-                                    0
+                                    <td style="width:15%;text-align: center">0</td>
                                 </c:otherwise>
                             </c:choose>
-                            <td style="width:15%">${mySchedule.scheduleViewCount}</td>
+                            <td style="width:15%;text-align: center">${mySchedule.scheduleViewCount}</td>
                         </tr>
                     </c:forEach>
                     </tbody>

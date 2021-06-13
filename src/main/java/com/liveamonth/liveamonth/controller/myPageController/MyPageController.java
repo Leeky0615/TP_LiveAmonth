@@ -153,9 +153,9 @@ public class MyPageController extends SuperController {
             this.setPageAttr(model,PAGE_MODIFY,false);
         }else if(page.equals(PAGE_DROP_USER.getText())){
             this.setPageAttr(model,PAGE_DROP_USER,false);
+            model.addAttribute(USER_VO.getText(), session.getAttribute(USER_VO.getText()));
             s3Uploader.delete(IMAGE_DIR.getText()+session_UserVO.getUserImage()); // 회원 탈퇴시 S3에 있는 이미지도 삭제
             myPageService.dropUser(session_UserVO.getUserID());
-            session.invalidate();
         }else if(page.equals(PAGE_ONE_TO_ONE_ASK.getText())){
             myPageService.addOneToOneAsk(oneToOneAskVO, session_UserVO.getUserNO());
             this.setPageAttr(model,PAGE_ONE_TO_ONE_ASK,false);

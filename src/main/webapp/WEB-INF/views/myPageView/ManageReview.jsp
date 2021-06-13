@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <link rel="stylesheet" href="resources/css/review.css" type="text/css">
 <script type="text/javascript" src="resources/js/myPage.js"></script>
@@ -40,16 +41,16 @@
                     <tr>
                         <th></th>
                         <th></th>
-                        <th>제목</th>
-                        <th>작성일</th>
-                        <th>좋아요</th>
-                        <th>조회</th>
+                        <th style="text-align: center">제목</th>
+                        <th style="text-align: center">작성일</th>
+                        <th style="text-align: center">좋아요</th>
+                        <th style="text-align: center">조회</th>
                     </tr>
                     </thead>
                     <tbody>
                     <c:forEach var="myReview" items="${myReviewList}">
                         <tr>
-                            <td style="width:10%">${reviewList.reviewNO}</td>
+                            <td style="width:10%">${myReview.reviewNO}</td>
                             <c:choose>
                                 <c:when test="${manageReviewCategory eq 'writeReviewReply'}">
                                     <td><input type="checkbox" name="myReviewCheckbox"
@@ -60,23 +61,29 @@
                                                value="${myReview.reviewNO}"></td>
                                 </c:otherwise>
                             </c:choose>
-                            <td style="width:35%"><a
-                                    href="getReview?reviewNO=${myReview.reviewNO}">${myReview.reviewSubject}</a>
+                            <td style="width:35%">
+                                <a href="getReview?reviewNO=${myReview.reviewNO}">${myReview.reviewSubject}</a>
                                 <span class="reviewReplyCount">
-                        <c:if test="${myReview.replyCount ne null}">
-                            [${myReview.replyCount}]
-                        </c:if>
-                    </span>
+                                    <c:if test="${myReview.replyCount ne null}">
+                                        [${myReview.replyCount}]
+                                    </c:if>
+                                </span>
                             </td>
-                            <td style="width:15%">${myReview.reviewDate}</td>
-                            <td style="width:15%">${myReview.reviewLikeCount}</td>
-                            <td style="width:15%">${myReview.reviewViewCount}</td>
+                            <td style="width:15%;text-align: center"><fmt:formatDate value="${myReview.reviewDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+                            <c:set var="reviewLikeCount" value="${myReview.reviewLikeCount}"/>
+                            <c:choose>
+                                <c:when test="${scheduleLikeCount != null}">
+                                    <td style="width:15%;text-align: center">${reviewLikeCount}</td>
+                                </c:when>
+                                <c:otherwise>
+                                    <td style="width:15%;text-align: center">0</td>
+                                </c:otherwise>
+                            </c:choose>
+                            <td style="width:15%;text-align: center">${myReview.reviewViewCount}</td>
                         </tr>
                     </c:forEach>
                     </tbody>
                 </table>
-                <input type='checkbox' name='myReviewCheckbox' value='reviewSelectAll' onclick='reviewSelectAll(this)'/>
-                전체선택
             </div>
 
             <jsp:include page="Paging.jsp">
@@ -89,8 +96,11 @@
             </jsp:include>
         </c:otherwise>
     </c:choose>
+    <button type="button" class="btn btn-sm btn-primary pull-right" onclick="deleteMyReview();">글삭제</button>
+
 </form>
 <c:if test="${myReviewList.size() != 0}">
-    <button type="button" class="btn btn-sm btn-primary pull-right" onclick="deleteMyReview();">글삭제</button>
+    <input type='checkbox' name='myReviewCheckbox' value='reviewSelectAll' onclick='reviewSelectAll(this)'/>
+    전체선택
 </c:if>
 </body>
