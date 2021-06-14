@@ -35,7 +35,8 @@
         from review
                  LEFT JOIN reviewReply ON review.reviewNO = reviewReply.reviewNO
                  LEFT JOIN user ON review.userNO = user.userNO
-                 LEFT JOIN reviewLike ON review.reviewNO = reviewLike.reviewNO
+                 LEFT JOIN (select reviewNO ,count(*)as reviewLikeCount from reviewLike group by reviewNO) as
+            reviewLike ON review.reviewNO = reviewLike.reviewNO
         group by review.reviewNO
         order by reviewLikeCount desc
         limit 0, 5;
